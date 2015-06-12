@@ -17,6 +17,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
     public function _initRoute() {
         $router = \Yaf\Dispatcher::getInstance()->getRouter();
 
+        /*
         $route = new \Yaf\Route\Rewrite(
             '/collection',
             array(
@@ -28,7 +29,6 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
 
         $router->addRoute( 'collection', $route );
 
-        /*
         $route = new \Yaf\Route\Rewrite(
             '/:module/
         );

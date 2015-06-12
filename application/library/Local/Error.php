@@ -17,4 +17,19 @@ Class Error {
         'errno' => 3,
         'errmsg' => 'user not login'
     );
+
+    public static $VCODE_ERR = array(
+        'errno' => 4,
+        'errmsg' => 'vcode is not match'
+    );
+
+    public static $ACCOUNT_EXISTS = array(
+        'errno' => 5,
+        'errmsg' => 'account has already exists'
+    );
+
+    public static $ACCOUNT_NOTEXISTS = array(
+        'error' => 6,
+        'errmsg' => 'account is not exists'
+    );
 }

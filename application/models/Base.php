@@ -1,7 +1,7 @@
 <?php
 
 Class BaseModel {
-    private $db;
+    protected $db;
 
     public function __construct() {
         $this->db = DB::getInstance();
@@ -11,5 +11,8 @@ Class BaseModel {
     }
 
     public function save() {
+    }
+
+    public function select( ) {
     }
 }

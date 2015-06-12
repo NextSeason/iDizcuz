@@ -76,7 +76,6 @@ Class BaseController extends \Yaf\Controller_Abstract {
         /**
          * set new cookie
          */
-        echo '..setcookie';
         setcookie( self::TOKEN_COOKIE_NAME, $newToken, 0, '/' );//, $this->conf->root_domain, false, false );
     }
 

@@ -41,10 +41,6 @@ Class DB {
 
             $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-            echo 'xxxx';
-
-            var_dump( $this->pdo->inTransaction() );
-
         } catch( PDOException $e ) {
             die( $e->getMessage() );
         }
@@ -57,6 +53,6 @@ Class DB {
             self::$_instance = new self();
         }
 
-        return self::$_instance;
+        return self::$_instance->pdo;
     }
 }
