@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>用户登录注册</title>
+        <link rel="stylesheet" href="/static/common/css/base.css" />
+        <link rel="stylesheet" href="/static/common/css/common.css" />
+        <link rel="stylesheet" href="/static/account/css/account.css" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <div class="scroll-bg boxes">
+                <div class="inner">
+                    <div class="account-form-area">
+                        <div class="logo-text brand">iDizcuz</div>
+                        <form class="signin sign">
+                            <div class="line">
+                                <input type="text" class="email" placeholder="邮箱" />
+                            </div>
+                            <div class="line">
+                                <input type="password" class="passwd" placeholder="密码" />
+                                <a href="/account/page/forget" class="forget"><em>忘记密码？</em></a>
+                            </div>
+                            <div class="line">
+                                <p class="tip"></p>
+                            </div>
+                            <div class="line">
+                                <a href="###" class="btns larger signin-btn">登录</a>
+                            </div>
+                            <p>没有<em class="brand">iDizcuz</em>帐号？点击<a href="/account/page/signup" class="to-signup">注册</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/static/common/js/jquery.js"></script>
+        <script src="/static/common/js/jSwitch.js"></script>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'name', '/static/account/packages/Signin/bootstrap.js', {} );
+        </script>
+    </body>
+</html>

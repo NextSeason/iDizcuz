@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>用户登录注册</title>
+        <link rel="stylesheet" href="/static/common/css/base.css" />
+        <link rel="stylesheet" href="/static/common/css/common.css" />
+        <link rel="stylesheet" href="/static/account/css/account.css" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <div class="scroll-bg boxes">
+                <div class="inner">
+                    <div class="account-form-area">
+                        <div class="logo-text brand">iDizcuz</div>
+                        <form class="forget sign">
+                            <div class="line">
+                                <input type="text" class="email" placeholder="邮箱" />
+                            </div>
+                            <div class="line">
+                                <input type="password" class="passwd" placeholder="密码" />
+                            </div>
+                            <div class="line">
+                                <input type="text" class="vcode" placeholder="验证码" />
+                                <div class="send-vcode">
+                                    <a href="###" class="btns inside-input send-btn disabled">发验证码到邮箱</a>
+                                    <a href="###" class="btns inside-input resend-btn">重新发送 <b class="timer">60s</b></a>
+                                </div>
+                            </div>
+                            <div class="line">
+                                <p class="tip"></p>
+                            </div>
+                            <div class="line">
+                                <a href="###" class="btns larger signin-btn">设置新密码</a>
+                            </div>
+                            <p>没有<em class="brand">iDizcuz</em>帐号？点击<a href="/account/page/signup">注册</a>或直接<a href="/account/page/signin">登录</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/static/common/js/jquery.js"></script>
+        <script src="/static/common/js/jSwitch.js"></script>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'name', '/static/account/packages/Forget/bootstrap.js', {} );
+        </script>
+    </body>
+</html>
