@@ -59,7 +59,9 @@ CREATE TABLE `posts` (
     PRIMARY KEY( `id` )
 );
 
-DROP TABLE IF EXISTS `zan` (
+DROP TABLE IF EXISTS `zan`;
+
+CREATE TABLE `zan` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `post_id` int unsigned NOT NULL,
     `account_id` int unsigned NOT NULL,

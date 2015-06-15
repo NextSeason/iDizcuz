@@ -29,7 +29,12 @@ Class Error {
     );
 
     public static $ACCOUNT_NOTEXISTS = array(
-        'error' => 6,
+        'errno' => 6,
         'errmsg' => 'account is not exists'
+    );
+
+    public static $PASSWD_ERR = array(
+        'errno' => 7,
+        'errmsg' => 'password is not correct'
     );
 }

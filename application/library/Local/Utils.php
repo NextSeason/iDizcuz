@@ -51,4 +51,8 @@ Class Utils {
     static public function loadConf( $conf, $tag ) {
         return new \Yaf\Config\Ini( APP_PATH . '/conf/' . $conf . '.ini', $tag );
     }
+
+    static public function passwd( $passwd, $salt ) {
+        return sha1( $passwd . $salt );
+    }
 }

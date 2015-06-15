@@ -5,11 +5,15 @@ Class BaseController extends \Yaf\Controller_Abstract {
     protected $request;
     protected $conf;
 
+    protected $action_path;
     protected $session;
 
     const TOKEN_COOKIE_NAME = '__ct';
 
     public function init() {
+
+        $this->action_path = sprintf( 'modules/%s/actions/Pages/', $this->_module );
+
         $this->request = $this->getRequest();
 
         /**
@@ -31,11 +35,7 @@ Class BaseController extends \Yaf\Controller_Abstract {
     /**
      * set default header for whole site
      */
-    protected function setHeader() {
-        $response = $this->getResponse();
-        $response->setHeader( 'Content-Type', 'application/json; charset=utf-8' );
-        $response->response();
-    }
+    protected function setHeader() {}
 
     /**
      * @method setToken
@@ -105,29 +105,4 @@ Class BaseController extends \Yaf\Controller_Abstract {
         $session = $this->session;
     }
 
-    protected function response( $data ) {
-        echo json_encode( $data );
-    }
-
-    public function error( $err, $errmsg = null, $data = null ) {
-        $error = \Local\Error::$$err;
-
-        if( !is_null( $errmsg ) ) {
-            $error[ 'errmsg' ] = $errmsg;
-        }
-
-        if( !is_null( $data ) ) {
-            $error[ 'data' ] = $data;
-        }
-
-        $this->response ( $error );
-        exit;
-    }
-
-    public function success( $data = null ) {
-        $this->response( array(
-            'errno' => 0,
-            'data' => $data
-        ) );
-    }
 }
