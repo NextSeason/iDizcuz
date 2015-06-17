@@ -13,7 +13,6 @@ Class InterfaceController extends BaseInterfaceController {
             'sendvcode' => $action_path . 'SendVcode.php',
             'signup' => $action_path . 'Signup.php',
             'signin' => $action_path . 'Signin.php',
-            'signout' => $action_path . 'Signout.php'
         );
     }
 }

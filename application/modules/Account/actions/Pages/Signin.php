@@ -1,16 +1,11 @@
 <?php
 
-Class SigninAction extends \Yaf\Action_Abstract {
+Class SigninAction extends \Local\BaseAction {
+    public function __execute() {
+        $data = array();
 
-    private $request;
-    private $params;
+        $this->tpl = 'account/signin';
 
-    private $controller;
-    private $session;
-
-    private $accountModel;
-
-    public function execute() {
-        $this->display( 'account/signin' );
+        return $data;
     }
 }

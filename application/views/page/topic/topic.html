@@ -1,47 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <title></title>
-        <link rel="stylesheet" href="/static/common/css/base.css" />
-        <link rel="stylesheet" href="/static/common/css/common.css" />
-        <link rel="stylesheet" href="/static/common/css/font-awesome.css" />
+        <?php include TPL_PATH . 'common/head.inc.html'; ?>
         <link rel="stylesheet" href="/static/topic/css/topic.css" />
         <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css" />
     </head>
     <body>
         <div id="idizcuz">
-            <div class="boxes top">
-                <div class="inner">
-                    <?php if( $account ) { ?>
-                    <ul class="account">
-                        <li>
-                            <a href="###"><?php echo $account[ 'uname' ]; ?></a>
-                            <ul>
-                                <li><a href="###"><i class="fa fa-user"></i>我的主页</a></li>
-                                <li><a href="###">消息</a></li>
-                                <li><a href="###">设置</a></li>
-                                <li><a href="###">退出</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <?php } else { ?>
-                    <div class="sign">
-                        <a href="/account/page/signup">注册</a>
-                        <span> | </span>
-                        <a href="/account/page/signin">登录</a>
-                    </div>
-                    <?php } ?>
-                    <a href="/" class="logo-text light">今日论点 • iDizcuz</a>
-                </div>
-            </div>
+            <?php include TPL_PATH . 'common/top.inc.html'; ?>
             <div class="boxes main">
                 <div class="inner clearfix">
                     <div class="topic-area l">
                         <div class="title-line">
-                            <div class="date-selector r">
+                            <div class="date-selector r clearfix">
                                 <a href="###"><i class="fa fa-chevron-left"></i></a>
-                                <a href="###" class="btns small">今日论点</a>
+                                <a href="###" class="btns small date">今日论点</a>
                                 <a href="###"><i class="fa fa-chevron-right"></i></a>
                             </div>
                             <h1>讨论：如何看待乐嘉在节目中耍酒疯这件事？</h1>
@@ -51,7 +24,7 @@
                         </div>
                         <div class="detail-line clearfix">
                             <div class="media l">
-                                <a href="http://www.iqiyi.com/v_19rroicb60.html?vfm=m_177_bdsx"><img src="/static/topic/images/topic.jpg" target="_blank" /></a>
+                                <a href="http://www.iqiyi.com/v_19rroicb60.html?vfm=m_177_bdsx" target="_blank"><img src="/static/topic/images/topic.jpg" /></a>
                             </div>
                             <div class="desc">
                             <p>
@@ -96,16 +69,29 @@
                                 </li>
                             </ul>
                             <div id="textbox" class="textbox">
-                                <script type="text/plain" id="editor">
+                                <script type="text/plain" id="editor" class="editor">
                                     <p>在此输入您想发表的内容</p>
                                 </script>
                             </div>
-                            <div class="submit-line">
-                                <a href="###" class="btns large">发布观点</a>
+                            <div class="submit-line clearfix">
+                                <p class="post-tip"></p>
+                                <p class="post-warn"></p>
+                                <a href="###" class="btns large public">发布观点</a>
                             </div>
                         </div>
                     </div>
                     <div class="sidebar r">
+                        <?php if( $account ) { ?>
+                            <div class="new-post">
+                                <p>心理所想，不吐不快</p>
+                                <a href="###" class="btns large">分享我的观点</a>
+                            </div>
+                        <?php } else { ?>
+                            <div class="about-idizcuz">
+                                <p>试着去成为一个理性且有思想的人<p>
+                                <a href="/account/page/signup" class="btns large">加入每日论点 • iDizcuz</a>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -114,12 +100,64 @@
                 </div>
             </div>
         </div>
-        <script src="/static/common/js/jquery.js"></script>
-        <script src="/static/common/js/jSwitch.js"></script>
         <script src="/static/common/js/umeditor.config.js"></script>
         <script src="/static/common/js/umeditor.js"></script>
         <script>
-            var um = UM.getEditor( 'editor' );
+            ( function() {
+                var um = UM.getEditor( 'editor' ),
+                    placeholder = '在此输入您想发表的内容',
+                    timeout1 = null,
+                    timeout2 = null;
+
+                window.um = um;
+
+                var setWarn = function( text ) {
+                    timeout1 && clearTimeout( timeout1 );
+                    $( '.submit-line .post-warn' ).html( text );
+                    timeout1 = setTimeout( function() {
+                        $( '.submit-line .post-warn' ).html( '' );
+                    }, 2000 );
+                };
+
+                um.addListener( 'click', function() {
+                    var contentTxt = um.getContentTxt();
+                    if( contentTxt == placeholder ) {
+                        um.setContent( '' );
+                        um.blur();
+                        um.focus();
+                    }
+                } );
+
+                $( '.submit-line .public' ).on( 'click', function( e ) {
+                    var content = um.getContent(),
+                        contentTxt = um.getContentTxt();
+
+                    if( contentTxt == placeholder || !contentTxt.length ) {
+                        setWarn( '发布内容不能为空' );
+                        return false;
+                    }
+
+                    if( contentTxt.length < 20 ) {
+                        setWarn( '您发布的文字内容不能少于20个字' );
+                        return false;
+                    }
+
+                    if( contentTxt.length > 20000 ) {
+                        setWarn( '您发布的文字内容不能大于20000个字' );
+                        return false;
+                    }
+                    $.ajax( {
+                        url : '/topic/interface/public',
+                        method : 'POST',
+                        data : {
+                            topic : 1,
+                            content : content
+                        }
+                    } ).done( function( response ) {
+                    } );
+                } );
+            } )();
+
         </script>
     </body>
 </html>

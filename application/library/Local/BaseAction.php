@@ -9,11 +9,21 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     protected $request;
     protected $tpl;
     protected $type = 'page';
+    protected $account;
+    protected $params = array();
+
+    protected $accountModel;
 
     public function execute() {
         $this->session = \Yaf\Session::getInstance();
         $this->request = $this->getRequest();
         $this->controller = $this->getController();
+
+        $this->account = $this->session[ 'account' ];
+
+        if( $this->account ) {
+            $this->updateSession();
+        }
 
         $data = $this->__execute();
 
@@ -25,6 +35,35 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         }
     }
 
-    abstract protected function __execute();
+    protected function success( $response = null ) {
+        $this->controller->success( $response );
+    }
 
+    protected function error( $err ) {
+        $this->controller->error( $err );
+    }
+
+    protected function updateSession() {
+        $this->accountModel = new \AccountModel();
+
+        $account = $this->accountModel->get( $this->account[ 'id' ]  );
+
+        if( $account ) {
+            $this->account = array_merge( $this->account, $account );
+        }
+    }
+
+    protected function accountStatus( $id ) {
+        $account = $this->session[ 'account' ];
+
+        if( $account && $account[ 'id' ] == $id ) {
+            return $account[ 'status' ];
+        }
+
+        if( empty( $this->accountModel ) ) {
+            $this->accountModel = new \AccountModel();
+        }
+    }
+
+    abstract protected function __execute();
 }

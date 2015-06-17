@@ -16,23 +16,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
 
     public function _initRoute() {
         $router = \Yaf\Dispatcher::getInstance()->getRouter();
-
-        /*
-        $route = new \Yaf\Route\Rewrite(
-            '/collection',
-            array(
-                'module' => 'collection',
-                'controller' => 'switch',
-                'action' => 'entrance'
-            )
-        );
-
-        $router->addRoute( 'collection', $route );
-
-        $route = new \Yaf\Route\Rewrite(
-            '/:module/
-        );
-         */
+        $router->addRoute( 'idizcuz', new \Yaf\Route\Supervar( 'r' ) );
     }
 
     public function _initSession() {

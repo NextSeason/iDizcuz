@@ -6,6 +6,8 @@
  */
 Class AccountModel extends BaseModel {
 
+    protected $table = 'accounts';
+
     public function getAccountByEmail( $email ) {
         $query = 'SELECT * FROM `accounts` WHERE `email` = :email';
 

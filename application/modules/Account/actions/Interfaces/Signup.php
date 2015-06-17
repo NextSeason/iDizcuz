@@ -1,29 +1,22 @@
 <?php
 
-Class SignupAction extends \Yaf\Action_Abstract {
+Class SignupAction extends \Local\BaseAction {
 
-    private $request;
-    private $params;
+    private $data = array();
 
-    private $controller;
-    private $session;
+    public function __execute() {
 
-    private $accountModel;
-
-    public function execute() {
-        $this->session = \Yaf\Session::getInstance();
-
-        $this->request = $this->getRequest();
-
-        $this->controller = $this->getController();
+        $this->type = 'interface';
 
         $this->paramsProcessing()->checkVcode();
-        
-        $this->accountModel = new AccountModel();
+
+        if( empty( $this->accountModel ) ) {
+            $this->accountModel = new AccountModel();
+        }
         
         $this->checkExists()->addAccount();
 
-        $this->controller->success();
+        return $this->data;
     }
 
     private function checkVcode() {
@@ -39,7 +32,7 @@ Class SignupAction extends \Yaf\Action_Abstract {
         ) );
 
         if( !$res ) {
-            $this->controller->error( 'VCODE_ERR' );
+            $this->error( 'VCODE_ERR' );
         }
 
         return $this;
@@ -49,11 +42,10 @@ Class SignupAction extends \Yaf\Action_Abstract {
         $account =  $this->accountModel->getAccountByEmail( $this->params[ 'email' ] );
 
         if( $account ) {
-            $this->controller->error( 'ACCOUNT_EXISTS' );
+            $this->error( 'ACCOUNT_EXISTS' );
         }
 
         return $this;
-        
     }
 
     private function addAccount() {
@@ -83,31 +75,31 @@ Class SignupAction extends \Yaf\Action_Abstract {
         $email = $request->getPost( 'email' );
 
         if( is_null( $email ) || !filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         $uname = $request->getPost( 'uname' );
 
         if( is_null( $uname ) || strlen( $uname ) > 18 ) {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         $passwd = $request->getPost( 'passwd' );
 
         if( is_null( $passwd ) ) {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
         $len = strlen( $passwd );
 
         if( $len < 6 || $len > 20 ) {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         $vcode = $request->getPost( 'vcode' );
         $len = strlen( $vcode );
 
         if( is_null( $vcode ) || $len != 6 ) {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         $this->params = array(
@@ -119,5 +111,4 @@ Class SignupAction extends \Yaf\Action_Abstract {
 
         return $this;
     }
-
 }

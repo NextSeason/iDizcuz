@@ -37,4 +37,10 @@ Class Error {
         'errno' => 7,
         'errmsg' => 'password is not correct'
     );
+
+    public static $USER_BANNED = array(
+        'error' => 8,
+        'errmsg' => 'user has been banned'
+    );
+
 }
