@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `admin`;
 
-CREATE TABLE IF NOT EXISTS `admin` (
+CREATE TABLE `admin` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `email` char(80) NOT NULL,
     `passwd` char(40) NOT NULL,
