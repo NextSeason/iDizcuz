@@ -1,29 +1,23 @@
 <?php
 
-Class SigninAction extends \Yaf\Action_Abstract {
-    private $request;
-    private $params;
-
-    private $controller;
-    private $session;
+Class SigninAction extends \Local\BaseAction {
     private $account;
 
-    private $accountModel;
+    private $data = array();
 
-    public function execute() {
-        $this->session = \Yaf\Session::getInstance();
+    public function __execute() {
 
-        $this->request = $this->getRequest();
-
-        $this->controller = $this->getController();
+        $this->type = 'interface';
 
         $this->paramsProcessing()->checkStatus();
 
-        $this->accountModel = new AccountModel();
+        if( empty( $this->accountModel ) ) {
+            $this->accountModel = new AccountModel();
+        }
 
         $this->authentication()->setSession()->updateAccountData();
 
-        $this->controller->success();
+        return $this->data;
     }
 
     private function authentication() {
@@ -31,13 +25,13 @@ Class SigninAction extends \Yaf\Action_Abstract {
         $account = $this->accountModel->getAccountByEmail( $params[ 'email' ] );
 
         if( !$account ) {
-            $this->controller->error( 'ACCOUNT_NOTEXISTS' );
+            $this->error( 'ACCOUNT_NOTEXISTS' );
         }
 
         $passwd = \Local\Utils::passwd( $params[ 'passwd' ],  $account[ 'salt' ] );
 
         if( $passwd != $account[ 'passwd' ] ) {
-            $this->controller->error( 'PASSWD_ERR' );
+            $this->error( 'PASSWD_ERR' );
         }
 
         $account[ 'signin_time' ] = $_SERVER[ 'REQUEST_TIME' ];
@@ -70,7 +64,7 @@ Class SigninAction extends \Yaf\Action_Abstract {
          * check if email is validate before check it from database
          */
         if( is_null( $email ) || !filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         // get password
@@ -78,14 +72,14 @@ Class SigninAction extends \Yaf\Action_Abstract {
 
         // check password is exists
         if( is_null( $passwd ) ) {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         $len = strlen( $passwd );
 
         // bad password
         if( $len < 6 || $len > 20 ) {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         $this->params = array(

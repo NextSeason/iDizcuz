@@ -3,6 +3,8 @@
 Class BaseInterfaceController extends BaseController {
     public function init() {
         parent::init();
+
+        $this->action_path = sprintf( 'modules/%s/actions/Interfaces/', $this->_module );
     }
 
     protected function response( $data ) {

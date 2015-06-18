@@ -40,6 +40,7 @@ CREATE TABLE `topics` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `cid` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'category id default is 0',
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic type, 0 is discuss and 1 is arguments',
+    `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic status, 0 is not public and 1 is public',
     `title` varchar( 120 ) NOT NULL COMMENT 'title of this topic',
     `post_cnt` int unsigned NOT NULL DEFAULT 0 COMMENT 'number of post under this topic',
     `desc` varchar( 255 ) NOT NULL COMMENT 'description for this topic',

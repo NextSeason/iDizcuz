@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <?php 
+            $type_arr = array( '讨论', '辩论' );
+            $title = $type_arr[ $topic[ 'type' ] ] . '：' . $topic[ 'title' ] . '- 每日论点 • iDizcuz';
+        ?>
         <?php include TPL_PATH . 'common/head.inc.html'; ?>
         <link rel="stylesheet" href="/static/topic/css/topic.css" />
         <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css" />
@@ -17,10 +21,10 @@
                                 <a href="###" class="btns small date">今日论点</a>
                                 <a href="###"><i class="fa fa-chevron-right"></i></a>
                             </div>
-                            <h1>讨论：如何看待乐嘉在节目中耍酒疯这件事？</h1>
+                            <h1><?php echo $type_arr[ $topic[ 'type' ] ]; ?>：<?php echo $topic[ 'title' ]; ?></h1>
                         </div>
                         <div class="point">
-                                <p>作为公众人物，在如此的公开场合做出如此的不当的行为实数少见，网友对此事看法不一，那么你怎么看待公众人物的这种行为以及其带来的影响呢？</p>
+                            <p><?php echo $topic[ 'desc' ]; ?></p>
                         </div>
                         <div class="detail-line clearfix">
                             <div class="media l">

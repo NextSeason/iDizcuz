@@ -51,6 +51,28 @@ Class BaseModel {
     public function save() {
     }
 
-    public function select( ) {
+    /*
+    public function select( $select, $condition, $orderby = '`id` DESC', $start = 0, $length = 1 ) {
+        $query = 'SELECT ';
+
+        if( is_array( $select ) ) {
+            array_walk( $select, function( &$value ) {
+                $value = '`' . $value '`';
+            } );
+
+            $select = implode( ',', $select );
+        } else if( is_string( $select ) {
+            if( $select != '*' ) {
+                $select = '`' . $select . '`';
+            }
+        }
+
+        $query = sprintf( 'SELECT %s FROM `%s` WHERE %s %s limit %d, %d', $this->table, $condition, $orderby, $start, $length );
+
+        try {
+            $stmt = $this->db->prepare( $query );
+        }
+
     }
+     */
 }

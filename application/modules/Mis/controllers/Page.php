@@ -7,7 +7,9 @@ Class PageController extends BasePageController {
         parent::init();
 
         $this->actions = array(
-            'signin' => $this->action_path . 'Signin.php'
+            'signin' => $this->action_path . 'Signin.php',
+            'index' => $this->action_path . 'Index.php',
+            'newtopic' => $this->action_path . 'NewTopic.php'
         );
     }
 }

@@ -22,18 +22,4 @@ Class AccountModel extends BaseModel {
             return false;
         }
     }
-
-    public function addAccount( $data ) {
-        $query = 'INSERT INTO `accounts`( `email`, `passwd`, `salt`, `uname`, `reg_ip`, `login_ip` ) VALUES( :email, :passwd, :salt, :uname, :reg_ip, :login_ip )';
-
-        $stmt = $this->db->prepare( $query );
-
-        foreach( $data as $key => &$value ) {
-            $stmt->bindParam( ':' . $key, $value );
-        }
-        if( !$stmt->execute() ) {
-            return false;
-        }
-        return $this->db->lastInsertId();
-    }
 }

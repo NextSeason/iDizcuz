@@ -1,10 +1,10 @@
 <?php
 
-Class SigninAction extends \Local\MisAction {
+Class IndexAction extends \Local\MisAction {
     public function __execute() {
         $data = array();
 
-        $this->tpl = 'mis/signin';
+        $this->tpl = 'mis/index';
 
         return $data;
     }

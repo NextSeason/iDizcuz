@@ -2,26 +2,25 @@
 
 namespace Local;
 
-Abstract Class BaseAction extends \Yaf\Action_Abstract {
-
+Abstract Class MisAction extends \Yaf\Action_Abstract {
     protected $session;
     protected $controller;
     protected $request;
     protected $tpl;
     protected $type = 'page';
-    protected $account;
+    protected $admin;
     protected $params = array();
 
-    protected $accountModel;
+    protected $adminModel;
 
     public function execute() {
         $this->session = \Yaf\Session::getInstance();
         $this->request = $this->getRequest();
         $this->controller = $this->getController();
 
-        $this->account = $this->session[ 'account' ];
+        $this->admin = $this->session [ 'admin' ];
 
-        if( $this->account ) {
+        if( $this->admin ) {
             $this->updateSession();
         }
 
@@ -30,7 +29,7 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         if( $this->type == 'interface' ) {
             $this->controller->success( $data );
         } else {
-            $data[ 'account' ] = $this->session[ 'account' ];
+            $data[ 'admin' ] = $this->session[ 'admin' ];
             $this->display( $this->tpl, $data );
         }
     }
@@ -44,28 +43,25 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     }
 
     protected function updateSession() {
-        $this->accountModel = new \AccountModel();
+        $this->adminModel = new \AdminModel();
 
-        $account = $this->accountModel->get( $this->account[ 'id' ]  );
+        $admin = $this->adminModel->get( $this->admin[ 'id' ] );
 
-        if( $account ) {
-            $this->account = array_merge( $this->account, $account );
+        if( $admin ) {
+            $this->admin = array_merge( $this->admin, $admin );
         }
 
         return $this;
     }
 
-    protected function accountStatus( $id ) {
-        $account = $this->session[ 'account' ];
-
-        if( $account && $account[ 'id' ] == $id ) {
-            return $account[ 'status' ];
+    protected function getPower( $id ) {
+        $admin = $this->session[ 'admin' ];
+        if( $admin && $admin[ 'id' ] == $id ) {
+            return $admin[ 'status' ];
         }
 
-        if( empty( $this->accountModel ) ) {
-            $this->accountModel = new \AccountModel();
+        if( empty( $this->adminModel ) ) {
+            $this->adminModel = new \AdminModel();
         }
     }
-
-    abstract protected function __execute();
 }

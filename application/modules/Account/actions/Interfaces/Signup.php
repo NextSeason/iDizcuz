@@ -66,7 +66,7 @@ Class SignupAction extends \Local\BaseAction {
             'login_ip' => $ip
         );
 
-        $res = $this->accountModel->addAccount( $data );
+        $res = $this->accountModel->insert( $data );
     }
 
     private function paramsProcessing() {
