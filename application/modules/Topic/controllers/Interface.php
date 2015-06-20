@@ -9,7 +9,7 @@ Class InterfaceController extends BaseInterfaceController {
         $action_path = sprintf( 'modules/%s/actions/Interfaces/', $this->_module );
 
         $this->actions = array(
-            'public' => $action_path . 'Public.php'
+            'post' => $action_path . 'Post.php'
         );
     }
 }

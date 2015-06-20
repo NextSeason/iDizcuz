@@ -25,7 +25,10 @@ Class BaseModel {
         }
     }
 
-    public function insert( $data ) {
+    public function insert( $data, $table = null ) {
+
+        if( is_null( $table ) ) $table = $this->table;
+
         $keys = array();
         $values = array();
 
@@ -37,42 +40,49 @@ Class BaseModel {
         $keys = implode( ',', $keys );
         $values = implode( ',', $values );
 
-        $query = sprintf( 'INSERT INTO `' . $this->table . '`(%s) VALUES(%s)', $keys, $values );
+        $query = sprintf( 'INSERT INTO `' . $table . '`(%s) VALUES(%s)', $keys, $values );
 
-        $stmt = $this->db->prepare( $query );
+        try {
 
-        foreach( $data as $key => &$value ) {
-            $stmt->bindParam( ':' . $key, $value );
-        }
+            $stmt = $this->db->prepare( $query );
 
-        return !$stmt->execute() ? false : $this->db->lastInsertId();
-    }
-
-    public function save() {
-    }
-
-    /*
-    public function select( $select, $condition, $orderby = '`id` DESC', $start = 0, $length = 1 ) {
-        $query = 'SELECT ';
-
-        if( is_array( $select ) ) {
-            array_walk( $select, function( &$value ) {
-                $value = '`' . $value '`';
-            } );
-
-            $select = implode( ',', $select );
-        } else if( is_string( $select ) {
-            if( $select != '*' ) {
-                $select = '`' . $select . '`';
+            foreach( $data as $k => &$v ) {
+                $stmt->bindParam( ':' . $k, $v );
             }
+                
+            $stmt->execute();
+
+            return $this->db->lastInsertId();
+
+        } catch( PDOException $e ) {
+            return false;
+        }
+    }
+
+    public function increment( $id, $column, $table = null ) {
+        if( is_null( $table ) ) $table = $this->table;
+
+        $query = 'UPDATE `' . $table . '` SET ';
+
+        $update = array();
+
+        foreach( $column as $k => $v ) {
+            $update[] = sprintf( '`%s`=`%s`+%d', $k, $k, (int)$v );
         }
 
-        $query = sprintf( 'SELECT %s FROM `%s` WHERE %s %s limit %d, %d', $this->table, $condition, $orderby, $start, $length );
+        $query .= implode( ',', $update ) . ' WHERE `id` = :id';
 
         try {
             $stmt = $this->db->prepare( $query );
-        }
+            $stmt->bindParam( ':id', $id );
 
+            return $stmt->execute();
+        } catch( PDOException $e ) {
+            return false;
+        }
+        
+    } 
+
+    public function save() {
     }
-     */
 }

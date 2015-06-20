@@ -39,8 +39,18 @@ Class Error {
     );
 
     public static $USER_BANNED = array(
-        'error' => 8,
+        'errno' => 8,
         'errmsg' => 'user has been banned'
+    );
+
+    public static $TOPIC_NOTEXISTS = array(
+        'errno' => 9,
+        'errmsg' => 'topic is not exists'
+    );
+
+    public static $POINT_NOTEXISTS = array(
+        'errno' => 10,
+        'errmsg' => 'point is not exists'
     );
 
 }

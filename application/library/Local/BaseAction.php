@@ -50,7 +50,11 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
 
         if( $account ) {
             $this->account = array_merge( $this->account, $account );
+        } else {
+            $this->account = null;
         }
+
+        $this->session[ 'account' ] = $this->account;
 
         return $this;
     }

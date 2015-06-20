@@ -3,7 +3,7 @@
 Class NewTopicAction extends \Local\MisAction {
 
     private $data = array();
-    private $topicModel;
+    private $transactionModel;
 
     public function __execute() {
 
@@ -11,7 +11,7 @@ Class NewTopicAction extends \Local\MisAction {
 
         $this->paramsProcessing();
 
-        $this->topicModel = new TopicModel();
+        $this->transactionModel = new TransactionModel();
         
         $topic = $this->addTopic();
 
@@ -39,7 +39,7 @@ Class NewTopicAction extends \Local\MisAction {
             $data[ 'start' ] = $params[ 'start' ];
         }
 
-        return $this->topicModel->insert( $data );
+        return $this->transactionModel->addTopic( $data );
     }
 
     private function paramsProcessing() {

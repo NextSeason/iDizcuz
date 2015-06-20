@@ -1,8 +1,6 @@
 <?php
 
 Class SigninAction extends \Local\BaseAction {
-    private $account;
-
     private $data = array();
 
     public function __execute() {

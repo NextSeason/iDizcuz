@@ -14,7 +14,7 @@
             <?php include TPL_PATH . 'common/top.inc.html'; ?>
             <div class="boxes main">
                 <div class="inner clearfix">
-                    <div class="topic-area l">
+                    <div class="topic-area l" data-topic-id="<?php echo $topic[ 'id' ]; ?>">
                         <div class="title-line">
                             <div class="date-selector r clearfix">
                                 <a href="###"><i class="fa fa-chevron-left"></i></a>
@@ -72,16 +72,28 @@
                                     </div>
                                 </li>
                             </ul>
-                            <div id="textbox" class="textbox">
-                                <script type="text/plain" id="editor" class="editor">
-                                    <p>在此输入您想发表的内容</p>
-                                </script>
-                            </div>
-                            <div class="submit-line clearfix">
-                                <p class="post-tip"></p>
-                                <p class="post-warn"></p>
-                                <a href="###" class="btns large public">发布观点</a>
-                            </div>
+                            <?php if( $account ) { ?>
+                                <div id="textbox" class="textbox">
+                                    <script type="text/plain" id="editor" class="editor">
+                                        <p>在此输入您想发表的内容</p>
+                                    </script>
+                                </div>
+                                <div class="submit-line clearfix">
+                                    <p class="post-tip"></p>
+                                    <p class="post-warn"></p>
+                                    <a href="###" class="btns large public">发布观点</a>
+                                </div>
+                            <?php } else { ?>
+                                <div id="textbox" class="textbox">
+                                    <div class="not-login-editor">
+                                        <p>请登录并发表您的观点
+                                            <a href="/signin">登录</a>
+                                            /
+                                            <a href="/signup">注册</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="sidebar r">
@@ -108,12 +120,13 @@
         <script src="/static/common/js/umeditor.js"></script>
         <script>
             ( function() {
+                if( !document.getElementById( 'editor' ) ) {
+                    return false;
+                }
                 var um = UM.getEditor( 'editor' ),
                     placeholder = '在此输入您想发表的内容',
                     timeout1 = null,
                     timeout2 = null;
-
-                window.um = um;
 
                 var setWarn = function( text ) {
                     timeout1 && clearTimeout( timeout1 );
@@ -151,17 +164,16 @@
                         return false;
                     }
                     $.ajax( {
-                        url : '/topic/interface/public',
+                        url : '/topic/interface/post',
                         method : 'POST',
                         data : {
-                            topic : 1,
-                            content : content
+                            content : content,
+                            topic_id : $( '.topic-area' ).attr( 'data-topic-id' )
                         }
                     } ).done( function( response ) {
                     } );
                 } );
             } )();
-
         </script>
     </body>
 </html>

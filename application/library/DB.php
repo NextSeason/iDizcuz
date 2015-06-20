@@ -40,6 +40,7 @@ Class DB {
             ); 
 
             $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $this->pdo->setAttribute( PDO::ATTR_AUTOCOMMIT, false );
 
         } catch( PDOException $e ) {
             die( $e->getMessage() );

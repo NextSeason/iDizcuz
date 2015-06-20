@@ -4,6 +4,8 @@
  */
 CREATE DATABASE IF NOT EXISTS `idizcuz` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 
+use `idizcuz`;
+
 
 /**
  * create table accounts that used to record data for accounts in grouple
@@ -28,11 +30,13 @@ CREATE TABLE IF NOT EXISTS `accounts` (
     UNIQUE KEY `account_email_unique` (`email`)
 );
 
+/*
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
     `id` int unsigned NOT NULL COMMENT 'user id, same as account id'
 );
+*/
 
 DROP TABLE IF EXISTS `topics`; 
 
@@ -42,15 +46,22 @@ CREATE TABLE `topics` (
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic type, 0 is discuss and 1 is arguments',
     `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic status, 0 is not public and 1 is public',
     `title` varchar( 120 ) NOT NULL COMMENT 'title of this topic',
-    `post_cnt` int unsigned NOT NULL DEFAULT 0 COMMENT 'number of post under this topic',
     `desc` varchar( 255 ) NOT NULL COMMENT 'description for this topic',
-    `agree` int unsigned NOT NULL DEFAULT 0,
-    `disagree` int unsigned NOT NULL DEFAULT 0,
     `start` timestamp NOT NULL DEFAULT NOW() COMMENT 'the time to start this topic',
     `end` timestamp NOT NULL COMMENT 'the time to stop this topic',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
     PRIMARY KEY( `id`)
+);
+
+DROP TABLE IF EXISTS `topics_data`;
+
+CREATE TABLE `topics_data` (
+    `id` int unsigned NOT NULL,
+    `post_cnt` int unsigned NOT NULL DEFAULT 0 COMMENT 'number of post under this topic',
+    `agree` int unsigned NOT NULL DEFAULT 0,
+    `disagree` int unsigned NOT NULL DEFAULT 0,
+    PRIMARY KEY( `id` )
 );
 
 DROP TABLE IF EXISTS `points`;
@@ -60,11 +71,18 @@ CREATE TABLE `points` (
     `topic_id` int unsigned NOT NULL,
     `title` varchar( 120 ) NOT NULL COMMENT 'title of this point',
     `desc` varchar( 255 ) NOT NULL COMMENT 'description for this post',
+    `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
+    `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `points_data`;
+
+CREATE TABLE `points_data` (
+    `id` int unsigned NOT NULL,
     `post_cnt` int unsigned NOT NULL DEFAULT 0,
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
-    `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
-    `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
     PRIMARY KEY( `id` )
 );
 
@@ -76,10 +94,17 @@ CREATE TABLE `posts` (
     `content` text NOT NULL,
     `topic_id` int unsigned NOT NULL,
     `point_id` int unsigned,
-    `agree` int unsigned NOT NULL DEFAULT 0,
-    `disagree` int unsigned NOT NULL DEFAULT 0,
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `posts_data`;
+
+CREATE TABLE `posts_data` (
+    `id` int unsigned NOT NULL,
+    `agree` int unsigned NOT NULL DEFAULT 0,
+    `disagree` int unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY( `id` )
 );
 

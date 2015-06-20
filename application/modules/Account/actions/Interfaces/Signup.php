@@ -4,6 +4,8 @@ Class SignupAction extends \Local\BaseAction {
 
     private $data = array();
 
+    private $transactionModel;
+
     public function __execute() {
 
         $this->type = 'interface';
@@ -14,9 +16,18 @@ Class SignupAction extends \Local\BaseAction {
             $this->accountModel = new AccountModel();
         }
         
-        $this->checkExists()->addAccount();
+        $this->checkExists();
+
+        $this->transactionModel = new TransactionModel();
+        
+        $this->addAccount()->setSession();
 
         return $this->data;
+    }
+
+    private function setSession() {
+        $this->session[ 'account' ] = $this->account;
+        return $this;
     }
 
     private function checkVcode() {
@@ -57,7 +68,7 @@ Class SignupAction extends \Local\BaseAction {
 
         $ip = $_SERVER[ 'REMOTE_ADDR' ];
 
-        $data = array(
+        $account = array(
             'email' => $params[ 'email' ],
             'passwd' => $passwd,
             'salt' => $salt,
@@ -66,8 +77,22 @@ Class SignupAction extends \Local\BaseAction {
             'login_ip' => $ip
         );
 
-        $res = $this->accountModel->insert( $data );
+        $account_id = $this->transactionModel->addAccount( $account );
+
+        if( !$account_id ) {
+            $this->error( 'SYSTEM_ERR' );
+        }
+
+        $account[ 'id' ] = $account_id;
+
+        $account[ 'signin_time' ] = $_SERVER[ 'REQUEST_TIME' ];
+        $account[ 'signin_ip' ] = $_SERVER[ 'REMOTE_ADDR' ];
+
+        $this->account = $account;
+
+        return $this;
     }
+
 
     private function paramsProcessing() {
         $request = $this->request;
