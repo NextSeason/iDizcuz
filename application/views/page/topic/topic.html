@@ -43,14 +43,39 @@
                             <div class="operate-line clearfix">
                                 <span class="count">本论点共 <i>2</i> 条讨论</span>
                                 <ul class="r clearfix">
-                                    <li><a href="###" class="focus">最新讨论</a></li>
-                                    <li><a href="###">最多支持</a></li>
-                                    <li><a href="###">最多反对</a></li>
+                                    <li><a href="###" class="focus sort" data-order-type="0">最新讨论</a></li>
+                                    <li><a href="###" class="sort" data-order="1">最多支持</a></li>
+                                    <li><a href="###" class="sort" data-order="2" >最多反对</a></li>
                                 </ul>  
                             </div>
+                            <textarea class="templates" id="post-list-tpl">
+                                <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                                    <li class="posts" data-post-id="<%=data[i].id %>">
+                                        <div class="data-line clearfix">
+                                            <div class="operates r">
+                                                <a href="###" class="favo">收藏</a>
+                                                <a href="###" class="share">分享</a>
+                                                <a href="###" class="report">举报</a>
+                                            </div>
+                                            <div class="vote l">
+                                                <a href="###" class="btns small agree">支持(<%=data[i].data.agree %>)</a>
+                                                <a href="###" class="btns small disagree">反对(<%=data[i].data.disagree %>)</a>
+                                            </div>
+                                            <div class="title l">
+                                                <h2><%=data[i].title %></h2>
+                                                <a href="###" class="uname">作者： <%=data[i].author.uname %><%=data[i].author.desc %></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="contents">
+                                            <p><%=data[i].content %><p>
+                                        </div>
+                                    </li>
+                                <% } %>
+                            </textarea>
+                            <div class="loading-list top">正在加载列表数据</div>
                             <ul class="post-list">
                                 <li class="posts">
-                                    
                                     <div class="data-line clearfix">
                                         <div class="operates r">
                                             <a href="###" class="favo">收藏</a>
@@ -119,61 +144,9 @@
         <script src="/static/common/js/umeditor.config.js"></script>
         <script src="/static/common/js/umeditor.js"></script>
         <script>
-            ( function() {
-                if( !document.getElementById( 'editor' ) ) {
-                    return false;
-                }
-                var um = UM.getEditor( 'editor' ),
-                    placeholder = '在此输入您想发表的内容',
-                    timeout1 = null,
-                    timeout2 = null;
-
-                var setWarn = function( text ) {
-                    timeout1 && clearTimeout( timeout1 );
-                    $( '.submit-line .post-warn' ).html( text );
-                    timeout1 = setTimeout( function() {
-                        $( '.submit-line .post-warn' ).html( '' );
-                    }, 2000 );
-                };
-
-                um.addListener( 'click', function() {
-                    var contentTxt = um.getContentTxt();
-                    if( contentTxt == placeholder ) {
-                        um.setContent( '' );
-                        um.blur();
-                        um.focus();
-                    }
-                } );
-
-                $( '.submit-line .public' ).on( 'click', function( e ) {
-                    var content = um.getContent(),
-                        contentTxt = um.getContentTxt();
-
-                    if( contentTxt == placeholder || !contentTxt.length ) {
-                        setWarn( '发布内容不能为空' );
-                        return false;
-                    }
-
-                    if( contentTxt.length < 20 ) {
-                        setWarn( '您发布的文字内容不能少于20个字' );
-                        return false;
-                    }
-
-                    if( contentTxt.length > 20000 ) {
-                        setWarn( '您发布的文字内容不能大于20000个字' );
-                        return false;
-                    }
-                    $.ajax( {
-                        url : '/topic/interface/post',
-                        method : 'POST',
-                        data : {
-                            content : content,
-                            topic_id : $( '.topic-area' ).attr( 'data-topic-id' )
-                        }
-                    } ).done( function( response ) {
-                    } );
-                } );
-            } )();
+            var idizcuz = new J();
+            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', {} );
+            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
         </script>
     </body>
 </html>

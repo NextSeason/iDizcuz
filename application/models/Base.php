@@ -15,10 +15,10 @@ Class BaseModel {
 
         try {
             $stmt = $this->db->prepare( $query );
-            $stmt->bindParam( ':id', $id );
+            $stmt->bindValue( ':id', $id );
             $stmt->execute();
 
-            return $stmt->fetch();
+            return $stmt->fetch( PDO::FETCH_ASSOC );
 
         } catch( PDOException $e ) {
             return false;

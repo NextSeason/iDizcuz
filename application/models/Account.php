@@ -22,4 +22,21 @@ Class AccountModel extends BaseModel {
             return false;
         }
     }
+
+    public function get( $id, $filter = null ) {
+        $account = parent::get( $id );
+
+        if( !$account ) return false;
+
+        if( is_null( $filter ) ) {
+            return $account;
+        }
+
+        $result = [];
+
+        foreach( $filter as $k ) {
+            $result[ $k ] = $account[ $k ];
+        }
+        return $result;
+    }
 }

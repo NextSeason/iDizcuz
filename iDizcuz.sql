@@ -80,6 +80,7 @@ DROP TABLE IF EXISTS `points_data`;
 
 CREATE TABLE `points_data` (
     `id` int unsigned NOT NULL,
+    `topic_id` int unsigned NOT NULL,
     `post_cnt` int unsigned NOT NULL DEFAULT 0,
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
@@ -93,7 +94,7 @@ CREATE TABLE `posts` (
     `author_id` int unsigned NOT NULL,
     `content` text NOT NULL,
     `topic_id` int unsigned NOT NULL,
-    `point_id` int unsigned,
+    `point_id` int unsigned NOT NULL DEFAULT 0,
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
     PRIMARY KEY( `id` )
@@ -103,8 +104,11 @@ DROP TABLE IF EXISTS `posts_data`;
 
 CREATE TABLE `posts_data` (
     `id` int unsigned NOT NULL,
+    `topic_id` int unsigned NOT NULL,
+    `point_id` int unsigned NOT NULL DEFAULT 0,
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
+    `status` tinyint unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY( `id` )
 );
 

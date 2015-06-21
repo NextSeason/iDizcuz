@@ -13,9 +13,19 @@ Class TransactionModel extends BaseModel {
              */
             $post_id = $this->insert( $data, 'posts' );
 
-            $this->insert( [ 'id' => $post_id ], 'posts_data' );
-
             $topic_id = $data[ 'topic_id' ];
+
+            $post_data = [
+                'id' => $post_id,
+                'topic_id' => $topic_id
+            ];
+
+            if( isset( $data[ 'point_id' ] ) ) {
+                $post_data[ 'point_id' ] = $data[ 'point_id' ];
+            }
+
+
+            $this->insert( $post_data, 'posts_data' );
 
             /**
              * update post_cnt in table topics_data
