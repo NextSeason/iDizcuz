@@ -53,9 +53,9 @@
                                     <li class="posts" data-post-id="<%=data[i].id %>">
                                         <div class="data-line clearfix">
                                             <div class="operates r">
-                                                <a href="###" class="favo">收藏</a>
-                                                <a href="###" class="share">分享</a>
-                                                <a href="###" class="report">举报</a>
+                                                <a href="###" class="op-btn" data-action="fav"><i class="fa fa-star-o"></i> 收藏</a>
+                                                <a href="###" class="op-btn" data-action="share">分享</a>
+                                                <a href="###" class="op-btn" data-action="report">举报</a>
                                             </div>
                                             <div class="vote l">
                                                 <a href="###" class="btns small agree">支持(<%=data[i].data.agree %>)</a>
@@ -67,36 +67,51 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        <div class="bubbles op-bubbles">
+                                            <a href="###" class="close"><i class="fa fa-times"></i></a>
+                                            <div class="triangle"><div class="triangle"></div></div>
+                                            <div class="inner">
+                                                <div class="fav box">
+                                                    <p>收藏成功！您也可以分享这条观点，让更多人参与讨论</p>
+                                                </div>
+                                                <div class="share box clearfix">
+                                                    <div class="qrcode l">
+                                                        <img src="http://img4.cache.netease.com/game/2014/6/27/20140627172239307b9.png" />
+                                                    </div>
+                                                    <div class="share-part l">
+                                                        <div class="bdsharebuttonbox share-btn-boxes" data-tag="share_1">
+                                                            <a class="bds_qzone share-btns" data-cmd="qzone"><i class="fa fa-qq"></i></a>
+                                                            <a class="bds_tsina share-btns" data-cmd="tsina"><i class="fa fa-weibo"></i></a>
+                                                            <a class="bds_renren share-btns" data-cmd="renren"><i class="fa fa-renren"></i></a>
+                                                            <a class="bds_tqq share-btns" data-cmd="tqq"><i class="fa fa-tencent-weibo"></i></a>
+                                                            <a class="bds_fbook share-btns" data-cmd="fbook"><i class="fa fa-facebook-official"></i></a>
+                                                            <a class="bds_twi share-btns" data-cmd="twi"><i class="fa fa-twitter"></i></a>
+                                                        </div> 
+                                                        <div class="share-link">
+                                                            <div class="line clearfix">
+                                                                <span class="l">分享此条观点：</span>
+                                                                <a href="/topic?post=<%=data[i].id %>&fr=sharelink" class="link l">http://www.idizcuz.com/topic?post=<%=data[i].id %>&fr=sharelink</a>
+                                                                <a href="###" class="btns l">复制链接</a>
+                                                            </div>
+                                                            <div class="line clearfix">
+                                                                <span class="l">分享当前论点：</span>
+                                                                <a href="/topic/<?php echo $topic['id']; ?>?fr=sharelink" class="link l">http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=sharelink</a>
+                                                                <a href="###" class="btns l">复制链接</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="report box"></div>
+                                            </div>
+                                        </div>
                                         <div class="contents">
-                                            <p><%=data[i].content %><p>
+                                            <p><%=data[i].content %></p>
                                         </div>
                                     </li>
                                 <% } %>
                             </textarea>
-                            <div class="loading-list top">正在加载列表数据</div>
-                            <ul class="post-list">
-                                <li class="posts">
-                                    <div class="data-line clearfix">
-                                        <div class="operates r">
-                                            <a href="###" class="favo">收藏</a>
-                                            <a href="###" class="share">分享</a>
-                                            <a href="###" class="report">举报</a>
-                                        </div>
-                                        <div class="vote l">
-                                            <a href="###" class="btns small support">支持(100)</a>
-                                            <a href="###" class="btns small against">反对(10)</a>
-                                        </div>
-                                        <div class="title l">
-                                            <h2>艺人的基本修养和所谓的『真性情』</h2>
-                                            <a href="###" class="uname">作者：Mr.Lv 『互联网从业好几年』</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="contents">
-                                        <p>艺人，作为公众人物，</p>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div class="loading-list top">正在加载列表数据...</div>
+                            <ul class="post-list"></ul>
                             <?php if( $account ) { ?>
                                 <div id="textbox" class="textbox">
                                     <script type="text/plain" id="editor" class="editor">
@@ -148,5 +163,8 @@
             idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', {} );
             idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
         </script>
+        <script>
+            with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+        </script> 
     </body>
 </html>
