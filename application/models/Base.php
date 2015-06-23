@@ -8,7 +8,7 @@ Class BaseModel {
         $this->db = DB::getInstance();
     }
 
-    public function get( $id ) {
+    public function _get( $id ) {
         if( empty( $this->table ) ) return false;
 
         $query = 'SELECT * FROM `' . $this->table . '` WHERE `id` = :id';
@@ -25,7 +25,27 @@ Class BaseModel {
         }
     }
 
-    public function insert( $data, $table = null ) {
+    public function get( $id ) {
+        try {
+            $this->db->beginTransaction();
+            $res = $this->_get( $id );
+            if( !$res ) {
+                throw new PDOException( 'failed to get data' );
+            }
+            $this->db->commit();
+
+            return $res;
+            
+        } catch( PDOException $e ) {
+            return false;
+        }
+    }
+
+    public function gets( $id ) {
+        
+    }
+
+    public function _insert( $data, $table = null ) {
 
         if( is_null( $table ) ) $table = $this->table;
 
@@ -59,6 +79,18 @@ Class BaseModel {
         }
     }
 
+    public function insert( $data ) {
+        try {
+            $this->db->beginTransaction();
+            $res = $this->_insert( $data );
+            if( !$res ) throw new PDOException( 'failed to insert data' );
+            $this->db->commit();
+            return $res;
+        } catch( PDOException $e ) {
+            return false;
+        }
+    }
+
     public function increment( $id, $column, $table = null ) {
         if( is_null( $table ) ) $table = $this->table;
 
@@ -83,6 +115,30 @@ Class BaseModel {
         
     } 
 
-    public function save() {
+    public function _remove( $id, $table = null ) {
+        if( is_null( $table ) ) $table = $this->table;
+
+        $query = 'DELETE FROM `' . $table . '` WHERE `id` = :id';
+
+        try {
+            $stmt = $this->db->prepare( $query );
+            $stmt->bindValue( ':id', $id );
+
+            return $stmt->execute();
+        } catch( PDOException $e ) {
+            return false;
+        }
+    }
+
+    public function remove( $id ) {
+        try {
+            $this->db->beginTransaction();
+            $res = $this->_remove( $id );
+            if( !$res ) throw new PDOException( 'failed to delete data' );
+            $this->db->commit();
+            return $res;
+        } catch( PDOException $e ) {
+            return false;
+        }
     }
 }

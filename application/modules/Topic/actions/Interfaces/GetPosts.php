@@ -2,8 +2,9 @@
 
 Class GetPostsAction extends \Local\BaseAction {
 
+    private $data = [];
+
     private $postDataModel;
-    private $postModel;
 
     public function __execute() {
         $this->type = 'interface';
@@ -11,42 +12,80 @@ Class GetPostsAction extends \Local\BaseAction {
         $this->paramsProcessing();
 
         $this->postDataModel = new PostDataModel();
-        $this->postModel = new PostModel();
 
-        $posts = $this->getPosts();
+        $this->data[ 'posts' ] = $this->getPosts();
 
-        return [ 'posts' => $posts ];
+        return $this->data;
     }
 
     private function getPosts() {
         $params = $this->params;
 
         if( !is_null( $params[ 'point_id' ] ) ) {
-            $postsData = $this->postDataModel->getPostsByPoint( $params[ 'point_id' ], $params[ 'order' ], $params[ 'start' ], $params[ 'len' ] );
+            $postsData = $this->postDataModel->getPostsByPoint( 
+                $params[ 'point_id' ], 
+                $params[ 'order' ], 
+                $params[ 'start' ], 
+                $params[ 'len' ] 
+            );
         } else {
-            $postsData = $this->postDataModel->getPostsByTopic( $params[ 'topic_id' ], $params[ 'order' ], $params[ 'start' ], $params[ 'len' ] );
+            $postsData = $this->postDataModel->getPostsByTopic( 
+                $params[ 'topic_id' ],
+                $params[ 'order' ],
+                $params[ 'start' ],
+                $params[ 'len' ] 
+            );
         }
 
         if( $postsData === false ) {
             $this->error( 'SYSTEM_ERR' );
         }
 
+        if( count( $postsData ) == 0 ) {
+            return [];
+        }
+
         $posts = [];
 
+        $postModel = new PostModel();
+
+        /**
+         * get post and mark by postsdata
+         */
         foreach( $postsData as $postData ) {
-            $post = $this->postModel->get( $postData[ 'id' ] );
+            $post = $postModel->get( $postData[ 'id' ] );
             $post[ 'data' ] = $postData;
+            $post[ 'mark' ] = 0;
             $posts[] = $post;
         }
 
+        if( !is_null( $this->account ) ) {
+            $markModel = new MarkModel();
+
+            $account_id = $this->account[ 'id' ];
+
+            foreach( $posts as &$post ) {
+                $mark = $markModel->getMarkByPostAndAccount(
+                    $post[ 'id' ],
+                    $account_id
+                );
+
+                $post[ 'mark' ] = $mark ? $mark[ 'id' ] : 0;
+            }
+        }
+
+        /**
+         * get account info for each post;
+         * @todo it is better to add cache for some accounts to reduce times to seach in mysql
+         */
         $accountModel = new AccountModel();
 
         foreach( $posts as &$post ) {
-            $author = $accountModel->get( $post[ 'author_id' ], [ 'id', 'uname', 'desc' ] );
-            if( !$author ) {
+            $account = $accountModel->get( $post[ 'account_id' ], [ 'id', 'uname', 'desc' ] );
+            if( !$account) {
                 $this->error( 'SYSTEM_ERR' );
             }
-            $post[ 'author' ] = $author;
+            $post[ 'account' ] = $account;
         }
 
         return $posts;

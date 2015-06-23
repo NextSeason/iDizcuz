@@ -45,7 +45,7 @@ CREATE TABLE `topics` (
     `cid` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'category id default is 0',
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic type, 0 is discuss and 1 is arguments',
     `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic status, 0 is not public and 1 is public',
-    `title` varchar( 120 ) NOT NULL COMMENT 'title of this topic',
+    `title` varchar( 80 ) NOT NULL COMMENT 'title of this topic',
     `desc` varchar( 255 ) NOT NULL COMMENT 'description for this topic',
     `start` timestamp NOT NULL DEFAULT NOW() COMMENT 'the time to start this topic',
     `end` timestamp NOT NULL COMMENT 'the time to stop this topic',
@@ -69,7 +69,7 @@ DROP TABLE IF EXISTS `points`;
 CREATE TABLE `points` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `topic_id` int unsigned NOT NULL,
-    `title` varchar( 120 ) NOT NULL COMMENT 'title of this point',
+    `title` varchar( 80 ) NOT NULL COMMENT 'title of this point',
     `desc` varchar( 255 ) NOT NULL COMMENT 'description for this post',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
@@ -87,14 +87,28 @@ CREATE TABLE `points_data` (
     PRIMARY KEY( `id` )
 );
 
+DROP TABLE IF EXISTS `drafts`;
+
+CREATE TABLE `drafts` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `account_id` int unsigned NOT NULL,
+    `content` varchar(21500) NOT NULL,
+    `topic_id` int unsigned NOT NULL,
+    `point_id` int unsigned NOT NULL DEFAULT 0,
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    `mtime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY( `id` )
+);
+
 DROP TABLE IF EXISTS `posts`;
 
 CREATE TABLE `posts` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
-    `author_id` int unsigned NOT NULL,
-    `content` text NOT NULL,
+    `account_id` int unsigned NOT NULL,
+    `content` varchar(21500) NOT NULL,
     `topic_id` int unsigned NOT NULL,
     `point_id` int unsigned NOT NULL DEFAULT 0,
+    `reply_id` int unsigned NOT NULL DEFAULT 0,
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
     PRIMARY KEY( `id` )
@@ -106,6 +120,7 @@ CREATE TABLE `posts_data` (
     `id` int unsigned NOT NULL,
     `topic_id` int unsigned NOT NULL,
     `point_id` int unsigned NOT NULL DEFAULT 0,
+    `comments_cnt` int unsigned NOT NULL DEFAULT 0,
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
     `status` tinyint unsigned NOT NULL DEFAULT 0,
@@ -123,6 +138,41 @@ CREATE TABLE `opinions` (
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'send method, 0 means normal, 1 means score, 2 coin',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `marks`;
+
+CREATE TABLE `marks` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `account_id` int unsigned NOT NULL,
+    `post_id` int unsigned NOT NULL,
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `comments`;
+
+CREATE TABLE `comments`(
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `post_id` int unsigned NOT NULL,
+    `account_id` int unsigned NOT NULL,
+    `content` varchar(1000) NOT NULL,
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    `mtime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `reports`
+
+CREATE TABLE `reports` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `post_id` int unsigned NOT NULL,
+    `account_id` int unsigned NOT NULL,
+    `reason` char(60) NOT NULL,
+    `desc` varchar( 255 ),
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    `mtime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );
 

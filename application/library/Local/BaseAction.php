@@ -9,7 +9,7 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     protected $request;
     protected $tpl;
     protected $type = 'page';
-    protected $account;
+    protected $account = null;
     protected $params = array();
 
     protected $accountModel;
@@ -41,6 +41,10 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
 
     protected function error( $err, $errmsg = null, $data = null ) {
         $this->controller->error( $err, $errmsg, $data );
+    }
+
+    protected function currentAccount() {
+        return $this->session[ 'account' ];
     }
 
     protected function updateSession() {

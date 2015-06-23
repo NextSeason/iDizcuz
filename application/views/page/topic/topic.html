@@ -53,17 +53,24 @@
                                     <li class="posts" data-post-id="<%=data[i].id %>">
                                         <div class="data-line clearfix">
                                             <div class="operates r">
-                                                <a href="###" class="op-btn" data-action="fav"><i class="fa fa-star-o"></i> 收藏</a>
+                                                <% var mark = +data[i].mark %>
+                                                <a href="###" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-mark-id="<%=mark %>">
+                                                    <% if ( mark ) { %>
+                                                        <i class="fa fa-star"></i> 取消收藏
+                                                    <% } else { %>
+                                                        <i class="fa fa-star-o"></i> 收藏
+                                                    <% } %>
+                                                </a>
                                                 <a href="###" class="op-btn" data-action="share">分享</a>
                                                 <a href="###" class="op-btn" data-action="report">举报</a>
                                             </div>
                                             <div class="vote l">
-                                                <a href="###" class="btns small agree">支持(<%=data[i].data.agree %>)</a>
-                                                <a href="###" class="btns small disagree">反对(<%=data[i].data.disagree %>)</a>
+                                                <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="agree">支持(<%=data[i].data.agree %>)</a>
+                                                <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="disagree">反对(<%=data[i].data.disagree %>)</a>
                                             </div>
                                             <div class="title l">
                                                 <h2><%=data[i].title %></h2>
-                                                <a href="###" class="uname">作者： <%=data[i].author.uname %><%=data[i].author.desc %></span>
+                                                <a href="###" class="uname">作者： <%=data[i].account.uname %><%=data[i].account.desc %></span>
                                                 </a>
                                             </div>
                                         </div>
@@ -71,8 +78,8 @@
                                             <a href="###" class="close"><i class="fa fa-times"></i></a>
                                             <div class="triangle"><div class="triangle"></div></div>
                                             <div class="inner">
-                                                <div class="fav box">
-                                                    <p>收藏成功！您也可以分享这条观点，让更多人参与讨论</p>
+                                                <div class="mark box">
+                                                    <p>收藏成功！您也可以分享这条论述，让更多人参与讨论</p>
                                                 </div>
                                                 <div class="share box clearfix">
                                                     <div class="qrcode l">
@@ -89,7 +96,7 @@
                                                         </div> 
                                                         <div class="share-link">
                                                             <div class="line clearfix">
-                                                                <span class="l">分享此条观点：</span>
+                                                                <span class="l">分享此条论述：</span>
                                                                 <a href="/topic?post=<%=data[i].id %>&fr=sharelink" class="link l">http://www.idizcuz.com/topic?post=<%=data[i].id %>&fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
@@ -101,11 +108,49 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="report box"></div>
+                                                <div class="report box clearfix">
+                                                    <div class="reasons l">
+                                                        <label>
+                                                            <input type="checkbox" value="1" />
+                                                            <span class="msg">广告等垃圾信息</span>
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" value="2" />
+                                                            <span class="msg">包涵人身攻击或不文明内容</span>
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" value="3" />
+                                                            <span class="msg">内容涉嫌违反法律</span>
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" value="4" />
+                                                            <span class="msg">内容涉嫌侵犯他人版权</span>
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" value="0" />
+                                                            <span class="msg">其他</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="l desc-area">
+                                                        <textarea class="desc" placeholder="请对您举报的内容做简单描述，长度不可超过250字">&lt;/textarea>
+                                                        <p class="brand alert">*  核实举报消息后此条论述会被删除，恶意举报可能面对iDizcuz相关策略惩罚</p>
+                                                        <div class="btn-line">
+                                                            <a href="###" class="btns">提交举报</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="contents">
                                             <p><%=data[i].content %></p>
+                                        </div>
+                                        <div class="bottom-line">
+                                            <a href="###" class="reply r">回复这条论述</a>
+                                            <span class="ctime">发表于：<%=data[i].ctime %></span>
+                                            <% if( data[i].mtime != data[i].ctime ) { %>
+                                                <span class="mtime">修改于：<%=data[i].mtime %></span>
+                                            <% } %>
+                                            <a href="###" class="comments">100条短评</a>
                                         </div>
                                     </li>
                                 <% } %>

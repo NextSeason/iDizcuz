@@ -53,4 +53,9 @@ Class Error {
         'errmsg' => 'point is not exists'
     );
 
+    public static $POST_NOTEXISTS = array(
+        'errno' => 11,
+        'errmsg' => 'post is not exists' 
+    );
+
 }

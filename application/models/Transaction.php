@@ -11,7 +11,7 @@ Class TransactionModel extends BaseModel {
             /**
              * insert new post into database
              */
-            $post_id = $this->insert( $data, 'posts' );
+            $post_id = $this->_insert( $data, 'posts' );
 
             $topic_id = $data[ 'topic_id' ];
 
@@ -25,7 +25,7 @@ Class TransactionModel extends BaseModel {
             }
 
 
-            $this->insert( $post_data, 'posts_data' );
+            $this->_insert( $post_data, 'posts_data' );
 
             /**
              * update post_cnt in table topics_data
@@ -51,12 +51,12 @@ Class TransactionModel extends BaseModel {
         try {
             $this->db->beginTransaction();
 
-            $topic_id = $this->insert( $data, 'topics' );
+            $topic_id = $this->_insert( $data, 'topics' );
 
             /**
              * insert new data into table topics_data
              */
-            $this->insert( array( 'id' => $topic_id ), 'topics_data' );
+            $this->_insert( array( 'id' => $topic_id ), 'topics_data' );
 
             $this->db->commit();
 
@@ -72,7 +72,7 @@ Class TransactionModel extends BaseModel {
         try {
             $this->db->beginTransaction();
 
-            $account_id = $this->insert( $data, 'accounts' );
+            $account_id = $this->_insert( $data, 'accounts' );
 
             $this->db->commit();
 

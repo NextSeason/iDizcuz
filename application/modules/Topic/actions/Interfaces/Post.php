@@ -34,7 +34,7 @@ Class PostAction extends \Local\BaseAction {
         $data = array(
             'content' => $params[ 'content' ],
             'topic_id' => $params[ 'topic_id' ],
-            'author_id' => $this->account[ 'id' ],
+            'account_id' => $this->account[ 'id' ],
         );
 
         if( isset( $params[ 'point_id ' ] ) ) {
