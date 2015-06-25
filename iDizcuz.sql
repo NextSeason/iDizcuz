@@ -127,13 +127,13 @@ CREATE TABLE `posts_data` (
     PRIMARY KEY( `id` )
 );
 
-DROP TABLE IF EXISTS `opinions`;
+DROP TABLE IF EXISTS `votes`;
 
-CREATE TABLE `opinions` (
+CREATE TABLE `votes` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `post_id` int unsigned NOT NULL,
     `account_id` int unsigned NOT NULL,
-    `position` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'option for this post, 0 means agree, 1 means disagree',
+    `opinion` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'opinion for this post, 0 means agree, 1 means disagree',
     `value` tinyint unsigned NOT NULL DEFAULT 1,
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'send method, 0 means normal, 1 means score, 2 coin',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
@@ -163,13 +163,15 @@ CREATE TABLE `comments`(
     PRIMARY KEY( `id` )
 );
 
-DROP TABLE IF EXISTS `reports`
+DROP TABLE IF EXISTS `reports`;
 
 CREATE TABLE `reports` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `post_id` int unsigned NOT NULL,
     `account_id` int unsigned NOT NULL,
     `reason` char(60) NOT NULL,
+    `status` tinyint NOT NULL DEFAULT 0,
+    `result` varchar( 255 ),
     `desc` varchar( 255 ),
     `ctime` timestamp NOT NULL DEFAULT NOW(),
     `mtime` timestamp NOT NULL DEFAULT NOW(),

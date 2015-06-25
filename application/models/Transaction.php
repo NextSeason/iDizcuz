@@ -1,6 +1,93 @@
 <?php
 
 Class TransactionModel extends BaseModel {
+
+    public function vote( $data, $postData = null ) {
+        try {
+            $this->db->beginTransaction();
+
+            $vote_id = $this->_insert( $data, 'votes' );
+
+            if( !$vote_id ) {
+                throw new PDOException( 'failed to insert data into table votes' );
+            }
+
+            if( !$postData ) {
+                $postData = $this->_get( $data[ 'post_id' ], 'posts_data' );
+                if( !$postData ) {
+                    throw new PDOException( 'failed to get data from table posts_data' );
+                }
+            }
+
+            $opinion = $data[ 'opinion' ] == 1 ? 'agree' : 'disagree';
+
+            $query = sprintf( 'UPDATE `posts_data` SET `%s`=`%s`+:value WHERE `id`=:id', $opinion, $opinion );
+
+            $stmt = $this->db->prepare( $query );
+            $stmt->bindValue( ':value', $data[ 'value' ] );
+            $stmt->bindValue( ':id', intval( $data[ 'post_id' ] ), PDO::PARAM_INT );
+
+            if( !$stmt->execute() ) {
+                throw new PDOException( 'failed to update data in posts_data' );
+            }
+
+
+            if( $postData[ 'point_id' ] != 0 ) {
+                // update points_data 
+            }
+
+            $query = sprintf( 'UPDATE `topics_data` SET `%s`=`%s`+:value WHERE `id`=:id', $opinion, $opinion );
+
+            $stmt = $this->db->prepare( $query );
+            $stmt->bindValue( ':value', $data[ 'value' ] );
+            $stmt->bindValue( ':id', intval( $postData[ 'topic_id' ] ), PDO::PARAM_INT );
+
+            if( !$stmt->execute() ) {
+                throw new PDOException( 'failed to update data in topics_data' );
+            }
+
+            return $this->db->commit();
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    /*
+    public function updateVote( $vote, $opinion, $value, $postData = null ) {
+        $old_value = $vote[ 'value' ];
+        $old_opinion = $vote[ 'opinion' ];
+        $diff = 0;
+
+        try {
+            $this->db->beginTransaction();
+
+            $query = 'UPDATE `votes` SET `opinion`=:opinion, `value`=:value WHERE `id`=:id';
+
+            $stmt = $this->db->prepare( $query );
+            $stmt->bindValue( ':id', $vote[ 'id' ] );
+            $stmt->bindValue( ':opinion', $opinion );
+            $stmt->bindValue( ':value', $value );
+
+            if( !$stmt->execute() ) {
+                throw new PDOException( 'failed to update vote data' );
+            }
+
+            if( is_null( $post ) ) {
+                $postData = $this->_get( $vote[ 'post_id' ], 'posts_data' );
+            }
+
+
+
+            return $this->db->commit();
+
+        } cache ( PDOException $e ) {
+            $this->db->roolback();
+            return false;
+        }
+    }
+     */
     public function addPost( $data ) {
         /**
          * insert new post into table posts

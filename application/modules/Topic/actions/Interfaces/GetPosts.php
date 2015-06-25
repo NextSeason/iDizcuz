@@ -102,6 +102,10 @@ Class GetPostsAction extends \Local\BaseAction {
 
         $point_id = $request->getQuery( 'point' );
 
+        if( is_null( $point_id ) ) {
+            //$point_id = 0;
+        }
+
         $order = $request->getQuery( 'order' );
 
         $orderList = [ '`id` DESC', '`agree` DESC', '`disagree` DESC' ];

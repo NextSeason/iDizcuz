@@ -58,4 +58,19 @@ Class Error {
         'errmsg' => 'post is not exists' 
     );
 
+    public static $REACHED_MAX = array(
+        'errno' => 12,
+        'errmsg' => 'reached the max value'
+    );
+
+    public static $REACHED_MIN = array(
+        'errno' => 13,
+        'errmsg' => 'reached the min value' 
+    );
+
+    public static $REPORTED_POST = array(
+        'errno' => 14,
+        'errmsg' => 'already report this post'
+    );
+
 }

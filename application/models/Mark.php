@@ -6,9 +6,8 @@ Class MarkModel extends BaseModel {
     public function removeMarkByPostAndAccount( $post, $account ) {
         $query = 'DELETE FROM `marks` WHERE `post_id` = :post AND `account_id` = :account';
 
-        $this->db->beginTransaction();
-
         try {
+            $this->db->beginTransaction();
             $stmt = $this->db->prepare( $query );
             $stmt->bindValue( ':post', $post );
             $stmt->bindValue( ':account', $account );
@@ -29,6 +28,7 @@ Class MarkModel extends BaseModel {
         $query = 'SELECT * FROM `marks` WHERE `post_id` = :post AND `account_id` = :account';
 
         try {
+            $this->db->beginTransaction();
             $stmt = $this->db->prepare( $query );
             $stmt->bindValue( ':post', $post );
             $stmt->bindValue( ':account', $account );
@@ -36,6 +36,8 @@ Class MarkModel extends BaseModel {
             if( !$stmt->execute() ) {
                 throw new PDOException( 'failed to get mark from table marks' );
             }
+
+            $this->db->commit();
 
             return $stmt->fetch( PDO::FETCH_ASSOC );
 

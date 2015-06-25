@@ -12,7 +12,8 @@ Class InterfaceController extends BaseInterfaceController {
             'post' => $action_path . 'Post.php',
             'getposts' => $action_path . 'GetPosts.php',
             'mark' => $action_path . 'Mark.php',
-            'vote' => $action_path . 'Vote.php'
+            'vote' => $action_path . 'Vote.php',
+            'report' => $action_path . 'Report.php'
         );
     }
 }

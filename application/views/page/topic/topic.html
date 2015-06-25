@@ -65,8 +65,8 @@
                                                 <a href="###" class="op-btn" data-action="report">举报</a>
                                             </div>
                                             <div class="vote l">
-                                                <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="agree">支持(<%=data[i].data.agree %>)</a>
-                                                <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="disagree">反对(<%=data[i].data.disagree %>)</a>
+                                                <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=data[i].data.agree %></b>)</a>
+                                                <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=data[i].data.disagree %></b>)</a>
                                             </div>
                                             <div class="title l">
                                                 <h2><%=data[i].title %></h2>
@@ -78,31 +78,39 @@
                                             <a href="###" class="close"><i class="fa fa-times"></i></a>
                                             <div class="triangle"><div class="triangle"></div></div>
                                             <div class="inner">
-                                                <div class="mark box">
-                                                    <p>收藏成功！您也可以分享这条论述，让更多人参与讨论</p>
+                                                <div class="mark box clearfix">
+                                                    <p class="l">收藏成功！您可以在<a href="###">我的收藏</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
+                                                    <div class="share-box l">
+                                                        <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
+                                                        <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
+                                                        <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
+                                                        <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
+                                                        <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
+                                                        <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
+                                                    </div>
                                                 </div>
                                                 <div class="share box clearfix">
                                                     <div class="qrcode l">
                                                         <img src="http://img4.cache.netease.com/game/2014/6/27/20140627172239307b9.png" />
                                                     </div>
                                                     <div class="share-part l">
-                                                        <div class="bdsharebuttonbox share-btn-boxes" data-tag="share_1">
-                                                            <a class="bds_qzone share-btns" data-cmd="qzone"><i class="fa fa-qq"></i></a>
-                                                            <a class="bds_tsina share-btns" data-cmd="tsina"><i class="fa fa-weibo"></i></a>
-                                                            <a class="bds_renren share-btns" data-cmd="renren"><i class="fa fa-renren"></i></a>
-                                                            <a class="bds_tqq share-btns" data-cmd="tqq"><i class="fa fa-tencent-weibo"></i></a>
-                                                            <a class="bds_fbook share-btns" data-cmd="fbook"><i class="fa fa-facebook-official"></i></a>
-                                                            <a class="bds_twi share-btns" data-cmd="twi"><i class="fa fa-twitter"></i></a>
+                                                        <div class="bdsharebuttonbox share-btn-boxes share-box" data-tag="share_1">
+                                                            <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
+                                                            <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
+                                                            <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
+                                                            <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
+                                                            <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
+                                                            <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
                                                         </div> 
                                                         <div class="share-link">
                                                             <div class="line clearfix">
                                                                 <span class="l">分享此条论述：</span>
-                                                                <a href="/topic?post=<%=data[i].id %>&fr=sharelink" class="link l">http://www.idizcuz.com/topic?post=<%=data[i].id %>&fr=sharelink</a>
+                                                                <a href="/topic?post=<%=data[i].id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?post=<%=data[i].id %>&fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
                                                             <div class="line clearfix">
                                                                 <span class="l">分享当前论点：</span>
-                                                                <a href="/topic/<?php echo $topic['id']; ?>?fr=sharelink" class="link l">http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=sharelink</a>
+                                                                <a href="/topic/<?php echo $topic['id']; ?>?fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
                                                         </div>
@@ -133,7 +141,7 @@
                                                     </div>
                                                     <div class="l desc-area">
                                                         <textarea class="desc" placeholder="请对您举报的内容做简单描述，长度不可超过250字">&lt;/textarea>
-                                                        <p class="brand alert">*  核实举报消息后此条论述会被删除，恶意举报可能面对iDizcuz相关策略惩罚</p>
+                                                        <p class="brand alert">*  核实举报后此论述会被删除，作者将受到相关惩罚。恶意举报也将面对相关策略惩罚</p>
                                                         <div class="btn-line">
                                                             <a href="###" class="btns">提交举报</a>
                                                         </div>
@@ -207,9 +215,7 @@
             var idizcuz = new J();
             idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', {} );
             idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
+            idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
         </script>
-        <script>
-            with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-        </script> 
     </body>
 </html>

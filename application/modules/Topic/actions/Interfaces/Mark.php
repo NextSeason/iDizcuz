@@ -3,7 +3,7 @@
 Class MarkAction extends \Local\BaseAction {
     private $data = array();
 
-    private $postModel;
+    private $postDataModel;
 
     private $markModel;
 
@@ -16,7 +16,7 @@ Class MarkAction extends \Local\BaseAction {
 
         $this->paramsProcessing();
         
-        $this->postModel = new PostModel();
+        $this->postDataModel = new PostDataModel();
         
         $this->checkPost();
 
@@ -61,7 +61,7 @@ Class MarkAction extends \Local\BaseAction {
     }
 
     private function checkPost() {
-        $post = $this->postModel->get( $this->params[ 'post_id' ] );
+        $post = $this->postDataModel->get( $this->params[ 'post_id' ] );
         if( !$post ) {
             $this->error( 'POST_NOTEXISTS' );
         }

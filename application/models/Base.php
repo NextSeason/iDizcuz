@@ -8,10 +8,10 @@ Class BaseModel {
         $this->db = DB::getInstance();
     }
 
-    public function _get( $id ) {
-        if( empty( $this->table ) ) return false;
+    public function _get( $id, $table = null ) {
+        if( is_null( $table ) ) $table = $this->table;
 
-        $query = 'SELECT * FROM `' . $this->table . '` WHERE `id` = :id';
+        $query = 'SELECT * FROM `' . $table . '` WHERE `id` = :id';
 
         try {
             $stmt = $this->db->prepare( $query );
