@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'iDizcuz Management Information System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/newEvent.css" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/mis/top.inc.html'; ?>
+            <div class="main">
+                <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
+                <div class="core">
+                    <form class="event-form">
+                        <label>
+                            <p class="s-title">事件标题：</p>
+                            <input type="text" class="title" placeholder="事件标题" />
+                        </label>
+                        <label>
+                            <p class="s-title">事件TIP：</p>
+                            <input type="text" class="tip" placeholder="事件TIP" />
+                        </label>
+                        <label>
+                            <p class="s-title">事件时间：</p>
+                            <input type="date" class="time" placeholder="事件时间" />
+                        </label>
+                        <label>
+                            <p class="s-title">内容来源：</p>
+                            <input type="text" class="origin" placeholder="内容来源" />
+                        </label>
+                        <label>
+                            <p class="s-title">来源地址：</p>
+                            <input type="text" class="origin_url" placeholder="内容来源的正确URL" />
+                        </label>
+                        <label>
+                            <p class="s-title">来源LOGO：</p>
+                            <input type="text" class="origin_url" placeholder="内容来源的LOGO的图片地址" />
+                        </label>
+                        <label>
+                            <p class="s-title">事件内容：</p>
+                            <textarea class="content"></textarea>
+                        </label>
+                        <label>
+                            <a href="###" class="btns dark large preview">预览</a>
+                            <a href="###" class="btns large save">保存</a>
+                        </label>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

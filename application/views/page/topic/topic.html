@@ -70,8 +70,7 @@
                                             </div>
                                             <div class="title l">
                                                 <h2><%=data[i].title %></h2>
-                                                <a href="###" class="uname">作者： <%=data[i].account.uname %><%=data[i].account.desc %></span>
-                                                </a>
+                                                <a href="###" class="uname">作者： <%=data[i].account.uname %><%=data[i].account.desc %></a>
                                             </div>
                                         </div>
                                         <div class="bubbles op-bubbles">
@@ -118,32 +117,19 @@
                                                 </div>
                                                 <div class="report box clearfix">
                                                     <div class="reasons l">
-                                                        <label>
-                                                            <input type="checkbox" value="1" />
-                                                            <span class="msg">广告等垃圾信息</span>
-                                                        </label>
-                                                        <label>
-                                                            <input type="checkbox" value="2" />
-                                                            <span class="msg">包涵人身攻击或不文明内容</span>
-                                                        </label>
-                                                        <label>
-                                                            <input type="checkbox" value="3" />
-                                                            <span class="msg">内容涉嫌违反法律</span>
-                                                        </label>
-                                                        <label>
-                                                            <input type="checkbox" value="4" />
-                                                            <span class="msg">内容涉嫌侵犯他人版权</span>
-                                                        </label>
-                                                        <label>
-                                                            <input type="checkbox" value="0" />
-                                                            <span class="msg">其他</span>
-                                                        </label>
+                                                        <?php foreach( $reportReasons as $key => $value ) { ?>
+                                                            <label>
+                                                                <input type="radio" name="reasons-<%=data[i].id %>" value="<?php echo $key; ?>" />
+                                                                <span class="msg"><?php echo $value; ?></span>
+                                                            </label>
+                                                        <?php } ?>
                                                     </div>
                                                     <div class="l desc-area">
                                                         <textarea class="desc" placeholder="请对您举报的内容做简单描述，长度不可超过250字">&lt;/textarea>
                                                         <p class="brand alert">*  核实举报后此论述会被删除，作者将受到相关惩罚。恶意举报也将面对相关策略惩罚</p>
                                                         <div class="btn-line">
-                                                            <a href="###" class="btns">提交举报</a>
+                                                            <span class="tip"></span>
+                                                            <a href="###" class="btns report-submit">提交举报</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -162,6 +148,66 @@
                                         </div>
                                     </li>
                                 <% } %>
+                            </textarea>
+                            <textarea class="templates" id="new-post-tpl">
+                                <li class="posts new-post" data-post-id="< %=data[i].id %>">
+                                    <div class="data-line clearfix">
+                                        <div class="operates r">
+                                            <a href="###" class="op-btn" data-action="share">分享</a>
+                                        </div>
+                                        <div class="vote l">
+                                            <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b>0</b>)</a>
+                                            <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b>0</b>)</a>
+                                        </div>
+                                        <div class="title l">
+                                            <h2><%=data.title %></h2>
+                                            <a href="###" class="uname">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
+                                        </div>
+                                    </div>
+                                    <div class="bubbles op-bubbles">
+                                        <a href="###" class="close"><i class="fa fa-times"></i></a>
+                                        <div class="triangle"><div class="triangle"></div></div>
+                                        <div class="inner">
+                                                <div class="share box clearfix">
+                                                    <div class="qrcode l">
+                                                        <img src="http://img4.cache.netease.com/game/2014/6/27/20140627172239307b9.png" />
+                                                    </div>
+                                                    <div class="share-part l">
+                                                        <div class="share-btn-boxes share-box">
+                                                            <span>将自己的论述分享给朋友：</span>
+                                                            <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
+                                                            <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
+                                                            <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
+                                                            <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
+                                                            <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
+                                                            <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
+                                                        </div> 
+                                                        <div class="share-link">
+                                                            <div class="line clearfix">
+                                                                <span class="l">分享此条论述：</span>
+                                                                <a href="/topic?post=<%=data.id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?post=<%=data.id %>&fr=sharelink</a>
+                                                                <a href="###" class="btns l">复制链接</a>
+                                                            </div>
+                                                            <div class="line clearfix">
+                                                                <span class="l">分享当前论点：</span>
+                                                                <a href="/topic/<?php echo $topic['id']; ?>?fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=sharelink</a>
+                                                                <a href="###" class="btns l">复制链接</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="contents">
+                                        <p><%=data.content %></p>
+                                    </div>
+                                    <div class="bottom-line">
+                                        <a href="###" class="reply r">回复这条论述</a>
+                                        <span class="ctime">发表于：<%=data.ctime %></span>
+                                        <a href="###" class="comments">0条短评</a>
+                                    </div>
+                                </li>
                             </textarea>
                             <div class="loading-list top">正在加载列表数据...</div>
                             <ul class="post-list"></ul>

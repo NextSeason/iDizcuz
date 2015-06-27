@@ -73,4 +73,13 @@ Class Error {
         'errmsg' => 'already report this post'
     );
 
+    public static $CONTENT_TOOSHORT = array(
+        'errno' => 15,
+        'errmsg' => 'content is too short'
+    );
+
+    public static $CONTENT_TOOLONG = array(
+        'errno' => 16,
+        'errmsg' => 'content is too long'
+}
 }

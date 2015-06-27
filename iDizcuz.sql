@@ -169,13 +169,29 @@ CREATE TABLE `reports` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `post_id` int unsigned NOT NULL,
     `account_id` int unsigned NOT NULL,
-    `reason` char(60) NOT NULL,
+    `reason` tinyint NOT NULL DEFAULT 0,
     `status` tinyint NOT NULL DEFAULT 0,
     `result` varchar( 255 ),
     `desc` varchar( 255 ),
     `ctime` timestamp NOT NULL DEFAULT NOW(),
     `mtime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `topic_events`;
+
+CREATE TABLE `topic_events` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) NOT NULL,
+    `content` text NOT NULL,
+    `tip` varchar(255) NOT NULL,
+    `time` timestamp,
+    `origin` varchar( 10 ) NOT NULL DEFAULT '',
+    `origin_url` varchar( 128 ) NOT NULL DEFAULT '',
+    `origin_logo` varchar( 128 ) NOT NULL DEFAULT '',
+    `topic_id` varchar( 255 ) NOT NULL DEFAULT '',
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    `mtime` timestamp NOT NULL DEFAULT NOW()
 );
 
 /*

@@ -19,9 +19,10 @@ Class ReportModel extends BaseModel {
                 throw new PDOException( 'failed to get data from reports' );
             }
 
+            $this->db->commit();
+
             return $stmt->fetch( PDO::FETCH_ASSOC );
 
-            $this->db->commit();
         } catch( PDOException $e ) {
             return false;
         }

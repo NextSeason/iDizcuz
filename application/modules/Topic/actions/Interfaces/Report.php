@@ -24,7 +24,7 @@ Class ReportAction extends \Local\BaseAction {
 
         $this->addReport();
 
-        return $this->data();
+        return $this->data;
 
     }
 

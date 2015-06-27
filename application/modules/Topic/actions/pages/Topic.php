@@ -14,9 +14,15 @@ Class TopicAction extends \Local\BaseAction {
 
         $this->topicModel = new TopicModel();
 
-        $topic = $this->getTopic();
+        $this->getTopic()->reportReasons();
 
         return $this->data;
+    }
+
+    private function reportReasons() {
+        $reportConf = \Local\Utils::loadConf( 'report', 'reasons' );
+        $this->data[ 'reportReasons' ] = $reportConf;
+        return $this;
     }
 
     private function getTopic() {
@@ -32,6 +38,8 @@ Class TopicAction extends \Local\BaseAction {
         }
 
         $this->data[ 'topic' ] = $topic;
+
+        return $this;
     }
 
     private function paramsProcessing() {

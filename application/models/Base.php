@@ -83,10 +83,13 @@ Class BaseModel {
         try {
             $this->db->beginTransaction();
             $res = $this->_insert( $data );
-            if( !$res ) throw new PDOException( 'failed to insert data' );
+            if( !$res ) {
+                throw new PDOException( 'failed to insert data' );
+            }
             $this->db->commit();
             return $res;
         } catch( PDOException $e ) {
+            print_r( $this->db->errorInfo() );
             return false;
         }
     }

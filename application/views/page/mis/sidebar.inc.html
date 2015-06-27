@@ -1,12 +1,12 @@
 <div class="sidebar">
-    <ul>
+    <ul class="item-list">
         <li>
             <a href="###" class="l1">
                 <i class="fa fa-plus-square"></i> 数据查看
             </a>
             <ul>
                 <li>
-                    <a href="###">
+                    <a href="###" class="items">
                         <i class="fa fa-level-up flip"></i> 当日数据
                     </a>
                 </li>
@@ -18,13 +18,30 @@
             </a>
             <ul>
                 <li>
-                    <a href="###" class="focus">
+                    <a href="/mis/page/newtopic" class="newtopic">
                         <i class="fa fa-level-up flip"></i> 添加话题
                     </a>
                 </li>
                 <li>
-                    <a href="###">
+                    <a href="###" class="items">
                         <i class="fa fa-level-up flip"></i> 话题列表
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="###" class="l1">
+                <i class="fa fa-plus-square"></i> 话题事件管理
+            </a>
+            <ul>
+                <li>
+                    <a href="/mis/page/newevent" class="newevent">
+                        <i class="fa fa-level-up flip"></i> 添加话题事件
+                    </a>
+                </li>
+                <li>
+                    <a href="###" class="items">
+                        <i class="fa fa-level-up flip"></i> 话题事件列表
                     </a>
                 </li>
             </ul>
@@ -35,12 +52,12 @@
             </a>
             <ul>
                 <li>
-                    <a href="###">
+                    <a href="###" class="items">
                         <i class="fa fa-level-up flip"></i> 待审核列表
                     </a>
                 </li>
                 <li>
-                    <a href="###">
+                    <a href="###" class="items">
                         <i class="fa fa-level-up flip"></i> 已审核列表
                     </a>
                 </li>
@@ -52,12 +69,12 @@
             </a>
             <ul>
                 <li>
-                    <a href="###">
+                    <a href="###" class="items">
                         <i class="fa fa-level-up flip"></i> 用户查找
                     </a>
                 </li>
                 <li>
-                    <a href="###">
+                    <a href="###" class="items">
                         <i class="fa fa-level-up flip"></i> 用户封禁
                     </a>
                 </li>
@@ -69,12 +86,12 @@
             </a>
             <ul>
                 <li>
-                    <a href="###">
+                    <a href="###" class="items">
                         <i class="fa fa-level-up flip"></i> 待处理举报
                     </a>
                 </li>
                 <li>
-                    <a href="###">
+                    <a href="###" class="items">
                         <i class="fa fa-level-up flip"></i>
                         已处理举报
                     </a>
@@ -82,4 +99,10 @@
             </ul>
         </li>
     </ul>
+    <script>
+        var pathname = location.pathname,
+            focus = pathname.substr( pathname.lastIndexOf( '/' ) + 1 );
+
+        $( '.sidebar .item-list .' + focus ).addClass( 'focus' );
+    </script>
 </div>

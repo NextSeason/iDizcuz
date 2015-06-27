@@ -23,7 +23,7 @@ Class PostAction extends \Local\BaseAction {
 
         $this->transactionModel = new TransactionModel();
         
-        echo $this->addPost();
+        $this->data[ 'id' ] = $this->addPost();
 
         return $this->data;
     }
@@ -99,8 +99,12 @@ Class PostAction extends \Local\BaseAction {
 
         $len = strlen( $contentTxt );
 
-        if( $len < 20 || $len > 60000 ) {
-            $this->error( 'PARAMS_ERR' );
+        if( $len < 20 ) {
+            $this->error( 'CONTENT_TOOSHORT' );
+        }
+
+        if( $len > 60000 ) {
+            $this->error( 'CONTENT_TOOLONG' );
         }
 
         $content = \Local\EditorPurifier::purify( $content );
