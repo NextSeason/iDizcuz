@@ -9,6 +9,7 @@ Class PostModel extends BaseModel {
     public function getPostsByTopic( $topic_id, $order, $start = 0, $len= 20 ) {
         $query = sprintf( 'SELECT * FROM `posts` WHERE `topic_id` = :topic_id ORDER BY %s LIMIT :start, :len', $order);
         try {
+            $this->db->beginTransaction();
             $stmt = $this->db->prepare( $query );
             $stmt->bindValue( ':topic_id', $topic_id );
             $stmt->bindValue( ':start', (int)$start, PDO::PARAM_INT );
@@ -16,8 +17,9 @@ Class PostModel extends BaseModel {
 
             $stmt->execute();
 
-            $posts = $stmt->fetchAll( PDO::FETCH_CLASS );
+            $posts = $stmt->fetchAll( PDO::FETCH_ASSOC );
 
+            $this->db->commit();
             return $posts; 
         } catch( PDOException $e ) {
             return false;

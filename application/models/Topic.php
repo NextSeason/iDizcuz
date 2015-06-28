@@ -25,4 +25,27 @@ Class TopicModel extends BaseModel {
 
     public function getFocusBeforeDate( $date ) {
     }
+
+    public function getTopics( $order = '`id` DESC', $start = 0, $len = 40 ) {
+        $query = sprintf( 'SELECT * FROM `topics` ORDER BY %s LIMIT :start, :len', $order );
+
+        try {
+            $this->db->beginTransaction();
+            $stmt = $this->db->prepare( $query );
+
+            $stmt->bindValue( ':start', (int)$start, PDO::PARAM_INT );
+            $stmt->bindValue( ':len', (int)$len, PDO::PARAM_INT );
+
+            if( !$stmt->execute() ) {
+                throw new PDOException( 'failed to get data from topics' );
+            }
+
+            $topics = $stmt->fetchAll( PDO::FETCH_ASSOC );
+            $this->db->commit();
+
+            return $topics;
+        } catch( PDOException $e ) {
+            return false;
+        }
+    }
 }

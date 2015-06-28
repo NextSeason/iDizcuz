@@ -191,7 +191,8 @@ CREATE TABLE `topic_events` (
     `origin_logo` varchar( 128 ) NOT NULL DEFAULT '',
     `topic_id` varchar( 255 ) NOT NULL DEFAULT '',
     `ctime` timestamp NOT NULL DEFAULT NOW(),
-    `mtime` timestamp NOT NULL DEFAULT NOW()
+    `mtime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY( `id` )
 );
 
 /*

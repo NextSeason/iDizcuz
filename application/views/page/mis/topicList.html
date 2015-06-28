@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'iDizcuz Management Information System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/topicList.css" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/mis/top.inc.html'; ?>
+            <div class="main">
+                <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
+                <div class="core">
+                    <ul class="topics-list">
+                        <?php foreach( $topics as $topic ) { ?>
+                        <li class="topics" id="topic-<?php echo $topic['id']; ?>">
+                            <div class="inner">
+                                <div class="topline clearfix">
+                                    <span class="r">
+                                        TOPIC ID : <?php echo $topic['id']; ?>
+                                    </span>
+                                    <h3>
+                                        <?php echo $topic['title']; ?>
+                                    </h3>
+                                </div>
+                                <div class="topic-content">
+                                    <div class="content">
+                                        <?php echo $topic['desc']; ?>
+                                    </div>
+                                </div>
+                                <div class="topic-info">
+                                    <div class="line">
+                                        <span class="s-title">添加时间：</span>
+                                        <span><?php echo $topic['ctime']; ?></span>
+                                    </div>
+                                </div>
+                                <div class="btn-line">
+                                    <a href="###" class="btns edit">编辑</a>
+                                </div>
+                            </div>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>

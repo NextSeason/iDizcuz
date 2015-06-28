@@ -81,5 +81,5 @@ Class Error {
     public static $CONTENT_TOOLONG = array(
         'errno' => 16,
         'errmsg' => 'content is too long'
-}
+    );
 }

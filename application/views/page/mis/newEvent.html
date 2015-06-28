@@ -35,7 +35,7 @@
                         </label>
                         <label>
                             <p class="s-title">来源LOGO：</p>
-                            <input type="text" class="origin_url" placeholder="内容来源的LOGO的图片地址" />
+                            <input type="text" class="origin_logo" placeholder="内容来源的LOGO的图片地址" />
                         </label>
                         <label>
                             <p class="s-title">事件内容：</p>
@@ -49,5 +49,50 @@
                 </div>
             </div>
         </div>
+        <script>
+            $( '.save' ).on( 'click', function( e ) {
+                e.preventDefault();
+
+                var form = $( 'form.event-form' );
+
+                var title = $.trim( form.find( '.title' ).val() ),
+                    tip = $.trim( form.find( '.tip' ).val() ),
+                    time = $.trim( form.find( '.time' ).val() ),
+                    origin = $.trim( form.find( '.origin' ).val() ),
+                    origin_url = $.trim( form.find( '.origin_url' ).val() ),
+                    origin_logo = $.trim( form.find( '.origin_logo' ).val() ),
+                    content = $.trim( form.find( '.content' ).val() );
+
+                if( !title.length ) {
+                    alert( '事件标题必须填写' );
+                    return false;
+                }
+
+                if( !content.length ) {
+                    alert( '事件内容必须填写' );
+                    return false;
+                }
+
+                var data = {
+                    title : title,
+                    content : content
+                };
+
+                tip.length && ( data.tip = tip );
+                time.length && ( data.time = time );
+                origin.length && ( data.origin = origin );
+                origin_url.length && ( data.origin_url = origin_url );
+                origin_logo.length && ( data.origin_logo = origin_logo );
+
+                $.ajax( {
+                    url : '/mis/interface/newevent',
+                    method : 'POST',
+                    data : data
+                } ).done( function( response ) {
+                    
+                } );
+
+            } );
+        </script>
     </body>
 </html>
