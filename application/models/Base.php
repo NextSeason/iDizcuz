@@ -37,6 +37,7 @@ Class BaseModel {
             return $res;
             
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }
@@ -89,7 +90,7 @@ Class BaseModel {
             $this->db->commit();
             return $res;
         } catch( PDOException $e ) {
-            print_r( $this->db->errorInfo() );
+            $this->db->rollback();
             return false;
         }
     }
@@ -141,6 +142,7 @@ Class BaseModel {
             $this->db->commit();
             return $res;
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }

@@ -12,13 +12,18 @@ Class AccountModel extends BaseModel {
         $query = 'SELECT * FROM `accounts` WHERE `email` = :email';
 
         try {
+            $this->db->beginTransaction();
+
             $stmt = $this->db->prepare( $query );
             $stmt->bindParam( ':email', $email );
             $stmt->execute();
 
-            return $stmt->fetch();
+            $account = $stmt->fetch();
+            $this->db->commit();
+            return $account;
 
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }

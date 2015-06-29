@@ -22,6 +22,7 @@ Class PostModel extends BaseModel {
             $this->db->commit();
             return $posts; 
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }

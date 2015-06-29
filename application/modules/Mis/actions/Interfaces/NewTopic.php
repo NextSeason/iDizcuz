@@ -39,6 +39,10 @@ Class NewTopicAction extends \Local\MisAction {
             $data[ 'start' ] = $params[ 'start' ];
         }
 
+        if( isset( $params[ 'events' ] ) ) {
+            $data[ 'events' ] = $params[ 'events' ];
+        }
+
         return $this->transactionModel->addTopic( $data );
     }
 
@@ -95,6 +99,15 @@ Class NewTopicAction extends \Local\MisAction {
 
         if( !empty( $start ) ) {
             $this->params[ 'start' ] = $start;
+        }
+
+        $events = $request->getPost( 'events' );
+
+        if( !is_null( $events ) ) {
+            if( !preg_match( '#^\d[\d,]*\d$#', $events ) ) {
+                $this->error( 'PARAMS_ERR' );
+            }
+            $this->params[ 'events' ] = $events;
         }
 
         return $this;

@@ -104,12 +104,12 @@
                                                         <div class="share-link">
                                                             <div class="line clearfix">
                                                                 <span class="l">分享此条论述：</span>
-                                                                <a href="/topic?post=<%=data[i].id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?post=<%=data[i].id %>&fr=sharelink</a>
+                                                                <a href="/topic?id=<?php echo $topic['id']; ?>&post=<%=data[i].id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>post=<%=data[i].id %>&fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
                                                             <div class="line clearfix">
                                                                 <span class="l">分享当前论点：</span>
-                                                                <a href="/topic/<?php echo $topic['id']; ?>?fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=sharelink</a>
+                                                                <a href="/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
                                                         </div>
@@ -185,12 +185,12 @@
                                                         <div class="share-link">
                                                             <div class="line clearfix">
                                                                 <span class="l">分享此条论述：</span>
-                                                                <a href="/topic?post=<%=data.id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?post=<%=data.id %>&fr=sharelink</a>
+                                                                <a href="/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
                                                             <div class="line clearfix">
                                                                 <span class="l">分享当前论点：</span>
-                                                                <a href="/topic/<?php echo $topic['id']; ?>?fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=sharelink</a>
+                                                                <a href="/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
                                                         </div>
@@ -208,6 +208,16 @@
                                         <a href="###" class="comments">0条短评</a>
                                     </div>
                                 </li>
+                            </textarea>
+                            <textarea class="templates" id="target-post-tpl">
+                                <div class="target-post">
+                                    <div class="post-detail">
+                                    </div>
+                                    <div class="bridge">
+                                        以下为此论述所在的『论点』内容
+                                        <a href="/topic?id=<?php echo $topic['id']; ?>" target="_blank">[ 单独打开论点 ]</a>
+                                    </div>
+                                </div>
                             </textarea>
                             <div class="loading-list top">正在加载列表数据...</div>
                             <ul class="post-list"></ul>
@@ -262,6 +272,13 @@
             idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', {} );
             idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
             idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
+
+/*
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;$
+*/
+
         </script>
     </body>
 </html>

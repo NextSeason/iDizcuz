@@ -9,6 +9,7 @@ Class PageController extends BasePageController {
         $this->actions = array(
             'signin' => $this->action_path . 'Signin.php',
             'index' => $this->action_path . 'Index.php',
+            'topic' => $this->action_path . 'Topic.php',
             'newtopic' => $this->action_path . 'NewTopic.php',
             'topiclist' => $this->action_path . 'TopicList.php',
             'newevent' => $this->action_path . 'NewEvent.php',

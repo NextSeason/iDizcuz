@@ -12,10 +12,13 @@
             <div class="main">
                 <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
                 <div class="core">
-                    <form class="topic-form">
+                    <?php if( !$topic ) { ?>
+                        <p class="not-exists">Topic不存在</p>
+                    <?php } else { ?>
+                    <form class="topic-form" data-topic-id="<?php echo $topic['id']; ?>">
                         <label>
                             <p class="s-title">论点标题(120字字节，通常一个汉字占三个字节)：</p>
-                            <input type="text" class="title" placeholder="论点标题" />
+                            <input type="text" class="title" placeholder="论点标题" value="<?php echo $topic['title']; ?>" />
                         </label>
                         <div class="line clearfix">
                             <label>
@@ -43,17 +46,18 @@
                         </div>
                         <label>
                             <p class="s-title">话题介绍：</p>
-                            <textarea class="desc"></textarea>
+                            <textarea class="desc"><?php echo $topic['desc']; ?></textarea>
                         </label>
                         <label>
                             <p class="s-title">话题事件列表：（键入事件ID，多个ID之间用逗号隔开）</p>
-                            <input type="text" class="events" />
+                            <input type="text" class="events" value="<?php echo $topic['events']; ?>" />
                         </label>
                         <div class="warn"></div>
                         <label>
-                            <a href="###" class="btns dark large public">发布</a>
+                            <a href="###" class="btns large save">保存</a>
                         </label>
                     </form>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -98,6 +102,7 @@
                     $( '.warn' ).hide();
 
                     data = {
+                        id : $( 'form.topic-form' ).attr( 'data-topic-id' ),
                         title : title,
                         desc : desc,
                         type : $( 'select.type' ).val(),
@@ -109,20 +114,20 @@
                     isPublic && ( data.isPublic = 1 );
 
                     $.ajax( {
-                        url : '/mis/interface/newtopic',
+                        url : '/mis/interface/modifytopic',
                         method : 'POST',
                         data : data
                     } ).done( function( response ) {
                         var errno = +response.errno;
 
                         if( !errno ) {
-                            alert( '添加成功' );
-                            location.href = '/mis/page/topic?id=' + response.data.id;
+                            alert( '修改成功' );
+                            location.reload();
                         }
                     } );
                 };
 
-                $( '.public' ).on( 'click', function( e ) {
+                $( '.save' ).on( 'click', function( e ) {
                     if( !window.confirm( '确认填写无误，直接发布？' ) ) {
                         return false;
                     }

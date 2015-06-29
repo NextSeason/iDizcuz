@@ -24,6 +24,7 @@ Class ReportModel extends BaseModel {
             return $stmt->fetch( PDO::FETCH_ASSOC );
 
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }

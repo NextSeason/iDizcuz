@@ -21,6 +21,7 @@ Class TopicEventModel extends BaseModel {
             $this->db->commit();
             return $events;
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }

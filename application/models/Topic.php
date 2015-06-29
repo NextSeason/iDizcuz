@@ -12,13 +12,19 @@ Class TopicModel extends BaseModel {
         $query = 'SELECT * FROM `topics` WHERE `type` = :type AND `status` = 1 AND  `start` < :start ORDER BY `start` DESC LIMIT 0, 1';
 
         try {
+            $this->db->beginTransaction();
             $stmt = $this->db->prepare( $query );
             $stmt->bindParam( ':start', Date( 'Y-m-d H:i:s', strtotime( 'tomorrow' ) ) );
             $stmt->bindParam( ':type', $type );
             $stmt->execute();
 
-            return $stmt->fetch();
+            $topic = $stmt->fetch( PDO::FETCH_ASSOC );
+            
+            $this->db->commit();
+
+            return $topic;
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }
@@ -45,6 +51,7 @@ Class TopicModel extends BaseModel {
 
             return $topics;
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }

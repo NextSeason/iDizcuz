@@ -49,6 +49,7 @@ Class TransactionModel extends BaseModel {
             return $this->db->commit();
 
         } catch( PDOException $e ) {
+            var_dump( $e->getMessage() );
             $this->db->rollback();
             return false;
         }

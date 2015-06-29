@@ -47,6 +47,7 @@ CREATE TABLE `topics` (
     `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic status, 0 is not public and 1 is public',
     `title` varchar( 80 ) NOT NULL COMMENT 'title of this topic',
     `desc` varchar( 255 ) NOT NULL COMMENT 'description for this topic',
+    `events` varchar( 255 ) NOT NULL DEFAULT '',
     `start` timestamp NOT NULL DEFAULT NOW() COMMENT 'the time to start this topic',
     `end` timestamp NOT NULL COMMENT 'the time to stop this topic',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',

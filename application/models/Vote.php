@@ -19,10 +19,13 @@ Class VoteModel extends BaseModel {
                 throw new PDOException( 'failed to get data from table votes' );
             }
 
-            return $stmt->fetch( PDO::FETCH_ASSOC );
+            $vote = $stmt->fetch( PDO::FETCH_ASSOC );
 
             $this->db->commit();
+
+            return $vote;
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }
@@ -42,6 +45,7 @@ Class VoteModel extends BaseModel {
 
             return $this->db->commit();
         } catch( PDOException $e ) {
+            $this->db->rollback();
             return false;
         }
     }
