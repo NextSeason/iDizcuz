@@ -30,13 +30,22 @@ CREATE TABLE IF NOT EXISTS `accounts` (
     UNIQUE KEY `account_email_unique` (`email`)
 );
 
-/*
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `accounts_data`;
 
-CREATE TABLE `users` (
+CREATE TABLE `accounts_data` (
+    `id` int unsigned NOT NULLL,
+    `post_cnt` int unsigned NOT NULL DEFAULT 0,
+    `agree` int unsigned NOT NULL DEFAULT 0,
+    `disagree` int unsigned NOT NULL DEFAULT 0,
+    `score` int unsigned NOT NULL DEFAULT 0,
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `accounts_info`;
+
+CREATE TABLE `accounts_info` (
     `id` int unsigned NOT NULL COMMENT 'user id, same as account id'
 );
-*/
 
 DROP TABLE IF EXISTS `topics`; 
 
