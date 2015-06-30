@@ -32,6 +32,7 @@ Class NewTopicAction extends \Local\MisAction {
             'type' => $params[ 'type' ],
             'status' => $params[ 'isPublic' ],
             'title' => $params[ 'title' ],
+            'events' => $params[ 'events' ],
             'desc' => $params[ 'desc' ]
         );
 
@@ -104,7 +105,7 @@ Class NewTopicAction extends \Local\MisAction {
         $events = $request->getPost( 'events' );
 
         if( !is_null( $events ) ) {
-            if( !preg_match( '#^\d[\d,]*\d$#', $events ) ) {
+            if( !preg_match( '#(^\d[\d,]*\d$)|(^\d$)#', $events ) ) {
                 $this->error( 'PARAMS_ERR' );
             }
             $this->params[ 'events' ] = $events;

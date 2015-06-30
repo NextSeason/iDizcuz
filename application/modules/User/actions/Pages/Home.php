@@ -6,7 +6,6 @@ Class HomeAction extends \Local\BaseAction {
 
     public function __execute() {
         $this->tpl = 'user/home';
-
         return $this->data;
     }
 }

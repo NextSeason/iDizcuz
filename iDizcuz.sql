@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 DROP TABLE IF EXISTS `accounts_data`;
 
 CREATE TABLE `accounts_data` (
-    `id` int unsigned NOT NULLL,
+    `id` int unsigned NOT NULL,
     `post_cnt` int unsigned NOT NULL DEFAULT 0,
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
@@ -44,7 +44,13 @@ CREATE TABLE `accounts_data` (
 DROP TABLE IF EXISTS `accounts_info`;
 
 CREATE TABLE `accounts_info` (
-    `id` int unsigned NOT NULL COMMENT 'user id, same as account id'
+    `id` int unsigned NOT NULL COMMENT 'user id, same as account id',
+    `sex` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'sex of user, 1 means male, 2 means female, 0 means not selected',
+    `industry` tinyint unsigned NOT NULL DEFAULT 0,
+    `employment` varchar(20) NOT NULL DEFAULT '',
+    `position` varchar(10) NOT NULL DEFAULT '',
+    `desc` varchar(255) NOT NULL DEFAULT '',
+    PRIMARY KEY(`id`)
 );
 
 DROP TABLE IF EXISTS `topics`; 
@@ -61,7 +67,7 @@ CREATE TABLE `topics` (
     `end` timestamp NOT NULL COMMENT 'the time to stop this topic',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
-    PRIMARY KEY( `id`)
+    PRIMARY KEY(`id`)
 );
 
 DROP TABLE IF EXISTS `topics_data`;
@@ -128,7 +134,7 @@ DROP TABLE IF EXISTS `posts_data`;
 
 CREATE TABLE `posts_data` (
     `id` int unsigned NOT NULL,
-    `topic_id` int unsigned NOT NULL,
+    `topic_id` int unsigned NOT NULL DEFAULT 0,
     `point_id` int unsigned NOT NULL DEFAULT 0,
     `comments_cnt` int unsigned NOT NULL DEFAULT 0,
     `agree` int unsigned NOT NULL DEFAULT 0,

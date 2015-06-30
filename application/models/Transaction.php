@@ -162,6 +162,14 @@ Class TransactionModel extends BaseModel {
 
             $account_id = $this->_insert( $data, 'accounts' );
 
+            $data = array(
+                'id' => $account_id
+            );
+
+            $this->_insert( $data, 'accounts_data' ); 
+
+            $this->_insert( $data, 'accounts_info' ); 
+
             $this->db->commit();
 
             return $account_id;

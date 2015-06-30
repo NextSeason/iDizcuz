@@ -55,4 +55,9 @@ Class Utils {
     static public function passwd( $passwd, $salt ) {
         return sha1( $passwd . $salt );
     }
+
+    static public function redirect( $path ) {
+        header( 'Location:' . $path );
+        exit;
+    }
 }
