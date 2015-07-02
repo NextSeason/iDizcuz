@@ -34,10 +34,10 @@
                             </div>
                             <div class="s-main l clearfix sex-area">
                                 <label>
-                                    <input type="radio" value="1" name="sex"> 男
+                                    <input type="radio" value="1" name="sex" <?php if( $accountInfo['sex'] == 1 ) { echo 'checked'; } ?>> 男
                                 </label>
                                 <label>
-                                    <input type="radio" value="0" name="sex"> 女
+                                    <input type="radio" value="2" name="sex" <?php if( $accountInfo['sex'] == 2 ) { echo 'checked'; } ?>> 女
                                 </label>
                             </div>
                         </div>
@@ -48,16 +48,19 @@
                             <div class="s-main l">
                                 <div class="industries-selection select-helper"><select class="industries">
                                         <option value="0">选择行业</option>
+                                        <?php foreach( $industries as $k => $v ) { ?>
+                                        <option value="<?php echo $k; ?>" <?php if( $k == $accountInfo['industry'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
+                                        <?php } ?>
                                     </select></div>
                             </div>
                         </div>
                         <div class="parts clearfix">
                             <div class="s-title l">
-                                <span>目前情况</span>
+                                <span>目前状况</span>
                             </div>
                             <div class="s-main l">
-                                <input type="text" class="employment" placeholder="公司/学校/机构等" /> 
-                                <input type="text" class="small position" placeholder="职位" />
+                                <input type="text" class="employment" value="<?php echo $accountInfo['employment']; ?>" placeholder="公司/学校/机构等" /> 
+                                <input type="text" class="small position" value="<?php echo $accountInfo['position']; ?>" placeholder="职位" />
                             </div>
                         </div>
                         <div class="parts clearfix">
@@ -65,18 +68,34 @@
                                 <span>个人简介</span>
                             </div>
                             <div class="s-main l">
-                                <textarea class="desc"></textarea>
+                                <textarea class="desc"><?php echo $accountInfo['desc']; ?></textarea>
                             </div>
                         </div>
                         <div class="parts clearfix">
                             <div class="s-title l">&nbsp;</div>
                             <div class="s-main l">
-                                <a href="###" class="btns">提交</a>
+                                <a href="###" class="btns submit">提交</a>
+                                <span class="tip"></span>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+            <div id="upload-dialog">
+                <div class="inner">
+                    <div class="img-area">
+                    </div>
+                    <div class="ft">
+                        <a href="###" class="btns dark cancel">取消</a>
+                        <a href="###" class="btns save">保存</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
+    <script>
+        var idizcuz = new J(); 
+        idizcuz.mount( 'Upload', '/static/settings/packages/Upload/bootstrap.js', {} );
+        idizcuz.mount( 'UserInfo', '/static/settings/packages/UserInfo/bootstrap.js', {} );
+    </script>
 </html>

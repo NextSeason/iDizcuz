@@ -146,4 +146,47 @@ Class BaseModel {
             return false;
         }
     }
+
+    public function _update( $id, $data, $table = null ) {
+        if( is_null( $table ) ) {
+            $table = $this->table;
+        }
+
+        $dataList = [];
+
+        foreach ( $data as $k => $v ) {
+            $dataList[] = '`' . $k . '`' . ' = :' . $k;
+        }
+
+        $query = sprintf( 'UPDATE `%s` SET %s WHERE `id` = :id', $table, implode( ',', $dataList ) );
+
+        try {
+            $stmt = $this->db->prepare( $query );
+            foreach( $data as $k => $v ) {
+                $stmt->bindValue( ':' . $k, $v );
+            } 
+
+            $stmt->bindValue( ':id', $id );
+
+            return $stmt->execute();
+        } catch( PDOException $e ) {
+            return false;
+        }
+    }
+    public function update( $id, $data ) {
+        try {
+            $this->db->beginTransaction();
+            $res = $this->_update( $id, $data );
+
+            if( !$res ) {
+                throw new PDOException( 'failed to update data' );
+            }
+
+            $this->db->commit();
+            return $res;
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
 }

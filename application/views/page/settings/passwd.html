@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php 
+            $title = '';
+        ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/settings/css/settings.css" />
+        <link rel="stylesheet" type="text/css" href="/static/settings/css/passwd.css" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/common/top.inc.html'; ?>
+            <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
+            <div class="boxes">
+                <div class="inner">
+                    <form class="passwd">
+                        <label class="clearfix">
+                            <span class="l">当前密码</span>
+                            <input type="password" class="opasswd l" />
+                        </label>
+                        <label class="clearfix">
+                            <span class="l">新的密码</span>
+                            <input type="password" class="npasswd l" />
+                        </label>
+                        <label class="clearfix">
+                            <span class="l">确认密码</span>
+                            <input type="password" class="rpasswd l" />
+                        </label>
+                        <label>
+                            <a href="###" class="btns submit">提交</a>
+                            <span class="tip"></span>
+                        </label>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            ( function() {
+                var submiting = false;
+                $( '.submit' ).on( 'click', function( e ) {
+                    e.preventDefault();
+
+                    if( submiting ) return false;
+
+                    var tip = $( '.tip' ),
+                        opasswd = $( '.opasswd' ).val(),
+                        npasswd = $( '.npasswd' ).val(),
+                        rpasswd = $( '.rpasswd' ).val();
+
+                    if( !opasswd.length ) {
+                        tip.html( '请输入旧密码' );
+                        return false;
+                    }
+
+                    if( !npasswd.length ) {
+                        tip.html( '请输入新密码' );
+                        return false;
+                    }
+                    if( npasswd.length > 20 || npasswd.length < 6 ) {
+                        tip.html( '新密码长度在6~20字符之间' );
+                        return false;
+                    }
+
+                    if( !rpasswd.length ) {
+                        tip.html( '请输入确认密码' );
+                        return false;
+                    }
+
+                    if( rpasswd != npasswd ) {
+                        tip.html( '两次输入新密码不一致' );
+                        return false;
+                    }
+
+                    if( opasswd == npasswd ) {
+                        tip.html( '新密码和原密码一致' );
+                        return false;
+                    }
+
+                    submiting = true;
+
+                    $.ajax( {
+                        url : '/settings/interface/passwd',
+                        method : 'POST',
+                        data : {
+                            opasswd : opasswd,
+                            npasswd : npasswd
+                        }
+                    } ).done( function( response) {
+                        var errno = +response.errno;
+
+                        submiting = false;
+
+                        switch( errno ) {
+                            case 0 :
+                                tip.html( '密码修改成功' );
+                                location.reload();
+                                break;
+                            case 7 :
+                                tip.html( '当前密码输入不正确' ); 
+                            case 2 :
+                                tip.html( '提交参数错误' ); 
+                                break;
+                            case 3 :
+                                tip.html( '您当前没有登录' ); 
+                                location.href = '/signin';
+                                break; 
+                            default :
+                                tip.html( '未知错误，请稍候再试' ); 
+                                break;
+                        }
+                    } );
+                } );
+            } )();
+        </script>
+    </body>
+</html>

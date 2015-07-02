@@ -8,7 +8,6 @@ Class InterfaceController extends BaseInterfaceController {
         parent::init();
 
         $this->action = array(
-            'user' => $this->action_path . 'User.php'
         );
     }
 }

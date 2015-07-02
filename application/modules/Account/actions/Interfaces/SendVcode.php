@@ -1,25 +1,15 @@
 <?php
 
-Class SendVcodeAction extends \Yaf\Action_Abstract {
+Class SendVcodeAction extends \Local\BaseAction {
 
-    private $request;
-    private $params;
-
-    private $controller;
-    private $session;
     private $code;
+    private $data = array();
 
-    public function execute() {
-
-        $this->session = \Yaf\Session::getInstance();
-
-        $this->request = $this->getRequest();
-
-        $this->controller = $this->getController();
+    public function __execute() {
 
         $this->paramsProcessing()->saveCode()->sendCode();
-        
-        $this->controller->success();
+
+        return $this->data;
     }
 
     private function saveCode() {
@@ -52,7 +42,7 @@ Class SendVcodeAction extends \Yaf\Action_Abstract {
             return $this;
         }
 
-        $this->controller->error( 'PARAMS_ERR' );
+        $this->error( 'PARAMS_ERR' );
         return $this;
     }
 
@@ -81,7 +71,7 @@ Class SendVcodeAction extends \Yaf\Action_Abstract {
 
         $do = $this->request->getPost( 'do' );
 
-        if( !in_array( $do, $actions_list ) ) $this->controller->error( 'PARAMS_ERR' );
+        if( !in_array( $do, $actions_list ) ) $this->error( 'PARAMS_ERR' );
 
         /**
          * get email address or cellphone number which user typed in
@@ -93,7 +83,7 @@ Class SendVcodeAction extends \Yaf\Action_Abstract {
         } else if( preg_match( '#^\d{11}$#', $to ) ) {
             $type = 'phone';
         } else {
-            $this->controller->error( 'PARAMS_ERR' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         $this->params = array(
