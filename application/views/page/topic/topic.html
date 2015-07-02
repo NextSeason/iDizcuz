@@ -23,22 +23,49 @@
                             </div>
                             <h1><?php echo $type_arr[ $topic[ 'type' ] ]; ?>：<?php echo $topic[ 'title' ]; ?></h1>
                         </div>
-                        <div class="point">
-                            <p><?php echo $topic[ 'desc' ]; ?></p>
+                        <div class="desc">
+                            <p><?php echo $topic[ 'desc' ] . $topic[ 'desc' ] . $topic[ 'desc' ] . $topic[ 'desc' ] . $topic[ 'desc' ]; ?></p>
                         </div>
-                        <div class="detail-line clearfix">
-                            <div class="media l">
-                                <a href="http://www.iqiyi.com/v_19rroicb60.html?vfm=m_177_bdsx" target="_blank"><img src="/static/topic/images/topic.jpg" /></a>
+                        <?php if( count( $topic[ 'events' ] ) > 0 ) { ?>
+                            <div class="events">
+                                <div class="ctrl-bar clearfix">
+                                    <a href="###" class="scroll scroll-right r">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                    <a href="###" class="scroll scroll-left l">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </a>
+                                    <ul class="l clearfix">
+                                        <li>
+                                            <a href="###" class="events-nav" data-event-id="">
+                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="###" class="events-nav" data-event-id="">
+                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="###" class="events-nav" data-event-id="">
+                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="###" class="events-nav" data-event-id="">
+                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="###" class="events-nav" data-event-id="">
+                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="desc">
-                            <p>
-7日晚，安徽卫视《超级演说家》节目在北京现场录制过程中，乐嘉为支持自己的残疾选手崔万志现场喝酒，结果醉酒后失控，满口爆粗TMD不断，导致金星、窦文涛等嘉宾齐齐离场，录制一度中止。在被问及三个人以后还会不会与乐嘉合作时候，金星直接表示，“以后谁还跟跟他合作啊？差点尿都吓出来了。”窦文涛则表示，“我跟他从没有过任何合作，也不认识”。
-                            </p>
-                            <p>
-乐嘉表示，自己此刻站出来说话有三点原因：节目播出前直接发声会被认为是炒作；不想因为自己的回应导致人们听不见崔万志的最后的演讲；对解释很不屑，该懂你的自然会懂。乐嘉对现场事件也做出了回顾与描述，首先，酒是临时起意让助手买的，其次，喝酒总共两次。同时，对自己现场的粗鄙行为也做出了解释：“骂脏话、拍桌子、跺脚、上窜下跳，跪在地上，是我在所有地方做演讲时出现的常态，与我是否喝酒，毫无关系。的确，以上举动，很不优雅，毫不高级，卖相难看，太没修养，这些都对。然而，对我来讲，一个演讲如果只能在有风度和有影响力中二选其一，我会选后者。”
-                                </p>
-                            </div>
-                        </div>
+                        <?php } ?>
                         <div class="list-area">
                             <div class="operate-line clearfix">
                                 <span class="count">本论点共 <i>2</i> 条讨论</span>

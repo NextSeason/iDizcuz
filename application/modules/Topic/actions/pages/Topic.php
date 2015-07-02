@@ -14,7 +14,7 @@ Class TopicAction extends \Local\BaseAction {
 
         $this->topicModel = new TopicModel();
 
-        $this->getTopic()->reportReasons();
+        $this->getTopic()->getEvents()->reportReasons();
 
         return $this->data;
     }
@@ -22,6 +22,29 @@ Class TopicAction extends \Local\BaseAction {
     private function reportReasons() {
         $reportConf = \Local\Utils::loadConf( 'report', 'reasons' );
         $this->data[ 'reportReasons' ] = $reportConf;
+        return $this;
+    }
+
+    private function getEvents() {
+        $events = $this->data[ 'topic' ][ 'events' ];
+
+        if( strlen( $events ) == 0 ) { 
+            $this->data[ 'topic' ][ 'events' ] = array();
+            return $this; 
+        }
+
+        $events = explode( ',', $events );
+
+        $topicEventModel = new TopicEventModel();
+
+        $list = array();
+
+        foreach( $events as $event ) {
+            $list[] = $topicEventModel->get( $event );
+        }
+
+        $this->data[ 'topic' ][ 'events' ] = $list;
+        
         return $this;
     }
 
