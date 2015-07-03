@@ -202,6 +202,7 @@ CREATE TABLE `topic_events` (
     `content` text NOT NULL,
     `tip` varchar(255) NOT NULL,
     `time` timestamp,
+    `img` varchar(255) NOT NULL DEFAULT '',
     `origin` varchar( 10 ) NOT NULL DEFAULT '',
     `origin_url` varchar( 128 ) NOT NULL DEFAULT '',
     `origin_logo` varchar( 128 ) NOT NULL DEFAULT '',

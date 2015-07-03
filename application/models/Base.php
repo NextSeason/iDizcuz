@@ -42,8 +42,42 @@ Class BaseModel {
         }
     }
 
-    public function gets( $id ) {
+    public function _gets( $ids, $table = null ) {
+        if( is_null( $table ) ) {
+            $table = $this->table;
+        }
+        $query = 'SELECT * FROM `' . $table . '` WHERE `id` = :id';
+
+        $res = [];
+
+        try {
+            $stmt = $this->db->prepare( $query );
+            foreach( $ids as $id ) {
+                $stmt->bindValue( ':id', $id );
+                $stmt->execute();
+                $res[] = $stmt->fetch( PDO::FETCH_ASSOC );
+            }
+
+            return $res;
+        } catch( PDOException $e ) {
+            return false;
+        }
         
+    }
+
+    public function gets( $ids ) {
+        try {
+            $this->db->beginTransaction();
+
+            $res = $this->_gets( $ids );
+
+            $this->db->commit();
+
+            return $res;
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
     }
 
     public function _insert( $data, $table = null ) {

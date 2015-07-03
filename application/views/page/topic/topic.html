@@ -24,48 +24,16 @@
                             <h1><?php echo $type_arr[ $topic[ 'type' ] ]; ?>：<?php echo $topic[ 'title' ]; ?></h1>
                         </div>
                         <div class="desc">
-                            <p><?php echo $topic[ 'desc' ] . $topic[ 'desc' ] . $topic[ 'desc' ] . $topic[ 'desc' ] . $topic[ 'desc' ]; ?></p>
+                            <p><?php echo $topic[ 'desc' ]; ?></p>
                         </div>
-                        <?php if( count( $topic[ 'events' ] ) > 0 ) { ?>
-                            <div class="events">
-                                <div class="ctrl-bar clearfix">
-                                    <a href="###" class="scroll scroll-right r">
-                                        <i class="fa fa-chevron-right"></i>
-                                    </a>
-                                    <a href="###" class="scroll scroll-left l">
-                                        <i class="fa fa-chevron-left"></i>
-                                    </a>
-                                    <ul class="l clearfix">
-                                        <li>
-                                            <a href="###" class="events-nav" data-event-id="">
-                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="###" class="events-nav" data-event-id="">
-                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="###" class="events-nav" data-event-id="">
-                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="###" class="events-nav" data-event-id="">
-                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="###" class="events-nav" data-event-id="">
-                                                <img src="http://localhost:8004/static/topic/images/topic.jpg" />
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </div>
+                        <?php if( strlen( $topic[ 'events' ] ) > 0 ) { ?>
+                            <div class="show-events" data-events-ids="<?php echo $topic['events']; ?>">
+                                点击查看此论点相关内容和信息
                             </div>
                         <?php } ?>
+                        <div class="events">
+                            <div class="loading"></div>
+                        </div>
                         <div class="list-area">
                             <div class="operate-line clearfix">
                                 <span class="count">本论点共 <i>2</i> 条讨论</span>
@@ -292,19 +260,57 @@
                 </div>
             </div>
         </div>
+        <textarea class="templates" id="events-list-tpl">
+            <div class="nav-list">
+                <a href="###" class="scroll scroll-right r" data-direction="right">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+                <a href="###" class="scroll scroll-left l" data-direction="left">
+                    <i class="fa fa-chevron-left"></i>
+                </a>
+                <div class="list-area">
+                    <ul class="clearfix" style="width:100px">
+                        <% for( var i = 0, l = data.length; i < l; i++ ) { %>
+                            <li>
+                                <a href="###" title="" class="events-nav" data-event-id="<%=data[i].id %>">
+                                    <img src="http://localhost:8004/static/topic/images/topic.jpg" />
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+            <div class="bubbles events-tip">
+                <div class="triangle"><div class="triangle"></div></div>
+                <div class="inner">
+                    <p class="text"></p>
+                </div>
+            </div>
+        </textarea>
+        <textarea class="templates" id="event-content-tpl">
+            <div class="event-content">
+                <h4 class="title">房东加快速度发撒附件撒倒垃圾发撒</h4>
+                <div class="clearfix">
+                    <span class="origin">内容来自：<a href="http://www.baidu.com">百度新闻</a></span>
+                    <span class="author">作者：彬•卿峰</span>
+                    <span class="date">时间：2015-01-09</span>
+                </div>
+                <div class="event-text">
+                    fjdljlsdajfdjfjafjsdlafj 房东撒娇考虑老地方看撒减法就房东撒娇了解发撒富士达拉近距离减肥大赛骄傲了
+                    <p>房东激励撒娇房东就发</p>
+                </div>
+                <div class="event-info">
+                </div>
+            </div>
+        </textarea>
         <script src="/static/common/js/umeditor.config.js"></script>
         <script src="/static/common/js/umeditor.js"></script>
         <script>
             var idizcuz = new J();
+            idizcuz.mount( 'events', '/static/topic/packages/Events/bootstrap.js', {} );
             idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', {} );
             idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
             idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
-
-/*
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;$
-*/
 
         </script>
     </body>
