@@ -32,7 +32,7 @@ Class TopicModel extends BaseModel {
     public function getFocusBeforeDate( $date ) {
     }
 
-    public function getTopics( $order = '`id` DESC', $start = 0, $len = 40 ) {
+    public function getTopics( $order = '`id` DESC', $start = 0, $len = 20 ) {
         $query = sprintf( 'SELECT * FROM `topics` ORDER BY %s LIMIT :start, :len', $order );
 
         try {
