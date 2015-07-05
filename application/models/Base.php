@@ -101,10 +101,10 @@ Class BaseModel {
 
             $stmt = $this->db->prepare( $query );
 
-            foreach( $data as $k => &$v ) {
-                $stmt->bindParam( ':' . $k, $v );
+            foreach( $data as $k => $v ) {
+                $stmt->bindValue( ':' . $k, $v );
             }
-                
+
             $stmt->execute();
 
             return $this->db->lastInsertId();

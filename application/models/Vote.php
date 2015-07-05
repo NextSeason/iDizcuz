@@ -30,6 +30,12 @@ Class VoteModel extends BaseModel {
         }
     }
 
+    public function getVotesByAccount( $account, $order, $start = 0, $len = 20 ) {
+        $query = sprintf( 'SELECT * FROM `votes` WHERE `account_id`=:account ORDER BY %s LIMIT :start, :len', $order );
+
+        try {} catch() {}
+    }
+
     public function updateVoteOpinion( $id, $opinion, $value = 1 ) {
         $query = 'UPDATE `votes` SET `opinion` = :opinion, `value` = :value';
 

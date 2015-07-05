@@ -14,8 +14,8 @@ Class TopicModel extends BaseModel {
         try {
             $this->db->beginTransaction();
             $stmt = $this->db->prepare( $query );
-            $stmt->bindParam( ':start', Date( 'Y-m-d H:i:s', strtotime( 'tomorrow' ) ) );
-            $stmt->bindParam( ':type', $type );
+            $stmt->bindValue( ':start', Date( 'Y-m-d H:i:s', strtotime( 'tomorrow' ) ) );
+            $stmt->bindValue( ':type', $type );
             $stmt->execute();
 
             $topic = $stmt->fetch( PDO::FETCH_ASSOC );
@@ -32,8 +32,14 @@ Class TopicModel extends BaseModel {
     public function getFocusBeforeDate( $date ) {
     }
 
-    public function getTopics( $order = '`id` DESC', $start = 0, $len = 20 ) {
-        $query = sprintf( 'SELECT * FROM `topics` ORDER BY %s LIMIT :start, :len', $order );
+    public function getTopics( $type = null, $order = '`id` DESC', $start = 0, $len = 20 ) {
+
+        if( is_null( $type ) ) {
+            $query = sprintf( 'SELECT * FROM `topics` WHERE `status` = 1 ORDER BY %s LIMIT :start, :len', $order );
+        } else {
+            $query = sprintf( 'SELECT * FROM `topics` WHERE `status` = 1 AND `type`=%d ORDER BY %s LIMIT :start, :len', $type, $order );
+        }
+
 
         try {
             $this->db->beginTransaction();

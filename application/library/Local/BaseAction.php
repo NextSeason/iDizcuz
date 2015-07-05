@@ -19,7 +19,7 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         $this->request = $this->getRequest();
         $this->controller = $this->getController();
 
-        $this->account = $this->session[ 'account' ];
+        $this->account = isset( $this->session[ 'account' ] ) ? $this->session[ 'account' ] : null;
 
         if( $this->account ) {
             $this->updateSession();

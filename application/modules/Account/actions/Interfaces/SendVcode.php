@@ -6,6 +6,7 @@ Class SendVcodeAction extends \Local\BaseAction {
     private $data = array();
 
     public function __execute() {
+        $this->type = 'interface';
 
         $this->paramsProcessing()->saveCode()->sendCode();
 
@@ -47,16 +48,15 @@ Class SendVcodeAction extends \Local\BaseAction {
     }
 
     private function sendEmail() {
-        $emailConf = \Local\Utils::loadConf( 'email', 'grouple' );
+        $to = $this->params[ 'to' ];
 
         $params = array(
-            'From' => $emailConf->addresses->system,
-            'Subject' => 'Grouple验证码',
+            'Subject' => '每日论点•iDizcuz 注册验证码',
             'Body' => $this->code
         );
         
         \Local\Send::email( $params, array( 
-            array( $this->params[ 'to' ], $this->params[ 'to' ] )
+            array( $to, $to )
         ) );
     }
 

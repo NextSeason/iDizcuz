@@ -33,8 +33,11 @@ Class Utils {
                 break;
         }
 
-        foreach( array_rand( $optional, $len ) as $key ) {
-            $result .= $optional[ $key ];
+        $max = count( $optional ) - 1;
+
+        for( $i = 0; $i < $len; ++$i ) {
+
+            $result .= $optional[ rand( 0, $max ) ];
         }
 
         return $result;

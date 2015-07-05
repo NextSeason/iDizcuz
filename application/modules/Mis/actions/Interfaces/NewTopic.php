@@ -28,11 +28,10 @@ Class NewTopicAction extends \Local\MisAction {
         $params = $this->params;
 
         $data = array(
-             'cid' => $params[ 'cid' ],
+            'cid' => $params[ 'cid' ],
             'type' => $params[ 'type' ],
             'status' => $params[ 'isPublic' ],
             'title' => $params[ 'title' ],
-            'events' => $params[ 'events' ],
             'desc' => $params[ 'desc' ]
         );
 

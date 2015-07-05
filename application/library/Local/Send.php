@@ -9,15 +9,16 @@ Class Send {
     static public function email( $params, $addresses ) {
         $mail = new PHPMailer();
 
+        $emailConf = \Local\Utils::loadConf( 'email', 'system' );
         $mail->isSMTP();
-        $mail->Host = 'smtp.163.com';
+        $mail->Host = $emailConf->smtp->host;
         $mail->SMTPAuth = true;
-        $mail->Username = 'kelcb@163.com';
-        $mail->Password = 'Mr.LvChengbin324';
+        $mail->Username = $emailConf->address;
+        $mail->Password = $emailConf->smtp->password;
         $mail->SMTPSecure = 'tls';
 
-        $mail->From = 'kelcb@163.com';
-        $mail->FromName = 'GROUPLE.COM';
+        $mail->From = $emailConf->address;
+        $mail->FromName = 'IDIZCUZ.COM';
 
 
         foreach( $addresses as $address ) {

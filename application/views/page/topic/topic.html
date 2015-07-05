@@ -271,9 +271,10 @@
                 <a href="###" class="scroll scroll-left l" data-direction="left">
                     <i class="fa fa-chevron-left"></i>
                 </a>
-                <div class="list-area">
-                    <ul class="clearfix" style="width:100px">
-                        <% for( var i = 0, l = data.length; i < l; i++ ) { %>
+                <div class="list-box">
+                    <% var l = data.length %>
+                    <ul class="clearfix" style="width:<%= l * 135 + 6 * ( l - 1 ) %>">
+                        <% for( var i = 0; i < l; i++ ) { %>
                             <li>
                                 <a href="###" title="" class="events-nav" data-event-id="<%=data[i].id %>">
                                     <img src="http://localhost:8004/static/topic/images/topic.jpg" />

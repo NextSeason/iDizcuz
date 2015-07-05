@@ -4,14 +4,10 @@ Class GetPostsAction extends \Local\BaseAction {
 
     private $data = [];
 
-    private $postDataModel;
-
     public function __execute() {
         $this->type = 'interface';
 
         $this->paramsProcessing();
-
-        $this->postDataModel = new PostDataModel();
 
         $this->data[ 'posts' ] = $this->getPosts();
 
@@ -21,15 +17,17 @@ Class GetPostsAction extends \Local\BaseAction {
     private function getPosts() {
         $params = $this->params;
 
+        $postDataModel = new PostDataModel();
+
         if( !is_null( $params[ 'point_id' ] ) ) {
-            $postsData = $this->postDataModel->getPostsByPoint( 
+            $postsData = $postDataModel->getPostsByPoint( 
                 $params[ 'point_id' ], 
                 $params[ 'order' ], 
                 $params[ 'start' ], 
                 $params[ 'len' ] 
             );
         } else {
-            $postsData = $this->postDataModel->getPostsByTopic( 
+            $postsData = $postDataModel->getPostsByTopic( 
                 $params[ 'topic_id' ],
                 $params[ 'order' ],
                 $params[ 'start' ],

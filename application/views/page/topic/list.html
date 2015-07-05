@@ -6,12 +6,43 @@
             $title = '每日论点•iDizcuz';
         ?>
         <?php include TPL_PATH . 'common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topic/css/topic.css" />
-        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css" />
+        <link rel="stylesheet" href="/static/topic/css/list.css" />
     </head>
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . 'common/top.inc.html'; ?>
+            <div class="boxes main">
+                <div class="inner clearfix">
+                    <div class="list-area l">
+                        <div class="select-type clearfix">
+                            <ul class="clearfix r">
+                                <li><a href="/topic/page/list" class="<?php if( is_null( $type ) ) { echo 'focus'; }  ?>">全部</a></li>
+                                <li><a href="/topic/page/list?type=0" class="<?php if( $type === '0' ) { echo 'focus'; } ?>">讨论</a></li>
+                                <li><a href="/topic/page/list?type=1" class="<?php if( $type === '1' ) { echo 'focus'; } ?>">辩论</a></li>
+                            </ul>  
+                        </div>
+                        <ul class="topic-list">
+                            <?php foreach( $topics as $topic ) { ?>
+                                <li>
+                                <h3><a href="###"><?php echo $topic['title']; ?></a></h3>
+                                    <p class="data">
+                                        <span class="r">发布时间：<?php echo substr( $topic['ctime'], 0, -9 ); ?></span>
+                                        <span class="">共有论述：<?php echo $topic['data']['post_cnt']; ?></span>
+                                        <span>获得支持：<?php echo $topic['data']['agree']; ?></span>
+                                        <span>获得反对：<?php echo $topic['data']['disagree']; ?></span>
+                                    </p>
+                                    <p class="desc">
+                                        <?php echo $topic['desc']; ?>
+                                    </p>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="sidebar r">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

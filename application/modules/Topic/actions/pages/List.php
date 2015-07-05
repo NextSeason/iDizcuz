@@ -2,16 +2,12 @@
 
 Class ListAction extends \Local\BaseAction {
     private $data = array();
-
     private $rn = 20;
-    private $topicModel;
 
     public function __execute() {
         $this->tpl = 'topic/list';
 
         $this->paramsProcessing();
-
-        $this->topicModel = new TopicModel();
 
         $this->getTopics()->getTopicData();
 
@@ -19,12 +15,15 @@ Class ListAction extends \Local\BaseAction {
     }
 
     private function getTopics() {
+
+        $topicModel = new TopicModel();
+
         $params = $this->params;
         $rn = $this->rn;
 
         $start = $rn * $params[ 'pn' ] + 1;
         
-        $topics = $this->topicModel->getTopics();
+        $topics = $topicModel->getTopics( $this->params[ 'type' ] );
 
         if( !$topics ) {
         }
@@ -33,10 +32,29 @@ Class ListAction extends \Local\BaseAction {
         return $this;
     }
 
+    private function getTopicData() {
+
+        $topics = $this->data[ 'topics' ];
+
+        if( count( $topics ) > 0 ) {
+            $topicDataModel = new TopicDataModel();
+
+            foreach( $topics as &$topic ) {
+                $topic[ 'data' ] = $topicDataModel->get( $topic['id'] );
+            }
+
+            $this->data['topics'] = $topics;
+        }
+
+        return $this;
+    }
+
     private function paramsProcessing() {
         $request = $this->request;
 
         $type = $request->getQuery( 'type' );
+
+        $this->data['type'] = $type;
 
         $pn = $request->getQuery( 'pn' );
 

@@ -141,6 +141,10 @@ Class TransactionModel extends BaseModel {
 
             $topic_id = $this->_insert( $data, 'topics' );
 
+            if( !$topic_id ) {
+                throw new PDOException( 'failed to insert data into topics' );
+            }
+
             /**
              * insert new data into table topics_data
              */
