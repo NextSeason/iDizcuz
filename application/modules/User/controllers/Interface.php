@@ -8,7 +8,9 @@ Class InterfaceController extends BaseInterfaceController {
         parent::init();
 
         $this->actions = array(
-            'userposts' => $this->action_path . 'UserPosts.php'
+            'userposts' => $this->action_path . 'UserPosts.php',
+            'votedposts' => $this->action_path . 'VotedPosts.php',
+            'markedposts' => $this->action_path . 'MarkedPosts.php'
         );
     }
 }

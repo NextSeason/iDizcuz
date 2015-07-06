@@ -37,6 +37,10 @@ Class TopicAction extends \Local\BaseAction {
             $topic = $this->topicModel->getCurrentFocus();
         }
 
+        $topicDataModel = new TopicDataModel();
+
+        $topic['data'] = $topicDataModel->get( $topic[ 'id' ] );
+
         $this->data[ 'topic' ] = $topic;
 
         return $this;

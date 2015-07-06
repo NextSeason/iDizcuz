@@ -47,9 +47,22 @@ Class UserPostsAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
+        $start = $request->getQuery( 'start' );
+
+        $start = intval( $start );
+
+        $rn = $request->getQuery( 'rn' );
+
+        $rn = intval( $rn );
+
+        if( $rn == 0 ) $rn = 20;
+
+        if( $rn > 100 ) $rn = 100;
 
         $this->params = array(
-            'account' => $account
+            'account' => $account,
+            'start' => $start,
+            'rn' => $rn
         );
 
         return $this;

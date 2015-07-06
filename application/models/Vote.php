@@ -30,10 +30,29 @@ Class VoteModel extends BaseModel {
         }
     }
 
-    public function getVotesByAccount( $account, $order, $start = 0, $len = 20 ) {
-        $query = sprintf( 'SELECT * FROM `votes` WHERE `account_id`=:account ORDER BY %s LIMIT :start, :len', $order );
+    public function getVotesByAccount( $account, $opinion, $order = '`id` DESC', $start = 0, $len = 20 ) {
+        $query = sprintf( 'SELECT * FROM `votes` WHERE `account_id`=:account AND `opinion`=:opinion ORDER BY %s LIMIT :start, :len', $order );
 
-        try {} catch() {}
+        try {
+            $this->db->beginTransaction();
+
+            $stmt = $this->db->prepare( $query );
+
+            $stmt->bindValue( ':account', $account );
+            $stmt->bindValue( ':opinion', $opinion );
+            $stmt->bindValue( ':start', (int)$start, PDO::PARAM_INT );
+            $stmt->bindValue( ':len', (int)$len, PDO::PARAM_INT );
+
+            $stmt->execute();
+
+            $votes = $stmt->fetchAll( PDO::FETCH_ASSOC );
+
+            $this->db->commit();
+            return $votes;
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
     }
 
     public function updateVoteOpinion( $id, $opinion, $value = 1 ) {

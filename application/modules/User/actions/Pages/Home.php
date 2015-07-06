@@ -9,6 +9,8 @@ Class HomeAction extends \Local\BaseAction {
 
         $this->paramsProcessing()->check()->getData()->reportReasons();
 
+        $this->data[ 'page' ] = $this->params[ 'page' ];
+
         return $this->data;
     }
 
@@ -75,8 +77,15 @@ Class HomeAction extends \Local\BaseAction {
             $id = null;
         }
 
+        $page = $this->request->getQuery( 'page' );
+
+        if( is_null( $page ) ) {
+            $page = 'posts';
+        }
+
         $this->params = array(
-            'id' => $id
+            'id' => $id,
+            'page' => $page
         );
 
         return $this;
