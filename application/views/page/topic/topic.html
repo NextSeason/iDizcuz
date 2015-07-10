@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css" />
     </head>
     <body>
-        <div id="idizcuz">
+        <div id="idizcuz" data-account-id="<?php echo isset( $account['id'] ) ? $account['id'] : 0; ?>">
             <?php include TPL_PATH . 'common/top.inc.html'; ?>
             <div class="boxes main">
                 <div class="inner clearfix">
@@ -50,24 +50,28 @@
                                         <li class="posts" data-post-id="<%=data[i].id %>">
                                             <div class="data-line clearfix">
                                                 <div class="operates r">
-                                                    <% var mark = +data[i].mark %>
-                                                    <a href="###" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-mark-id="<%=mark %>">
-                                                        <% if ( mark ) { %>
-                                                            <i class="fa fa-star"></i> 取消收藏
-                                                        <% } else { %>
-                                                            <i class="fa fa-star-o"></i> 收藏
-                                                        <% } %>
-                                                    </a>
+                                                    <% if( !data[i].isMine ) { %>
+                                                        <% var mark = +data[i].mark %>
+                                                        <a href="###" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-mark-id="<%=mark %>">
+                                                            <% if ( mark ) { %>
+                                                                <i class="fa fa-star"></i> 取消收藏
+                                                            <% } else { %>
+                                                                <i class="fa fa-star-o"></i> 收藏
+                                                            <% } %>
+                                                        </a>
+                                                    <% } %>
                                                     <a href="###" class="op-btn" data-action="share">分享</a>
-                                                    <a href="###" class="op-btn" data-action="report">举报</a>
-                                                </div>
+                                                    <% if( !data[i].isMine ) { %>
+                                                        <a href="###" class="op-btn" data-action="report">举报</a>
+                                                    <% } %>
+                                                    </div>
                                                 <div class="vote l">
                                                     <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=data[i].data.agree %></b>)</a>
                                                     <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=data[i].data.disagree %></b>)</a>
                                                 </div>
                                                 <div class="title l">
-                                                    <h2><%=data[i].title %></h2>
-                                                    <a href="###" class="uname">作者： <%=data[i].account.uname %><%=data[i].account.desc %></a>
+                                                    <h2><a href="/topic?topic=<?php echo $topic['id']; ?>&post=<%=data[i].id %>"><%=data[i].title %></h2>
+                                                    <a href="/user?u=<%=data[i].account.id %>" class="uname">作者： <%=data[i].account.uname %><%=data[i].account.desc %></a>
                                                 </div>
                                             </div>
                                             <div class="bubbles op-bubbles">
