@@ -14,7 +14,7 @@
             <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
             <div class="boxes">
                 <div class="inner">
-                    <form class="info-form">
+                    <form class="info-form" id="avatar-form">
                         <div class="parts clearfix">
                             <div class="s-title l">
                                 <span>头像</span>
@@ -24,10 +24,12 @@
                                 <div class="upload-btn">
                                     <a href="###" class="btns file">选择头像</a>
                                     <input type="file" class="real-file-btn" />
-                                    <p>请上传小于2M的JPG或PNG图片</p>
+                                    <p>请上传小于2M的JPG或PNG图片，（建议尺寸160px * 160px）</p>
                                 </div>
                             </div>
                         </div>
+                    </form>
+                    <form class="info-form" id="info-form">
                         <div class="parts clearfix">
                             <div class="s-title l">
                                 <span>性别</span>
@@ -84,6 +86,16 @@
             <div id="upload-dialog">
                 <div class="inner">
                     <div class="img-area">
+                        <div class="inner">
+                            <img src="http://localhost:8004/static/topic/images/topic.jpg" />
+                        </div>
+                    </div>
+                    <div class="img-cover"></div>
+                    <div class="line"></div>
+                    <div class="resize-area clearfix">
+                        <a href="###" class="plus r"><i class="fa fa-search-plus"></i></a>
+                        <a href="###" class="minus l"><i class="fa fa-search-minus"></i></a>
+                        <input type="range" value="0" max="100" class="resize-bar" />
                     </div>
                     <div class="ft">
                         <a href="###" class="btns dark cancel">取消</a>
@@ -98,4 +110,5 @@
         idizcuz.mount( 'Upload', '/static/settings/packages/Upload/bootstrap.js', {} );
         idizcuz.mount( 'UserInfo', '/static/settings/packages/UserInfo/bootstrap.js', {} );
     </script>
+    <?php include TPL_PATH . '/common/foot.inc.html'; ?>
 </html>

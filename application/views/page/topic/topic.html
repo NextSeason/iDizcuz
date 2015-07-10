@@ -219,28 +219,41 @@
                             </textarea>
                             <div class="loading list-top"></div>
                             <ul class="post-list"></ul>
-                            <?php if( $account ) { ?>
-                                <div id="textbox" class="textbox">
-                                    <script type="text/plain" id="editor" class="editor">
-                                        <p>在此输入您想发表的内容</p>
-                                    </script>
-                                </div>
-                                <div class="submit-line clearfix">
-                                    <p class="post-tip"></p>
-                                    <p class="post-warn"></p>
-                                    <a href="###" class="btns large public">发布观点</a>
-                                </div>
-                            <?php } else { ?>
-                                <div id="textbox" class="textbox">
-                                    <div class="not-login-editor">
-                                        <p>请登录并发表您的观点
-                                            <a href="/signin">登录</a>
-                                            /
-                                            <a href="/signup">注册</a>
-                                        </p>
+                            <div class="editor-area">
+                                <?php if( $account ) { ?>
+                                    <div class="line clearfix">
+                                        <span>论述标题：</span>
+                                        <input type="text" class="long title" placeholder="如果标题为空，系统则自动获取部分论述内容作为标题" />
+                                        <a href="###" class="get-title">从内容中获取标题</a>
                                     </div>
-                                </div>
-                            <?php } ?>
+                                    <div id="textbox" class="textbox">
+                                        <script type="text/plain" id="editor" class="editor">
+                                            <p>在此输入您想发表的内容</p>
+                                        </script>
+                                    </div>
+                                    <div class="line clearfix">
+                                        <span>针对论述：</span>
+                                        <input type="text" class="for" placeholder="点击论述列表中的『针对此论述回复』可以添加针对的论述" />
+                                        <a href="###" class="clear-for">清空</a>
+                                        <a href="###" class="open-for" target="_blank">打开针对论述</a>
+                                    </div>
+                                    <div class="submit-line clearfix">
+                                        <p class="post-tip"></p>
+                                        <p class="post-warn"></p>
+                                        <a href="###" class="btns large public">发布观点</a>
+                                    </div>
+                                <?php } else { ?>
+                                    <div id="textbox" class="textbox">
+                                        <div class="not-login-editor">
+                                            <p>请登录并发表您的观点
+                                                <a href="/signin">登录</a>
+                                                /
+                                                <a href="/signup">注册</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
                     <div class="sidebar r">
@@ -317,5 +330,6 @@
             idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
 
         </script>
+        <?php include TPL_PATH . 'common/foot.inc.html'; ?>
     </body>
 </html>

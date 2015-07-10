@@ -26,68 +26,6 @@
                         <a href="###" class="uname">作者： <%=data[i].account.uname %><%=data[i].account.desc %></a>
                     </div>
                 </div>
-                <div class="bubbles op-bubbles">
-                    <a href="###" class="close"><i class="fa fa-times"></i></a>
-                    <div class="triangle"><div class="triangle"></div></div>
-                    <div class="inner">
-                        <div class="mark box clearfix">
-                            <p class="l">收藏成功！您可以在<a href="###">我的收藏</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
-                            <div class="share-box l">
-                                <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
-                                <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
-                                <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
-                                <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
-                                <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
-                                <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
-                            </div>
-                        </div>
-                        <div class="share box clearfix">
-                            <div class="qrcode l">
-                                <img src="http://img4.cache.netease.com/game/2014/6/27/20140627172239307b9.png" />
-                            </div>
-                            <div class="share-part l">
-                                <div class="bdsharebuttonbox share-btn-boxes share-box" data-tag="share_1">
-                                    <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
-                                    <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
-                                    <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
-                                    <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
-                                    <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
-                                    <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
-                                </div> 
-                                <div class="share-link">
-                                    <div class="line clearfix">
-                                        <span class="l">分享此条论述：</span>
-                                        <a href="/topic?id=<?php echo $topic['id']; ?>&post=<%=data[i].id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>post=<%=data[i].id %>&fr=sharelink</a>
-                                        <a href="###" class="btns l">复制链接</a>
-                                    </div>
-                                    <div class="line clearfix">
-                                        <span class="l">分享当前论点：</span>
-                                        <a href="/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
-                                        <a href="###" class="btns l">复制链接</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="report box clearfix">
-                            <div class="reasons l">
-                                <?php foreach( $reportReasons as $key => $value ) { ?>
-                                    <label>
-                                        <input type="radio" name="reasons-<%=data[i].id %>" value="<?php echo $key; ?>" />
-                                        <span class="msg"><?php echo $value; ?></span>
-                                    </label>
-                                <?php } ?>
-                            </div>
-                            <div class="l desc-area">
-                                <textarea class="desc" placeholder="请对您举报的内容做简单描述，长度不可超过250字">&lt;/textarea>
-                                <p class="brand alert">*  核实举报后此论述会被删除，作者将受到相关惩罚。恶意举报也将面对相关策略惩罚</p>
-                                <div class="btn-line">
-                                    <span class="tip"></span>
-                                    <a href="###" class="btns report-submit">提交举报</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="contents">
                     <p><%=data[i].content %></p>
                 </div>
@@ -97,7 +35,7 @@
                     <% if( data[i].mtime != data[i].ctime ) { %>
                         <span class="mtime">修改于：<%=data[i].mtime %></span>
                     <% } %>
-                    <a href="###" class="comments">100条短评</a>
+                    <a href="###" class="comments"><%=data[i].comments_cnt %>条短评</a>
                 </div>
             </li>
         <% } %>

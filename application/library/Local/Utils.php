@@ -52,7 +52,14 @@ Class Utils {
      * @return content of configuration
      */
     static public function loadConf( $conf, $tag ) {
-        return new \Yaf\Config\Ini( APP_PATH . '/conf/' . $conf . '.ini', $tag );
+        $host = $_SERVER[ 'HTTP_HOST' ];
+        $path = '/conf/';
+
+        if( $host == 'localhost:8004' ) {
+            $path = '/local-conf/';
+        }
+
+        return new \Yaf\Config\Ini( APP_PATH . $path . $conf . '.ini', $tag );
     }
 
     static public function passwd( $passwd, $salt ) {

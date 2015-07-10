@@ -11,6 +11,7 @@ Class Send {
 
         $emailConf = \Local\Utils::loadConf( 'email', 'system' );
         $mail->isSMTP();
+        $mail->CharSet = 'UTF-8';
         $mail->Host = $emailConf->smtp->host;
         $mail->SMTPAuth = true;
         $mail->Username = $emailConf->address;
@@ -18,8 +19,9 @@ Class Send {
         $mail->SMTPSecure = 'tls';
 
         $mail->From = $emailConf->address;
-        $mail->FromName = 'IDIZCUZ.COM';
+        $mail->FromName = '每日论点•iDizcuz.com';
 
+        $mail->IsHTML( true );
 
         foreach( $addresses as $address ) {
             $mail->addAddress( $address[ 0 ], $address[ 1 ] );

@@ -12,6 +12,8 @@ Class BaseController extends \Yaf\Controller_Abstract {
 
     public function init() {
 
+        \Yaf\Dispatcher::getInstance()->autoRender( false );
+
         $this->action_path = sprintf( 'modules/%s/actions/Pages/', $this->_module );
 
         $this->request = $this->getRequest();

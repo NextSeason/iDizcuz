@@ -28,24 +28,33 @@ Class VotedPostsAction extends \Local\BaseAction {
             $this->error( 'SYSTEM_ERR' );
         }
 
-        $this->data[ 'votes' ] = $votes;
+        $this->pool[ 'votes' ] = $votes;
 
         return $this;
     }
 
     private function getPosts() {
-        if( !count( $this->data[ 'votes' ] ) ) {
+        $posts = array();
+
+        $votes = $this->pool[ 'votes' ];
+
+        if( !count( $votes ) ) {
+            $this->data[ 'posts' ] = $posts;
             return $this;
         }
 
         $postModel = new PostModel();
         $postDataModel = new PostDataModel();
+        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
 
-        foreach( $this->data[ 'votes' ] as &$vote ) {
+        foreach( $votes as $vote ) {
             $post = $postModel->get( $vote[ 'post_id' ] );
             $post[ 'data' ] = $postDataModel->get( $vote[ 'post_id' ] );
-            $vote[ 'post' ] = $post;
+            $post[ 'account' ] = $accountModel->get( $post['account_id'], array( 'id', 'uname', 'desc' ) );
+            $post[ 'vote' ] = $vote;
+            $posts[] = $post;
         }
+        $this->data[ 'posts' ] = $posts;
 
         return $this;
     }

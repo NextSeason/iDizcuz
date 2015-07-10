@@ -6,9 +6,44 @@ Class UserPostsAction extends \Local\BaseAction {
     public function __execute() {
         $this->type = 'interface';
 
-        $this->paramsProcessing()->getPosts()->getTopics();
+        $this->paramsProcessing()->getPosts()->getPostsData()->getTopics()->getAccount();
+
+        if( $this->account ) {
+            $this->getMarked();
+        }
 
         return $this->data;
+    }
+
+    private function getMarked() {
+        if( !count( $this->data[ 'posts' ] ) ) {
+            return $this;
+        }
+        $markModel = new MarkModel();
+
+        $account_id = $this->account[ 'id' ];
+
+        foreach( $this->data['posts'] as &$post ) {
+            $mark = $markModel->getMarkByPostAndAccount( 
+                $post[ 'id' ], 
+                $account_id
+            );
+
+            $post[ 'mark' ] = $mark ? $mark[ 'id' ] : 0;
+        }
+        return $this;
+    }
+
+    private function getAccount() {
+        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
+
+        $account = $accountModel->get( $this->params[ 'account' ], array( 'id', 'uname', 'desc' ) );
+
+        foreach( $this->data[ 'posts'] as &$post ) {
+            $post[ 'account' ] = $account;
+        }
+
+        return $this;
     }
 
     private function getTopics() {
@@ -20,6 +55,20 @@ Class UserPostsAction extends \Local\BaseAction {
 
         foreach( $this->data[ 'posts' ] as &$post ) {
             $post[ 'topic' ] = $topicModel->get( $post['topic_id'] );
+        }
+
+        return $this;
+    }
+
+    private function getPostsData() {
+        if( count( $this->data[ 'posts' ] ) == 0 ) {
+            return $this;
+        }
+
+        $postDataModel = new PostDataModel();
+
+        foreach( $this->data[ 'posts' ] as &$post ) {
+            $post[ 'data' ] = $postDataModel->get( $post['id'] );
         }
 
         return $this;

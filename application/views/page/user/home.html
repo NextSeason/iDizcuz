@@ -10,55 +10,51 @@
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
-            <div class="boxes account">
-                <div class="inner">
-                    <div class="user-card clearfix">
-                        <a href="/user" class="avatar">
-                            <img src="/static/common/images/thinker.png" />
-                        </a>
-                        <div class="user-info">
-                            <?php if( $self == 1 ) { ?>
-                                <a href="/settings" class="btns small dark edit">编辑</a>
-                            <?php } ?>
-                            <p>
-                                <a href="/user" class="uname"><?php echo $user['uname']; ?></a>
-                            </p>
-                            <p class="situation">
-                                <span><?php echo $user['info']['employment']; ?></span>
-                                <span><?php echo $user['info']['position']; ?></span>
-                            </p>
-                            <?php if( $user['info']['industry'] != '0' ) { ?>
-                                <p class="industry">
-                                    <span>从事行业：</span>
-                                    <span><?php echo $user['info']['industry']; ?></span>
-                                </p>
-                            <?php } ?>
-                            <p class="desc">
-                                <span>个人简介：</span>
-                                <?php echo $user['info']['desc']; ?>
-                            </p>
-                        </div>
-                        <div class="sp l"></div>
-                        <div class="user-data l">
-                            <div class="line">
-                                <span>注册时间：<?php echo substr( $user['ctime'], 0, -9 ); ?></span>
-                            </div>
-                            <div class="line">
-                                <span>发表论述：<?php echo $user['data']['post_cnt']; ?></span>
-                            </div>
-                            <div class="line">
-                                <span>获得支持：<?php echo $user['data']['agree']; ?></span>
-                            </div>
-                            <div class="line">
-                                <span>获得反对：<?php echo $user['data']['disagree']; ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="boxes main">
                 <div class="inner clearfix">
                     <div class="main-area l">
+                        <div class="user-card clearfix">
+                            <a href="/user" class="avatar">
+                                <img src="/static/common/images/thinker.png" />
+                            </a>
+                            <div class="user-info">
+                                <?php if( $self == 1 ) { ?>
+                                    <a href="/settings" class="btns small dark edit">编辑</a>
+                                <?php } ?>
+                                <p>
+                                    <a href="/user" class="uname"><?php echo $user['uname']; ?></a>
+                                </p>
+                                <p class="situation">
+                                    <span><?php echo $user['info']['employment']; ?></span>
+                                    <span><?php echo $user['info']['position']; ?></span>
+                                </p>
+                                <?php if( $user['info']['industry'] != '0' ) { ?>
+                                    <p class="industry">
+                                        <span>从事行业：</span>
+                                        <span><?php echo $user['info']['industry']; ?></span>
+                                    </p>
+                                <?php } ?>
+                                <p class="desc">
+                                    <span>个人简介：</span>
+                                    <?php echo $user['info']['desc']; ?>
+                                </p>
+                            </div>
+                            <div class="sp l"></div>
+                            <div class="user-data l">
+                                <div class="line">
+                                    <span>注册时间：<?php echo substr( $user['ctime'], 0, -9 ); ?></span>
+                                </div>
+                                <div class="line">
+                                    <span>发表论述：<?php echo $user['data']['post_cnt']; ?></span>
+                                </div>
+                                <div class="line">
+                                    <span>获得支持：<?php echo $user['data']['agree']; ?></span>
+                                </div>
+                                <div class="line">
+                                    <span>获得反对：<?php echo $user['data']['disagree']; ?></span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="nav-box clearfix">
                             <ul class="nav clearfix r">
                                 <li><a href="/user/posts" data-page="posts" <?php if( $page == 'posts' ) { echo 'class="focus"'; } ?>>发表的论述</a></li>
@@ -67,19 +63,63 @@
                                 <li><a href="/user/mark" data-page="mark" <?php if( $page == 'mark' ) { echo 'class="focus"'; } ?>>收藏</a></li>
                             </ul>
                         </div>
-                        <ul>
-                        </ul>
+                        <ul class="post-list"></ul>
                     </div>
                     <div class="sidebar">
                     </div>
                 </div>
             </div>
         </div>
-        <?php include TPL_PATH . '/common/post_list.tpl.html'; ?>
+        <textarea class="templates" id="post-list-tpl">
+            <% if( !data.length ) { %>
+                <div class="empty">这里暂时是空的</div>
+            <% } else { %>
+                <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                    <% var post = data[i]; %>
+                    <% var postUrl = '/topic?id=' + post.topic_id + '&post=' + post.id; %>
+                    <li class="posts" data-post-id="<%=post.id %>">
+                        <div class="data-line clearfix">
+                            <div class="operates r">
+                                <% var mark = +post.mark %>
+                                <a href="<%=postUrl %>" target="_blank" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-mark-id="<%=mark %>">
+                                    <% if ( mark ) { %>
+                                        <i class="fa fa-star"></i> 取消收藏
+                                    <% } else { %>
+                                        <i class="fa fa-star-o"></i> 收藏
+                                    <% } %>
+                                </a>
+                                <a href="<%=postUrl %>" target="_blank" class="op-btn" data-action="share">分享</a>
+                                <a href="<%=postUrl %>" target="_blank" class="op-btn" data-action="report">举报</a>
+                            </div>
+                            <div class="vote l">
+                                <a href="<%=postUrl %>" target="_blank" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree %></b>)</a>
+                                <a href="<%=postUrl %>" target="_blank" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
+                            </div>
+                            <div class="title l">
+                                <h2><%=post.title %></h2>
+                                <a href="/user?id=<%=post.account_id %>" target="_blank" class="uname">作者： <%=post.account.uname %><%=post.account.desc %></a>
+                            </div>
+                        </div>
+                        <div class="contents">
+                            <p><%=post.content %></p>
+                        </div>
+                        <div class="bottom-line">
+                            <a href="<%=postUrl %>" target="_blank" class="reply r">回复这条论述</a>
+                            <span class="ctime">发表于：<%=post.ctime %></span>
+                            <% if( post.mtime != post.ctime ) { %>
+                                <span class="mtime">修改于：<%=post.mtime %></span>
+                            <% } %>
+                            <a href="<%=postUrl %>" target="_blank" class="comments"><%=post.data.comments_cnt %>条短评</a>
+                        </div>
+                    </li>
+                <% } %>
+            <% } %>
+        </textarea>
         <script>
             var iDizcuz = new J();
             iDizcuz.mount( 'list', '/static/user/packages/List/bootstrap.js' );
         </script>
+        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
     </body>
 </html>
  

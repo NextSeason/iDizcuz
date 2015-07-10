@@ -28,24 +28,33 @@ Class MarkedPostsAction extends \Local\BaseAction {
             $this->error( 'SYSTEM_ERR' );
         }
 
-        $this->data[ 'marks' ] = $marks;
+        $this->pool[ 'marks' ] = $marks;
 
         return $this;
     }
 
     private function getPosts() {
-        if( !count( $this->data['marks'] ) ) {
+        $posts = array();
+        $marks = $this->pool[ 'marks' ];
+
+        if( !count( $marks ) ) {
+            $this->data[ 'posts' ] = $posts;
             return $this;
         }
 
         $postModel = new PostModel();   
         $postDataModel = new PostDataModel();
+        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
 
-        foreach( $this->data[ 'marks' ] as &$mark ) {
+        foreach( $marks as $mark ) {
             $post = $postModel->get( $mark['post_id'] );
             $post['data'] = $postDataModel->get( $mark['post_id'] );
-            $mark['post'] = $post;
+            $post['account'] = $accountModel->get( $post[ 'account_id' ], array( 'id', 'uname', 'desc' ) );
+            $post['mark'] = $mark;
+            $posts[] = $post;
         }
+
+        $this->data['posts'] = $posts;
 
         return $this;
     }

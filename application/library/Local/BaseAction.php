@@ -11,6 +11,7 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     protected $type = 'page';
     protected $account = null;
     protected $params = array();
+    protected $pool = array();
 
     protected $accountModel;
 

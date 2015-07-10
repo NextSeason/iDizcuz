@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS `accounts` (
     `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'account type reserved column',
     `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'status of account',
-    `reg_ip` varchar(15) NOT NULL DEFAULT '0.0.0.0' COMMENT 'ip address for registration',
-    `login_ip` varchar(15) NOT NULL DEFAULT '0.0.0.0' COMMENT 'ip address of last login client',
+    `reg_ip` int NOT NULL DEFAULT 0 COMMENT 'ip address for registration',
+    `login_ip` int NOT NULL DEFAULT 0 COMMENT 'ip address of last login client',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last login time',
     PRIMARY KEY (`id`),
@@ -38,6 +38,7 @@ CREATE TABLE `accounts_data` (
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
     `score` int unsigned NOT NULL DEFAULT 0,
+    `mark` int unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY( `id` )
 );
 
@@ -66,7 +67,6 @@ CREATE TABLE `topics` (
     `start` timestamp NOT NULL DEFAULT NOW() COMMENT 'the time to start this topic',
     `end` timestamp NOT NULL COMMENT 'the time to stop this topic',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
-    `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
     PRIMARY KEY(`id`)
 );
 
@@ -88,7 +88,6 @@ CREATE TABLE `points` (
     `title` varchar( 80 ) NOT NULL COMMENT 'title of this point',
     `desc` varchar( 255 ) NOT NULL COMMENT 'description for this post',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
-    `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
     PRIMARY KEY( `id` )
 );
 
@@ -108,11 +107,12 @@ DROP TABLE IF EXISTS `drafts`;
 CREATE TABLE `drafts` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `account_id` int unsigned NOT NULL,
+    `title` varchar( 255 ) NOT NULL DEFAULT '',
     `content` varchar(21500) NOT NULL,
+    `for` int unsigned NOT NULL DEFAULT 0,
     `topic_id` int unsigned NOT NULL,
     `point_id` int unsigned NOT NULL DEFAULT 0,
     `ctime` timestamp NOT NULL DEFAULT NOW(),
-    `mtime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );
 
@@ -121,10 +121,13 @@ DROP TABLE IF EXISTS `posts`;
 CREATE TABLE `posts` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `account_id` int unsigned NOT NULL,
+    `title` varchar(255) NOT NULL DEFAULT '',
     `content` varchar(21500) NOT NULL,
+    `for` int unsigned NOT NULL DEFAULT 0,
     `topic_id` int unsigned NOT NULL,
     `point_id` int unsigned NOT NULL DEFAULT 0,
     `reply_id` int unsigned NOT NULL DEFAULT 0,
+    `ip` int unsigned NOT NULL DEFAULT 0,
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
     PRIMARY KEY( `id` )
@@ -137,6 +140,7 @@ CREATE TABLE `posts_data` (
     `topic_id` int unsigned NOT NULL DEFAULT 0,
     `point_id` int unsigned NOT NULL DEFAULT 0,
     `comments_cnt` int unsigned NOT NULL DEFAULT 0,
+    `for_cnt` int unsigned NOT NULL DEFAULT 0,
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
     `status` tinyint unsigned NOT NULL DEFAULT 0,
@@ -153,7 +157,6 @@ CREATE TABLE `votes` (
     `value` tinyint unsigned NOT NULL DEFAULT 1,
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'send method, 0 means normal, 1 means score, 2 coin',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
-    `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last update time',
     PRIMARY KEY( `id` )
 );
 
@@ -174,8 +177,8 @@ CREATE TABLE `comments`(
     `post_id` int unsigned NOT NULL,
     `account_id` int unsigned NOT NULL,
     `content` varchar(1000) NOT NULL,
+    `ip` int unsigned NOT NULL DEFAULT 0,
     `ctime` timestamp NOT NULL DEFAULT NOW(),
-    `mtime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );
 
@@ -190,7 +193,6 @@ CREATE TABLE `reports` (
     `result` varchar( 255 ),
     `desc` varchar( 255 ),
     `ctime` timestamp NOT NULL DEFAULT NOW(),
-    `mtime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );
 
@@ -208,35 +210,19 @@ CREATE TABLE `topic_events` (
     `origin_logo` varchar( 128 ) NOT NULL DEFAULT '',
     `topic_id` varchar( 255 ) NOT NULL DEFAULT '',
     `ctime` timestamp NOT NULL DEFAULT NOW(),
-    `mtime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );
 
-/*
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `messages`;
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `messages` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
-    `name`,
-    `sex`,
-    `birthday`,
-    `position`
-    `address`,
-    `postcode`,
-    `phone`,
-    `email`,
-    `hometown`,
-    `primary_school`,
-    `junior_high_school`,
-    `senior_high_school`,
-    `college`,
-    `introduce`,
-    `security`
+    `from` int unsigned NOT NULL DEFAULT 0 COMMENT 'user id who sent this message, set 0 if system account',
+    `to` int unsigned NOT NULL DEFAULT 0,
+    `title` varchar( 255 ) NOT NULL DEFAULT '',
+    `context` varchar(1000) NOT NULL DEFAULT '',
+    `read` tinyint unsigned NOT NULL DEFAULT 0,
+    `del` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '0 means never been deleted, 1 means deleted by receiver, 2 means deleted by sender',
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY( `id` )
 );
-
-CREATE TABLE IF EXISTS `edu_experience` (
-);
-
-CREATE TABLE IF EXISTS `work_experience` (
-);
-*/

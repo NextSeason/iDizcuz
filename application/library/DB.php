@@ -22,7 +22,7 @@ Class DB {
     }
 
     private function loadConf() {
-        $this->conf = new \Yaf\Config\Ini( APP_PATH . '/conf/db.ini', 'product' );
+        $this->conf = \Local\Utils::loadConf( 'db', 'product' );
         return $this;
     }
 

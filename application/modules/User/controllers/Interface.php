@@ -10,7 +10,8 @@ Class InterfaceController extends BaseInterfaceController {
         $this->actions = array(
             'userposts' => $this->action_path . 'UserPosts.php',
             'votedposts' => $this->action_path . 'VotedPosts.php',
-            'markedposts' => $this->action_path . 'MarkedPosts.php'
+            'markedposts' => $this->action_path . 'MarkedPosts.php',
+            'saveavatar' => $this->action_path . 'SaveAvatar.php'
         );
     }
 }

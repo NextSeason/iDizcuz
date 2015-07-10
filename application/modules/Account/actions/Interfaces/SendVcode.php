@@ -50,9 +50,15 @@ Class SendVcodeAction extends \Local\BaseAction {
     private function sendEmail() {
         $to = $this->params[ 'to' ];
 
+        $conf = \Local\Utils::loadConf( 'email', 'signup' );
+
+        $this->setViewPath( '/Users/lvchengbin/Projects/iDizcuz/application/views/' );
+
         $params = array(
-            'Subject' => '每日论点•iDizcuz 注册验证码',
-            'Body' => $this->code
+            'Subject' => $conf->subject,
+            'Body' => $this->getView()->render( $conf->body, array(
+                'code' => $this->code
+            ) )
         );
         
         \Local\Send::email( $params, array( 

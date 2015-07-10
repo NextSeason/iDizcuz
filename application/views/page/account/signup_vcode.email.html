@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+  　    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title><?php echo $title; ?></title>
+    </head>
+    <body style="margin : 0; padding : 0">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:800px;margin:0 auto">
+            <tr bgcolor="#cc3914" height="59">
+                <td style="padding:0 20px"><a href="http://www.idizcuz.com?fr=mail" style="font-size:26px;font-weight:bold;text-decoration:none;color:#FFF;" ><i>每日论点•iDizcuz</i></a></td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" style="width:800px;margin:0 auto;padding:20px 0;">
+            <tr>
+                <td style="padding:0 20px">
+                    <p>欢迎您加入<a href="http://www.idizcuz.com" style="color:#cc3914"><i>每日论点•iDizcuz</i></a>，您的用户注册验证码为：
+                        <br />
+                        <br />
+                        <b style="font-size:18px"><?php echo $code; ?></b>
+                        <br />
+                        <br />
+                        请复制验证码，并返回之前注册页面继续操作。
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <?php if( !isset( $allowReply ) || !$allowReply ) { ?>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:800px;margin:0 auto">
+                <tr>
+                    <td style="border-top:dashed 1px #CCC;padding:0 20px">
+                        <p style="color:#AAA">本邮件由系统自动发出，请勿回复</p>
+                    </td>
+                </tr>
+            </table>
+        <?php } ?>
+        <table border="0" cellpadding="0" cellspacing="0" height="59px" bgcolor="#EEE" style="width:800px;margin:0 auto 20px" >
+            <tr>
+                <td align="center" width="100%">
+                    <a href="http://www.idizcuz.com?fr=mail" style="color:#999;font-size:14px;text-decoration:none">每日论点•iDizcuz</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
