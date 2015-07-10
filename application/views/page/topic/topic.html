@@ -90,9 +90,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="share box clearfix">
-                                                        <div class="qrcode l">
-                                                            <img src="http://img4.cache.netease.com/game/2014/6/27/20140627172239307b9.png" />
-                                                        </div>
+                                                        <div class="qrcode l"></div>
                                                         <div class="share-part l">
                                                             <div class="bdsharebuttonbox share-btn-boxes share-box" data-tag="share_1">
                                                                 <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
@@ -105,12 +103,12 @@
                                                             <div class="share-link">
                                                                 <div class="line clearfix">
                                                                     <span class="l">分享此条论述：</span>
-                                                                    <a href="/topic?id=<?php echo $topic['id']; ?>&post=<%=data[i].id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>post=<%=data[i].id %>&fr=sharelink</a>
+                                                                    <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data[i].id %>&fr=sharelink" target="_blank" class="share-post-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>post=<%=data[i].id %>&fr=sharelink</a>
                                                                     <a href="###" class="btns l">复制链接</a>
                                                                 </div>
                                                                 <div class="line clearfix">
                                                                     <span class="l">分享当前论点：</span>
-                                                                    <a href="/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
+                                                                    <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="share-topic-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
                                                                     <a href="###" class="btns l">复制链接</a>
                                                                 </div>
                                                             </div>
@@ -338,6 +336,7 @@
         </textarea>
         <script src="/static/common/js/umeditor.config.js"></script>
         <script src="/static/common/js/umeditor.js"></script>
+        <script src="/static/common/js/qrcode.js"></script>
         <script>
             var idizcuz = new J();
             idizcuz.mount( 'events', '/static/topic/packages/Events/bootstrap.js', {} );
