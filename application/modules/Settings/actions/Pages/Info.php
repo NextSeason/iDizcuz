@@ -16,6 +16,8 @@ Class InfoAction extends \Local\BaseAction {
 
         $this->accountInfo()->getIndustries();
 
+        $this->data[ 'page' ] = 'info';
+
         return $this->data;
     }
 

@@ -1,17 +1,16 @@
 <?php
 
-Class PasswdAction extends \Local\BaseAction {
+Class NotificationAction extends \Local\BaseAction {
     private $data = [];
 
     public function __execute() {
-        $this->tpl = 'settings/passwd';
+        $this->tpl = 'settings/notification';
 
         if( !$this->account ) {
             \Local\Utils::redirect( '/signin' );
         }
 
-        $this->data['page'] = 'passwd';
-
+        $this->data['page'] = 'notification';
         return $this->data;
     }
 }
