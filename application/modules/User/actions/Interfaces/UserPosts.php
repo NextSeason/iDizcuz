@@ -79,7 +79,7 @@ Class UserPostsAction extends \Local\BaseAction {
 
         $posts = $postModel->getPostsByAccount( $this->params[ 'account' ], '`id` DESC' );
 
-        if( !$posts ) {
+        if( $posts === false ) {
             $this->error( 'SYSTEM_ERR' );
         }
 

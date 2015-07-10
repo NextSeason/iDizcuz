@@ -18,7 +18,7 @@
                         <div class="title-line">
                             <h1><?php echo $type_arr[ $topic[ 'type' ] ]; ?>：<?php echo $topic[ 'title' ]; ?></h1>
                             <p>
-                                <a href="/topic/page/list" class="btns small dark r">更多论点</a>
+                                <a href="/topic/page/list" target="_blank" class="btns small dark r">更多论点</a>
                                 <span>发布日期：2015-09-09</span>
                             </p>
                         </div>
@@ -70,8 +70,8 @@
                                                     <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=data[i].data.disagree %></b>)</a>
                                                 </div>
                                                 <div class="title l">
-                                                    <h2><a href="/topic?topic=<?php echo $topic['id']; ?>&post=<%=data[i].id %>"><%=data[i].title %></h2>
-                                                    <a href="/user?u=<%=data[i].account.id %>" class="uname">作者： <%=data[i].account.uname %><%=data[i].account.desc %></a>
+                                                    <h2><a href="/topic?topic=<?php echo $topic['id']; ?>&post=<%=data[i].id %>" target="_blank"><%=data[i].title %></a></h2>
+                                                    <a href="/user?u=<%=data[i].account.id %>" class="uname" target="_blank">作者： <%=data[i].account.uname %><%=data[i].account.desc %></a>
                                                 </div>
                                             </div>
                                             <div class="bubbles op-bubbles">
@@ -142,7 +142,7 @@
                                             <% if( data[i].to != 0 ) { %>
                                                 <div class="to-area">
                                                     <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
-                                                    <a href="/topic?post=<%=data[i].to.id %>"><%=data[i].to.title %></a>
+                                                    <a href="/topic?post=<%=data[i].to.id %>" target="_blank"><%=data[i].to.title %></a>
                                                 </div>
                                             <% } %>
                                             <div class="bottom-line">
@@ -169,7 +169,7 @@
                                         </div>
                                         <div class="title l">
                                             <h2><%=data.title %></h2>
-                                            <a href="###" class="uname">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
+                                            <a href="###" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
                                         </div>
                                     </div>
                                     <div class="bubbles op-bubbles">
@@ -210,6 +210,12 @@
                                     <div class="contents">
                                         <p><%=data.content %></p>
                                     </div>
+                                    <% if( data[i].to != 0 ) { %>
+                                        <div class="to-area">
+                                            <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
+                                            <a href="/topic?post=<%=data[i].to.id %>" target="_blank"><%=data[i].to.title %></a>
+                                        </div>
+                                    <% } %>
                                     <div class="bottom-line">
                                         <a href="###" class="reply r">回复这条论述</a>
                                         <span class="ctime">发表于：<%=data.ctime %></span>

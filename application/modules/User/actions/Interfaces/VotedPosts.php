@@ -24,7 +24,7 @@ Class VotedPostsAction extends \Local\BaseAction {
             $params[ 'rn' ]
         );
 
-        if( !$votes ) {
+        if( $votes === false ) {
             $this->error( 'SYSTEM_ERR' );
         }
 

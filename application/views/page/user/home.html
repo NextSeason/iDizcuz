@@ -57,10 +57,10 @@
                         </div>
                         <div class="nav-box clearfix">
                             <ul class="nav clearfix r">
-                                <li><a href="/user/posts" data-page="posts" <?php if( $page == 'posts' ) { echo 'class="focus"'; } ?>>发表的论述</a></li>
-                                <li><a href="/user/agree" data-page="agree" <?php if( $page == 'agree' ) { echo 'class="focus"'; } ?>>TA支持的</a></li>
-                                <li><a href="/user/disagree" data-page="disagree" <?php if( $page == 'disagree' ) { echo 'class="focus"'; } ?>>TA反对的</a></li>
-                                <li><a href="/user/mark" data-page="mark" <?php if( $page == 'mark' ) { echo 'class="focus"'; } ?>>收藏</a></li>
+                                <li><a href="/user/posts?u=<?php echo $user['id']; ?>" data-page="posts" <?php if( $page == 'posts' ) { echo 'class="focus"'; } ?>>发表的论述</a></li>
+                                <li><a href="/user/agree?u=<?php echo $user['id']; ?>" data-page="agree" <?php if( $page == 'agree' ) { echo 'class="focus"'; } ?>>TA支持的</a></li>
+                                <li><a href="/user/disagree?u=<?php echo $user['id']; ?>" data-page="disagree" <?php if( $page == 'disagree' ) { echo 'class="focus"'; } ?>>TA反对的</a></li>
+                                <li><a href="/user/mark?u=<?php echo $user['id']; ?>" data-page="mark" <?php if( $page == 'mark' ) { echo 'class="focus"'; } ?>>收藏</a></li>
                             </ul>
                         </div>
                         <ul class="post-list"></ul>
@@ -96,15 +96,15 @@
                                 <a href="<%=postUrl %>" target="_blank" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
                             </div>
                             <div class="title l">
-                                <h2><%=post.title %></h2>
-                                <a href="/user?id=<%=post.account_id %>" target="_blank" class="uname">作者： <%=post.account.uname %><%=post.account.desc %></a>
+                                <h2><a href="/topic?id=<%=post.topic_id %>&post=<%=post.id %>" target="_blank"><%=post.title %></a></h2>
+                                <a href="/user?u=<%=post.account_id %>" target="_blank" class="uname">作者： <%=post.account.uname %><%=post.account.desc %></a>
                             </div>
                         </div>
                         <div class="contents">
                             <p><%=post.content %></p>
                         </div>
                         <div class="bottom-line">
-                            <a href="<%=postUrl %>" target="_blank" class="reply r">回复这条论述</a>
+                            <a href="<%=postUrl %>" target="_blank" class="reply r">针对本条论述发表观点</a>
                             <span class="ctime">发表于：<%=post.ctime %></span>
                             <% if( post.mtime != post.ctime ) { %>
                                 <span class="mtime">修改于：<%=post.mtime %></span>

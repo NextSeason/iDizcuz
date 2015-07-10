@@ -43,6 +43,14 @@ Class GetPostAction extends \Local\BaseAction {
 
         $post[ 'account' ] = $account;
 
+        if( $post['to'] != 0 ) {
+            $to = $this->postModel->get( $post[ 'id' ] );
+            $post['to'] = array(
+                'id' => $to['id'],
+                'title' => $to['title']
+            );
+        }
+
         $this->data[ 'post' ] = $post;
         return $this;
     }
