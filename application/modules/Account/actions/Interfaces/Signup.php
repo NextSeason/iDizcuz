@@ -66,7 +66,7 @@ Class SignupAction extends \Local\BaseAction {
 
         $passwd = sha1( $params[ 'passwd' ] . $salt );
 
-        $ip = $_SERVER[ 'REMOTE_ADDR' ];
+        $ip = ip2long( $_SERVER[ 'REMOTE_ADDR' ] );
 
         $account = array(
             'email' => $params[ 'email' ],

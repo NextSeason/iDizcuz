@@ -69,6 +69,9 @@ Class GetPostsAction extends \Local\BaseAction {
                 );
 
                 $post[ 'mark' ] = $mark ? $mark[ 'id' ] : 0;
+                if( $post['to'] != 0 ) {
+                    $post['to'] = $postModel->get( $post['to'] );
+                }
             }
         }
 

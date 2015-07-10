@@ -135,13 +135,19 @@
                                             <div class="contents">
                                                 <p><%=data[i].content %></p>
                                             </div>
+                                            <% if( data[i].to != 0 ) { %>
+                                                <div class="to-area">
+                                                    <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
+                                                    <a href="/topic?post=<%=data[i].to.id %>"><%=data[i].to.title %></a>
+                                                </div>
+                                            <% } %>
                                             <div class="bottom-line">
-                                                <a href="###" class="reply r">回复这条论述</a>
+                                                <a href="#editor" class="reply-to r">针对本条论述发表观点</a>
                                                 <span class="ctime">发表于：<%=data[i].ctime %></span>
                                                 <% if( data[i].mtime != data[i].ctime ) { %>
                                                     <span class="mtime">修改于：<%=data[i].mtime %></span>
                                                 <% } %>
-                                                <a href="###" class="comments">100条短评</a>
+                                                <a href="###" class="comments"><%=data[i].data.comments_cnt %>条短评</a>
                                             </div>
                                         </li>
                                     <% } %>
@@ -231,11 +237,11 @@
                                             <p>在此输入您想发表的内容</p>
                                         </script>
                                     </div>
-                                    <div class="line clearfix">
+                                    <div class="line clearfix to-line">
                                         <span>针对论述：</span>
-                                        <input type="text" class="for" placeholder="点击论述列表中的『针对此论述回复』可以添加针对的论述" />
-                                        <a href="###" class="clear-for">清空</a>
-                                        <a href="###" class="open-for" target="_blank">打开针对论述</a>
+                                        <a href="###" class="to-title" target="_blank"></a>
+                                        <input type="hidden" class="to" />
+                                        <a href="###" class="remove-to"><i class="fa fa-times-circle"></i></a>
                                     </div>
                                     <div class="submit-line clearfix">
                                         <p class="post-tip"></p>

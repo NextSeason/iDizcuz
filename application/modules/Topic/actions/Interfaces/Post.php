@@ -34,7 +34,10 @@ Class PostAction extends \Local\BaseAction {
         $data = array(
             'content' => $params[ 'content' ],
             'topic_id' => $params[ 'topic_id' ],
+            'title' => $params[ 'title' ],
+            'to' => $params[ 'to' ],
             'account_id' => $this->account[ 'id' ],
+            'ip' => ip2long( $_SERVER[ 'REMOTE_ADDR' ] )
         );
 
         if( isset( $params[ 'point_id ' ] ) ) {
@@ -99,7 +102,7 @@ Class PostAction extends \Local\BaseAction {
 
         $len = strlen( $contentTxt );
 
-        if( $len < 20 ) {
+        if( $len < 10 ) {
             $this->error( 'CONTENT_TOOSHORT' );
         }
 
@@ -117,8 +120,15 @@ Class PostAction extends \Local\BaseAction {
 
         $point_id = $request->getPost( 'point_id' );
 
+        $title = $request->getPost( 'title' );
+
+        $to = intval( $request->getPost( 'to' ) );
+
+
         $this->params = array(
             'content' => $content,
+            'title' => $title,
+            'to' => $to,
             'topic_id' => $topic_id,
             'point_id' => $point_id
         );

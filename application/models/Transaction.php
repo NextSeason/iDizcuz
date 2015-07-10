@@ -124,6 +124,10 @@ Class TransactionModel extends BaseModel {
                 $this->increment( $data[ 'point_id' ], [ 'post_cnt' => 1 ], 'points_data'  );
             }
 
+            if( isset( $data[ 'to' ] ) && $data['to'] != 0 ) {
+                $this->increment( $data['to'], [ 'to_times' ], 'posts_data' );
+            }
+
             $this->db->commit();
 
             return $post_id;
