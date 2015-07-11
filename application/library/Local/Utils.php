@@ -55,7 +55,7 @@ Class Utils {
         $host = $_SERVER[ 'HTTP_HOST' ];
         $path = '/conf/';
 
-        if( $host == 'localhost:8004' ) {
+        if( $host != 'www.idizcuz.com' ) {
             $path = '/local-conf/';
         }
 

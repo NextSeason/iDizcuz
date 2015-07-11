@@ -134,7 +134,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="contents">
+                                            <div class="contents rich-text">
                                                 <p><%=data[i].content %></p>
                                             </div>
                                             <% if( data[i].to != 0 ) { %>
@@ -167,7 +167,7 @@
                                         </div>
                                         <div class="title l">
                                             <h2><%=data.title %></h2>
-                                            <a href="###" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
+                                            <a href="/user" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
                                         </div>
                                     </div>
                                     <div class="bubbles op-bubbles">
@@ -175,9 +175,7 @@
                                         <div class="triangle"><div class="triangle"></div></div>
                                         <div class="inner">
                                                 <div class="share box clearfix">
-                                                    <div class="qrcode l">
-                                                        <img src="http://img4.cache.netease.com/game/2014/6/27/20140627172239307b9.png" />
-                                                    </div>
+                                                    <div class="qrcode l"></div>
                                                     <div class="share-part l">
                                                         <div class="share-btn-boxes share-box">
                                                             <span>将自己的论述分享给朋友：</span>
@@ -191,12 +189,12 @@
                                                         <div class="share-link">
                                                             <div class="line clearfix">
                                                                 <span class="l">分享此条论述：</span>
-                                                                <a href="/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink</a>
+                                                                <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink" target="_blank" class="share-post-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
                                                             <div class="line clearfix">
                                                                 <span class="l">分享当前论点：</span>
-                                                                <a href="/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
+                                                                <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="share-topic-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
                                                                 <a href="###" class="btns l">复制链接</a>
                                                             </div>
                                                         </div>
@@ -205,17 +203,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="contents">
+                                    <div class="contents rich-text">
                                         <p><%=data.content %></p>
                                     </div>
-                                    <% if( data[i].to != 0 ) { %>
+                                    <% if( data.to != 0 ) { %>
                                         <div class="to-area">
                                             <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
-                                            <a href="/topic?post=<%=data[i].to.id %>" target="_blank"><%=data[i].to.title %></a>
+                                            <a href="/topic?post=<%=data.to.id %>" target="_blank"><%=data.to.title %></a>
                                         </div>
                                     <% } %>
                                     <div class="bottom-line">
-                                        <a href="###" class="reply r">回复这条论述</a>
+                                        <a href="###" class="reply r">针对本条论述发表观点</a>
                                         <span class="ctime">发表于：<%=data.ctime %></span>
                                         <a href="###" class="comments">0条短评</a>
                                     </div>
@@ -304,7 +302,7 @@
                         <% for( var i = 0; i < l; i++ ) { %>
                             <li>
                                 <a href="###" title="" class="events-nav" data-event-id="<%=data[i].id %>">
-                                    <img src="http://localhost:8004/static/topic/images/topic.jpg" />
+                                    <img src="http://topicstc.idizcuzz.com/<%=data[i].img%>" />
                                 </a>
                             </li>
                         <% } %>
@@ -322,14 +320,11 @@
             <div class="event-content">
                 <h4 class="title">房东加快速度发撒附件撒倒垃圾发撒</h4>
                 <div class="clearfix">
-                    <span class="origin">内容来自：<a href="http://www.baidu.com">百度新闻</a></span>
+                    <span class="origin">内容来自：<a href="<%=data.origin_url %>"><%=data.origin %></a></span>
                     <span class="author">作者：彬•卿峰</span>
-                    <span class="date">时间：2015-01-09</span>
+                    <span class="date">时间：<%=data.time %></span>
                 </div>
-                <div class="event-text">
-                    fjdljlsdajfdjfjafjsdlafj 房东撒娇考虑老地方看撒减法就房东撒娇了解发撒富士达拉近距离减肥大赛骄傲了
-                    <p>房东激励撒娇房东就发</p>
-                </div>
+                <div class="event-text"><%=data.content %></div>
                 <div class="event-info">
                 </div>
             </div>

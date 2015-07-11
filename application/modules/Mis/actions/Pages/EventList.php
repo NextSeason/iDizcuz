@@ -5,7 +5,7 @@ Class EventListAction extends \Local\MisAction {
     private $topicEventModel;
 
     public function __execute() {
-        $this->tpl = 'mis/eventlist';
+        $this->tpl = 'mis/eventList';
 
         $this->paramsProcessing();
 

@@ -82,4 +82,19 @@ Class Error {
         'errno' => 16,
         'errmsg' => 'content is too long'
     );
+
+    public static $EXCEEDED_MAX = array(
+        'errno' => 17,
+        'errmsg' => 'value beyond the maximum'
+    );
+
+    public static $UNSUPPORT_MIME = array(
+        'errno' => 18,
+        'errmsg' => 'unsupported file type'
+    );
+
+    public static $FAILED_SAVE = array(
+        'errno' => 19,
+        'errmsg' => 'failed to save file'
+    );
 }

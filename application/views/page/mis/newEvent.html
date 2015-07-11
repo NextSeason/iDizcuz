@@ -14,6 +14,12 @@
                 <div class="core">
                     <form class="event-form">
                         <label>
+                            <p class="s-title">事件封面配图：</p>
+                            <input type="file" class="image" />
+                            <input type="hidden" class="img" />
+                            <div class="preview-img"></div>
+                        </label>
+                        <label>
                             <p class="s-title">事件标题：</p>
                             <input type="text" class="title" placeholder="事件标题" />
                         </label>
@@ -50,49 +56,103 @@
             </div>
         </div>
         <script>
-            $( '.save' ).on( 'click', function( e ) {
-                e.preventDefault();
+            (function() {
+                $( '.save' ).on( 'click', function( e ) {
+                    e.preventDefault();
 
-                var form = $( 'form.event-form' );
+                    var form = $( 'form.event-form' );
 
-                var title = $.trim( form.find( '.title' ).val() ),
-                    tip = $.trim( form.find( '.tip' ).val() ),
-                    time = $.trim( form.find( '.time' ).val() ),
-                    origin = $.trim( form.find( '.origin' ).val() ),
-                    origin_url = $.trim( form.find( '.origin_url' ).val() ),
-                    origin_logo = $.trim( form.find( '.origin_logo' ).val() ),
-                    content = $.trim( form.find( '.content' ).val() );
+                    var title = $.trim( form.find( '.title' ).val() ),
+                        tip = $.trim( form.find( '.tip' ).val() ),
+                        time = $.trim( form.find( '.time' ).val() ),
+                        origin = $.trim( form.find( '.origin' ).val() ),
+                        origin_url = $.trim( form.find( '.origin_url' ).val() ),
+                        origin_logo = $.trim( form.find( '.origin_logo' ).val() ),
+                        content = $.trim( form.find( '.content' ).val() ),
+                        img = form.find( 'input.img' ).val();
 
-                if( !title.length ) {
-                    alert( '事件标题必须填写' );
-                    return false;
-                }
+                    if( !img.length ) {
+                        alert( '必须上传封面图片' );
+                        return false;
+                    }
 
-                if( !content.length ) {
-                    alert( '事件内容必须填写' );
-                    return false;
-                }
+                    if( !title.length ) {
+                        alert( '事件标题必须填写' );
+                        return false;
+                    }
 
-                var data = {
-                    title : title,
-                    content : content
-                };
+                    if( !content.length ) {
+                        alert( '事件内容必须填写' );
+                        return false;
+                    }
 
-                tip.length && ( data.tip = tip );
-                time.length && ( data.time = time );
-                origin.length && ( data.origin = origin );
-                origin_url.length && ( data.origin_url = origin_url );
-                origin_logo.length && ( data.origin_logo = origin_logo );
+                    var data = {
+                        title : title,
+                        content : content,
+                        img : img
+                    };
 
-                $.ajax( {
-                    url : '/mis/interface/newevent',
-                    method : 'POST',
-                    data : data
-                } ).done( function( response ) {
+                    tip.length && ( data.tip = tip );
+                    time.length && ( data.time = time );
+                    origin.length && ( data.origin = origin );
+                    origin_url.length && ( data.origin_url = origin_url );
+                    origin_logo.length && ( data.origin_logo = origin_logo );
+
+                    $.ajax( {
+                        url : '/mis/interface/newevent',
+                        method : 'POST',
+                        data : data
+                    } ).done( function( response ) {
                     
+                    } );
                 } );
+                $( 'input.image' ).on( 'change', function( e ) {
 
-            } );
+                    // upload cover-image
+                    var file = $( this ).get( 0 ).files[ 0 ];
+ 
+                    $( this ).val('');
+
+                    var formData = new FormData();
+ 
+                    formData.append( 'file', file );
+ 
+                    var xhr_provider = function() {
+                        var xhr = $.ajaxSettings.xhr();
+ 
+                        if( xhr.upload ) { 
+                            xhr.upload.addEventListener( 'progress', function(e) {
+                                if(e.lengthComputable) {
+                                    console.log(e.loaded);
+                                }
+                            }, false);
+                        }   
+                        return xhr;
+                    };
+
+                    $.ajax( {
+                        url: '/mis/interface/upload',
+                        type : 'post',
+                        data: formData,
+                        contentType: false, 
+                        processData: false,
+                        xhr: xhr_provider
+                    } ).done( function( response ) {
+                        var errno = +response.errno,
+                            url = response.data.url;
+
+                        if( !errno ) {
+
+                            $( '.preview-img' ).show().html( '<img src="http://topicstc.idizcuzz.com/' + url + '" />' );
+                            $( 'input.img' ).val( url );
+                            return;
+                        }
+                         
+                    } ).fail( function() {
+                        alert( '图片上传失败' );
+                    } );
+                } );
+            } )();
         </script>
     </body>
 </html>

@@ -20,17 +20,118 @@ Class UploadImagesAction extends \Local\BaseAction {
         "DIR_ERROR" => "创建目录失败"
     );
 
+    private $mime2Ext = array(
+        'image/jpeg' => '.jpg',
+        'image/gif' => '.gif',
+        'image/bmp' => '.bmp',
+        'image/png' => '.png'
+    );
+
     public function __execute() {
         $this->type = 'interface';
 
-        $this->paramsProcessing();
+        /**
+         * ueditor is so stupid that it can only receive html 
+         * because it use form submit to upload images
+         */
+        header( 'Content-Type:text/html; charset=utf-8' );
 
-        return $this->data;
+        if( !$this->account ) {
+            $this->_error( \Local\Error::NOT_LOGIN );
+        }
+
+        $this->paramsProcessing()->check()->save();
+
+        $this->_success();
+    }
+
+    private function save() {
+        $image = $this->params[ 'image' ];
+
+        if( is_uploaded_file( $image[ 'tmp_name' ] ) ) {
+
+            $md5 = md5_file( $image['tmp_name'] );
+
+            $filename = $md5 . $this->mime2Ext[ $image['type'] ];
+
+
+            $response = \Local\FileManage::savePoststc( $filename, $image[ 'tmp_name' ] );
+
+            if( $response->status != 200 ) {
+                $this->_error( \Local\Error::SYSTEM_ERR, 'UNKNOW' );
+            }
+
+            $conf = \Local\Utils::loadConf( 'attachment', 'posts' );
+
+            $this->data[ 'url' ] = $conf->cdn . '/' . $filename;
+
+        } else {
+            $this->_error( \Local\Error::SYSTEM_ERR, 'UNKNOW' );
+        }
+    }
+
+    private function check() {
+        $image = $this->params[ 'image' ];
+        $conf = \Local\Utils::loadConf( 'attachment', 'posts' );
+
+        if( $image['size'] > $conf->maxsize ) {
+            $this->_error( \Local\Error::EXCEEDED_MAX, 'SIZE' );
+        }
+
+        $mimes = explode( '|', $conf->allowmime );
+
+        if( !in_array( $image['type'], $mimes ) ) {
+            $this->_error( \Local\Error::UNSUPPORT_MIME, 'TYPE' );
+        }
+        return $this;
+    }
+
+    private function _success() {
+        $image = $this->params[ 'image' ];
+
+        $url = $this->data[ 'url' ];
+
+        $type = explode( '.', $url );
+
+        $this->data[ 'url' ] = $url;
+        $this->data[ 'originalName' ] = $image['name'];
+        $this->data[ 'name' ] = $url;
+        $this->data[ 'type' ] = '.' . end( $type );
+        $this->data[ 'size' ] = $image[ 'size' ];
+        $this->data[ 'state' ] = $this->stateMap[ 0 ];
+
+        echo json_encode( $this->data );
+        exit;
+    }
+
+    private function _error( $err, $state = 'UNKNOWN' ) {
+        $this->data = array_merge( $this->data, $err );
+        $this->data[ 'state' ] = $this->stateMap[ $state ];
+
+        echo json_encode( $this->data );
+        exit;
     }
 
     private function paramsProcessing() {
+        $image = $this->request->getFiles( 'image' ); 
 
-        $
+        if( is_null( $image ) ) {
+            $this->_error( \Local\Error::PARAMS_ERR );
+        }
+
+        if( $image['error'] > 0 ) {
+            switch( $image['error'] ) {
+                case 1 :
+                case 2 :
+                    $this->_error( \Local\Error::EXCEEDED_MAX, 'SIZE' );
+                    break;
+                default :
+                    $this->_error( \Local\Error::PARAMS_ERR );
+                    break;
+            }
+        }
+
+        $this->params[ 'image' ] = $image;
 
         return $this;
     }

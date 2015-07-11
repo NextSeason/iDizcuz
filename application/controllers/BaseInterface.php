@@ -7,7 +7,7 @@ Class BaseInterfaceController extends BaseController {
         $this->action_path = sprintf( 'modules/%s/actions/Interfaces/', $this->_module );
     }
 
-    protected function response( $data ) {
+    public function response( $data ) {
         echo json_encode( $data );
     }
 

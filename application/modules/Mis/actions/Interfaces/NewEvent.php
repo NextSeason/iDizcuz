@@ -21,7 +21,8 @@ Class NewEventAction extends \Local\MisAction {
 
         $data = [
             'title' => $params[ 'title' ],
-            'content' => $params[ 'content' ]
+            'content' => $params[ 'content' ],
+            'img' => $params[ 'img' ]
         ];
 
         if( !is_null( $params[ 'tip' ] ) ) {
@@ -59,6 +60,12 @@ Class NewEventAction extends \Local\MisAction {
         if( is_null( $title ) ) {
             $this->error( 'PARAMS_ERR', 'event title is required' ); 
         }
+        
+        $img = $request->getPost( 'img' );
+
+        if( is_null( $img ) ) {
+            $this->error( 'PARAMS_ERR', 'event title is required' ); 
+        }
 
         $tip = $request->getPost( 'tip' );
 
@@ -78,6 +85,7 @@ Class NewEventAction extends \Local\MisAction {
 
         $this->params = [
             'title' => $title,
+            'img' => $img,
             'tip' => $tip,
             'time' => $time,
             'origin' => $origin,
