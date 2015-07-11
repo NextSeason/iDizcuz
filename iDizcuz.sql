@@ -177,7 +177,9 @@ CREATE TABLE `comments`(
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `post_id` int unsigned NOT NULL,
     `account_id` int unsigned NOT NULL,
-    `content` varchar(1000) NOT NULL,
+    `reply_account_id` int unsigned NOT NULL DEFAULT 0,
+    `reply_comment_id` int unsigned NOT NULL DEFAULT 0,
+    `content` varchar(500) NOT NULL,
     `ip` int unsigned NOT NULL DEFAULT 0,
     `ctime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
@@ -189,10 +191,22 @@ CREATE TABLE `reports` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `post_id` int unsigned NOT NULL,
     `account_id` int unsigned NOT NULL,
-    `reason` tinyint NOT NULL DEFAULT 0,
-    `status` tinyint NOT NULL DEFAULT 0,
+    `reason` tinyint unsigned NOT NULL DEFAULT 0,
+    `status` tinyint unsigned NOT NULL DEFAULT 0,
     `result` varchar( 255 ),
     `desc` varchar( 255 ),
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `comment_complaint`;
+
+CREATE TABLE `comment_complaint` ( 
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `comment_id` int unsigned NOT NULL,
+    `reason` tinyint unsigned NOT NULL DEFAULT 0,
+    `status` tinyint unsigned NOT NULL DEFAULT 0,
+    `result` tinyint unsigned NOT NULL DEFAULT 0,
     `ctime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );

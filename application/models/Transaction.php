@@ -21,74 +21,24 @@ Class TransactionModel extends BaseModel {
 
             $opinion = $data[ 'opinion' ] == 1 ? 'agree' : 'disagree';
 
-            $query = sprintf( 'UPDATE `posts_data` SET `%s`=`%s`+:value WHERE `id`=:id', $opinion, $opinion );
+            $value = $data[ 'value' ];
 
-            $stmt = $this->db->prepare( $query );
-            $stmt->bindValue( ':value', $data[ 'value' ] );
-            $stmt->bindValue( ':id', intval( $data[ 'post_id' ] ), PDO::PARAM_INT );
+            $this->increment( $data[ 'post_id' ], [ $opinion => $value ], 'posts_data' );
 
-            if( !$stmt->execute() ) {
-                throw new PDOException( 'failed to update data in posts_data' );
-            }
-
+            $this->increment( $postData[ 'topic_id' ], [ $opinion => $value ], 'topics_data' );
 
             if( $postData[ 'point_id' ] != 0 ) {
-                // update points_data 
-            }
-
-            $query = sprintf( 'UPDATE `topics_data` SET `%s`=`%s`+:value WHERE `id`=:id', $opinion, $opinion );
-
-            $stmt = $this->db->prepare( $query );
-            $stmt->bindValue( ':value', $data[ 'value' ] );
-            $stmt->bindValue( ':id', intval( $postData[ 'topic_id' ] ), PDO::PARAM_INT );
-
-            if( !$stmt->execute() ) {
-                throw new PDOException( 'failed to update data in topics_data' );
+                $this->increment( $postData[ 'point_id' ], [ $opinion => $value ], 'points_data' );
             }
 
             return $this->db->commit();
 
         } catch( PDOException $e ) {
-            var_dump( $e->getMessage() );
             $this->db->rollback();
             return false;
         }
     }
 
-    /*
-    public function updateVote( $vote, $opinion, $value, $postData = null ) {
-        $old_value = $vote[ 'value' ];
-        $old_opinion = $vote[ 'opinion' ];
-        $diff = 0;
-
-        try {
-            $this->db->beginTransaction();
-
-            $query = 'UPDATE `votes` SET `opinion`=:opinion, `value`=:value WHERE `id`=:id';
-
-            $stmt = $this->db->prepare( $query );
-            $stmt->bindValue( ':id', $vote[ 'id' ] );
-            $stmt->bindValue( ':opinion', $opinion );
-            $stmt->bindValue( ':value', $value );
-
-            if( !$stmt->execute() ) {
-                throw new PDOException( 'failed to update vote data' );
-            }
-
-            if( is_null( $post ) ) {
-                $postData = $this->_get( $vote[ 'post_id' ], 'posts_data' );
-            }
-
-
-
-            return $this->db->commit();
-
-        } cache ( PDOException $e ) {
-            $this->db->roolback();
-            return false;
-        }
-    }
-     */
     public function addPost( $data ) {
         /**
          * insert new post into table posts
@@ -128,6 +78,8 @@ Class TransactionModel extends BaseModel {
                 $this->increment( $data['to'], [ 'to_times' ], 'posts_data' );
             }
 
+            $this->increment( $data[ 'account_id' ], [ 'post_cnt' => 1 ], 'accounts_data' );
+
             $this->db->commit();
 
             return $post_id;
@@ -137,6 +89,29 @@ Class TransactionModel extends BaseModel {
             return false;
         }
     }
+
+    public function addComment( $data ) {
+        try {
+            $this->db->beginTransaction();
+
+            $comment_id = $this->_insert( $data, 'comments' );
+
+            if( !$comment_id ) {
+                throw new PDOException( 'failed to insert data into comments' );
+            }
+
+            $this->increment( $data[ 'post_id' ], [ 'comments_cnt' => 1 ], 'posts_data' );
+
+            $this->db->commit();
+
+            return $comment_id;
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
 
     public function addTopic( $data ) {
 

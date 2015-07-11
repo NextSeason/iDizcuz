@@ -14,7 +14,9 @@ Class InterfaceController extends BaseInterfaceController {
             'vote' => $this->action_path . 'Vote.php',
             'report' => $this->action_path . 'Report.php',
             'getevents' => $this->action_path . 'GetEvents.php',
-            'uploadimages' => $this->action_path . 'UploadImages.php'
+            'uploadimages' => $this->action_path . 'UploadImages.php',
+            'comment' => $this->action_path . 'Comment.php',
+            'getcomments' => $this->action_path . 'GetComments.php'
         );
     }
 }
