@@ -83,7 +83,7 @@ Class PostAction extends \Local\BaseAction {
         $account = $this->session[ 'account' ];
 
         if( !$account ) {
-            $this->error( 'NOT_LOGIN' );
+            $this->error( 'NOTLOGIN_ERR' );
         }
 
         if( intval( $account[ 'status' ] > 0 ) ) {

@@ -7,7 +7,7 @@ Class UpdateInfoAction extends \Local\BaseAction {
         $this->type = 'interface';
 
         if( !$this->account ) {
-            $this->error( 'NOT_LOGIN' );
+            $this->error( 'NOTLOGIN_ERR' );
         }
 
         $this->paramsProcessing()->updateData();

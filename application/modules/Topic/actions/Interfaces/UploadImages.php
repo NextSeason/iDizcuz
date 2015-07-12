@@ -37,7 +37,7 @@ Class UploadImagesAction extends \Local\BaseAction {
         header( 'Content-Type:text/html; charset=utf-8' );
 
         if( !$this->account ) {
-            $this->_error( \Local\Error::NOT_LOGIN );
+            $this->_error( \Local\Error::NOTLOGIN_ERR );
         }
 
         $this->paramsProcessing()->check()->save();

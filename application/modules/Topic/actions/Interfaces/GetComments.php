@@ -7,9 +7,39 @@ Class GetCommentsAction extends \Local\BaseAction {
     public function __execute() {
         $this->type = 'interface';
 
-        $this->paramsProcessing()->getComments();
+        $this->paramsProcessing()->getComments()->getAccounts()->getReplyAccount();
 
         return $this->data;
+    }
+
+    private function getReplyAccount() {
+        if( count( $this->data[ 'comments'] ) == 0 ) {
+            return $this;
+        }
+        
+        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
+
+        foreach( $this->data[ 'comments' ] as &$comment ) {
+            if( $comment[ 'reply_account_id' ] == 0 ) continue;
+            $comment[ 'reply_account' ] = $accountModel->get( $comment[ 'reply_account_id' ], [ 'id', 'uname' ] );
+        }
+
+        return $this;
+
+    }
+
+    private function getAccounts() {
+        if( count( $this->data[ 'comments'] ) == 0 ) {
+            return $this;
+        }
+
+        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
+
+        foreach( $this->data[ 'comments'] as &$comment ) {
+            $comment[ 'account' ] = $accountModel->get( $comment[ 'account_id' ], [ 'id', 'uname' ] );
+        }
+
+        return $this;
     }
 
     private function getComments() {

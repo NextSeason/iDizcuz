@@ -10,7 +10,10 @@
         <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css" />
     </head>
     <body>
-        <div id="idizcuz" data-account-id="<?php echo isset( $account['id'] ) ? $account['id'] : 0; ?>">
+        <div id="idizcuz" 
+            data-account-id="<?php echo isset( $account['id'] ) ? $account['id'] : 0; ?>" 
+            data-account-uname="<?php echo isset( $account['uname'] ) ? htmlspecialchars( $account['uname'] ) : ''; ?>"
+        >
             <?php include TPL_PATH . 'common/top.inc.html'; ?>
             <div class="boxes main">
                 <div class="inner clearfix">
@@ -164,7 +167,7 @@
                 <div class="empty">此论点目前还没有论述，快发布您的论述，并分享给您的好友吧</div>
             <% } else { %>
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
-                    <li class="posts" data-post-id="<%=data[i].id %>">
+                    <li class="posts" id="post-<%=data[i].id %>" data-post-id="<%=data[i].id %>">
                         <div class="data-line clearfix">
                             <div class="operates r">
                                 <% if( !data[i].isMine ) { %>
@@ -269,21 +272,8 @@
                             <a href="###" class="comments"><%=data[i].data.comments_cnt %>条短评</a>
                         </div>
                         <div class="comments-box">
-                            <ul>
-                                <li class="comments-item" data-comment-id="0">
-                                    <a href="###"><i class="fa fa-user"></i> 卿峰</a>
-                                    <p class="comments-text">诶让我快乐的萨芬千万富翁哦我就去诶让我屁人情味陪欧文放开我</p>
-                                    <div class="op-line">
-                                        <span>2013-03-05</span>
-                                        <a href="###" class="reply"><i class="fa fa-reply"></i> 回复</a>
-                                        <a href="###" class="complaint"><i class="fa fa-flag"></i> 举报</a>
-                                    </div>
-                                    <form class="comments-form reply-form clearfix">
-                                        <input type="text" class="comment l" placeholder="输入评论内容" />
-                                        <a href="###" class="btns submit l" data-comment-id="" data-account-id="">评论</a>
-                                    </form>
-                                </li>
-                            </ul>
+                            <div class="loading"></div>
+                            <ul class="comments-list"></ul>
                             <form class="comments-form clearfix">
                                 <input type="text" class="comment l" placeholder="输入评论内容" />
                                 <a href="###" class="btns submit l">评论</a>
@@ -303,7 +293,7 @@
             </div>
         </textarea>
         <textarea class="templates" id="new-post-tpl">
-            <li class="posts new-post" data-post-id="< %=data[i].id %>">
+            <li class="posts new-post" id="post-<%=data.id %>" data-post-id="<%=data.id %>">
                 <div class="data-line clearfix">
                     <div class="operates r">
                         <a href="###" class="op-btn" data-action="share">分享</a>
@@ -365,6 +355,35 @@
                 </div>
             </li>
         </textarea>
+        <textarea class="templates" id="comments-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                <li class="comments-item" data-comment-id="<%=data[i].id %>">
+                    <a href="/user?u=<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
+                    <p class="comments-text">
+                        <% if( data[i].reply_account ) { %>
+                            [ 
+                            <span>回复 </span>     
+                            <a href="/user?u=<%=data[i].reply_account_id %>" target="_blank"%><%-data[i].reply_account.uname %></a>
+                            ]
+                        <% } %>
+                        <%- data[i].content %>
+                    </p>
+                    <div class="op-line">
+                        <span><%=data[i].ctime %></span>
+                        <% if( data[i].isSelf ) { %>
+                            <a href="###" class="remove"><i class="fa fa-trash"></i> 删除</a>
+                        <% } else { %>
+                            <a href="###" class="reply"><i class="fa fa-reply"></i> 回复</a>
+                            <a href="###" class="complaint"><i class="fa fa-flag"></i> 举报</a>
+                        <% } %>
+                    </div>
+                    <form class="comments-form reply-form clearfix">
+                        <input type="text" class="comment l" placeholder="输入评论内容" />
+                        <a href="###" class="btns submit l" data-comment-id="<%=data[i].id %>" data-account-id="<%=data[i].account_id %>">评论</a>
+                    </form>
+                </li>
+            <% } %>
+        </textarea>
         <script src="/static/common/js/umeditor.config.js"></script>
         <script src="/static/common/js/umeditor.js"></script>
         <script src="/static/common/js/qrcode.js"></script>
@@ -373,6 +392,7 @@
             idizcuz.mount( 'events', '/static/topic/packages/Events/bootstrap.js', {} );
             idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', {} );
             idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
+            idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js', {} );
             idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
 
         </script>
