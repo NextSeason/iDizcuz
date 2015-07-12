@@ -25,7 +25,7 @@ Class PostAction extends \Local\BaseAction {
         
         $this->data[ 'id' ] = $this->addPost();
 
-        if( $this->params[ 'to' ] != 0 ) {
+        if( $this->params[ 'to' ] != 0 && $this->params['to'] != $this->account['id'] ) {
             $this->sendMessage();
         }
 
@@ -33,13 +33,30 @@ Class PostAction extends \Local\BaseAction {
     }
 
     private function sendMessage() {
+        $view = $this->getView();
+
+        $conf = \Local\Utils::loadConf( 'message', 'post' );
+
         $data = [
             'from' => 0,
             'to' => $this->params[ 'to' ],
-            'title' => '收到针对您的论述'
+            'type' => $conf->type,
+            'title' => $view->render( $conf->template, array(
+                '_part' => 'title',
+                'account' => $this->account
+            ) ),
+            'content' => $view->render( $conf->template, array(
+                '_part' => 'content',
+                'account' => $this->account,
+                'post' => array(
+                    'id' => $this->data['id'],
+                    'ctime' => date( 'Y-m-d H:i:s', $_SERVER[ 'REQUEST_TIME' ] ),
+                    'title' => $this->params[ 'title' ]
+                )
+            ) )
         ];
         $transactionModel = new TransactionModel();
-        $transactionModel->sendMessage();
+        $transactionModel->sendMessage( $data );
     }
 
     private function addPost() {

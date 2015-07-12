@@ -40,6 +40,7 @@ CREATE TABLE `accounts_data` (
     `score` int unsigned NOT NULL DEFAULT 0,
     `mark` int unsigned NOT NULL DEFAULT 0,
     `unread_msg` int unsigned NOT NULL DEFAULT 0,
+    `msg_cnt` int unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY( `id` )
 );
 
@@ -237,7 +238,7 @@ CREATE TABLE `messages` (
     `from` int unsigned NOT NULL DEFAULT 0 COMMENT 'user id who sent this message, set 0 if system account',
     `to` int unsigned NOT NULL DEFAULT 0,
     `title` varchar( 255 ) NOT NULL DEFAULT '',
-    `context` varchar(1000) NOT NULL DEFAULT '',
+    `content` varchar(1000) NOT NULL DEFAULT '',
     `read` tinyint unsigned NOT NULL DEFAULT 0,
     `del` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '0 means never been deleted, 1 means deleted by receiver, 2 means deleted by sender',
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '0 = system message, 1 = got post, 2 = got reply, 3 = got comment',

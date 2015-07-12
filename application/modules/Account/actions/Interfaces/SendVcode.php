@@ -52,8 +52,6 @@ Class SendVcodeAction extends \Local\BaseAction {
 
         $conf = \Local\Utils::loadConf( 'email', 'signup' );
 
-        $this->setViewPath( '/Users/lvchengbin/Projects/iDizcuz/application/views/' );
-
         $params = array(
             'Subject' => $conf->subject,
             'Body' => $this->getView()->render( $conf->body, array(

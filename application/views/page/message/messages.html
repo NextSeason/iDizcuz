@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php 
+            $title = '';
+        ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/message/css/messages.css" />
+    </head>
+    <body>
+        <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
+            <?php include TPL_PATH . '/common/top.inc.html'; ?>
+            <div class="boxes main">
+                <div class="inner clearfix">
+                    <div class="content-box l">
+                        <ul class="nav clearfix">
+                            <li>
+                                <a href="/messages?tab=1&type=1" class="<?php if( $tab == 1 ) { echo 'focus'; } ?>">系统通知</a>
+                            </li>
+                            <li>
+                                <a href="/messages?tab=2&type=2" class="<?php if( $tab == 2 ) { echo 'focus'; } ?>">收到论述</a>
+                            </li>
+                            <li>
+                                <a href="/messages?tab=3&type=3" class="<?php if( $tab == 3 ) { echo 'focus'; } ?>">收到评论</a>
+                            </li>
+                            <li>
+                                <a href="/messages?tab=4&type=4" class="<?php if( $tab == 4 ) { echo 'focus'; } ?>">收到回复</a>
+                            </li>
+                        </ul>
+                        <ul class="messages-list">
+                            <?php if( count( $messages ) == 0 ) { ?>
+                                <li class="empty">这里暂时没有消息</li>
+                            <?php } else { ?>
+                                <?php foreach( $messages as $message ) { ?>
+                                    <li id="message-<?php echo $message['id']; ?>" class="message-item" data-read="<?php echo $message['read']; ?>" data-message-id="<?php echo $message['id']; ?>">
+                                        <div class="title-line">
+                                            <a href="###" class="remove r"><i class="fa fa-trash"></i> 删除</a>
+                                            <?php if( $message['read'] == 0 ) { ?>
+                                                <span class="flag"><i class="fa fa-circle"></i></span>
+                                            <?php } ?>
+                                            <span class="time">
+                                                [<?php echo substr( $message['ctime'], 0, -9 ); ?>]
+                                            </span>
+                                            <?php echo $message['title']; ?>
+                                            <a href="###" class="open">[查看详情]</a>
+                                        </div>
+                                        <div class="content">
+                                            <?php echo $message['content']; ?>
+                                        </div>
+                                    </li>
+                                <?php } ?>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="sidebar l">
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js', {} );
+        </script>
+        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+    </body>
+</html>

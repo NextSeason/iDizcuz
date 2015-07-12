@@ -2,6 +2,35 @@
 
 Class TransactionModel extends BaseModel {
 
+    public function readMessage( $account, $id ) {
+        try {
+            $this->db->beginTransaction();
+
+            $query = 'UPDATE `messages` SET `read` = 1 WHERE `id` = :id AND `to` = :to';
+
+            $stmt = $this->db->prepare( $query );
+
+            $stmt->bindValue( ':id', $id );
+            $stmt->bindValue( ':to', $account );
+
+            $res = $stmt->execute();
+
+            if( !$res ) {
+                throw new PDOException( 'failed to update data in table messages' );
+            }
+
+            $this->increment( $account, [ 'unread_msg' => -1 ], 'accounts_data' );
+
+            $this->db->commit();
+
+            return $res;
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
     public function sendMessage( $data ) {
         try {
             $this->db->beginTransaction();
@@ -12,9 +41,13 @@ Class TransactionModel extends BaseModel {
                 throw new PDOException( 'failed to insert data into table messages' );
             }
 
-            $this->increment( $data[ 'to' ], [ 'unread_msg' => 1 ], 'accounts_data' );
+            $this->increment( $data[ 'to' ], [ 
+                'unread_msg' => 1,
+                'msg_cnt' => 1
+            ], 'accounts_data' );
+
             $this->db->commit();
-        } catch {
+        } catch( PDOException $e ) {
             $this->rollback();
             return false;
         }

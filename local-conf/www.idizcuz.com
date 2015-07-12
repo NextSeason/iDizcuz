@@ -29,7 +29,7 @@
                 rewrite ^/user(\?.*)?$ /index.php?__r=user/page/home$1 last;
 
                 rewrite ^/settings(\?.*)?$ /index.php?__r=settings/page/info$1 last;
-                rewrite ^/message(\?.*)?$ /index.php?__r=message/page/message$1 last;
+                rewrite ^/messages(\?.*)?$ /index.php?__r=message/page/messages$1 last;
 
                 rewrite ^/(.*)  /index.php?$1 last;
             }

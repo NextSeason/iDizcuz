@@ -8,7 +8,7 @@ Class PageController extends BasePageController {
         parent::init();
 
         $this->actions = array(
-            'message' => $this->action_path . 'Message.php'
+            'messages' => $this->action_path . 'Messages.php'
         );
     }
 }
