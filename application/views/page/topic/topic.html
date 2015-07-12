@@ -119,6 +119,7 @@
                     </div>
                 </form>
             </div>
+            <a href="javascript:void(0)" id="copy-btn" class="btns">复制链接</a>
         </div>
         <!-- templates area start -->
         <textarea class="templates" id="events-list-tpl">
@@ -167,6 +168,7 @@
                 <div class="empty">此论点目前还没有论述，快发布您的论述，并分享给您的好友吧</div>
             <% } else { %>
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                    <% if( data[i].hide ) { continue } %>
                     <li class="posts" id="post-<%=data[i].id %>" data-post-id="<%=data[i].id %>">
                         <div class="data-line clearfix">
                             <div class="operates r">
@@ -199,7 +201,7 @@
                             <div class="triangle"><div class="triangle"></div></div>
                             <div class="inner">
                                 <div class="mark box clearfix">
-                                    <p class="l">收藏成功！您可以在<a href="###">我的收藏</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
+                                    <p class="l">收藏成功！您可以在<a href="/user/mark">我的主页</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
                                     <div class="share-box l">
                                         <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
                                         <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
@@ -223,13 +225,13 @@
                                         <div class="share-link">
                                             <div class="line clearfix">
                                                 <span class="l">分享此条论述：</span>
-                                                <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data[i].id %>&fr=sharelink" target="_blank" class="share-post-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>post=<%=data[i].id %>&fr=sharelink</a>
-                                                <a href="###" class="btns l">复制链接</a>
+                                                <a href="http://www.idizcuz.com/topic?id=<%=data[i].topic_id%>&post=<%=data[i].id %>&fr=sharelink" data-title="<%-data[i].title %>" target="_blank" class="share-post-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>post=<%=data[i].id %>&fr=sharelink</a>
+                                                <a href="###" class="btns l copy-link">复制链接</a>
                                             </div>
                                             <div class="line clearfix">
                                                 <span class="l">分享当前论点：</span>
-                                                <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="share-topic-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
-                                                <a href="###" class="btns l">复制链接</a>
+                                                <a href="http://www.idizcuz.com/topic?id=<%=data[i].topic_id %>&fr=sharelink" data-title="<?php echo $topic['title']; ?>>" target="_blank" class="share-topic-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
+                                                <a href="###" class="btns l copy-link">复制链接</a>
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +305,7 @@
                         <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b>0</b>)</a>
                     </div>
                     <div class="title l">
-                        <h2><%=data.title %></h2>
+                        <h2><a href="/topic?post=<%=data.id %>" target="_blank"><%-data.title %></a></h2>
                         <a href="/user" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
                     </div>
                 </div>
@@ -326,13 +328,13 @@
                                 <div class="share-link">
                                     <div class="line clearfix">
                                         <span class="l">分享此条论述：</span>
-                                        <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink" target="_blank" class="share-post-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink</a>
-                                        <a href="###" class="btns l">复制链接</a>
+                                        <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink" data-title="<%-data.title %>" target="_blank" class="share-post-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink</a>
+                                        <a href="###" class="btns l copy-link">复制链接</a>
                                     </div>
                                     <div class="line clearfix">
                                         <span class="l">分享当前论点：</span>
-                                        <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" target="_blank" class="share-topic-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
-                                        <a href="###" class="btns l">复制链接</a>
+                                        <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" data-title="<?php echo $topic['title']; ?>" target="_blank" class="share-topic-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
+                                        <a href="###" class="btns l copy-link">复制链接</a>
                                     </div>
                                 </div>
                             </div>
@@ -351,7 +353,6 @@
                 <div class="bottom-line">
                     <a href="###" class="reply r">针对本条论述发表观点</a>
                     <span class="ctime">发表于：<%=data.ctime %></span>
-                    <a href="###" class="comments">0条短评</a>
                 </div>
             </li>
         </textarea>
@@ -387,6 +388,8 @@
         <script src="/static/common/js/umeditor.config.js"></script>
         <script src="/static/common/js/umeditor.js"></script>
         <script src="/static/common/js/qrcode.js"></script>
+        <script src="/static/common/js/qrcode.js"></script>
+        <script src="/static/common/js/ZeroClipboard.js"></script>
         <script>
             var idizcuz = new J();
             idizcuz.mount( 'events', '/static/topic/packages/Events/bootstrap.js', {} );
@@ -394,7 +397,7 @@
             idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
             idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js', {} );
             idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
-
+            idizcuz.mount( 'copy', '/static/topic/packages/Copy/bootstrap.js', {} );
         </script>
         <?php include TPL_PATH . 'common/foot.inc.html'; ?>
     </body>

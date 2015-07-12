@@ -1,5 +1,5 @@
     server {
-        listen       8004;
+        listen       80;
         server_name  www.idizcuz.com;
 
 
@@ -10,11 +10,11 @@
 
         location / {
             autoindex   on;
-            root   /Users/lvchengbin/Projects/iDizcuz/public;
+            root   /home/iDizcuz/www/public;
             index  index.php index.html index.htm;
 
-
             if (!-e $request_filename) {
+
                 rewrite ^/mis(\?.*)?$ /index.php?__r=mis/page/index$1 last;
                 rewrite ^/topic(\?.*)?$ /index.php?__r=topic/page/topic$1 last;
                 rewrite ^/signin(\?.*)?$ /index.php?__r=account/page/signin$1 last;
@@ -51,7 +51,7 @@
         #}
 
         location ~* ^/static {
-            root /Users/lvchengbin/Projects/iDizcuz;
+            root /home/iDizcuz/www;
             expires 10d;
         }
 
@@ -59,22 +59,17 @@
             root /home/iDizcuz/www;
         }
 
-        location ~* ^/67b25e25c416f15ab3e30b5672e16249.html {
-            root /home/iDizcuz/www;
-        }
-
-        location ~* ^/7a9f3666817d1f055e6c4db2c56e4f2f1436271463616.html {
-            root /home/iDizcuz/www;
-        }
+	    location ~ \.html {
+	        root /home/iDizcuz/www;
+	    }
 
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
         #
         location ~ \.php$ {
-            fastcgi_pass   127.0.0.1:9000;
-            #fastcgi_pass   unix:/var/run/php5-fpm.sock;
+		include /etc/nginx/fastcgi_params;
+            fastcgi_pass   unix:/var/run/php5-fpm.sock;
             fastcgi_index  index.php;
-            fastcgi_param  SCRIPT_FILENAME  /Users/lvchengbin/Projects/iDizcuz/public$fastcgi_script_name;
-            include        fastcgi_params;
+            fastcgi_param  SCRIPT_FILENAME  /home/iDizcuz/www/public$fastcgi_script_name;
         }
 
         # deny access to .htaccess files, if Apache's document root

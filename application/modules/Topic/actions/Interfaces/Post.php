@@ -25,7 +25,21 @@ Class PostAction extends \Local\BaseAction {
         
         $this->data[ 'id' ] = $this->addPost();
 
+        if( $this->params[ 'to' ] != 0 ) {
+            $this->sendMessage();
+        }
+
         return $this->data;
+    }
+
+    private function sendMessage() {
+        $data = [
+            'from' => 0,
+            'to' => $this->params[ 'to' ],
+            'title' => '收到针对您的论述'
+        ];
+        $transactionModel = new TransactionModel();
+        $transactionModel->sendMessage();
     }
 
     private function addPost() {

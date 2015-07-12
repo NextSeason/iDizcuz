@@ -2,6 +2,24 @@
 
 Class TransactionModel extends BaseModel {
 
+    public function sendMessage( $data ) {
+        try {
+            $this->db->beginTransaction();
+
+            $message = $this->_insert( $data, 'messages' );
+
+            if( !$message ) {
+                throw new PDOException( 'failed to insert data into table messages' );
+            }
+
+            $this->increment( $data[ 'to' ], [ 'unread_msg' => 1 ], 'accounts_data' );
+            $this->db->commit();
+        } catch {
+            $this->rollback();
+            return false;
+        }
+    }
+
     public function vote( $data, $postData = null ) {
         try {
             $this->db->beginTransaction();

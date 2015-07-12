@@ -16,7 +16,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
 
     public function _initRoute() {
         $router = \Yaf\Dispatcher::getInstance()->getRouter();
-        $router->addRoute( 'idizcuz', new \Yaf\Route\Supervar( 'r' ) );
+        $router->addRoute( 'idizcuz', new \Yaf\Route\Supervar( '__r' ) );
     }
 
     public function _initSession() {
