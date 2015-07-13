@@ -68,15 +68,13 @@ Class MarkedPostsAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $start = $request->getQuery( 'start' );
+        $start = intval( $request->getQuery( 'start' ) );
 
-        $start = intval( $start );
+        if( $start < 0 ) $start = 0;
 
-        $rn = $request->getQuery( 'rn' );
+        $rn = intval( $request->getQuery( 'rn' ) );
 
-        $rn = intval( $rn );
-
-        if( $rn == 0 ) $rn = 20;
+        if( $rn <= 0 ) $rn = 20;
         if( $rn > 100 ) $rn = 100;
 
         $this->params = array(

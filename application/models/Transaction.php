@@ -2,6 +2,132 @@
 
 Class TransactionModel extends BaseModel {
 
+    public function trashPost( $account, $id ) {
+        try {
+            $this->db->beginTransaction();
+
+            // step 1 get post data to check permission and get point_id , topic_id of this post
+            $post_data = $this->_get( $id, 'posts_data' );
+
+            if( !$post_data ) {
+                throw new PDOException( 'failed to get data from table posts_data' );
+            }
+
+            if( $post_data[ 'account_id' ] != $account ) {
+                throw new PDOException( 'user has no permission to remove this post' );
+            }
+
+            if( $post_data[ 'status' ] != 0 ) {
+                throw new PDOException( 'post has already removed' );
+            }
+
+            // step 2 update post_cnt in points_data if point_id is not 0
+            if( $post_data[ 'point_id' ] != 0 ) {
+                $this->increment( $post_data[ 'point_id' ], [ 'post_cnt' => -1 ], 'points_data' );
+            }
+
+            // step 3 update post_cnt in topics_data
+            $this->increment( $post_data[ 'topic_id' ], [ 'post_cnt' => -1 ], 'topics_data' );
+
+            // step 4 update post_cnt in accounts_data
+            $this->increment( $post_data[ 'account_id' ], [ 'post_cnt' => -1 ], 'accounts_data' );
+
+            // step 5 update score in accounts_data
+            // step 5 update status in posts_data
+            $this->_update( $id, [ 'status' => 1 ], 'posts_data' );
+
+            return $this->db->commit();
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    public function removeReceivedMessage( $account, $id ) {
+        try {
+            $this->db->beginTransaction();
+            // step 1 get message data from messages
+            $message = $this->_get( $id, 'messages' );
+
+            if( !$message ) {
+                throw new PDOException( 'cannot get data from table messages' );
+            }
+
+            if( $message[ 'to' ] != $account ) {
+                throw new PDOException( 'user has no permission to remove this message ' );
+            }
+
+            // step 2 remove message from tables messages
+            $del = $message[ 'del' ];
+
+            // del >= 2 means receiver removed this message or both sender and receiver removed this message
+            if( $del >= 2 ) {
+                throw new PDOException( 'message has already deleted by receiver' );
+            }
+
+            $del = $del == 0 ? 2 : 3;
+            $this->_update( $id, [ 'del' => $del ], 'messages' );
+
+            // step 3 if message has not been read, minus value of unread_msg in table accounts_data 
+            // step 4 minus value of msg_cnt in table accounts_data
+            $data = [
+                'msg_cnt' => -1
+            ];
+
+            if( $message['read'] == 0 ) {
+                $data[ 'unread_msg' ] = -1;
+            }
+
+            $this->increment( $account, [ 'msg_cnt' => -1 ], 'accounts_data' );
+
+            return $this->db->commit();
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    public function removePost( $account, $id ) {
+    }
+
+    public function removeComment( $account, $id ) {
+        try {
+            $this->db->beginTransaction();
+
+            $comment = $this->_get( $id, 'comments' );
+
+            if( !$comment ) {
+                throw new PDOException( 'failed to get data from table comments' );
+            }
+
+            if( $comment[ 'account_id' ] != $account ) {
+                throw new PDOException( 'has no permission to delete this comment' );
+            }
+
+            $post_id = $comment[ 'post_id' ];
+
+            $res = $this->increment( $post_id, [ 'comments_cnt' => -1 ], 'posts_data' );
+
+            if( !$res ) {
+                throw new PDOException( 'failed to update data in table posts_data' );
+            }
+
+            $res = $this->_remove( $id, 'comments' );
+
+            if( !$res ) {
+                throw new PDOException( 'failed to delete data in comments' );
+            }
+
+            return $this->db->commit();
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+
     public function readMessage( $account, $id ) {
         try {
             $this->db->beginTransaction();

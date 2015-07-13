@@ -58,9 +58,17 @@
                         <div class="nav-box clearfix">
                             <ul class="nav clearfix r">
                                 <li><a href="/user/posts?u=<?php echo $user['id']; ?>" data-page="posts" <?php if( $page == 'posts' ) { echo 'class="focus"'; } ?>>发表的论述</a></li>
-                                <li><a href="/user/agree?u=<?php echo $user['id']; ?>" data-page="agree" <?php if( $page == 'agree' ) { echo 'class="focus"'; } ?>>TA支持的</a></li>
-                                <li><a href="/user/disagree?u=<?php echo $user['id']; ?>" data-page="disagree" <?php if( $page == 'disagree' ) { echo 'class="focus"'; } ?>>TA反对的</a></li>
+                                <?php if( $self == 1 ) { ?>
+                                    <li><a href="/user/agree?u=<?php echo $user['id']; ?>" data-page="agree" <?php if( $page == 'agree' ) { echo 'class="focus"'; } ?>>我支持的</a></li>
+                                    <li><a href="/user/disagree?u=<?php echo $user['id']; ?>" data-page="disagree" <?php if( $page == 'disagree' ) { echo 'class="focus"'; } ?>>我反对的</a></li>
+                                <?php } else { ?>
+                                    <li><a href="/user/agree?u=<?php echo $user['id']; ?>" data-page="agree" <?php if( $page == 'agree' ) { echo 'class="focus"'; } ?>>TA支持的</a></li>
+                                    <li><a href="/user/disagree?u=<?php echo $user['id']; ?>" data-page="disagree" <?php if( $page == 'disagree' ) { echo 'class="focus"'; } ?>>TA反对的</a></li>
+                                <?php } ?>
                                 <li><a href="/user/mark?u=<?php echo $user['id']; ?>" data-page="mark" <?php if( $page == 'mark' ) { echo 'class="focus"'; } ?>>收藏</a></li>
+                                <?php if( $self == 1 ) { ?>
+                                    <li><a href="/user/removed" data-page="removed" <?php if( $page == 'removed' ) { echo 'class="focus"'; } ?>>已删除的</a></li>
+                                <?php } ?>
                             </ul>
                         </div>
                         <ul class="post-list"></ul>

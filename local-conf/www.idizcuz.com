@@ -26,6 +26,7 @@
                 rewrite ^/user/agree(\?.*)?$ /index.php?__r=user/page/home$1&page=agree last;
                 rewrite ^/user/disagree(\?.*)?$ /index.php?__r=user/page/home$1&page=disagree last;
                 rewrite ^/user/mark(\?.*)?$ /index.php?__r=user/page/home$1&page=mark last;
+                rewrite ^/user/removed(\?.*)?$ /index.php?__r=user/page/home$1&page=removed last;
                 rewrite ^/user(\?.*)?$ /index.php?__r=user/page/home$1 last;
 
                 rewrite ^/settings(\?.*)?$ /index.php?__r=settings/page/info$1 last;

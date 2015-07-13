@@ -120,6 +120,25 @@
                 </form>
             </div>
             <a href="javascript:void(0)" id="copy-btn" class="btns">复制链接</a>
+            <div id="remove-post-dialog" class="dialogs" >
+                <div class="inner">
+                    <input type="hidden" class="post-id" />
+                    <div class="text">
+                        <p>您确定要删除这条论述么？</p>
+                        <p class="success"><i class="brand fa fa-lightbulb-o"></i> 论述被删除成功！<br />删除后的论述可在自己的主页中看到，<br />并可进行彻底删除或恢复发布。</p>
+                        <p class="fail"><i class="brand fa fa-warning"></i> 操作失败，请稍候再试</p>
+                        <p class="tip"><i class="brand fa fa-lightbulb-o"></i> 删除该论述将会扣掉您 <b class="brand">100积分</b></p>
+                    </div>
+                    <div class="ft">
+                        <a href="###" class="btns confirm">确定</a>
+                        <a href="###" class="btns dark cancel">取消</a>
+                    </div>
+                </div>
+            </div>
+            <div id="editor-dialog" class="dialogs">
+                <div class="inner">
+                </div>
+            </div>
         </div>
         <!-- templates area start -->
         <textarea class="templates" id="events-list-tpl">
@@ -272,6 +291,9 @@
                                 <span class="mtime">修改于：<%=data[i].mtime %></span>
                             <% } %>
                             <a href="###" class="comments"><%=data[i].data.comments_cnt %>条短评</a>
+                            <% if( data[i].isMine ) { %>
+                                <a href="###" class="remove-post"><i class="fa fa-trash"></i> 删除</a>
+                            <% } %>
                         </div>
                         <div class="comments-box">
                             <div class="loading"></div>
@@ -358,7 +380,7 @@
         </textarea>
         <textarea class="templates" id="comments-list-tpl">
             <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
-                <li class="comments-item" data-comment-id="<%=data[i].id %>">
+                <li id="comment-<%=data[i].id %>" class="comments-item" data-comment-id="<%=data[i].id %>">
                     <a href="/user?u=<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
                     <p class="comments-text">
                         <% if( data[i].reply_account ) { %>
@@ -372,7 +394,7 @@
                     <div class="op-line">
                         <span><%=data[i].ctime %></span>
                         <% if( data[i].isSelf ) { %>
-                            <a href="###" class="remove"><i class="fa fa-trash"></i> 删除</a>
+                            <a href="###" class="remove-comment"><i class="fa fa-trash"></i> 删除</a>
                         <% } else { %>
                             <a href="###" class="reply"><i class="fa fa-reply"></i> 回复</a>
                             <a href="###" class="complaint"><i class="fa fa-flag"></i> 举报</a>
@@ -398,6 +420,8 @@
             idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js', {} );
             idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
             idizcuz.mount( 'copy', '/static/topic/packages/Copy/bootstrap.js', {} );
+
+            $( '#editor-dialog .inner' ).append( $( '.editor-area' ) );
         </script>
         <?php include TPL_PATH . 'common/foot.inc.html'; ?>
     </body>

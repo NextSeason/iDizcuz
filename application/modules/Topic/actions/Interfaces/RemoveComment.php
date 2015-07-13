@@ -1,27 +1,30 @@
 <?php
 
-Class RemoveAction extends \Local\BaseAction {
+Class RemoveCommentAction extends \Local\BaseAction {
     private $data = [];
 
     public function __execute() {
         $this->type = 'interface';
 
-        if( !$this->account ) {
+        if( is_null( $this->account ) ) {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing()->remove();
+        $this->paramsProcessing()->removeComment();
 
         return $this->data;
     }
 
-    private function remove() {
+    private function removeComment() {
         $transactionModel = new TransactionModel();
-
-        $res = $transactionModel->removeReceivedMessage(
+        $res = $transactionModel->removeComment(
             $this->account['id'],
             $this->params['id']
         );
+        if( !$res ) {
+            $this->error( 'SYSTEM_ERR' );
+        }
+
         return $this;
     }
 
@@ -32,9 +35,7 @@ Class RemoveAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $this->params = [
-            'id' => $id
-        ];
+        $this->params[ 'id' ] = $id;
 
         return $this;
     }

@@ -14,7 +14,7 @@ Class MessageModel extends BaseModel {
             $query .= ' AND `read`=:read ';
         }
 
-        $query .= ' LIMIT :start, :len';
+        $query .= ' AND `del` IN ( 0, 2 ) LIMIT :start, :len';
 
         try {
             $this->db->beginTransaction();

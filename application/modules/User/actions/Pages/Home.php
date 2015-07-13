@@ -9,7 +9,13 @@ Class HomeAction extends \Local\BaseAction {
 
         $this->paramsProcessing()->check()->getData()->reportReasons();
 
-        $this->data[ 'page' ] = $this->params[ 'page' ];
+        $page = $this->params[ 'page' ];
+
+        if( $page == 'removed' && !$this->account ) {
+            \Local\Utils::redirect( '/signin' );
+        }
+
+        $this->data[ 'page' ] = $page;
 
         return $this->data;
     }

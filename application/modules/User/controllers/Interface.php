@@ -11,6 +11,7 @@ Class InterfaceController extends BaseInterfaceController {
             'userposts' => $this->action_path . 'UserPosts.php',
             'votedposts' => $this->action_path . 'VotedPosts.php',
             'markedposts' => $this->action_path . 'MarkedPosts.php',
+            'removedposts' => $this->action_path . 'RemovedPosts.php',
             'saveavatar' => $this->action_path . 'SaveAvatar.php'
         );
     }

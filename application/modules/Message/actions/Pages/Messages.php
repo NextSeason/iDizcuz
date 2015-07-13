@@ -31,7 +31,7 @@ Class MessagesAction extends \Local\BaseAction {
         );
 
         if( $messages === false ) {
-            $this->error( 'SYSTEM_ERR' );
+            //$this->data[ 'messages' ] = [];
         }
 
         $this->data[ 'messages' ] = $messages;
