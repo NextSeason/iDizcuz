@@ -2,30 +2,147 @@
 
 Class CommentAction extends \Local\BaseAction {
     private $data = [];
+    private $transactionModel;
 
     public function __execute() {
         $this->type = 'interface';
 
+        // throw error is no account is in session
         if( !$this->account ) {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
         $this->paramsProcessing();
 
+        // get post of the post which user comment to.
+        $this->getPost();
+
+        
+
+        // if this comment is reply another comment
+        if( $this->params['reply_comment_id' ] != 0 ) {
+
+            // get comment data
+            $this->getReplyComment();
+
+        }
+
+        $this->transactionModel = new TransactionModel();
+
         $this->addComment();
 
+        $this->sendMessage();
+
         return $this->data;
+    }
+
+    private function sendMessage() {
+        $pool = $this->pool;
+        $account = $this->account;
+        $post = $pool['post'];
+
+
+        // send message to user who published this data
+        // if the user who published the message is the user in session, don't send message to himself
+        if( $account['id'] != $post['account_id'] ) {
+            $this->sendCommentMessage();
+        }
+
+        if( $this->params['reply_comment_id' ] != 0 ) {
+            $reply_comment = $pool['reply_comment'];
+            // check if the user who sent this post and the user who sent this message is not the same one
+            // then send message to the user to notice him/her someone replied his comment
+            // if not check, the user will receive two messages
+            if( ( $post['account_id'] != $reply_comment['account_id'] ) && ( $account['id'] != $reply_comment['account_id'] ) ) {
+
+                $this->sendReplyMessage();
+            }
+        }
+
+        return $this;
+    }
+
+    private function getPost() {
+        $postModel = new PostModel();
+
+        $post = $postModel->get( $this->params[ 'post_id' ] );
+
+        if( !$post ) {
+            $this->error( 'POST_NOTEXISTS' );
+        }
+
+        $this->pool[ 'post' ] = $post;
+
+        return $this;
+    }
+
+    private function getReplyComment() {
+        $commentModel = new CommentModel();
+
+        $comment = $commentModel->get( $this->params[ 'reply_comment_id' ] );
+
+        if( !$comment ) {
+            $this->error( 'COMMENT_NOTEXISTS' );
+        }
+
+        $this->pool[ 'reply_comment' ] = $comment;
+
+        return $this;
+    }
+
+    private function sendReplyMessage() {
+        $view = $this->getView();
+
+        $conf = \Local\Utils::loadConf( 'message', 'reply' );
+
+        $data = [
+            'from' => 0,
+            'to' => $this->pool['reply_comment']['account_id'],
+            'type' => $conf->type,
+            'title' => $view->render( $conf->template, array(
+            ) ),
+            'content' => $view->render( $conf->template, array(
+            ) )
+        ];
+
+        $this->transactionModel->sendMessage( $data );
+
+    }
+
+    private function sendCommentMessage() {
+        $view = $this->getView();
+
+        $conf = \Local\Utils::loadConf( 'message', 'comment' );
+
+        $data = [
+            'from' => 0,
+            'to' => $this->pool['post']['account_id'],
+            'type' => $conf->type,
+            'title' => $view->render( $conf->template, array(
+                '_part' => 'title',
+                'account' => $this->account
+            ) ),
+            'content' => $view->render( $conf->template, array(
+                '_part' => 'content',
+                'account' => $this->account,
+                'post' => $this->pool['post'],
+                'comment' => array(
+                    'content' => $this->params['content']
+                )
+            ) )
+        ];
+
+        $this->transactionModel->sendMessage( $data );
+
     }
 
     private function addComment() {
         $params = $this->params;
 
-        $transactionModel = new TransactionModel();
-
-        $comment_id = $transactionModel->addComment( array(
+        $comment_id = $this->transactionModel->addComment( array(
             'post_id' => $params[ 'post_id' ],
             'content' => $params[ 'content' ],
-            'reply_account_id' => $params[ 'reply_account_id' ],
+            'reply_account_id' => $params[ 'reply_comment_id' ] == 0 ? 0 : $this->pool[ 'reply_comment' ][ 'account_id' ],
             'reply_comment_id' => $params[ 'reply_comment_id' ],
             'account_id' => $this->account[ 'id' ],
             'ip' => ip2long( $_SERVER[ 'REMOTE_ADDR' ] )
@@ -61,14 +178,11 @@ Class CommentAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $reply_account_id = intval( $request->getPost( 'account_id' ) );
-
         $reply_comment_id = intval( $request->getPost( 'comment_id' ) );
 
         $this->params = [
             'post_id' => $post_id,
             'content' => $content,
-            'reply_account_id' => $reply_account_id,
             'reply_comment_id' => $reply_comment_id
         ];
 

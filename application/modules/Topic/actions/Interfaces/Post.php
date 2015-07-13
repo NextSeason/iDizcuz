@@ -21,11 +21,15 @@ Class PostAction extends \Local\BaseAction {
             $this->checkPoint();
         }
 
+        if( $this->params[ 'to' ] != 0 ) {
+            $this->getToPostData();
+        }
+
         $this->transactionModel = new TransactionModel();
         
         $this->data[ 'id' ] = $this->addPost();
 
-        if( $this->params[ 'to' ] != 0 && $this->params['to'] != $this->account['id'] ) {
+        if( $this->params[ 'to' ] != 0 && $this->pool['to_post_data']['account_id'] != $this->account['id'] ) {
             $this->sendMessage();
         }
 
@@ -39,7 +43,7 @@ Class PostAction extends \Local\BaseAction {
 
         $data = [
             'from' => 0,
-            'to' => $this->params[ 'to' ],
+            'to' => $this->pool[ 'to_post_data' ][ 'account_id' ],
             'type' => $conf->type,
             'title' => $view->render( $conf->template, array(
                 '_part' => 'title',
@@ -55,8 +59,19 @@ Class PostAction extends \Local\BaseAction {
                 )
             ) )
         ];
-        $transactionModel = new TransactionModel();
-        $transactionModel->sendMessage( $data );
+        $this->transactionModel->sendMessage( $data );
+    }
+
+    private function getToPostData() {
+        $postDataModel = new PostDataModel();
+        $post_data = $postDataModel->get( $this->params[ 'to' ] );
+
+        if( !$post_data ) {
+            $this->error( 'POST_NOTEXISTS' );
+        }
+
+        $this->pool['to_post_data'] = $post_data;
+        return $this;
     }
 
     private function addPost() {

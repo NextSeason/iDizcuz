@@ -105,7 +105,9 @@ Class BaseModel {
                 $stmt->bindValue( ':' . $k, $v );
             }
 
-            $stmt->execute();
+            if( !$stmt->execute() ) {
+                throw new PDOException( 'failed to insert data into table' );
+            }
 
             return $this->db->lastInsertId();
 

@@ -97,4 +97,9 @@ Class Error {
         'errno' => 19,
         'errmsg' => 'failed to save file'
     );
+
+    public static $COMMENT_NOTEXISTS = array(
+        'errno' => 20,
+        'errmsg' => 'comment is not exists'
+    );
 }

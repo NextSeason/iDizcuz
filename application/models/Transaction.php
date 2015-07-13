@@ -158,7 +158,7 @@ Class TransactionModel extends BaseModel {
     }
 
     public function sendMessage( $data ) {
-        try {
+        //try {
             $this->db->beginTransaction();
 
             $message = $this->_insert( $data, 'messages' );
@@ -173,10 +173,10 @@ Class TransactionModel extends BaseModel {
             ], 'accounts_data' );
 
             $this->db->commit();
-        } catch( PDOException $e ) {
-            $this->rollback();
-            return false;
-        }
+        //} catch( PDOException $e ) {
+            //$this->db->rollback();
+            //return false;
+        //}
     }
 
     public function vote( $data, $postData = null ) {
@@ -232,7 +232,8 @@ Class TransactionModel extends BaseModel {
 
             $post_data = [
                 'id' => $post_id,
-                'topic_id' => $topic_id
+                'topic_id' => $topic_id,
+                'account_id' => $data[ 'account_id' ]
             ];
 
             if( isset( $data[ 'point_id' ] ) ) {
