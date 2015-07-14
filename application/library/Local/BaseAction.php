@@ -14,6 +14,7 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     protected $pool = array();
 
     protected $accountModel;
+    protected $accountDataModel;
 
     public function execute() {
         $this->session = \Yaf\Session::getInstance();
@@ -55,6 +56,8 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
 
         if( $account ) {
             $this->account = array_merge( $this->account, $account );
+            $this->accountDataModel = new \AccountDataModel();
+            $this->account['data'] = $this->accountDataModel->get( $account['id'] );
         } else {
             $this->account = null;
         }

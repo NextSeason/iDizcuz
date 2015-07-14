@@ -3,10 +3,19 @@
         <?php if( $account ) { ?>
             <ul class="account">
                 <li>
-                    <a href="/user"><?php echo $account[ 'uname' ]; ?></a>
+                    <a href="/user">
+                        <?php echo $account[ 'uname' ]; ?>
+                        <?php if( $account['data']['unread_msg'] > 0 ) { ?>
+                            <i class="unread-msg-remind"><?php echo $account['data']['unread_msg']; ?></i>
+                        <?php } ?>
+                    </a>
                     <ul>
                         <li><a href="/user"><i class="fa fa-home"></i> 我的主页</a></li>
-                        <li><a href="/messages"><i class="fa fa-envelope"></i> 消息</a></li>
+                        <li><a href="/messages"><i class="fa fa-envelope"></i> 消息
+                            <?php if( $account['data']['unread_msg'] > 0 ) { ?>
+                                <i class="unread-msg-remind"><?php echo $account['data']['unread_msg']; ?></i>
+                            <?php } ?>
+                        </a></li>
                         <li><a href="/settings"><i class="fa fa-gear"></i> 设置</a></li>
                         <li><a href="/signout"><i class="fa fa-power-off"></i> 退出</a></li>
                     </ul>
