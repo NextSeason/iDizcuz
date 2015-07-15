@@ -10,8 +10,39 @@ Class GetPostsAction extends \Local\BaseAction {
         $this->paramsProcessing();
 
         $this->data[ 'posts' ] = $this->getPosts();
+            
+        $this->getTotal();
 
         return $this->data;
+    }
+
+    private function getTotal() {
+        $params = $this->params;
+
+        if( !is_null( $params['point_id'] ) && $params['point_id'] != 0 ) {
+            $pointDataModel = new PointDataModel();
+
+            $point_data = $pointDataModel->get( $params['point_id'] );
+
+            if( !$point_data ) {
+                $this->error( 'SYSTEM_ERR' );
+            }
+
+            $this->data['total'] = $point_data['post_cnt'];
+            return $this;
+        }
+
+        $topicDataModel = new TopicDataModel();
+
+        $topic_data = $topicDataModel->get( $params['topic_id'] );
+
+        if( !$topic_data ) {
+            $this->error( 'SYSTEM_ERR' );
+        }
+
+        $this->data['total'] = $topic_data['post_cnt'];
+
+        return $this;
     }
 
     private function getPosts() {
@@ -19,29 +50,33 @@ Class GetPostsAction extends \Local\BaseAction {
 
         $postDataModel = new PostDataModel();
 
-        if( !is_null( $params[ 'point_id' ] ) ) {
-            $postsData = $postDataModel->getPostsByPoint( 
-                $params[ 'point_id' ], 
-                $params[ 'order' ], 
-                $params[ 'start' ], 
-                $params[ 'len' ] 
-            );
+        if( !is_null( $params[ 'point_id' ] ) && $params['point_id'] != 0 ) {
+            $postsData = $postDataModel->getPostsByPoint( [
+                'point_id' => $params[ 'point_id' ], 
+                'order' => $params[ 'order' ], 
+                'start' => $params[ 'start' ], 
+                'rn' => $params[ 'rn' ],
+                'columns' => [ 'id' ]
+            ] );
         } else {
-            $postsData = $postDataModel->getPostsByTopic( 
-                $params[ 'topic_id' ],
-                $params[ 'order' ],
-                $params[ 'start' ],
-                $params[ 'len' ] 
-            );
+            $postsData = $postDataModel->getPostsByTopic( [
+                'topic_id' => $params[ 'topic_id' ],
+                'order' => $params[ 'order' ],
+                'start' => $params[ 'start' ],
+                'rn' => $params[ 'rn' ],
+                'columns' => ['id']
+            ] );
         }
 
         if( $postsData === false ) {
             $this->error( 'SYSTEM_ERR' );
         }
 
-        if( count( $postsData ) == 0 ) {
-            return [];
+        foreach( $postsData as &$postData ) {
+            $postData = $postData['id'];
         }
+
+        return $postsData;
 
         $posts = [];
 
@@ -69,6 +104,7 @@ Class GetPostsAction extends \Local\BaseAction {
                 );
 
                 $post[ 'mark' ] = $mark ? $mark[ 'id' ] : 0;
+                $post[ 'isMine' ] = $this->account['id'] == $post['account_id'] ? 1 : 0;
             }
         }
 
@@ -110,32 +146,27 @@ Class GetPostsAction extends \Local\BaseAction {
 
         $point_id = $request->getQuery( 'point' );
 
-        if( is_null( $point_id ) ) {
-            //$point_id = 0;
-        }
-
         $order = $request->getQuery( 'order' );
 
         $orderList = [ '`id` DESC', '`agree` DESC', '`disagree` DESC' ];
 
         $order = is_null( $order ) ? '`id` DESC' : $orderList[ $order ];
 
-        $start = $request->getQuery( 's' );
+        $start = intval( $request->getQuery( 'start' ) );
 
-        if( is_null( $start ) ) $start = 0;
+        if( $start < 0 ) $start = 0;
 
-        $len = $request->getQuery( 'l' );
+        $rn = intval( $request->getQuery( 'rn' ) );
 
-        if( is_null( $len ) ) $len = 20;
-
-        if( $len > 100 ) $len = 100;
+        if( $rn == 0 ) $rn = 20;
+        if( $rn > 100 ) $rn = 100;
 
         $this->params = [
             'topic_id' => $topic_id,
             'point_id' => $point_id,
             'order' => $order,
             'start' => $start,
-            'len' => $len
+            'rn' => $rn
         ];
 
         return $this;

@@ -45,9 +45,10 @@
                                     <li><a href="###" class="sort" data-order="2" >最多反对</a></li>
                                 </ul>  
                             </div>
-                            <div class="loading list-top"></div>
                             <ul class="post-list"></ul>
+                            <div class="loading list-bottom"></div>
                         </div>
+                        <div class="pagination clearfix"></div>
                         <div id="editor-inflow-box">
                             <div id="editor-area" class="editor-area">
                                 <?php if( $account ) { ?>
@@ -90,7 +91,7 @@
                         <?php if( $account ) { ?>
                             <div class="new-post">
                                 <p>心理所想，不吐不快</p>
-                                <a href="###" class="btns large">分享我的观点</a>
+                                <a href="###" class="btns large show-editor">发表我的论述</a>
                             </div>
                         <?php } else { ?>
                             <div class="about-idizcuz">
@@ -144,6 +145,22 @@
             </div>
         </div>
         <!-- templates area start -->
+        <textarea class="templates" id="post-pagination-tpl">
+            <% if( data.current != 1 ) { %>
+                <a href="###" data-pn=<%=data.current - 1 %>>上一页</a>
+            <% } %>
+            <% var list = data.list, l = list.length; %>
+            <% for( var i = 0; i < l; i += 1 ) { %>
+                <% if( list[i].pn == data.current ) { %>
+                    <span><%=list[i].pn %></span>
+                <% } else { %>
+                    <a href="###" data-pn="<%=list[i].pn %>"><%=list[i].pn %></a>
+                <% } %>
+            <% } %>
+            <% if( data.current != data.total ) {%>
+                <a href="###" data-pn="<%=+data.current + 1 %>">下一页</a>
+            <% } %>
+        </textarea>
         <textarea class="templates" id="events-list-tpl">
             <div class="nav-list">
                 <a href="###" class="scroll scroll-right r" data-direction="right">
@@ -174,10 +191,10 @@
         </textarea>
         <textarea class="templates" id="event-content-tpl">
             <div class="event-content">
-                <h4 class="title"><%=data.title %></h4>
+                <h4 class="title"><%-data.title %></h4>
                 <div class="clearfix">
                     <span class="origin">内容来自：<a href="<%=data.origin_url %>"><%=data.origin %></a></span>
-                    <span class="author">作者：<%=data.author %></span>
+                    <span class="author">作者：<%-data.author %></span>
                     <span class="date">时间：<%=data.time %></span>
                 </div>
                 <div class="event-text"><%=data.content %></div>
@@ -204,7 +221,7 @@
                                         <% } %>
                                     </a>
                                 <% } %>
-                                <a href="###" class="op-btn" data-action="share">分享</a>
+                                <a href="###" class="op-btn op-share" data-action="share">分享</a>
                                 <% if( !data[i].isMine ) { %>
                                     <a href="###" class="op-btn" data-action="report">举报</a>
                                 <% } %>
@@ -214,8 +231,8 @@
                                 <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=data[i].data.disagree %></b>)</a>
                             </div>
                             <div class="title l">
-                                <h2><a href="/topic?topic=<?php echo $topic['id']; ?>&post=<%=data[i].id %>" target="_blank"><%=data[i].title %></a></h2>
-                                <a href="/user?u=<%=data[i].account.id %>" class="uname" target="_blank">作者： <%=data[i].account.uname %><%=data[i].account.desc %></a>
+                                <h2><a href="/topic?topic=<?php echo $topic['id']; ?>&post=<%=data[i].id %>" target="_blank"><%-data[i].title %></a></h2>
+                                <a href="/user?u=<%=data[i].account.id %>" class="uname" target="_blank">作者： <%=data[i].account.uname %><%-data[i].account.desc %></a>
                             </div>
                         </div>
                         <div class="bubbles op-bubbles">
@@ -303,7 +320,7 @@
                             <ul class="comments-list"></ul>
                             <form class="comments-form clearfix">
                                 <input type="text" class="comment l" placeholder="输入评论内容" />
-                                <a href="###" class="btns submit l">评论</a>
+                                <input type="submit" class="btns submit l" value="评论" />
                             </form>
                         </div>
                     </li>
@@ -312,7 +329,7 @@
         </textarea>
         <textarea class="templates" id="target-post-tpl">
             <div class="target-post">
-                <div class="post-detail"></div>
+                <ul class="post-detail"></ul>
                 <div class="bridge">
                     以下为此论述所在的『论点』内容
                     <a href="/topic?id=<?php echo $topic['id']; ?>" target="_blank">[ 单独打开论点 ]</a>
@@ -389,7 +406,7 @@
                         <% if( data[i].reply_account ) { %>
                             [ 
                             <span>回复 </span>     
-                            <a href="/user?u=<%=data[i].reply_account_id %>" target="_blank"%><%-data[i].reply_account.uname %></a>
+                            <a href="/user?u=<%=data[i].reply_account.id %>" target="_blank"%><%-data[i].reply_account.uname %></a>
                             ]
                         <% } %>
                         <%- data[i].content %>
@@ -403,9 +420,9 @@
                             <a href="###" class="complaint"><i class="fa fa-flag"></i> 举报</a>
                         <% } %>
                     </div>
-                    <form class="comments-form reply-form clearfix">
+                    <form class="comments-form reply-form clearfix" data-comment-id="<%=data[i].id %>" data-account-id="<%-data[i].account.id %>">
                         <input type="text" class="comment l" placeholder="输入评论内容" />
-                        <a href="###" class="btns submit l" data-comment-id="<%=data[i].id %>" data-account-id="<%=data[i].account_id %>">评论</a>
+                        <input type="submit" class="btns submit l" value="评论" />
                     </form>
                 </li>
             <% } %>
@@ -431,9 +448,11 @@
             idizcuz.mount( 'events', '/static/topic/packages/Events/bootstrap.js', {} );
             idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', {} );
             idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
+            idizcuz.mount( 'operate', '/static/topic/packages/Operate/bootstrap.js', {} );
             idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js', {} );
             idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
             idizcuz.mount( 'copy', '/static/topic/packages/Copy/bootstrap.js', {} );
+            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js', {} );
         </script>
         <?php include TPL_PATH . 'common/foot.inc.html'; ?>
     </body>

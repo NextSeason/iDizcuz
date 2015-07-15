@@ -9,7 +9,7 @@ Class EditorPurifier {
 
         $config = \HTMLPurifier_Config::createDefault();
 
-        $config->set( 'HTML.Allowed', 'p,b,i,u,ul,ol,li,a[href],img[src]' );
+        $config->set( 'HTML.Allowed', 'p,b,i,u,ul,ol,li,a[href],img[src],strong,em,span' );
         $purifier = new \HTMLPurifier( $config );
         $clean_html = $purifier->purify( $content );
 

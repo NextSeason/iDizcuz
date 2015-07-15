@@ -225,4 +225,14 @@ Class BaseModel {
             return false;
         }
     }
+
+    public function formatColumns( $columns ) {
+        if( is_null( $columns ) ) return ' * ';
+
+        foreach( $columns as &$column ) {
+            $column = '`' . $column . '`';
+        }
+
+        return implode( ',', $columns );
+    }
 }
