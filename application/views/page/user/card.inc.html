@@ -1,0 +1,42 @@
+<div class="user-card clearfix">
+    <a href="/user" class="avatar">
+        <img src="/static/common/images/thinker.png" />
+    </a>
+    <div class="user-info">
+        <?php if( $self == 1 ) { ?>
+            <a href="/settings" class="btns small dark edit">编辑</a>
+        <?php } ?>
+        <p>
+            <a href="/user" class="uname"><?php echo $user['uname']; ?></a>
+        </p>
+        <p class="situation">
+            <span><?php echo $user['info']['employment']; ?></span>
+            <span><?php echo $user['info']['position']; ?></span>
+        </p>
+        <?php if( $user['info']['industry'] != '0' ) { ?>
+            <p class="industry">
+                <span>从事行业：</span>
+                <span><?php echo $user['info']['industry']; ?></span>
+            </p>
+        <?php } ?>
+        <p class="desc">
+            <span>个人简介：</span>
+            <?php echo $user['info']['desc']; ?>
+        </p>
+    </div>
+    <div class="sp l"></div>
+    <div class="user-data l">
+        <div class="line">
+            <span>注册时间：<?php echo substr( $user['ctime'], 0, -9 ); ?></span>
+        </div>
+        <div class="line">
+            <span>发表论述：<?php echo $user['data']['post_cnt']; ?></span>
+        </div>
+        <div class="line">
+            <span>获得支持：<?php echo $user['data']['agree']; ?></span>
+        </div>
+        <div class="line">
+            <span>获得反对：<?php echo $user['data']['disagree']; ?></span>
+        </div>
+    </div>
+</div>

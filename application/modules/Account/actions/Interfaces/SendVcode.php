@@ -8,9 +8,49 @@ Class SendVcodeAction extends \Local\BaseAction {
     public function __execute() {
         $this->type = 'interface';
 
-        $this->paramsProcessing()->saveCode()->sendCode();
+        $this->paramsProcessing()->checkFreq()->checkParams()->saveCode()->sendCode();
 
         return $this->data;
+    }
+
+    private function checkParams() {
+        if( $this->params['type'] == 'email' ) {
+            $this->checkEmail();
+        }
+
+        return $this;
+    }
+
+    private function checkEmail() {
+        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
+
+        $account = $accountModel->getAccountByEmail( $this->params['to'] );
+
+        if( $account && $this->params['do'] == 'signup' ) {
+            $this->error( 'ACCOUNT_EXISTS' );
+        }
+
+        if( !$account && $this->params['do'] == 'forget' ) {
+            $this->error( 'ACCOUNT_NOTEXISTS' );
+        }
+    }
+
+    private function checkFreq() {
+        $codes = \Local\Vcode::get( [
+            'type' => $this->params['type'],
+            'use' => $this->params['do']
+        ] );
+
+        if( !count( $codes ) ) return $this;
+
+        $now = $_SERVER[ 'REQUEST_TIME' ];
+
+        foreach( $codes as $code ) {
+            if( $now - $code['time'] < 60 ) {
+                $this->error( 'FREQ_TOOHIGH' );
+            }
+        }
+        return $this;
     }
 
     private function saveCode() {
@@ -50,7 +90,7 @@ Class SendVcodeAction extends \Local\BaseAction {
     private function sendEmail() {
         $to = $this->params[ 'to' ];
 
-        $conf = \Local\Utils::loadConf( 'email', 'signup' );
+        $conf = \Local\Utils::loadConf( 'email', 'forget' );
 
         $params = array(
             'Subject' => $conf->subject,
@@ -71,7 +111,7 @@ Class SendVcodeAction extends \Local\BaseAction {
      * merge all params in query string or $_POST, or others params together.
      */
     private function paramsProcessing() {
-        $actions_list = array( 'signin', 'signup', 'forget_passwd', 'reset_passwd' );
+        $actions_list = array( 'signin', 'signup', 'forget', 'reset_passwd' );
 
         $do = $this->request->getPost( 'do' );
 

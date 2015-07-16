@@ -48,7 +48,7 @@
                             <ul class="post-list"></ul>
                             <div class="loading list-bottom"></div>
                         </div>
-                        <div class="pagination clearfix"></div>
+                        <div id="post-pagination" class="pagination clearfix"></div>
                         <div id="editor-inflow-box">
                             <div id="editor-area" class="editor-area">
                                 <?php if( $account ) { ?>
@@ -145,22 +145,7 @@
             </div>
         </div>
         <!-- templates area start -->
-        <textarea class="templates" id="post-pagination-tpl">
-            <% if( data.current != 1 ) { %>
-                <a href="###" data-pn=<%=data.current - 1 %>>上一页</a>
-            <% } %>
-            <% var list = data.list, l = list.length; %>
-            <% for( var i = 0; i < l; i += 1 ) { %>
-                <% if( list[i].pn == data.current ) { %>
-                    <span><%=list[i].pn %></span>
-                <% } else { %>
-                    <a href="###" data-pn="<%=list[i].pn %>"><%=list[i].pn %></a>
-                <% } %>
-            <% } %>
-            <% if( data.current != data.total ) {%>
-                <a href="###" data-pn="<%=+data.current + 1 %>">下一页</a>
-            <% } %>
-        </textarea>
+        <?php include TPL_PATH . 'common/pagination.inc.html'; ?>
         <textarea class="templates" id="events-list-tpl">
             <div class="nav-list">
                 <a href="###" class="scroll scroll-right r" data-direction="right">
@@ -318,6 +303,7 @@
                         <div class="comments-box">
                             <div class="loading"></div>
                             <ul class="comments-list"></ul>
+                            <div class="comment-pagination pagination clearfix"></div>
                             <form class="comments-form clearfix">
                                 <input type="text" class="comment l" placeholder="输入评论内容" />
                                 <input type="submit" class="btns submit l" value="评论" />

@@ -7,9 +7,23 @@ Class GetCommentsAction extends \Local\BaseAction {
     public function __execute() {
         $this->type = 'interface';
 
-        $this->paramsProcessing()->getComments()->getAccounts()->getReplyAccount();
+        $this->paramsProcessing()->getComments()->getTotal()->getAccounts()->getReplyAccount();
 
         return $this->data;
+    }
+
+    private function getTotal() {
+        $postDataModel = new PostDataModel();
+
+        $post_data = $postDataModel->get( $this->params['post_id'] );
+
+        if( !$post_data ) {
+            $this->error( 'SYSTEM_ERR' );
+        }
+
+        $this->data['total'] = $post_data['comments_cnt'];
+
+        return $this;
     }
 
     private function getReplyAccount() {

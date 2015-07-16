@@ -100,8 +100,16 @@ Class CommentAction extends \Local\BaseAction {
             'to' => $this->pool['reply_comment']['account_id'],
             'type' => $conf->type,
             'title' => $view->render( $conf->template, array(
+                '_part' => 'title',
+                'account' => $this->account
             ) ),
             'content' => $view->render( $conf->template, array(
+                '_part' => 'content',
+                'account' => $this->account,
+                'post' => $this->pool['post'],
+                'comment' => array(
+                    'content' => $this->params['content']
+                )
             ) )
         ];
 

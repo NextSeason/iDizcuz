@@ -1,0 +1,16 @@
+<textarea class="templates" id="post-pagination-tpl">
+    <% if( data.current != 1 ) { %>
+        <a href="###" data-pn=<%=data.current - 1 %>>上一页</a>
+    <% } %>
+    <% var list = data.list, l = list.length; %>
+    <% for( var i = 0; i < l; i += 1 ) { %>
+        <% if( list[i].pn == data.current ) { %>
+            <span><%=list[i].pn %></span>
+        <% } else { %>
+            <a href="###" data-pn="<%=list[i].pn %>"><%=list[i].pn %></a>
+        <% } %>
+    <% } %>
+    <% if( data.current != data.total ) {%>
+        <a href="###" data-pn="<%=+data.current + 1 %>">下一页</a>
+    <% } %>
+</textarea>

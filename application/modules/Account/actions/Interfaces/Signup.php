@@ -42,8 +42,8 @@ Class SignupAction extends \Local\BaseAction {
             'receiver' => $params[ 'email' ] 
         ) );
 
-        if( !$res ) {
-            $this->error( 'VCODE_ERR' );
+        if( $res !== true ) {
+            $this->error( $res );
         }
 
         return $this;
@@ -64,7 +64,7 @@ Class SignupAction extends \Local\BaseAction {
 
         $salt = md5( \Local\Utils::randomString( 20 ) );
 
-        $passwd = sha1( $params[ 'passwd' ] . $salt );
+        $passwd = \Local\Utils::passwd( $params['passwd'], $salt );
 
         $ip = ip2long( $_SERVER[ 'REMOTE_ADDR' ] );
 
@@ -121,9 +121,8 @@ Class SignupAction extends \Local\BaseAction {
         }
 
         $vcode = $request->getPost( 'vcode' );
-        $len = strlen( $vcode );
 
-        if( is_null( $vcode ) || $len != 6 ) {
+        if( is_null( $vcode ) || strlen( $vcode ) != 6 ) {
             $this->error( 'PARAMS_ERR' );
         }
 

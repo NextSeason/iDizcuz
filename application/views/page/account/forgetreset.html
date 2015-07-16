@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = '每日论点•iDizcuz'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/account/css/account.css" />
+        <style>
+            .out-of-date {
+                position : absolute;
+                top : 200px;
+                background : #FFF;
+                width : 100%;
+                padding-bottom : 20px;
+                -webkit-box-sizing : border-box;
+                -moz-box-sizing : border-box;
+                -o-box-sizing : border-box;
+                -ms-box-sizing : border-box;
+                box-sizing : border-box;
+            }
+            .out-of-date p {
+                font-size : 18px;
+                line-height : 40px;
+                padding : 0 20px;
+            }
+            .out-of-date p.top-line {
+                background : #cc3914;
+                line-height : 50px;
+                padding : 0 20px; 
+                margin-bottom : 20px;
+            }
+
+            .out-of-date p.top-line a.logo-text {
+                color : #FFF;
+            }
+            .line .tip {
+                display : block!important;
+                padding : 10px!important;
+                height : auto!important;
+                line-height : 26px!important;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="idizcuz">
+            <div class="scroll-bg boxes">
+                <div class="inner">
+                    <?php if( $error > 0 ) { ?>
+                        <div class="out-of-date">
+                            <p class="top-line"><a href="/" class="logo-text">每日论点 • iDizcuz</a></p>
+                            <p>您访问的页面已经失效，如忘记密码，请重新返回 [<a href="/forget?u=http://www.idizcuz.com">忘记密码</a>] 页面进行验证</p>
+                            <p>
+                                <a href="/">返回首页</a>
+                                -
+                                <a href="/signup">注册</a>
+                                -
+                                <a href="/signin">登录</a>
+                            </p>
+                        </div>
+                    <?php } else { ?>
+                        <div class="account-form-area">
+                            <div class="logo-text brand">iDizcuz</div>
+                            <form class="forgetreset sign">
+                                <input type="hidden" class="token" value="<?php echo $token; ?>" />
+                                <div class="line">
+                                    <input type="text" class="email" value="<?php echo $email; ?>" disabled />
+                                </div>
+                                <div class="line">
+                                    <input type="password" class="passwd" placeholder="新密码" />
+                                </div>
+                                <div class="line">
+                                    <input type="password" class="rpasswd" placeholder="确认密码" />
+                                </div>
+                                <div class="line">
+                                    <p class="tip warn">勿将此页面链接泄露给他人。<br />请于<b>2分钟</b>之内完成新密码设置操作</p>
+                                </div>
+                                <div class="line">
+                                    <input type="submit" class="btns larger signin-btn" value="确定使用新密码" />
+                                </div>
+                                <p>暂时不修改密码：<a href="/">回到主页</a> - <a href="/signup">注册</a> - <a href="/signin">登录</a></p>
+                            </form>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'forgetreset', '/static/account/packages/ForgetReset/bootstrap.js', {} );
+        </script>
+        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+    </body>
+</html>

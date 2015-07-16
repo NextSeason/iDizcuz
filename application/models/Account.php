@@ -15,13 +15,38 @@ Class AccountModel extends BaseModel {
             $this->db->beginTransaction();
 
             $stmt = $this->db->prepare( $query );
-            $stmt->bindParam( ':email', $email );
+            $stmt->bindValue( ':email', $email );
             $stmt->execute();
 
             $account = $stmt->fetch();
             $this->db->commit();
             return $account;
 
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    public function updatePasswd( $params ) {
+        $email = $params['email'];
+        $passwd = $params['passwd'];
+        $salt = $params['salt'];
+
+        $query = sprintf( 'UPDATE `accounts` SET `passwd`=:passwd, `salt`=:salt WHERE `email`="%s" LIMIT 1', $email );
+
+        try {
+            $this->db->beginTransaction();
+
+            $stmt = $this->db->prepare( $query );
+            $stmt->bindValue( ':passwd', $passwd );
+            $stmt->bindValue( ':salt', $salt );
+
+            if( !$stmt->execute() ) {
+                throw new PDOException( 'failed to update password' );
+            }
+
+            return $this->db->commit();
         } catch( PDOException $e ) {
             $this->db->rollback();
             return false;

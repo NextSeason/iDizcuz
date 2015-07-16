@@ -1,0 +1,10 @@
+<div class="nav-box clearfix">
+    <ul class="nav clearfix r">
+        <li><a href="/user/feed?u=<?php echo $user['id']; ?>" data-page="feed" <?php if( $page == 'feed' ) { echo 'class="focus"'; } ?>>最新动态</a></li>
+        <li><a href="/user/posts?u=<?php echo $user['id']; ?>" data-page="posts" <?php if( $page == 'posts' ) { echo 'class="focus"'; } ?>>发表的论述</a></li>
+        <li><a href="/user/mark?u=<?php echo $user['id']; ?>" data-page="mark" <?php if( $page == 'mark' ) { echo 'class="focus"'; } ?>>收藏</a></li>
+        <?php if( $self === 'aaa' ) { ?>
+            <li><a href="/user/removed" data-page="removed" <?php if( $page == 'removed' ) { echo 'class="focus"'; } ?>>已删除的</a></li>
+        <?php } ?>
+    </ul>
+</div>

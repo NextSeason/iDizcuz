@@ -102,4 +102,19 @@ Class Error {
         'errno' => 20,
         'errmsg' => 'comment is not exists'
     );
+
+    public static $FREQ_TOOHIGH = array(
+        'errno' => 21,
+        'errmsg' => 'operating frequency is too high'
+    );
+
+    public static $FAIL_MAXTIMES = array(
+        'errno' => 22,
+        'errmsg' => 'failed too many times to continue'
+    );
+
+    public static $LINK_INVALID = array(
+        'errno' => 23,
+        'errmsg' => 'link is invalid'
+    );
 }
