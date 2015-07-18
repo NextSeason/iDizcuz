@@ -5,8 +5,6 @@ Class MarkAction extends \Local\BaseAction {
 
     private $postDataModel;
 
-    private $markModel;
-
     public function __execute() {
         $this->type = 'interface';
 
@@ -20,8 +18,6 @@ Class MarkAction extends \Local\BaseAction {
         
         $this->checkPost();
 
-        $this->markModel = new MarkModel();
-
         $this->action();
 
         return $this->data;
@@ -32,21 +28,26 @@ Class MarkAction extends \Local\BaseAction {
 
         $act = $params[ 'act' ];
 
+        $transactionModel = new TransactionModel();
+
         if( $act == 0 ) {
-            $res = $this->markModel->remove( $params[ 'mark_id' ] );
+            $res = $transactionModel->removeMark( [
+                'mark_id' => $params[ 'mark_id' ] 
+            ] );
 
             if( !$res ) $this->error( 'SYSTEM_ERR' );
 
             return $this;
         }
         if( $act == 1 ) {
-            $mark = $this->markModel->getMarkByPostAndAccount( $params[ 'post_id' ], $this->account[ 'id' ] );
+            $markModel = new MarkModel();
+            $mark = $markModel->getMarkByPostAndAccount( $params[ 'post_id' ], $this->account[ 'id' ] );
 
             if( $mark ) {
                 $this->data[ 'mark' ] = $mark[ 'id' ];
             } else {
 
-                $mark = $this->markModel->insert( array(
+                $mark = $transactionModel->addMark( array(
                     'account_id' => $this->account[ 'id' ],
                     'post_id' => $params[ 'post_id' ]
                 ) );

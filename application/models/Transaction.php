@@ -1,6 +1,112 @@
 <?php
 
 Class TransactionModel extends BaseModel {
+    public function unfollow( $params ) {
+        $account_id = $params['account_id'];
+        $fans_id = $params['fans_id'];
+
+        $query = 'DELETE FROM `follows` WHERE `account_id`=:account_id AND `fans_id`=:fans_id LIMIT 1';
+
+        try {
+            $this->db->beginTransaction();
+
+            $stmt = $this->db->prepare( $query );
+            $stmt->bindValue( ':account_id', $account_id );
+            $stmt->bindValue( ':fans_id', $fans_id );
+
+            if( !$stmt->execute() ) {
+                throw new PDOException( 'failed to remove data from follows' );
+            }
+
+            $this->increment( $account_id, ['fans' => -1], 'accounts_data' );
+            $this->increment( $fans_id, [ 'follow' => -1 ], 'accounts_data' );
+
+            return $this->db->commit();
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    public function follow( $params ) {
+        $account_id = $params['account_id'];
+        $fans_id = $params['fans_id'];
+
+        try {
+            $this->db->beginTransaction();
+
+            $follow_id = $this->_insert( $params, 'follows' );
+
+            if( !$follow_id ) {
+                throw new PDOException( 'failed to insert data into table follows' );
+            }
+
+            $this->increment( $account_id, [ 'fans' => 1 ], 'accounts_data' );
+            $this->increment( $fans_id, ['follow' => 1 ], 'accounts_data' );
+
+            return $this->db->commit();
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    public function removeMark( $params ) {
+        $mark_id = $params['mark_id'];
+
+        try {
+            $this->db->beginTransaction();
+
+            $mark = $this->_get( $mark_id, 'marks' );
+
+            if( !$mark ) {
+                throw new PDOException( 'mark is not exists' );
+            }
+
+            $res = $this->_remove( $mark_id, 'marks' );
+
+            if( !$res ) {
+                throw new PDOException( 'failed to remove data from marks' );
+            }
+
+            $this->increment( $mark['account_id'], ['mark'=>-1], 'accounts_data' );
+
+            return $this->db->commit();
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+
+    }
+
+    public function addMark( $params ) {
+        $account_id = $params['account_id'];
+        $post_id = $params['post_id'];
+
+        try {
+            $this->db->beginTransaction();
+
+            $mark = $this->_insert( $params, 'marks' );
+
+            if( !$mark ) {
+                throw new PDOException( 'failed to insert data into table mark' );
+            }
+
+            $this->increment( $account_id, [ 'mark' => 1 ], 'accounts_data' );
+
+            $this->db->commit();
+
+            return $mark;
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+
+    }
 
     public function trashPost( $account, $id ) {
         try {
@@ -191,6 +297,7 @@ Class TransactionModel extends BaseModel {
 
             if( !$postData ) {
                 $postData = $this->_get( $data[ 'post_id' ], 'posts_data' );
+
                 if( !$postData ) {
                     throw new PDOException( 'failed to get data from table posts_data' );
                 }
@@ -203,6 +310,8 @@ Class TransactionModel extends BaseModel {
             $this->increment( $data[ 'post_id' ], [ $opinion => $value ], 'posts_data' );
 
             $this->increment( $postData[ 'topic_id' ], [ $opinion => $value ], 'topics_data' );
+
+            $this->increment( $postData['account_id'], [ $opinion => $value ], 'accounts_data' );
 
             if( $postData[ 'point_id' ] != 0 ) {
                 $this->increment( $postData[ 'point_id' ], [ $opinion => $value ], 'points_data' );

@@ -27,15 +27,8 @@ Class TopicAction extends \Local\BaseAction {
 
     private function getTopic() {
         $id = $this->params[ 'id' ];
-        if( $id ) {
-            $topic = $this->topicModel->get( $id );
 
-            if( !$topic ) {
-                $topic = $this->topicModel->getCurrentFocus();
-            }
-        } else {
-            $topic = $this->topicModel->getCurrentFocus();
-        }
+        $topic = $this->topicModel->get( $id );
 
         $topicDataModel = new TopicDataModel();
 
@@ -48,7 +41,11 @@ Class TopicAction extends \Local\BaseAction {
 
     private function paramsProcessing() {
         
-        $id = $this->request->getQuery( 'id' );
+        $id = $this->request->getParam( 'id' );
+
+        if( is_null( $id ) ) {
+            $this->redirect( '/' );
+        }
 
         $this->params[ 'id' ] = $id;
 

@@ -17,6 +17,50 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
     public function _initRoute() {
         $router = \Yaf\Dispatcher::getInstance()->getRouter();
         $router->addRoute( 'idizcuz', new \Yaf\Route\Supervar( '__r' ) );
+
+        $router->addRoute( 'topic', new \Yaf\Route\Regex( '#/topic/(\d+)#', [
+            'module' => 'topic',
+            'controller' => 'page',
+            'action' => 'topic'
+        ], [
+            1 => 'id'   
+        ] ) );
+
+        $router->addRoute( 'post', new \Yaf\Route\Rewrite( '/post/:id', [
+            'module' => 'topic',
+            'controller' => 'page',
+            'action' => 'post'
+        ] ) );
+
+        $router->addRoute( 'user-posts', new \Yaf\Route\Rewrite( '/user/posts/:id', [
+            'module' => 'user',
+            'controller' => 'page',
+            'action' => 'home'
+        ] ) );
+
+        $router->addRoute( 'user-feed', new \Yaf\Route\Rewrite( '/user/feed/:id', [
+            'module' => 'user',
+            'controller' => 'page',
+            'action' => 'home'
+        ] ) );
+
+        $router->addRoute( 'user-mark', new \Yaf\Route\Rewrite( '/user/mark/:id', [
+            'module' => 'user',
+            'controller' => 'page',
+            'action' => 'home'
+        ] ) );
+
+        $router->addRoute( 'user-follow', new \Yaf\Route\Rewrite( '/user/follow/:id', [
+            'module' => 'user',
+            'controller' => 'page',
+            'action' => 'home'
+        ] ) );
+
+        $router->addRoute( 'user-fans', new \Yaf\Route\Rewrite( '/user/fans/:id', [
+            'module' => 'user',
+            'controller' => 'page',
+            'action' => 'home'
+        ] ) );
     }
 
     public function _initSession() {

@@ -7,7 +7,7 @@ Class MessagesAction extends \Local\BaseAction {
         $this->tpl = 'message/messages';
 
         if( !$this->account ) {
-            $this->error( 'NOTLOGIN_ERR' );
+            $this->redirect( '/signin' );
         }
 
         $this->paramsProcessing()->getMessages();

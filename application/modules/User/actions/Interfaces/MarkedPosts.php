@@ -7,9 +7,41 @@ Class MarkedPostsAction extends \Local\BaseAction {
     public function __execute() {
         $this->type = 'interface';
 
-        $this->paramsProcessing()->getMarks()->getPosts();
+        $this->paramsProcessing()->getMarks()->getPosts()->getTotal();
+
+        if( $this->account ) {
+            $this->getMarked();
+        }
 
         return $this->data;
+    }
+
+    private function getTotal() {
+        $accountDataModel = new AccountDataModel();
+
+        $account_data = $accountDataModel->get( $this->params['account'] );
+
+        $this->data['total'] = $account_data['mark'];
+        return $this;
+    }
+
+    private function getMarked() {
+        if( !count( $this->data[ 'posts' ] ) ) {
+            return $this;
+        }
+        $markModel = new MarkModel();
+
+        $account_id = $this->account[ 'id' ];
+
+        foreach( $this->data['posts'] as &$post ) {
+            $mark = $markModel->getMarkByPostAndAccount( 
+                $post[ 'id' ], 
+                $account_id
+            );
+
+            $post[ 'mark' ] = $mark ? $mark[ 'id' ] : 0;
+        }
+        return $this;
     }
 
     private function getMarks() {
@@ -42,15 +74,30 @@ Class MarkedPostsAction extends \Local\BaseAction {
             return $this;
         }
 
-        $postModel = new PostModel();   
         $postDataModel = new PostDataModel();
+        $postModel = new PostModel();   
+        $topicModel = new TopicModel();
         $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
 
         foreach( $marks as $mark ) {
-            $post = $postModel->get( $mark['post_id'] );
-            $post['data'] = $postDataModel->get( $mark['post_id'] );
+            $post_id = $mark['post_id'];
+
+            $post_data = $postDataModel->get( $post_id );
+
+            if( $post_data['status'] != 0 ) {
+                $posts[] = [
+                    'id' => $post_id,
+                    'deleted' => 1,
+                    'status' => $post_data['status']
+                ];
+
+                continue;
+            }
+
+            $post = $postModel->get( $post_id );
+            $post['data'] = $post_data;
             $post['account'] = $accountModel->get( $post[ 'account_id' ], array( 'id', 'uname', 'desc' ) );
-            $post['mark'] = $mark;
+            $post['topic'] = $topicModel->get( $post['topic_id'] );
             $posts[] = $post;
         }
 

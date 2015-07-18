@@ -18,10 +18,149 @@
             <div class="boxes main">
                 <div class="inner clearfix">
                     <div class="topic-area l" data-topic-id="<?php echo $topic[ 'id' ]; ?>">
+                        <?php if( !empty( $post ) ) { ?>
+                            <div class="target-post">
+                                <?php if( $post['data']['status'] > 0 ) { ?>
+                                    <div class="removed">
+                                        此论述以被删除，您可以
+                                        [<a href="/user/feed/<?php echo $post['account_id']; ?>">访问该用户主页</a>]
+                                        或
+                                        [<a href="/topic/<?php echo $topic['id']; ?>">查看论述所在话题</a>]
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="posts" id="post-<?php echo $post['id']; ?>" data-post-id="<?php echo $post['id']; ?>">
+                                        <div class="data-line clearfix">
+                                            <div class="operates r">
+                                                <?php if( !$post['mine'] ) { ?>
+                                                    <a href="###" class="op-btn op-<?php echo $post['marked'] ? 'unmark' : 'mark'; ?>" data-action="mark" data-mark-id="<?php echo $post['marked']; ?>">
+                                                        <?php if( $post['marked'] ) { ?>
+                                                            <i class="fa fa-star"></i> 取消收藏
+                                                        <?php } else { ?>
+                                                            <i class="fa fa-star-o"></i> 收藏
+                                                        <?php } ?>
+                                                    </a>
+                                                <?php } ?>
+                                                <a href="###" class="op-btn op-share" data-action="share">分享</a>
+                                                <?php if( !$post['mine'] ) { ?>
+                                                    <a href="###" class="op-btn" data-action="report">举报</a>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="vote l">
+                                                <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><?php echo $post['data']['agree']; ?></b>)</a>
+                                                <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><?php echo $post['data']['disagree']; ?></b>)</a>
+                                            </div>
+                                            <div class="title l">
+                                                <h2><?php echo htmlspecialchars( $post['title'] ); ?></h2>
+                                                <a href="/user/feed/<?php echo $post['account_id']; ?>" class="uname" target="_blank">
+                                                    作者： <?php echo htmlspecialchars( $post['account']['uname'] ); ?>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="bubbles op-bubbles">
+                                            <a href="###" class="close"><i class="fa fa-times"></i></a>
+                                            <div class="triangle"><div class="triangle"></div></div>
+                                            <div class="inner">
+                                                <div class="mark box clearfix">
+                                                    <p class="l">收藏成功！您可以在<a href="/user/mark/<?php echo $account['id']; ?>">我的主页</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
+                                                    <div class="share-box l">
+                                                        <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
+                                                        <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
+                                                        <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
+                                                        <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
+                                                        <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
+                                                        <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="share box clearfix">
+                                                    <div class="qrcode l"></div>
+                                                    <div class="share-part l">
+                                                        <div class="bdsharebuttonbox share-btn-boxes share-box" data-tag="share_1">
+                                                            <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
+                                                            <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
+                                                            <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
+                                                            <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
+                                                            <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
+                                                            <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
+                                                        </div> 
+                                                        <div class="share-link">
+                                                            <div class="line clearfix">
+                                                                <span class="l">分享此条论述：</span>
+                                                                <a href="http://www.idizcuz.com/post/<?php echo $post['id']; ?>?fr=share" data-title="<?php echo htmlspecialchars( $post['title'] ); ?>" target="_blank" class="share-post-link link l">
+                                                                    http://www.idizcuz.com/post/<?php echo $post['id']; ?>?fr=share
+                                                                </a>
+                                                                <a href="###" class="btns l copy-link">复制链接</a>
+                                                            </div>
+                                                            <div class="line clearfix">
+                                                                <span class="l">分享当前话题：</span>
+                                                                <a href="http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share" data-title="<?php echo $topic['title']; ?>>" target="_blank" class="share-topic-link link l">
+                                                                    http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share
+                                                                </a>
+                                                                <a href="###" class="btns l copy-link">复制链接</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="report box clearfix">
+                                                    <div class="reasons l">
+                                                        <?php foreach( $reportReasons as $key => $value ) { ?>
+                                                            <label>
+                                                                <input type="radio" name="reasons-<%=data[i].id %>" value="<?php echo $key; ?>" />
+                                                                <span class="msg"><?php echo $value; ?></span>
+                                                            </label>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <div class="l desc-area">
+                                                        <textarea class="desc" placeholder="请对您举报的内容做简单描述，长度不可超过250字"></textarea>
+                                                        <p class="brand alert">*  核实举报后此论述会被删除，作者将受到相关惩罚。恶意举报也将面对相关策略惩罚</p>
+                                                        <div class="btn-line">
+                                                            <span class="tip"></span>
+                                                            <a href="###" class="btns report-submit">提交举报</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="contents rich-text">
+                                            <p><?php echo $post['content']; ?></p>
+                                        </div>
+                                        <?php if( $post['to'] != 0 ) { ?>
+                                            <div class="to-area">
+                                                <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
+                                                <a href="/post/<?php echo $post['to']['id']; ?>" target="_blank"><?php echo $post['to']['title']; ?></a>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="bottom-line">
+                                            <a href="#editor" class="reply-to r">针对本条论述发表观点</a>
+                                            <span class="ctime">发表于：<?php echo substr( $post['ctime'], 0, -9 ); ?></span>
+                                            <?php if( $post['ctime'] != $post['mtime'] ) { ?>
+                                                <span class="mtime">最后修改于：<?php echo substr( $post['mtime'], 0, -9 ); ?></span>
+                                            <?php } ?>
+                                            <a href="###" class="comments"><?php echo $post['data']['comments_cnt']; ?> 条短评</a>
+                                            <?php if( $post['mine'] ) { ?>
+                                                <a href="###" class="remove-post" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
+                                            <?php } ?>
+                                        </div>
+                                        <div class="comments-box">
+                                            <div class="loading"></div>
+                                            <ul class="comments-list"></ul>
+                                            <div class="comment-pagination pagination clearfix"></div>
+                                            <form class="comments-form clearfix">
+                                                <input type="text" class="comment l" placeholder="输入评论内容" />
+                                                <input type="submit" class="btns submit l" value="评论" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="bridge">
+                                    以下为此论述所在的『话题』内容
+                                    <a href="/topic/<?php echo $topic['id']; ?>" target="_blank">[ 单独打开话题 ]</a>
+                                </div>
+                            </div>
+                        <?php } ?>
                         <div class="title-line">
                             <h1><?php echo $type_arr[ $topic[ 'type' ] ]; ?>：<?php echo $topic[ 'title' ]; ?></h1>
                             <p>
-                                <a href="/topic/page/list" target="_blank" class="btns small dark r">更多论点</a>
+                                <a href="/topic/page/list" target="_blank" class="btns small dark r">更多话题</a>
                                 <span>发布日期：2015-09-09</span>
                             </p>
                         </div>
@@ -30,7 +169,7 @@
                         </div>
                         <?php if( strlen( $topic[ 'events' ] ) > 0 ) { ?>
                             <div class="show-events" data-events-ids="<?php echo $topic['events']; ?>">
-                                点击查看此论点相关内容和信息
+                                点击查看此话题相关资料和信息
                             </div>
                         <?php } ?>
                         <div class="events">
@@ -38,7 +177,7 @@
                         </div>
                         <div class="list-area">
                             <div class="operate-line clearfix">
-                                <span class="count">本论点共 <i><?php echo $topic['data']['post_cnt']; ?></i> 条讨论</span>
+                                <span class="count">本话题共 <i><?php echo $topic['data']['post_cnt']; ?></i> 条讨论</span>
                                 <ul class="r clearfix">
                                     <li><a href="###" class="focus sort" data-order-type="0">最新讨论</a></li>
                                     <li><a href="###" class="sort" data-order="1">最多支持</a></li>
@@ -189,7 +328,7 @@
         </textarea>
         <textarea class="templates" id="post-list-tpl">
             <% if( !data.length ) { %>
-                <div class="empty">此论点目前还没有论述，快发布您的论述，并分享给您的好友吧</div>
+                <li class="empty">此话题目前还没有论述，快发布您的论述，并分享给您的好友吧</li>
             <% } else { %>
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
                     <% if( data[i].hide ) { continue } %>
@@ -216,8 +355,8 @@
                                 <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=data[i].data.disagree %></b>)</a>
                             </div>
                             <div class="title l">
-                                <h2><a href="/topic?topic=<?php echo $topic['id']; ?>&post=<%=data[i].id %>" target="_blank"><%-data[i].title %></a></h2>
-                                <a href="/user?u=<%=data[i].account.id %>" class="uname" target="_blank">作者： <%=data[i].account.uname %><%-data[i].account.desc %></a>
+                                <h2><a href="/post/<%=data[i].id %>" target="_blank"><%-data[i].title %></a></h2>
+                                <a href="/user/feed/<%=data[i].account.id %>" class="uname" target="_blank">作者： <%=data[i].account.uname %></a>
                             </div>
                         </div>
                         <div class="bubbles op-bubbles">
@@ -225,7 +364,7 @@
                             <div class="triangle"><div class="triangle"></div></div>
                             <div class="inner">
                                 <div class="mark box clearfix">
-                                    <p class="l">收藏成功！您可以在<a href="/user/mark">我的主页</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
+                                    <p class="l">收藏成功！您可以在<a href="/user/mark/<?php echo $account['id']; ?>">我的主页</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
                                     <div class="share-box l">
                                         <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
                                         <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
@@ -249,12 +388,16 @@
                                         <div class="share-link">
                                             <div class="line clearfix">
                                                 <span class="l">分享此条论述：</span>
-                                                <a href="http://www.idizcuz.com/topic?id=<%=data[i].topic_id%>&post=<%=data[i].id %>&fr=sharelink" data-title="<%-data[i].title %>" target="_blank" class="share-post-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>post=<%=data[i].id %>&fr=sharelink</a>
+                                                <a href="http://www.idizcuz.com/post/<%=data[i].id %>?fr=share" data-title="<%-data[i].title %>" target="_blank" class="share-post-link link l">
+                                                    http://www.idizcuz.com/post/<%=data[i].id %>?fr=share
+                                                </a>
                                                 <a href="###" class="btns l copy-link">复制链接</a>
                                             </div>
                                             <div class="line clearfix">
-                                                <span class="l">分享当前论点：</span>
-                                                <a href="http://www.idizcuz.com/topic?id=<%=data[i].topic_id %>&fr=sharelink" data-title="<?php echo $topic['title']; ?>>" target="_blank" class="share-topic-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
+                                                <span class="l">分享当前话题：</span>
+                                                <a href="http://www.idizcuz.com/topic/<%=data[i].topic_id %>?fr=share" data-title="<?php echo $topic['title']; ?>>" target="_blank" class="share-topic-link link l">
+                                                    http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share
+                                                </a>
                                                 <a href="###" class="btns l copy-link">复制链接</a>
                                             </div>
                                         </div>
@@ -286,7 +429,7 @@
                         <% if( data[i].to != 0 ) { %>
                             <div class="to-area">
                                 <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
-                                <a href="/topic?post=<%=data[i].to.id %>" target="_blank"><%=data[i].to.title %></a>
+                                <a href="/post/<%=data[i].to.id %>" target="_blank"><%=data[i].to.title %></a>
                             </div>
                         <% } %>
                         <div class="bottom-line">
@@ -313,15 +456,6 @@
                 <% } %>
             <% } %>
         </textarea>
-        <textarea class="templates" id="target-post-tpl">
-            <div class="target-post">
-                <ul class="post-detail"></ul>
-                <div class="bridge">
-                    以下为此论述所在的『论点』内容
-                    <a href="/topic?id=<?php echo $topic['id']; ?>" target="_blank">[ 单独打开论点 ]</a>
-                </div>
-            </div>
-        </textarea>
         <textarea class="templates" id="new-post-tpl">
             <li class="posts new-post" id="post-<%=data.id %>" data-post-id="<%=data.id %>">
                 <div class="data-line clearfix">
@@ -333,8 +467,8 @@
                         <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b>0</b>)</a>
                     </div>
                     <div class="title l">
-                        <h2><a href="/topic?post=<%=data.id %>" target="_blank"><%-data.title %></a></h2>
-                        <a href="/user" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
+                        <h2><a href="/post/<%=data.id %>" target="_blank"><%-data.title %></a></h2>
+                        <a href="/user/feed/<?php echo $account['id']; ?>" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
                     </div>
                 </div>
                 <div class="bubbles op-bubbles">
@@ -356,12 +490,16 @@
                                 <div class="share-link">
                                     <div class="line clearfix">
                                         <span class="l">分享此条论述：</span>
-                                        <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink" data-title="<%-data.title %>" target="_blank" class="share-post-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&post=<%=data.id %>&fr=sharelink</a>
+                                        <a href="http://www.idizcuz.com/post/<%=data.id %>?fr=share" data-title="<%-data.title %>" target="_blank" class="share-post-link link l">
+                                            http://www.idizcuz.com/post/<%=data.id %>?fr=share
+                                        </a>
                                         <a href="###" class="btns l copy-link">复制链接</a>
                                     </div>
                                     <div class="line clearfix">
-                                        <span class="l">分享当前论点：</span>
-                                        <a href="http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink" data-title="<?php echo $topic['title']; ?>" target="_blank" class="share-topic-link link l">http://www.idizcuz.com/topic?id=<?php echo $topic['id']; ?>&fr=sharelink</a>
+                                        <span class="l">分享当前话题：</span>
+                                        <a href="http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share" data-title="<?php echo $topic['title']; ?>" target="_blank" class="share-topic-link link l">
+                                            http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share
+                                        </a>
                                         <a href="###" class="btns l copy-link">复制链接</a>
                                     </div>
                                 </div>
@@ -375,7 +513,7 @@
                 <% if( data.to != 0 ) { %>
                     <div class="to-area">
                         <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
-                        <a href="/topic?post=<%=data.to.id %>" target="_blank"><%=data.to.title %></a>
+                        <a href="/post/<%=data.to.id %>" target="_blank"><%=data.to.title %></a>
                     </div>
                 <% } %>
                 <div class="bottom-line">
@@ -387,12 +525,12 @@
         <textarea class="templates" id="comments-list-tpl">
             <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
                 <li id="comment-<%=data[i].id %>" class="comments-item" data-comment-id="<%=data[i].id %>">
-                    <a href="/user?u=<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
+                    <a href="/user/feed/<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
                     <p class="comments-text">
                         <% if( data[i].reply_account ) { %>
                             [ 
                             <span>回复 </span>     
-                            <a href="/user?u=<%=data[i].reply_account.id %>" target="_blank"%><%-data[i].reply_account.uname %></a>
+                            <a href="/user/feed/<%=data[i].reply_account.id %>" target="_blank"%><%-data[i].reply_account.uname %></a>
                             ]
                         <% } %>
                         <%- data[i].content %>

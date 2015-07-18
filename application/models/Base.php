@@ -8,10 +8,10 @@ Class BaseModel {
         $this->db = DB::getInstance();
     }
 
-    public function _get( $id, $table = null ) {
+    public function _get( $id, $table = null, $columns = null ) {
         if( is_null( $table ) ) $table = $this->table;
 
-        $query = 'SELECT * FROM `' . $table . '` WHERE `id` = :id';
+        $query = 'SELECT ' . $this->formatColumns( $columns ) . '  FROM `' . $table . '` WHERE `id` = :id';
 
         try {
             $stmt = $this->db->prepare( $query );
@@ -25,10 +25,10 @@ Class BaseModel {
         }
     }
 
-    public function get( $id ) {
+    public function get( $id, $columns = null ) {
         try {
             $this->db->beginTransaction();
-            $res = $this->_get( $id );
+            $res = $this->_get( $id, null, $columns );
             if( !$res ) {
                 throw new PDOException( 'failed to get data' );
             }

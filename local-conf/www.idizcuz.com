@@ -6,28 +6,20 @@
         #charset koi8-r;
 
         #access_log  logs/host.access.log  main;
-        rewrite ^/$ /topic redirect;
 
         location / {
             autoindex   on;
             root   /Users/lvchengbin/Projects/iDizcuz/public;
             index  index.php index.html index.htm;
 
+            rewrite ^/(\?.*)?$ /index.php?__r=home/page/index$1 last;
 
             if (!-e $request_filename) {
                 rewrite ^/mis(\?.*)?$ /index.php?__r=mis/page/index$1 last;
-                rewrite ^/topic(\?.*)?$ /index.php?__r=topic/page/topic$1 last;
                 rewrite ^/signin(\?.*)?$ /index.php?__r=account/page/signin$1 last;
                 rewrite ^/signup(\?.*)?$ /index.php?__r=account/page/signup$1 last;
                 rewrite ^/signout(\?.*)?$ /index.php?__r=account/page/signout$1 last;
                 rewrite ^/forget(\?.*)?$ /index.php?__r=account/page/forget$1 last;
-
-                rewrite ^/user/posts(\?.*)?$ /index.php?__r=user/page/home$1&page=posts last;
-                rewrite ^/user/agree(\?.*)?$ /index.php?__r=user/page/home$1&page=agree last;
-                rewrite ^/user/disagree(\?.*)?$ /index.php?__r=user/page/home$1&page=disagree last;
-                rewrite ^/user/mark(\?.*)?$ /index.php?__r=user/page/home$1&page=mark last;
-                rewrite ^/user/removed(\?.*)?$ /index.php?__r=user/page/home$1&page=removed last;
-                rewrite ^/user(\?.*)?$ /index.php?__r=user/page/home$1 last;
 
                 rewrite ^/settings(\?.*)?$ /index.php?__r=settings/page/info$1 last;
                 rewrite ^/messages(\?.*)?$ /index.php?__r=message/page/messages$1 last;
@@ -60,11 +52,7 @@
             root /home/iDizcuz/www;
         }
 
-        location ~* ^/67b25e25c416f15ab3e30b5672e16249.html {
-            root /home/iDizcuz/www;
-        }
-
-        location ~* ^/7a9f3666817d1f055e6c4db2c56e4f2f1436271463616.html {
+        location ~ \.html {
             root /home/iDizcuz/www;
         }
 

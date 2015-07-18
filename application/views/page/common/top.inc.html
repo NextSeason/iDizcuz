@@ -10,7 +10,7 @@
                         <?php } ?>
                     </a>
                     <ul>
-                        <li><a href="/user"><i class="fa fa-home"></i> 我的主页</a></li>
+                        <li><a href="/user/feed/<?php echo $account['id']; ?>"><i class="fa fa-home"></i> 我的主页</a></li>
                         <li><a href="/messages"><i class="fa fa-envelope"></i> 消息
                             <?php if( $account['data']['unread_msg'] > 0 ) { ?>
                                 <i class="unread-msg-remind"><?php echo $account['data']['unread_msg']; ?></i>

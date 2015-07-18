@@ -24,7 +24,7 @@
                         <ul class="topic-list">
                             <?php foreach( $topics as $topic ) { ?>
                                 <li>
-                                <h3><a href="/topic?id=<?php echo $topic['id']; ?>"><?php echo $topic['title']; ?></a></h3>
+                                <h3><a href="/topic/<?php echo $topic['id']; ?>" target="_blank"><?php echo $topic['title']; ?></a></h3>
                                     <p class="data">
                                         <span class="r">发布时间：<?php echo substr( $topic['ctime'], 0, -9 ); ?></span>
                                         <span class="">共有论述：<?php echo $topic['data']['post_cnt']; ?></span>

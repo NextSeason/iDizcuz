@@ -1,10 +1,10 @@
 <?php if( $_part == 'title' ) { ?>
-    <a href="/user?u=<?php echo $account['id']; ?>" target="_blank"><?php echo $account['uname']; ?></a> 评论了你的论述
+    <a href="/user/feed/<?php echo $account['id']; ?>" target="_blank"><?php echo $account['uname']; ?></a> 评论了你的论述
 <?php } else if( $_part = 'content' ) { ?>
     <p>
-        <a href="/user?u=<?php echo $account['id']; ?>" target="_blank"><?php echo $account['uname']; ?></a> 
+        <a href="/user/feed/<?php echo $account['id']; ?>" target="_blank"><?php echo $account['uname']; ?></a> 
         在您的论述
-        『<a href="/topic?post=<?php echo $post['id']; ?>&fr=msg" target="_blank"><?php echo $post['title']; ?></a>』
+        『<a href="/post/<?php echo $post['id']; ?>?fr=msg" target="_blank"><?php echo $post['title']; ?></a>』
         下发表评论：『<?php echo $comment['content']; ?>』
     </p>
 <?php } ?>

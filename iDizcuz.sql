@@ -41,6 +41,8 @@ CREATE TABLE `accounts_data` (
     `mark` int unsigned NOT NULL DEFAULT 0,
     `unread_msg` int unsigned NOT NULL DEFAULT 0,
     `msg_cnt` int unsigned NOT NULL DEFAULT 0,
+    `follow` int unsigned NOT NULL DEFAULT 0,
+    `fans` int unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY( `id` )
 );
 
@@ -54,6 +56,16 @@ CREATE TABLE `accounts_info` (
     `position` varchar(10) NOT NULL DEFAULT '',
     `desc` varchar(255) NOT NULL DEFAULT '',
     PRIMARY KEY(`id`)
+);
+
+DROP TABLE IF EXISTS `follows`;
+
+CREATE TABLE `follows` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `account_id` int unsigned NOT NULL,
+    `fans_id` int unsigned NOT NULL,
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (`id`)
 );
 
 DROP TABLE IF EXISTS `topics`; 

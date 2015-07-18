@@ -1,9 +1,9 @@
 <?php if( $_part == 'title' ) { ?>
-    收到 <a href="/user?u=<?php echo $account['id']; ?>" target="_blank"><?php echo $account['uname']; ?></a> 针对您的论述
+    收到 <a href="/user/feed/<?php echo $account['id']; ?>" target="_blank"><?php echo $account['uname']; ?></a> 针对您的论述
 <?php } else if( $_part = 'content' ) { ?>
     <p>
-        <a href="/user?u=<?php echo $account['id']; ?>" target="_blank"><?php echo $account['uname']; ?></a>
-        于 <?php echo $post['ctime']; ?> 发布了一篇针对您的论述。<a href="/topic?post=<?php echo $post['id']; ?>" target="_blank"><?php echo $post['title']; ?></a>
-        [<a href="/topic?post=<?php echo $post['id']; ?>" target="_blank">点击查看</a>]
+        <a href="/user/feed/<?php echo $account['id']; ?>" target="_blank"><?php echo $account['uname']; ?></a>
+        于 <?php echo $post['ctime']; ?> 发布了一篇针对您的论述。<a href="/post/<?php echo $post['id']; ?>" target="_blank"><?php echo $post['title']; ?></a>
+        [<a href="/post/<?php echo $post['id']; ?>?fr=msg" target="_blank">点击查看</a>]
     </p>
 <?php } ?>

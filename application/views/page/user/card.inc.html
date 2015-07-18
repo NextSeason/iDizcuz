@@ -1,42 +1,50 @@
 <div class="user-card clearfix">
-    <a href="/user" class="avatar">
+    <a href="/user/feed/<?php echo $user['id']; ?>" class="avatar">
         <img src="/static/common/images/thinker.png" />
     </a>
     <div class="user-info">
-        <?php if( $self == 1 ) { ?>
-            <a href="/settings" class="btns small dark edit">编辑</a>
+        <p class="uname"><?php echo $user['uname']; ?></p>
+        <div class="num-part clearfix">
+            <div class="l">
+                <b class="num"><?php echo $user['data']['follow']; ?></b>
+                <a href="/user/follow/<?php echo $user['id']; ?>">关注</a>
+            </div>
+            <div class="m l">
+                <b class="num"><?php echo $user['data']['fans']; ?></b>
+                <a href="/user/fans/<?php echo $user['id']; ?>">粉丝</a>
+            </div>
+            <div class="l">
+                <b class="num"><?php echo $user['data']['post_cnt']; ?></b>
+                <a href="/user/posts/<?php echo $user['id']; ?>">论述</a>
+            </div>
+        </div>
+        <?php if( !$self ) { ?>
+            <div class="btns-part">
+                <?php if( $followed ) { ?>
+                    <a href="###" class="btns dark unfollow" data-account-id="<?php echo $user['id']; ?>">取消关注</a>
+                <?php } else { ?>
+                    <a href="###" class="btns follow" data-account-id="<?php echo $user['id']; ?>">关 注</a>
+                <?php } ?>
+            </div>
         <?php } ?>
-        <p>
-            <a href="/user" class="uname"><?php echo $user['uname']; ?></a>
-        </p>
-        <p class="situation">
-            <span><?php echo $user['info']['employment']; ?></span>
-            <span><?php echo $user['info']['position']; ?></span>
-        </p>
-        <?php if( $user['info']['industry'] != '0' ) { ?>
-            <p class="industry">
-                <span>从事行业：</span>
-                <span><?php echo $user['info']['industry']; ?></span>
+        <div class="info-part">
+            <p class="industry lines">
+                <span><?php echo $user['info']['industry']; ?> 行业</span>
             </p>
-        <?php } ?>
-        <p class="desc">
-            <span>个人简介：</span>
-            <?php echo $user['info']['desc']; ?>
-        </p>
-    </div>
-    <div class="sp l"></div>
-    <div class="user-data l">
-        <div class="line">
-            <span>注册时间：<?php echo substr( $user['ctime'], 0, -9 ); ?></span>
+            <p class="situation lines">
+                <span><?php echo $user['info']['employment']; ?>NextSeason新季</span>
+                <span><?php echo $user['info']['position']; ?>CEO</span>
+            </p>
         </div>
-        <div class="line">
-            <span>发表论述：<?php echo $user['data']['post_cnt']; ?></span>
-        </div>
-        <div class="line">
-            <span>获得支持：<?php echo $user['data']['agree']; ?></span>
-        </div>
-        <div class="line">
-            <span>获得反对：<?php echo $user['data']['disagree']; ?></span>
+        <div class="num-part l2 clearfix">
+            <div class="l">
+                <b class="num"><?php echo $user['data']['agree']; ?></b>
+                <a href="javascript:void(0)">获得支持</a>
+            </div>
+            <div class="l">
+                <b class="num"><?php echo $user['data']['disagree']; ?></b>
+                <a href="javascript:void(0)">获得反对</a>
+            </div>
         </div>
     </div>
 </div>

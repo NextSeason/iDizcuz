@@ -2,14 +2,21 @@
 
 Class HomeAction extends \Local\BaseAction {
 
-    private $data = array();
+    private $data = [];
+    private $tpls = [
+        'posts' => 'user/posts',
+        'mark' => 'user/mark',
+        'feed' => 'user/feed',
+        'follow' => 'user/follow',
+        'fans' => 'user/follow'
+    ];
 
     public function __execute() {
-        $this->tpl = 'user/home';
-
-        $this->paramsProcessing()->check()->getData()->reportReasons();
+        $this->paramsProcessing()->check()->getData()->getFollowStatus()->reportReasons();
 
         $page = $this->params[ 'page' ];
+
+        $this->tpl = $this->tpls[ $page ];
 
         if( $page == 'removed' && !$this->account ) {
             \Local\Utils::redirect( '/signin' );
@@ -18,6 +25,23 @@ Class HomeAction extends \Local\BaseAction {
         $this->data[ 'page' ] = $page;
 
         return $this->data;
+    }
+    private function getFollowStatus() {
+        if( !$this->account ) {
+            $this->data['followed'] = false;
+            return $this;
+        }
+
+        $followModel = new FollowModel();
+
+        $follow = $followModel->getFollowStatus( [
+            'account_id' => $this->params[ 'id' ], 
+            'fans_id' => $this->account['id']
+        ] );
+
+        $this->data['followed'] = $follow ? true : false;
+
+        return $this;
     }
 
     private function reportReasons() {
@@ -30,7 +54,9 @@ Class HomeAction extends \Local\BaseAction {
 
         $id = $this->params[ 'id' ];
 
-        $user = $this->accountModel->get( $id );
+        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
+
+        $user = $accountModel->get( $id );
 
         if( !$user ) {
             $this->data[ 'user' ] = null;
@@ -53,40 +79,27 @@ Class HomeAction extends \Local\BaseAction {
         $this->data[ 'user' ] = $user;
 
         return $this;
-
     }
 
     private function check() {
-        $id = $this->params[ 'id' ];
-
-        $account = $this->account;
-
-        if( !$account && !$id ) {
-            \Local\Utils::redirect( '/signin' );
+        $this->data['self'] = false;
+        if( ( $this->account && $this->account['id'] == $this->params['id'] ) ) {
+            $this->data[ 'self' ] = true;
         }
-
-        $this->data[ 'self' ] = 0;
-
-        if( ( !is_null( $account ) && !$id ) || ( !is_null( $account ) && $account['id'] == $id ) ) {
-            $id = $account[ 'id' ];
-            $this->data[ 'self' ] = 1;
-        }
-
-        $this->params[ 'id' ] = $id;
         return $this;
     }
 
     private function paramsProcessing() {
-        $id = $this->request->getQuery( 'u' );
+        $id = $this->request->getParam( 'id' );
 
         if( !is_null( $id ) && !preg_match( '#^\d+$#', $id ) ) {
             $id = null;
         }
 
-        $page = $this->request->getQuery( 'page' );
+        $uri = $_SERVER['REQUEST_URI'];
 
-        if( is_null( $page ) ) {
-            $page = 'posts';
+        if( preg_match( '#^/user/(\w+)/\d+$#', $uri, $matches ) ) {
+            $page = $matches[1];
         }
 
         $this->params = array(

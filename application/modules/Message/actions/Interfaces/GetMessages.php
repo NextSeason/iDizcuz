@@ -10,7 +10,7 @@ Class GetMessagesAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing()->getMessages();
+        $this->paramsProcessing()->getMessages()->getExtraData();
         return $this->data;
     }
 

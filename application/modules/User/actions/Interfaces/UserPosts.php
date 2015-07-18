@@ -6,7 +6,7 @@ Class UserPostsAction extends \Local\BaseAction {
     public function __execute() {
         $this->type = 'interface';
 
-        $this->paramsProcessing()->getPosts()->getPostsData()->getTopics()->getAccount();
+        $this->paramsProcessing()->getPostsData()->getPosts()->getTopics()->getAccount()->getTotal();
 
         if( $this->account ) {
             $this->getMarked();
@@ -34,10 +34,21 @@ Class UserPostsAction extends \Local\BaseAction {
         return $this;
     }
 
-    private function getAccount() {
-        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
+    private function getTotal() {
+        $accountDataModel = new AccountDataModel();
+        $account_data = $accountDataModel->get( $this->pool['account']['id'] );
+        $this->data['total'] = $account_data['post_cnt'];
+    }
 
-        $account = $accountModel->get( $this->params[ 'account' ], array( 'id', 'uname', 'desc' ) );
+    private function getAccount() {
+        if( $this->account && $this->params['account'] == $this->account['id'] ) {
+            $account = $this->account;
+        } else {
+            $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
+            $account = $accountModel->get( $this->params[ 'account' ], array( 'id', 'uname', 'desc' ) );
+        }
+
+        $this->pool['account'] = $account;
 
         foreach( $this->data[ 'posts'] as &$post ) {
             $post[ 'account' ] = $account;
@@ -61,29 +72,46 @@ Class UserPostsAction extends \Local\BaseAction {
     }
 
     private function getPostsData() {
-        if( count( $this->data[ 'posts' ] ) == 0 ) {
-            return $this;
-        }
-
         $postDataModel = new PostDataModel();
 
-        foreach( $this->data[ 'posts' ] as &$post ) {
-            $post[ 'data' ] = $postDataModel->get( $post['id'] );
+        $params = $this->params;
+
+        $posts_data = $postDataModel->getPostsByAccount( [
+            'account' => $params[ 'account' ],
+            'start' => $params['start'],
+            'rn' => $params['rn'],
+            'columns' => null
+        ] );
+
+        if( $posts_data === false ) {
+            $this->error( 'SYSTEM_ERR' );
         }
+
+        $this->pool[ 'posts_data' ] = $posts_data;
 
         return $this;
     }
 
     private function getPosts() {
+        $posts_data = $this->pool['posts_data'];
+
+        if( !count( $posts_data ) ) {
+            $this->data['posts'] = [];
+            return $this;
+        }
+
         $postModel = new PostModel();
 
-        $posts = $postModel->getPostsByAccount( $this->params[ 'account' ], '`id` DESC' );
+        $posts = [];
 
-        if( $posts === false ) {
-            $this->error( 'SYSTEM_ERR' );
+        foreach( $posts_data as $post_data ) {
+            $post = $postModel->get( $post_data['id'] );
+            $post['data'] = $post_data;
+            $posts[] = $post;
         }
 
         $this->data[ 'posts'] = $posts;
+
         return $this;
     }
 
