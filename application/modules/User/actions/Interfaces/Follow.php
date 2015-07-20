@@ -16,6 +16,11 @@ Class FollowAction extends \Local\BaseAction {
             
         $this->action()->sendMessage();
 
+        $this->record( [
+            'type' => 4,
+            'relation_id' => $this->params['account_id']
+        ] );
+
         return $this->data;
     }
 

@@ -10,9 +10,7 @@ Class PostAction extends \Local\BaseAction {
     public function __execute() {
         $this->type = 'interface';
 
-        $this->checkAccount()->paramsProcessing();
-
-        $this->topicModel = new TopicModel();
+        $this->checkAccount()->paramsProcessing()->topicModel = new TopicModel();
         
         $topic = $this->getTopic();
 
@@ -29,9 +27,15 @@ Class PostAction extends \Local\BaseAction {
         
         $this->data[ 'id' ] = $this->addPost();
 
+        // if this post is for another post, send message to notice another account
         if( $this->params[ 'to' ] != 0 && $this->pool['to_post_data']['account_id'] != $this->account['id'] ) {
             $this->sendMessage();
         }
+
+        $this->record( [
+            'type' => 0,
+            'relation_id' => $this->data['id']
+        ] );
 
         return $this->data;
     }

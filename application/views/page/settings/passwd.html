@@ -11,27 +11,31 @@
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
-            <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
             <div class="boxes">
                 <div class="inner">
-                    <form class="passwd">
-                        <label class="clearfix">
-                            <span class="l">当前密码</span>
-                            <input type="password" class="opasswd l" />
-                        </label>
-                        <label class="clearfix">
-                            <span class="l">新的密码</span>
-                            <input type="password" class="npasswd l" />
-                        </label>
-                        <label class="clearfix">
-                            <span class="l">确认密码</span>
-                            <input type="password" class="rpasswd l" />
-                        </label>
-                        <label>
-                            <a href="###" class="btns submit">提交</a>
-                            <span class="tip"></span>
-                        </label>
-                    </form>
+                    <div class="main-area">
+                        <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
+                        <form class="passwd">
+                            <label class="clearfix">
+                                <span class="l">当前密码</span>
+                                <input type="password" class="opasswd l" />
+                            </label>
+                            <label class="clearfix">
+                                <span class="l">新的密码</span>
+                                <input type="password" class="npasswd l" />
+                            </label>
+                            <label class="clearfix">
+                                <span class="l">确认密码</span>
+                                <input type="password" class="rpasswd l" />
+                            </label>
+                            <label>
+                                <a href="###" class="btns submit">提交</a>
+                                <span class="tip"></span>
+                            </label>
+                        </form>
+                    </div>
+                    <div class="sidebar">
+                    </div>
                 </div>
             </div>
         </div>

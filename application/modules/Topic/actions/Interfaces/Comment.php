@@ -33,6 +33,11 @@ Class CommentAction extends \Local\BaseAction {
 
         $this->sendMessage();
 
+        $this->record( [
+            'type' => 3,
+            'relation_id' => $this->params['post_id']
+        ] );
+
         return $this->data;
     }
 

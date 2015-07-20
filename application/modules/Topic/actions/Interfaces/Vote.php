@@ -4,9 +4,6 @@ Class VoteAction extends \Local\BaseAction {
     private $data = array();
     private $targetPostData = null;
 
-    private $postDataModel;
-    private $voteModel;
-
     public function __execute() {
         $this->type = 'interface';
 
@@ -14,15 +11,12 @@ Class VoteAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing();
+        $this->paramsProcessing()->checkPost()->addVote();
 
-        $this->postDataModel = new PostDataModel();
-
-        $this->checkPost();
-
-        $this->voteModel = new VoteModel();
-
-        $this->addVote();
+        $this->record( [
+            'type' => $this->params['opinion'] == 1 ? 1 : 2,
+            'relation_id' => $this->params['post_id']
+        ] );
 
         return $this->data;
     }
@@ -30,7 +24,9 @@ Class VoteAction extends \Local\BaseAction {
     private function addVote() {
         $params = $this->params;
 
-        $vote = $this->voteModel->getVoteByPostAndAccount( 
+        $voteModel = new VoteModel();
+
+        $vote = $voteModel->getVoteByPostAndAccount( 
             $params[ 'post_id' ], 
             $this->account[ 'id' ],
             $params[ 'opinion' ],
@@ -51,6 +47,8 @@ Class VoteAction extends \Local\BaseAction {
                 'value' => $params[ 'value' ]
             ),  $this->targetPostData );
         }
+
+        return $this;
     }
 
     private function paramsProcessing() {
@@ -101,12 +99,15 @@ Class VoteAction extends \Local\BaseAction {
     }
 
     private function checkPost() {
-        $post = $this->postDataModel->get( $this->params[ 'post_id' ] );
-        if( !$post ) {
+        $postDataModel = new PostDataModel();
+
+        $post_data = $postDataModel->get( $this->params[ 'post_id' ] );
+
+        if( !$post_data ) {
             $this->error( 'POST_NOTEXISTS' );
         }
 
-        $this->targetPostData = $post;
+        $this->targetPostData = $post_data;
 
         return $this;
     }

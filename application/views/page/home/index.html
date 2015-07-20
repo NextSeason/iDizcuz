@@ -7,6 +7,8 @@
     </head>
     <body>
         <div id="idizcuz">
+            <?php include TPL_PATH . '/common/top.inc.html'; ?>
+            <!--
             <div class="boxes home-head">
                 <div class="inner">
                     <div class="brand-area">
@@ -16,6 +18,85 @@
                             <span class="text">尝试去成为理性且有思想的人</span>
                             <span class="rl"></span>
                         </p>
+                    </div>
+                </div>
+            </div>
+            -->
+            <div class="boxes banner">
+                <div class="inner clearfix">
+                    <div class="slide-area l">
+                        <ul>
+                            <li>
+                                <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/aaaa704x272-2.jpg)"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="account-area r">
+                        <?php if( $account ) { ?>
+                            <div class="user-card clearfix">
+                                <a href="/user/activities/<?php echo $account['id']; ?>" class="avatar small"></a>
+                                <div class="user-info">
+                                    <p class="uname"><?php echo htmlspecialchars( $account['uname'] ); ?></p>
+                                    <div class="num-part clearfix">
+                                        <div class="l">
+                                            <b class="num"><?php echo $account['data']['follow']; ?></b>
+                                            <a href="/user/follow/<?php echo $account['id']; ?>">关注</a>
+                                        </div>
+                                        <div class="m l">
+                                            <b class="num"><?php echo $account['data']['fans']; ?></b>
+                                            <a href="/user/fans/<?php echo $account['id']; ?>">粉丝</a>
+                                        </div>
+                                        <div class="l">
+                                            <b class="num"><?php echo $account['data']['post_cnt']; ?></b>
+                                            <a href="/user/posts/<?php echo $account['id']; ?>">论述</a>
+                                        </div>
+                                    </div>
+                                    <div class="info-part">
+                                        <p class="industry lines">
+                                            <span>电子商务 行业</span>
+                                        </p>
+                                        <p class="situation lines">
+                                            <span>NextSeason新季</span>
+                                            <span>CEO</span>
+                                        </p>
+                                    </div>
+                                    <div class="num-part l2 clearfix">
+                                        <div class="l">
+                                            <b class="num"><?php echo $account['data']['agree']; ?></b>
+                                            <a href="javascript:void(0)">获得支持</a>
+                                        </div>
+                                        <div class="l">
+                                            <b class="num"><?php echo $account['data']['disagree']; ?></b>
+                                            <a href="javascript:void(0)">获得反对</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } else { ?>
+                            <a href="/signup" class="btns join-btn">加入每日论点 • iDizcuz</a>
+                            <div class="sign-box">
+                                <form class="signin">
+                                    <p class="tt">帐号登录</p>
+                                    <div class="line">
+                                        <input type="text" class="email" placeholder="邮箱">
+                                    </div>
+                                    <div class="line">
+                                        <input type="password" class="passwd" placeholder="密码">
+                                    </div>
+                                    <div class="line">
+                                        <p class="tip"></p>
+                                    </div>
+                                    <div class="line">
+                                        <a href="/forget" class="redirect forget">忘记密码？</a>
+                                        <span class="sp">|</span>
+                                        <a href="/signup" class="redirect">立即注册</a>
+                                    </div>
+                                    <div class="line">
+                                        <input type="submit" class="btns larger signin-btn" value="登录">
+                                    </div>
+                                </form>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

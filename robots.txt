@@ -1,0 +1,9 @@
+User-Agent: *
+Disallow: /user
+Disallow: /settings
+Disallow: /messages
+Disallow: /signin
+Disallow: /signup
+Disallow: /forget
+Disallow: /?*
+Disallow: /*?

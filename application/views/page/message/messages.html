@@ -13,20 +13,22 @@
             <div class="boxes main">
                 <div class="inner clearfix">
                     <div class="content-box l">
-                        <ul class="nav clearfix">
-                            <li>
-                                <a href="/messages" class="<?php if( $tab == 1 ) { echo 'focus'; } ?>">系统通知</a>
-                            </li>
-                            <li>
-                                <a href="/messages?tab=2&type=2" class="<?php if( $tab == 2 ) { echo 'focus'; } ?>">收到论述</a>
-                            </li>
-                            <li>
-                                <a href="/messages?tab=3&type=3" class="<?php if( $tab == 3 ) { echo 'focus'; } ?>">收到评论</a>
-                            </li>
-                            <li>
-                                <a href="/messages?tab=4&type=4" class="<?php if( $tab == 4 ) { echo 'focus'; } ?>">收到回复</a>
-                            </li>
-                        </ul>
+                        <div class="sub-nav clearfix">
+                            <ul class="nav clearfix">
+                                <li>
+                                    <a href="/messages" class="<?php if( $tab == 1 ) { echo 'focus'; } ?>">系统通知</a>
+                                </li>
+                                <li>
+                                    <a href="/messages?tab=2&type=2" class="<?php if( $tab == 2 ) { echo 'focus'; } ?>">收到论述</a>
+                                </li>
+                                <li>
+                                    <a href="/messages?tab=3&type=3" class="<?php if( $tab == 3 ) { echo 'focus'; } ?>">收到评论</a>
+                                </li>
+                                <li>
+                                    <a href="/messages?tab=4&type=4" class="<?php if( $tab == 4 ) { echo 'focus'; } ?>">收到回复</a>
+                                </li>
+                            </ul>
+                        </div>
                         <ul class="messages-list">
                             <?php if( count( $messages ) == 0 ) { ?>
                                 <li class="empty">这里暂时没有消息</li>
@@ -66,9 +68,9 @@
                         <% } %>
                     </div>
                 <% } %>
-                <a href="/user/feed/<%=data.id %>" class="avatar small empty l"><img src="/static/common/images/thinker.png" /></a>
+                <a href="/user/activities/<%=data.id %>" class="avatar small empty l"><img src="/static/common/images/thinker.png" /></a>
                 <div class="info-box l">
-                    <a href="/user/feed/<%=data.id %>" class="uname"><%-data.uname %></a>
+                    <a href="/user/activities/<%=data.id %>" class="uname"><%-data.uname %></a>
                     <div class="num-part clearfix">
                         <a href="/user/follow/<%=data.id %>" target="_blank">关注</a>
                         <b class="num"><%=data.data.follow %></b>

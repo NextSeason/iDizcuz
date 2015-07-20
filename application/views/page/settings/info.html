@@ -11,76 +11,80 @@
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
-            <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
             <div class="boxes">
-                <div class="inner">
-                    <form class="info-form" id="avatar-form">
-                        <div class="parts clearfix">
-                            <div class="s-title l">
-                                <span>头像</span>
-                            </div>
-                            <div class="s-main l clearfix">
-                                <img src="/static/common/images/thinker.png" class="avatar"/>
-                                <div class="upload-btn">
-                                    <a href="###" class="btns file">选择头像</a>
-                                    <input type="file" class="real-file-btn" />
-                                    <p>请上传小于2M的JPG或PNG图片，（建议尺寸160px * 160px）</p>
+                <div class="inner clearfix">
+                    <div class="main-area">
+                        <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
+                        <form class="info-form" id="avatar-form">
+                            <div class="parts clearfix">
+                                <div class="s-title l">
+                                    <span>头像</span>
+                                </div>
+                                <div class="s-main l clearfix">
+                                    <a href="###" class="avatar l"></a>
+                                    <div class="upload-btn">
+                                        <a href="###" class="btns file">选择头像</a>
+                                        <input type="file" class="real-file-btn" />
+                                        <p>请上传小于2M的JPG或PNG图片，（建议尺寸160px * 160px）</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <form class="info-form" id="info-form">
-                        <div class="parts clearfix">
-                            <div class="s-title l">
-                                <span>性别</span>
+                        </form>
+                        <form class="info-form" id="info-form">
+                            <div class="parts clearfix">
+                                <div class="s-title l">
+                                    <span>性别</span>
+                                </div>
+                                <div class="s-main l clearfix sex-area">
+                                    <label>
+                                        <input type="radio" value="1" name="sex" <?php if( $accountInfo['sex'] == 1 ) { echo 'checked'; } ?>> 男
+                                    </label>
+                                    <label>
+                                        <input type="radio" value="2" name="sex" <?php if( $accountInfo['sex'] == 2 ) { echo 'checked'; } ?>> 女
+                                    </label>
+                                </div>
                             </div>
-                            <div class="s-main l clearfix sex-area">
-                                <label>
-                                    <input type="radio" value="1" name="sex" <?php if( $accountInfo['sex'] == 1 ) { echo 'checked'; } ?>> 男
-                                </label>
-                                <label>
-                                    <input type="radio" value="2" name="sex" <?php if( $accountInfo['sex'] == 2 ) { echo 'checked'; } ?>> 女
-                                </label>
-                            </div>
-                        </div>
-                        <div class="parts clearfix">
-                            <div class="s-title l">
-                                <span>所在行业</span>
-                            </div>
-                            <div class="s-main l">
-                                <div class="industries-selection select-helper"><select class="industries">
+                            <div class="parts clearfix">
+                                <div class="s-title l">
+                                    <span>所在行业</span>
+                                </div>
+                                <div class="s-main l">
+                                    <div class="industries-selection select-helper"><select class="industries">
                                         <option value="0">选择行业</option>
                                         <?php foreach( $industries as $k => $v ) { ?>
                                         <option value="<?php echo $k; ?>" <?php if( $k == $accountInfo['industry'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
                                         <?php } ?>
                                     </select></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="parts clearfix">
-                            <div class="s-title l">
-                                <span>目前状况</span>
+                            <div class="parts clearfix">
+                                <div class="s-title l">
+                                    <span>目前状况</span>
+                                </div>
+                                <div class="s-main l">
+                                    <input type="text" class="employment" value="<?php echo $accountInfo['employment']; ?>" placeholder="公司/学校/机构等" /> 
+                                    <input type="text" class="small position" value="<?php echo $accountInfo['position']; ?>" placeholder="职位" />
+                                </div>
                             </div>
-                            <div class="s-main l">
-                                <input type="text" class="employment" value="<?php echo $accountInfo['employment']; ?>" placeholder="公司/学校/机构等" /> 
-                                <input type="text" class="small position" value="<?php echo $accountInfo['position']; ?>" placeholder="职位" />
+                            <div class="parts clearfix">
+                                <div class="s-title l">
+                                    <span>个人简介</span>
+                                </div>
+                                <div class="s-main l">
+                                    <textarea class="desc"><?php echo $accountInfo['desc']; ?></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="parts clearfix">
-                            <div class="s-title l">
-                                <span>个人简介</span>
+                            <div class="parts clearfix">
+                                <div class="s-title l">&nbsp;</div>
+                                <div class="s-main l">
+                                    <a href="###" class="btns submit">提交</a>
+                                    <span class="tip"></span>
+                                </div>
                             </div>
-                            <div class="s-main l">
-                                <textarea class="desc"><?php echo $accountInfo['desc']; ?></textarea>
-                            </div>
-                        </div>
-                        <div class="parts clearfix">
-                            <div class="s-title l">&nbsp;</div>
-                            <div class="s-main l">
-                                <a href="###" class="btns submit">提交</a>
-                                <span class="tip"></span>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="sidebar">
+                    </div>
                 </div>
             </div>
             <div id="upload-dialog" class="dialogs">

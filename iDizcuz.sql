@@ -258,3 +258,14 @@ CREATE TABLE `messages` (
     `ctime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );
+
+DROP TABLE IF EXISTS `activities`;
+
+CREATE TABLE `activities` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `type` tinyint unsigned NOT NULL DEFAULT 0,
+    `account_id` int unsigned NOT NULL DEFAULT 0,
+    `relation_id` int unsigned NOT NULL DEFAULT 0,
+    `ctime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY( `id` )
+);

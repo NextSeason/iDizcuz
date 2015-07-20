@@ -26,6 +26,12 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
             1 => 'id'   
         ] ) );
 
+        $router->addRoute( 'list', new \Yaf\Route\Rewrite( '/list/:id', [
+            'module' => 'topic',
+            'controller' => 'page',
+            'action' => 'list'
+        ] ) );
+
         $router->addRoute( 'post', new \Yaf\Route\Rewrite( '/post/:id', [
             'module' => 'topic',
             'controller' => 'page',
@@ -38,7 +44,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
             'action' => 'home'
         ] ) );
 
-        $router->addRoute( 'user-feed', new \Yaf\Route\Rewrite( '/user/feed/:id', [
+        $router->addRoute( 'user-activities', new \Yaf\Route\Rewrite( '/user/activities/:id', [
             'module' => 'user',
             'controller' => 'page',
             'action' => 'home'

@@ -79,5 +79,21 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         }
     }
 
+    protected function record( $params ) {
+        if( !$this->account ) {
+            return $this;
+        }
+
+        $activityModel = new \ActivityModel();
+
+        $activityModel->insert( [
+            'type' => $params[ 'type' ],
+            'account_id' => $this->account['id'],
+            'relation_id' => $params['relation_id']
+        ] );
+
+        return $this;
+    }
+
     abstract protected function __execute();
 }

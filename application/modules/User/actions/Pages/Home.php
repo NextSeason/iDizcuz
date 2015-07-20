@@ -6,7 +6,7 @@ Class HomeAction extends \Local\BaseAction {
     private $tpls = [
         'posts' => 'user/posts',
         'mark' => 'user/mark',
-        'feed' => 'user/feed',
+        'activities' => 'user/activities',
         'follow' => 'user/follow',
         'fans' => 'user/follow'
     ];

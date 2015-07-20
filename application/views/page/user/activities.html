@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php 
+            $title = '';
+        ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/activities.css" />
+    </head>
+    <body>
+        <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
+            <?php include TPL_PATH . '/common/top.inc.html'; ?>
+            <div class="boxes main">
+                <div class="inner clearfix">
+                    <div class="main-area l">
+                        <?php include TPL_PATH . '/user/nav.inc.html'; ?>
+                        <ul class="activities-list"></ul>
+                        <a class="load-more">
+                            加载更多动态
+                            <i class="fa fa-angle-double-down"></i>
+                        </a>
+                    </div>
+                    <div class="sidebar">
+                        <?php include TPL_PATH . '/user/card.inc.html'; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var iDizcuz = new J();
+            iDizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js', {});
+        </script>
+        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+    </body>
+</html>

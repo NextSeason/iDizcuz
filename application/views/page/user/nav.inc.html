@@ -1,6 +1,6 @@
-<div class="nav-box clearfix">
-    <ul class="nav clearfix r">
-        <li><a href="/user/feed/<?php echo $user['id']; ?>" data-page="feed" <?php if( $page == 'feed' ) { echo 'class="focus"'; } ?>>最新动态</a></li>
+<div class="sub-nav clearfix">
+    <ul class="nav clearfix">
+        <li><a href="/user/activities/<?php echo $user['id']; ?>" data-page="activities" <?php if( $page == 'activities' ) { echo 'class="focus"'; } ?>>最新动态</a></li>
         <li><a href="/user/posts/<?php echo $user['id']; ?>" data-page="posts" <?php if( $page == 'posts' ) { echo 'class="focus"'; } ?>>发表的论述</a></li>
         <li><a href="/user/mark/<?php echo $user['id']; ?>" data-page="mark" <?php if( $page == 'mark' ) { echo 'class="focus"'; } ?>>收藏</a></li>
         <li><a href="/user/follow/<?php echo $user['id']; ?>" data-page="mark" <?php if( $page == 'follow' ) { echo 'class="focus"'; } ?>>关注</a></li>

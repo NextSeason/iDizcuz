@@ -3,14 +3,14 @@
         <?php if( $account ) { ?>
             <ul class="account">
                 <li>
-                    <a href="/user">
+                    <a href="/user/activities/<?php echo $account['id']; ?>">
                         <?php echo $account[ 'uname' ]; ?>
                         <?php if( $account['data']['unread_msg'] > 0 ) { ?>
                             <i class="unread-msg-remind"><?php echo $account['data']['unread_msg']; ?></i>
                         <?php } ?>
                     </a>
                     <ul>
-                        <li><a href="/user/feed/<?php echo $account['id']; ?>"><i class="fa fa-home"></i> 我的主页</a></li>
+                        <li><a href="/user/activities/<?php echo $account['id']; ?>"><i class="fa fa-home"></i> 我的主页</a></li>
                         <li><a href="/messages"><i class="fa fa-envelope"></i> 消息
                             <?php if( $account['data']['unread_msg'] > 0 ) { ?>
                                 <i class="unread-msg-remind"><?php echo $account['data']['unread_msg']; ?></i>
@@ -28,6 +28,7 @@
                 <a href="/signin">登录</a>
             </div>
             <?php } ?>
-        <a href="/" class="logo-text light">每日论点 • iDizcuz</a>
+        <a href="/" class="logo-text">每日论点 • iDizcuz</a>
     </div>
 </div>
+<?php include TPL_PATH . '/common/nav.inc.html'; ?>
