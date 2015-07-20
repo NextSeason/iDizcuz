@@ -23,7 +23,7 @@
                                 <?php if( $post['data']['status'] > 0 ) { ?>
                                     <div class="removed">
                                         此论述以被删除，您可以
-                                        [<a href="/user/feed/<?php echo $post['account_id']; ?>">访问该用户主页</a>]
+                                        [<a href="/user/activities/<?php echo $post['account_id']; ?>">访问该用户主页</a>]
                                         或
                                         [<a href="/topic/<?php echo $topic['id']; ?>">查看论述所在话题</a>]
                                     </div>
@@ -51,7 +51,7 @@
                                             </div>
                                             <div class="title l">
                                                 <h2><?php echo htmlspecialchars( $post['title'] ); ?></h2>
-                                                <a href="/user/feed/<?php echo $post['account_id']; ?>" class="uname" target="_blank">
+                                                <a href="/user/activities/<?php echo $post['account_id']; ?>" class="uname" target="_blank">
                                                     作者： <?php echo htmlspecialchars( $post['account']['uname'] ); ?>
                                                 </a>
                                             </div>
@@ -356,7 +356,7 @@
                             </div>
                             <div class="title l">
                                 <h2><a href="/post/<%=data[i].id %>" target="_blank"><%-data[i].title %></a></h2>
-                                <a href="/user/feed/<%=data[i].account.id %>" class="uname" target="_blank">作者： <%=data[i].account.uname %></a>
+                                <a href="/user/activities/<%=data[i].account.id %>" class="uname" target="_blank">作者： <%=data[i].account.uname %></a>
                             </div>
                         </div>
                         <div class="bubbles op-bubbles">
@@ -468,7 +468,7 @@
                     </div>
                     <div class="title l">
                         <h2><a href="/post/<%=data.id %>" target="_blank"><%-data.title %></a></h2>
-                        <a href="/user/feed/<?php echo $account['id']; ?>" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
+                        <a href="/user/activities/<?php echo $account['id']; ?>" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
                     </div>
                 </div>
                 <div class="bubbles op-bubbles">
@@ -525,12 +525,12 @@
         <textarea class="templates" id="comments-list-tpl">
             <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
                 <li id="comment-<%=data[i].id %>" class="comments-item" data-comment-id="<%=data[i].id %>">
-                    <a href="/user/feed/<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
+                    <a href="/user/activities/<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
                     <p class="comments-text">
                         <% if( data[i].reply_account ) { %>
                             [ 
                             <span>回复 </span>     
-                            <a href="/user/feed/<%=data[i].reply_account.id %>" target="_blank"%><%-data[i].reply_account.uname %></a>
+                            <a href="/user/activities/<%=data[i].reply_account.id %>" target="_blank"%><%-data[i].reply_account.uname %></a>
                             ]
                         <% } %>
                         <%- data[i].content %>

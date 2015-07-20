@@ -1,7 +1,9 @@
 <?php
 
 Class IndexAction extends \Local\BaseAction {
-    private $data = [];
+    private $data = [
+        'nav' => 'home'
+    ];
 
     public function __execute() {
         $this->tpl = 'home/index';

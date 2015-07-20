@@ -35,7 +35,7 @@ Class CommentAction extends \Local\BaseAction {
 
         $this->record( [
             'type' => 3,
-            'relation_id' => $this->params['post_id']
+            'relation_id' => $this->data['comment_id']
         ] );
 
         return $this->data;

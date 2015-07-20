@@ -2,7 +2,9 @@
 
 Class PostAction extends \Local\BaseAction {
 
-    private $data = array();
+    private $data = [
+        'nav' => 'topic'
+    ];
 
     private $topicModel;
 

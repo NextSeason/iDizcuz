@@ -1,0 +1,39 @@
+<% var postUrl = '/post/' + post.id; %>
+<div class="posts" data-post-id="<%=post.id %>">
+    <div class="data-line clearfix">
+        <div class="operates r">
+            <% var mark = +post.mark %>
+            <a href="<%=postUrl %>" target="_blank" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-mark-id="<%=mark %>">
+                <% if ( mark ) { %>
+                    <i class="fa fa-star"></i> 取消收藏
+                <% } else { %>
+                    <i class="fa fa-star-o"></i> 收藏
+                <% } %>
+            </a>
+            <a href="<%=postUrl %>" target="_blank" class="op-btn" data-action="share">分享</a>
+            <a href="<%=postUrl %>" target="_blank" class="op-btn" data-action="report">举报</a>
+        </div>
+        <div class="vote l">
+            <a href="<%=postUrl %>" target="_blank" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree %></b>)</a>
+            <a href="<%=postUrl %>" target="_blank" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
+        </div>
+        <div class="title l">
+            <h2><a href="/post/<%=post.id %>" target="_blank"><%-post.title %></a></h2>
+            <a href="/user/activities/<%=post.account_id %>" target="_blank" class="uname">作者： <%-post.account.uname %><%-post.account.desc %></a>
+        </div>
+    </div>
+    <div class="topic-line">
+        <a href="/topic/<%=post.topic.id %>" target="_blank" class="uname">所在话题： <%-post.topic.title%></a>
+    </div>
+    <div class="contents rich-text">
+        <p><%=post.content %></p>
+    </div>
+    <div class="bottom-line">
+        <a href="<%=postUrl %>" target="_blank" class="reply r">针对本条论述发表观点</a>
+        <span class="ctime">发表于：<%=post.ctime.substr(0,10) %></span>
+        <% if( post.mtime != post.ctime ) { %>
+            <span class="mtime">修改于：<%=post.mtime.substr(0,10) %></span>
+        <% } %>
+        <a href="<%=postUrl %>" target="_blank" class="comments"><%-post.data.comments_cnt %>条短评</a>
+    </div>
+</div>

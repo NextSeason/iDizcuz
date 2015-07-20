@@ -10,6 +10,10 @@ Class FollowAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
+        if( $this->account['data']['follow'] >= 1000 ) {
+            $this->error( 'REACHED_MAX' );
+        }
+
         $this->paramsProcessing()->check();
 
         $this->transactionModel = new TransactionModel();
@@ -72,11 +76,12 @@ Class FollowAction extends \Local\BaseAction {
             $this->error( 'SYSTEM_ERR' );
         }
 
-        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
 
-        $account = $accountModel->get( $this->params['account_id'] );
+        $accountDataModel = new AccountDataModel();
 
-        if( !$account ) {
+        $account_data = $accountDataModel->get( $this->params['account_id'], ['id'] );
+
+        if( !$account_data ) {
             $this->error( 'ACCOUNT_NOTEXISTS' );
         }
 

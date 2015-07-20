@@ -47,6 +47,41 @@ Class GetActivitiesAction extends \Local\BaseAction {
 
     }
 
+    private function getComment( $id ) {
+        $commentModel = new CommentModel();
+        $comment = $commentModel->get( $id );
+
+        $postDataModel = new PostDataModel();
+        $post_data = $postDataModel->get( $comment['post_id'] );
+
+        if( !$post_data || $post_data['status'] > 0 ) {
+            $comment['post'] = null;
+        } else {
+            $postModel = new PostModel();
+            $post = $postModel->get( $comment['post_id'] );
+            $post['data'] = $post_data;
+            $comment['post'] = $post;
+        }
+
+        return $comment;
+    }
+
+    private function getAccount( $id ) {
+        $accountModel = new AccountModel();
+        $account = $accountModel->get( $id, ['id','uname', 'desc'] );
+
+        if( !$account ) {
+            return null;
+        }
+
+        $accountDataModel = new AccountDataModel();
+        $account['data'] = $accountDataModel->get( $id );
+
+        $accountInfoModel = new AccountInfoModel();
+        $account['info'] = $accountInfoModel->get( $id );
+        return $account;
+    }
+
     private function getExtra() {
         if( !count( $this->data['activities'] ) ) {
             return $this;
@@ -58,10 +93,13 @@ Class GetActivitiesAction extends \Local\BaseAction {
                 case 0 :
                 case 1 :
                 case 2 :
-                case 3 :
                     $activity['extra'] = $this->getPost( $activity['relation_id'] );
                     break;
+                case 3 :
+                    $activity['extra'] = $this->getComment( $activity['relation_id'] );
+                    break;
                 case 4 :
+                    $activity['extra'] = $this->getAccount( $activity['relation_id'] );
                     break;
                 default :
                     $activity['extra'] = null;
@@ -98,6 +136,12 @@ Class GetActivitiesAction extends \Local\BaseAction {
 
         if( $activities === false ) {
             $this->error( 'SYSTEM_ERR' );
+        }
+
+        $accountModel = new AccountModel();
+
+        foreach( $activities as &$activity ) {
+            $activity['account'] = $accountModel->get( $activity['account_id'], ['id','uname'] );
         }
         $this->data['activities'] = $activities;
 

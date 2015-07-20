@@ -107,6 +107,10 @@ Class VoteAction extends \Local\BaseAction {
             $this->error( 'POST_NOTEXISTS' );
         }
 
+        if( $this->account['id'] == $post_data['account_id'] ) {
+            $this->error( 'PARAMS_ERR' );
+        }
+
         $this->targetPostData = $post_data;
 
         return $this;

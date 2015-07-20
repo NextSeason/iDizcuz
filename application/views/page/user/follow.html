@@ -6,7 +6,6 @@
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
         <link rel="stylesheet" type="text/css" href="/static/user/css/home.css" />
-        <link rel="stylesheet" type="text/css" href="/static/user/css/follow.css" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -30,46 +29,9 @@
                 <li class="empty"></li>
             <% } else { %>
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
-                    <% var item = data[i], id = item.id; %>  
-                    <li class="clearfix">
-                        <% if( item.self != 1 ) { %>
-                            <div class="btns-part r">
-                                <% if( item.followed == 1 ) { %>
-                                    <a href="###" class="btns dark unfollow" data-account-id="<%=id %>">取消关注</a>
-                                <% } else { %>
-                                    <a href="###" class="btns follow" data-account-id="<%=id%>">关 注</a>
-                                <% } %>
-                            </div>
-                        <% } %>
-                        <a href="/user/activities/<%=id %>" class="avatar small empty l"></a>
-                        <div class="info-box l">
-                            <a href="/user/activities/<%=id %>" class="uname"><%-item.uname %></a>
-                            <div class="num-part clearfix">
-                                <a href="/user/follow/<%=id %>">关注</a>
-                                <b class="num"><%=item.data.follow %></b>
-                                <span class="sp">|</span>
-                                <a href="/user/fans/<%=id %>">粉丝</a>
-                                <b class="num"><%=item.data.fans %></b>
-                                <span class="sp">|</span>
-                                <a href="/user/posts/<%=id %>">论述</a>
-                                <b class="num"><%=item.data.post_cnt %></b>
-                                <span class="sp">|</span>
-                                <a href="javascript:void(0)">获得支持</a>
-                                <b class="num"><%=item.data.agree %></b>
-                                <span class="sp">|</span>
-                                <a href="javascript:void(0)">获得反对</a>
-                                <b class="num"><%=item.data.disagree %></b>
-                            </div>
-                            <div class="info-part">
-                                <span>所在行业：<?php echo $user['info']['industry']; ?></span>
-                                <span class="sp">|</span>
-                                <span><?php echo $user['info']['employment']; ?>NextSeason新季</span>
-                                <span><?php echo $user['info']['position']; ?>CEO</span>
-                            </div>
-                            <div class="desc-part">
-                                <span>个人简介：创业一定会成功的！</span>
-                            </div>
-                        </div>
+                    <% var card = data[i]; %>  
+                    <li>
+                        <?php include TPL_PATH . '/user/card_h.tpl.html'; ?>
                     </li>
                 <% } %>
             <% } %>

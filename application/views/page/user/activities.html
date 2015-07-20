@@ -15,7 +15,7 @@
                 <div class="inner clearfix">
                     <div class="main-area l">
                         <?php include TPL_PATH . '/user/nav.inc.html'; ?>
-                        <ul class="activities-list"></ul>
+                        <ul class="activity-list"></ul>
                         <a class="load-more">
                             加载更多动态
                             <i class="fa fa-angle-double-down"></i>
@@ -27,9 +27,50 @@
                 </div>
             </div>
         </div>
+        <textarea class="templates" id="activity-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                <% var item = data[i], type = item.type; %>
+                <li>
+                    <div class="activities">
+                        <div class="hline clearfix">
+                            <span class="date r"><%=item.ctime.substr(0,10) %></span>
+                            <a href="/user/activities/<%=item.account_id %>" target="_blank"><%-item.account.uname %></a>
+                            <% if( type == 0 ) { %>
+                                发布了新的论述
+                            <% } else if( type == 1 ) {%>
+                                支持了论述
+                            <% } else if( type == 2 ) {%>
+                                反对了论述
+                            <% } else if( type == 3 ) {%>
+                                评论了论述
+                            <% } else if( type == 4 ) {%>
+                                关注了 <a href="/user/activities/<%=item.extra.id %>"><%-item.extra.uname %></a>
+                            <% } %>
+                        </div>
+                        <div class="extra">
+                            <% if( type == 0 || type == 1 || type == 2 ) { %>
+                                <% var post = item.extra; %>
+                                <?php include TPL_PATH . '/user/post.tpl.inc.html'; ?>
+                            <% } else if( type == 3 ) {%>
+                                <% var comment = item.extra; %>
+                                <div class="extra-comments">
+                                    <p>评论内容：<%-comment.content %></p>
+                                </div>
+                                <div class="relation_post">
+                                    <p>相关论述：<a href="/post/<%=comment.post.id %>"><%-comment.post.title %></a></p>
+                                </div>
+                            <% } else if( type == 4 ) {%>
+                                <% var card = item.extra; %>
+                                <?php include TPL_PATH . '/user/card_h.tpl.html'; ?>
+                            <% } %>
+                        </div>
+                    </div>
+                </li>
+            <% } %>
+        </textarea>
         <script>
             var iDizcuz = new J();
-            iDizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js', {});
+            iDizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js', { self : <?php echo $self ? 1 : 0; ?>});
         </script>
         <?php include TPL_PATH . '/common/foot.inc.html'; ?>
     </body>
