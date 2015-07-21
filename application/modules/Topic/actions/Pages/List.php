@@ -9,42 +9,49 @@ Class ListAction extends \Local\BaseAction {
 
         $this->paramsProcessing();
 
-        $this->getTopics()->getTopicData();
+        $this->getTopicsData()->getTopics();
 
         return $this->data;
     }
 
     private function getTopics() {
+        $topics_data = $this->pool['topics_data'];
+
+        if( !count( $topics_data ) ) {
+            $this->data['topics'] = [];
+            return $this;
+        }
 
         $topicModel = new TopicModel();
 
-        $params = $this->params;
-        $rn = $this->rn;
+        $topics = [];
 
-        $start = $rn * $params[ 'pn' ] + 1;
-        
-        $topics = $topicModel->getTopics( $this->params[ 'type' ] );
-
-        if( !$topics ) {
+        foreach( $topics_data as $topic_data ) {
+            $topic = $topicModel->get( $topic_data['id'] );
+            $topic['data'] = $topic_data;
+            $topics[] = $topic;
         }
 
         $this->data['topics'] = $topics;
         return $this;
     }
 
-    private function getTopicData() {
+    private function getTopicsData() {
+        $params = $this->params;
 
-        $topics = $this->data[ 'topics' ];
+        $topicDataModel = new TopicDataModel();
 
-        if( count( $topics ) > 0 ) {
-            $topicDataModel = new TopicDataModel();
+        $topics_data = $topicDataModel->getTopicsData( [
+            'type' => $params['type'],
+            'start' => $params['start'],
+            'rn' => $this->rn
+        ] );
 
-            foreach( $topics as &$topic ) {
-                $topic[ 'data' ] = $topicDataModel->get( $topic['id'] );
-            }
-
-            $this->data['topics'] = $topics;
+        if( $topics_data === false ) {
+            // err
         }
+
+        $this->pool['topics_data'] = $topics_data;
 
         return $this;
     }
@@ -56,15 +63,16 @@ Class ListAction extends \Local\BaseAction {
 
         $this->data['type'] = $type;
 
-        $pn = $request->getQuery( 'pn' );
+        $pn = intval( $request->getQuery( 'pn' ) );
 
-        if( is_null( $pn ) || !preg_match( '#^\d+$#', $pn ) ) {
-            $pn = 0;
-        }
+        if( $pn < 1 ) $pn = 1;
+
+        $start = ( $pn - 1 ) * $this->rn;
 
         $this->params = array(
             'type' => $type,
-            'pn' => $pn
+            'pn' => $pn,
+            'start' => $start
         );
 
         return $this;

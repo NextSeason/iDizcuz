@@ -342,12 +342,9 @@ Class TransactionModel extends BaseModel {
             $post_data = [
                 'id' => $post_id,
                 'topic_id' => $topic_id,
+                'point_id' => $data[ 'point_id' ],
                 'account_id' => $data[ 'account_id' ]
             ];
-
-            if( isset( $data[ 'point_id' ] ) ) {
-                $post_data[ 'point_id' ] = $data[ 'point_id' ];
-            }
 
 
             $this->_insert( $post_data, 'posts_data' );
@@ -357,7 +354,7 @@ Class TransactionModel extends BaseModel {
              */
             $this->increment( $topic_id, [ 'post_cnt' => 1 ], 'topics_data' );
 
-            if( isset( $data[ 'point_id' ] ) ) {
+            if( $data[ 'point_id' ] != 0 ) {
                 $this->increment( $data[ 'point_id' ], [ 'post_cnt' => 1 ], 'points_data'  );
             }
 
@@ -399,8 +396,71 @@ Class TransactionModel extends BaseModel {
         }
     }
 
+    public function addPoint( $data ) {
+        try {
+            $this->db->beginTransaction();
 
-    public function addTopic( $data ) {
+            $point_id = $this->_insert( $data, 'points' );
+
+            if( !$point_id ) {
+                throw new PDOException( 'failed to insert data into points' );
+            }
+
+            $this->_insert( [ 'id' => $point_id ], 'points_data' );
+
+            $this->db->commit();
+
+            return $point_id;
+
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    public function updateTopic( $params ) {
+        $type = $params['type'];
+        $id = $params['id'];
+        $data = [
+            'cid' => $params['cid'],
+            'title' => $params['title'],
+            'desc' => $params['desc']
+        ];
+
+        $data[ 'points' ] = $type == 1 ? $params[ 'points' ] : '';
+
+        try {
+            $this->db->beginTransaction();
+            $res = $this->_update( $id, $data, 'topics' );
+
+            if( !$res ) {
+                throw new PDOException( 'cannot update data in table topics' );
+            }
+            $res = $this->_update( $id, ['type'=>$type], 'topics_data' );
+
+            if( !$res ) {
+                throw new PDOException( 'cannot update data in table topics_data' );
+            }
+
+            $this->db->commit();
+
+            return $res;
+        }catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
+    public function addTopic( $params ) {
+        $type = $params['type'];
+
+        $data = [
+            'cid' => $params['cid'],
+            'title' => $params['title'],
+            'desc' => $params['desc']
+        ];
+
+        $data[ 'points' ] = $type == 1 ? $params[ 'points' ] : '';
 
         try {
             $this->db->beginTransaction();
@@ -414,7 +474,10 @@ Class TransactionModel extends BaseModel {
             /**
              * insert new data into table topics_data
              */
-            $this->_insert( array( 'id' => $topic_id ), 'topics_data' );
+            $this->_insert( [
+                'id' => $topic_id,
+                'type' => $type
+            ], 'topics_data' );
 
             $this->db->commit();
 

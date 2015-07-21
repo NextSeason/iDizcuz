@@ -12,7 +12,7 @@ Class PostAction extends \Local\BaseAction {
 
         $this->tpl = 'topic/topic';
 
-        $this->paramsProcessing()->getPost()->getAccount()->getTopic()->reportReasons();
+        $this->paramsProcessing()->getPost()->getAccount()->getTopic()->getPoints()->reportReasons();
 
         return $this->data;
     }
@@ -74,6 +74,33 @@ Class PostAction extends \Local\BaseAction {
         $reportConf = \Local\Utils::loadConf( 'report', 'reasons' );
         $this->data[ 'reportReasons' ] = $reportConf;
         return $this;
+    }
+
+    private function getPoints() {
+        $topic = $this->data['topic'];
+        if( $topic['data']['type'] == 0 ) {
+            $this->data['points'] = [];
+            return $this;
+        }
+        $points = $topic['points'];
+
+        $pointModel = new PointModel();
+
+        $points = $pointModel->gets( explode( ',', $points ) );
+
+        if( !$points ) {
+            //error
+        }
+
+        $pointDataModel = new PointDataModel();
+
+        foreach( $points as &$point ) {
+            $point['data'] = $pointDataModel->get( $point['id'] );
+        }
+
+        $this->data['points'] = $points;
+        return $this;
+
     }
 
     private function getTopic() {

@@ -3,19 +3,14 @@
 Class PostAction extends \Local\BaseAction {
     private $data;
 
-    private $topicModel;
-    private $pointModel;
     private $transactionModel;
 
     public function __execute() {
         $this->type = 'interface';
 
-        $this->checkAccount()->paramsProcessing()->topicModel = new TopicModel();
-        
-        $topic = $this->getTopic();
+        $this->checkAccount()->paramsProcessing()->getTopicData();
 
-        if( $topic[ 'type' ] == 1 ) {
-            $this->pointModel = new PointModel();
+        if( $this->pool['topic_data']['type'] == 1 ) {
             $this->checkPoint();
         }
 
@@ -25,7 +20,7 @@ Class PostAction extends \Local\BaseAction {
 
         $this->transactionModel = new TransactionModel();
         
-        $this->data[ 'id' ] = $this->addPost();
+        $this->addPost();
 
         // if this post is for another post, send message to notice another account
         if( $this->params[ 'to' ] != 0 && $this->pool['to_post_data']['account_id'] != $this->account['id'] ) {
@@ -81,52 +76,58 @@ Class PostAction extends \Local\BaseAction {
     private function addPost() {
         $params = $this->params;
 
-        $data = array(
+        $params = array(
             'content' => $params[ 'content' ],
             'topic_id' => $params[ 'topic_id' ],
+            'point_id' => $params['point_id'],
             'title' => $params[ 'title' ],
             'to' => $params[ 'to' ],
             'account_id' => $this->account[ 'id' ],
             'ip' => ip2long( $_SERVER[ 'REMOTE_ADDR' ] )
         );
 
-        if( isset( $params[ 'point_id ' ] ) ) {
-            $data[ 'point_id' ] = $params[ 'point_id' ];
-        }
+        $post_id = $this->transactionModel->addPost( $params );
 
-        $post = $this->transactionModel->addPost( $data );
-
-        if( !$post ) {
+        if( !$post_id ) {
             $this->error( 'SYSTEM_ERR' );
         }
 
-        return $post;
+        $this->data['id'] = $post_id;
+
+        return $this;
     }
 
     private function checkPoint() {
-        $point_id = $this->params[ 'point_id' ];
-        if( !$point_id ) {
+        $point_id = intval( $this->params[ 'point_id' ] );
+        if( is_null( $point_id ) || $point_id == 0 ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $point = $this->pointModel->get( $point_id );
+        $topicModel = new TopicModel();
 
-        if( !$point ) {
+        $topic = $topicModel->get( $this->params[ 'topic_id' ], ['points'] );
+
+        if( !in_array( $point_id, explode( ',', $topic['points'] ) ) ) {
             $this->error( 'POINT_NOTEXISTS' );
         }
 
         return $this;
     }
 
-    private function getTopic() {
-        $topic_id = $this->params[ 'topic_id' ];
-        $topic = $this->topicModel->get( $topic_id );
+    private function getTopicData() {
+        $topicDataModel = new TopicDataModel();
 
-        if( !$topic ) {
+        $topic_id = $this->params[ 'topic_id' ];
+
+        $topic_data = $topicDataModel->get( $topic_id, [ 'type', 'status' ] );
+
+        if( !$topic_data || $topic_data['status'] == 0 ) {
             $this->error( 'TOPIC_NOTEXISTS' );
         }
 
-        return $topic;
+        $this->pool['topic_data'] = $topic_data;
+
+        return $this;
     }
 
     private function checkAccount() {

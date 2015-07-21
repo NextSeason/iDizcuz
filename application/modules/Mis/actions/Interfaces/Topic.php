@@ -1,6 +1,6 @@
 <?php
 
-Class NewTopicAction extends \Local\MisAction {
+Class TopicAction extends \Local\MisAction {
 
     private $data = array();
     private $transactionModel;
@@ -11,17 +11,32 @@ Class NewTopicAction extends \Local\MisAction {
 
         $this->paramsProcessing();
 
-        $this->transactionModel = new TransactionModel();
-        
-        $topic = $this->addTopic();
-
-        if( !$topic ) {
-            $this->error( 'SYSTEM_ERR' );
+        if( is_null( $this->params['id'] ) || $this->params['id'] == 0 ) {
+            $this->addTopic();
+        } else {
+            $this->updateTopic();
         }
 
-        $this->data[ 'id' ] = $topic;
-
         return $this->data;
+    }
+
+    private function updateTopic() {
+        $params = $this->params;
+
+        $transactionModel = new TransactionModel();
+        $res = $transactionModel->updateTopic( [
+            'id' => $params['id'],
+            'cid' => $params['cid'],
+            'type' => $params['type'],
+            'title' => $params['title'],
+            'desc' => $params['desc'],
+            'points' => $params['points']
+        ] );
+
+        if( !$res ) {
+            $this->error( 'SYSTEM_ERR' );
+        }
+        return $this;
     }
     
     private function addTopic() {
@@ -30,24 +45,26 @@ Class NewTopicAction extends \Local\MisAction {
         $data = array(
             'cid' => $params[ 'cid' ],
             'type' => $params[ 'type' ],
-            'status' => $params[ 'isPublic' ],
             'title' => $params[ 'title' ],
-            'desc' => $params[ 'desc' ]
+            'desc' => $params[ 'desc' ],
+            'points' => $params['points']
         );
+        $transactionModel = new TransactionModel();
 
-        if( isset( $params[ 'start' ]  ) )  {
-            $data[ 'start' ] = $params[ 'start' ];
+        $topic_id = $transactionModel->addTopic( $data );
+
+        if( !$topic_id ) {
+            $this->error( 'SYSTEM_ERR' );
         }
 
-        if( isset( $params[ 'events' ] ) ) {
-            $data[ 'events' ] = $params[ 'events' ];
-        }
-
-        return $this->transactionModel->addTopic( $data );
+        $this->data['topic_id'] = $topic_id;
+        return $this;
     }
 
     private function paramsProcessing() {
         $request = $this->request;
+
+        $id = $request->getPost( 'id' );
 
         $title = $request->getPost( 'title' );
 
@@ -55,7 +72,7 @@ Class NewTopicAction extends \Local\MisAction {
             $this->error( 'PARAMS_ERR', 'Topic title is null' );
         }
 
-        $len = strlen( $title );
+        $len = mb_strlen( $title );
 
         if( !$len ) {
             $this->error( 'PARAMS_ERR', 'Topic title is null' );
@@ -83,33 +100,20 @@ Class NewTopicAction extends \Local\MisAction {
             $this->error( 'PARAMS_ERR', 'You must to select a category for this topic' ); 
         }
 
-        $isPublic = $request->getPost( 'isPublic' );
+        $points = $request->getPost( 'points' );
 
-        $isPublic = !isset( $isPublic ) || $isPublic == 0 ? 0 : 1;
+        if( $type == 1 && ( is_null( $points ) || !strlen( $points ) ) ) {
+            $this->error( 'PARAMS_ERR', 'points is required' );
+        }
 
         $this->params = array(
+            'id' => $id,
             'title' => $title,
             'desc' => $desc,
             'type' => $type,
             'cid' => $cid,
-            'isPublic' => $isPublic
+            'points' => $points
         );
-
-        $start = $request->getPost( 'start' );
-
-        if( !empty( $start ) ) {
-            $this->params[ 'start' ] = $start;
-        }
-
-        $events = $request->getPost( 'events' );
-
-        if( !is_null( $events ) ) {
-            if( !preg_match( '#(^\d[\d,]*\d$)|(^\d$)#', $events ) ) {
-                $this->error( 'PARAMS_ERR' );
-            }
-            $this->params[ 'events' ] = $events;
-        }
-
         return $this;
     }
 }

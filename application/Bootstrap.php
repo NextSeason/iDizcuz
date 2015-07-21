@@ -18,6 +18,12 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
         $router = \Yaf\Dispatcher::getInstance()->getRouter();
         $router->addRoute( 'idizcuz', new \Yaf\Route\Supervar( '__r' ) );
 
+        $router->addRoute( 'articles', new \Yaf\Route\Rewrite( '/articles/:id', [
+            'module' => 'article',
+            'controller' => 'page',
+            'action' => 'list'
+        ] ) );
+
         $router->addRoute( 'topic', new \Yaf\Route\Regex( '#/topic/(\d+)#', [
             'module' => 'topic',
             'controller' => 'page',

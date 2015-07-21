@@ -3,7 +3,7 @@
     <head>
         <?php 
             $type_arr = array( '讨论', '辩论' );
-            $title = $type_arr[ $topic[ 'type' ] ] . '：' . $topic[ 'title' ] . '- 每日论点 • iDizcuz';
+            $title = $type_arr[ $topic['data']['type'] ] . '：' . $topic[ 'title' ] . '- 每日论点 • iDizcuz';
         ?>
         <?php include TPL_PATH . 'common/head.inc.html'; ?>
         <link rel="stylesheet" href="/static/topic/css/topic.css" />
@@ -158,22 +158,53 @@
                             </div>
                         <?php } ?>
                         <div class="title-line">
-                            <h1><?php echo $type_arr[ $topic[ 'type' ] ]; ?>：<?php echo $topic[ 'title' ]; ?></h1>
+                            <h1><?php echo $type_arr[ $topic['data']['type'] ]; ?>：<?php echo $topic[ 'title' ]; ?></h1>
                             <p>
-                                <a href="/topic/page/list" target="_blank" class="btns small dark r">更多话题</a>
+                                <a href="/list/1" target="_blank" class="btns small dark r">更多话题</a>
                                 <span>发布日期：2015-09-09</span>
                             </p>
                         </div>
                         <div class="desc">
-                            <p><?php echo $topic[ 'desc' ]; ?></p>
+                            <p>
+                                <?php echo $topic[ 'desc' ]; ?>
+                                <a href="/articles/<?php echo $topic['id']; ?>" target="_blank">[更多相关资料和信息]</a>
+                            </p>
                         </div>
-                        <?php if( strlen( $topic[ 'events' ] ) > 0 ) { ?>
-                            <div class="show-events" data-events-ids="<?php echo $topic['events']; ?>">
-                                点击查看此话题相关资料和信息
-                            </div>
-                        <?php } ?>
-                        <div class="events">
-                            <div class="loading"></div>
+                        <style>
+                            <?php 
+                                $colors = ['#E9733C', '#3BA1E0', '#b13011'];
+                                $i = 0;
+                                foreach( $points as $point ) { 
+                            ?>
+                            .point-flag-<?php echo $point['id']; ?> { color : <?php echo $colors[$i]; ?>; }
+                            <?php $i++; } ?>
+                        </style>
+                        <div class="point-area">
+                            <ul class="clearfix">
+                                <?php 
+                                    $arr = ['一','二','三','四','五'];
+                                    $i = 0;
+                                ?>
+                                <?php foreach( $points as $point ) { ?>
+                                <li>
+                                    <div class="points">
+                                        <div class="point-data r">
+                                            <div class="base-data">
+                                                <b class="triangle">
+                                                    <b class="triangle"></b>
+                                                </b>
+                                                <span>论述 <b class="brand"><?php echo $point['data']['post_cnt']; ?></b></span>
+                                                <span>支持 <b class="brand"><?php echo $point['data']['agree']; ?></b></span>
+                                                <span>反对 <b class="brand"><?php echo $point['data']['disagree']; ?></b></span>
+                                            </div>
+                                            <span href="###" class="index">指数 <b class="brand">12345</b></span>
+                                        </div>
+                                        <i class="fa fa-flag point-flag-<?php echo $point['id']; ?>"></i>
+                                        <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
+                                    </div>
+                                </li>
+                                <?php $i++; } ?>
+                            </ul>
                         </div>
                         <div class="list-area">
                             <div class="operate-line clearfix">
@@ -192,9 +223,30 @@
                             <div id="editor-area" class="editor-area">
                                 <?php if( $account ) { ?>
                                     <div class="line clearfix">
-                                        <span>论述标题：</span>
+                                        <span class="s-post-title">论述标题：</span>
                                         <input type="text" class="long title" placeholder="如果标题为空，系统则自动获取部分论述内容作为标题" />
-                                        <a href="###" class="get-title">从内容中获取标题</a>
+                                        <?php if( $topic['data']['type'] == 1 ) { ?>
+                                            <input type="hidden" class="point_id" value="0" />
+                                            <div class="select-point r">
+                                                <span class="s-agree-title">选择支持的观点：</span>
+                                                <a href="###" class="i-agree">
+                                                    <i class="fa fa-flag-o"></i>
+                                                    <div class="point-area point-selector">
+                                                        <ul class="clearfix">
+                                                            <?php $arr = ['一','二','三','四','五']; $i = 0; ?>
+                                                            <?php foreach( $points as $point ) { ?>
+                                                                <li>
+                                                                    <div class="points" data-point-id="<?php echo $point['id']; ?>">
+                                                                        <i class="fa fa-flag point-flag-<?php echo $point['id']; ?>"></i>
+                                                                        <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
+                                                                    </div>
+                                                                </li>
+                                                            <?php $i++; } ?>
+                                                        </ul>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        <?php } ?>
                                     </div>
                                     <div id="textbox" class="textbox">
                                         <script type="text/plain" id="editor" class="editor">
@@ -285,47 +337,6 @@
         </div>
         <!-- templates area start -->
         <?php include TPL_PATH . 'common/pagination.inc.html'; ?>
-        <textarea class="templates" id="events-list-tpl">
-            <div class="nav-list">
-                <a href="###" class="scroll scroll-right r" data-direction="right">
-                    <i class="fa fa-chevron-right"></i>
-                </a>
-                <a href="###" class="scroll scroll-left l" data-direction="left">
-                    <i class="fa fa-chevron-left"></i>
-                </a>
-                <div class="list-box">
-                    <% var l = data.length %>
-                    <ul class="clearfix" style="width:<%= l * 135 + 6 * ( l - 1 ) %>">
-                        <% for( var i = 0; i < l; i++ ) { %>
-                            <li>
-                                <a href="###" title="" class="events-nav" data-event-id="<%=data[i].id %>">
-                                    <img src="http://topicstc.idizcuzz.com/<%=data[i].img%>" />
-                                </a>
-                            </li>
-                        <% } %>
-                    </ul>
-                </div>
-            </div>
-            <div class="bubbles events-tip">
-                <div class="triangle"><div class="triangle"></div></div>
-                <div class="inner">
-                    <p class="text"></p>
-                </div>
-            </div>
-        </textarea>
-        <textarea class="templates" id="event-content-tpl">
-            <div class="event-content">
-                <h4 class="title"><%-data.title %></h4>
-                <div class="clearfix">
-                    <span class="origin">内容来自：<a href="<%=data.origin_url %>"><%=data.origin %></a></span>
-                    <span class="author">作者：<%-data.author %></span>
-                    <span class="date">时间：<%=data.time %></span>
-                </div>
-                <div class="event-text"><%=data.content %></div>
-                <div class="event-info">
-                </div>
-            </div>
-        </textarea>
         <textarea class="templates" id="post-list-tpl">
             <% if( !data.length ) { %>
                 <li class="empty">此话题目前还没有论述，快发布您的论述，并分享给您的好友吧</li>
@@ -334,8 +345,11 @@
                     <% if( data[i].hide ) { continue } %>
                     <li class="posts" id="post-<%=data[i].id %>" data-post-id="<%=data[i].id %>">
                         <div class="data-line clearfix">
+                            <% if( data[i].point_id != 0 ) {  %>
+                                <a href="###" class="flags r"><i class="fa fa-flag point-flag-<%-data[i].point_id %>"></i></a>
+                            <% } %>
                             <div class="operates r">
-                                <% if( !data[i].isMine ) { %>
+                                <% if( !data[i].own ) { %>
                                     <% var mark = +data[i].mark %>
                                     <a href="###" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-mark-id="<%=mark %>">
                                         <% if ( mark ) { %>
@@ -346,7 +360,7 @@
                                     </a>
                                 <% } %>
                                 <a href="###" class="op-btn op-share" data-action="share">分享</a>
-                                <% if( !data[i].isMine ) { %>
+                                <% if( !data[i].own ) { %>
                                     <a href="###" class="op-btn" data-action="report">举报</a>
                                 <% } %>
                             </div>
@@ -439,7 +453,7 @@
                                 <span class="mtime">修改于：<%=data[i].mtime %></span>
                             <% } %>
                             <a href="###" class="comments"><%=data[i].data.comments_cnt %>条短评</a>
-                            <% if( data[i].isMine ) { %>
+                            <% if( data[i].own ) { %>
                                 <a href="###" class="remove-post" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
                             <% } %>
                         </div>
@@ -569,8 +583,10 @@
                 $( '#editor-dialog' ).hide();
             };
 
-            idizcuz.mount( 'events', '/static/topic/packages/Events/bootstrap.js', {} );
-            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', {} );
+            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', { 'topic' : {
+                id : "<?php echo $topic['id']; ?>",
+                type : "<?php echo $topic['data']['type']; ?>" 
+            } } );
             idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
             idizcuz.mount( 'operate', '/static/topic/packages/Operate/bootstrap.js', {} );
             idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js', {} );

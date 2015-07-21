@@ -4,7 +4,7 @@
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
         <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/newTopic.css" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/topic.css" />
     </head>
     <body>
         <div id="idizcuz">
@@ -12,128 +12,115 @@
             <div class="main">
                 <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
                 <div class="core">
-                    <?php if( !$topic ) { ?>
-                        <p class="not-exists">Topic不存在</p>
-                    <?php } else { ?>
-                    <form class="topic-form" data-topic-id="<?php echo $topic['id']; ?>">
-                        <label>
-                            <p class="s-title">论点标题(120字字节，通常一个汉字占三个字节)：</p>
-                            <input type="text" class="title" placeholder="论点标题" value="<?php echo $topic['title']; ?>" />
-                        </label>
+                    <h1>
+                        <?php if( $topic['id'] != 0 ) { ?>
+                            <span>修改已添加话题</span>
+                            <span>[状态：<?php echo $topic['data']['status'] == 1 ? '已发布' : '未发布'; ?>]</span>
+                        <?php } else { ?>
+                            添加新话题
+                        <?php }?>
+                    </h1>
+                    <form class="topic-form">
+                        <input type="hidden" class="id" value="<?php echo $topic['id']; ?>" />
+                        <div class="important-tip">
+                            <h3><i class="fa fa-warning"></i> 重要提示</h3>
+                            <p>谨慎修改话题类型，修改已发布的话题的类型可能回到只数据严重错误，添加话题时请务必确保准确性！</p>
+                        </div>
                         <div class="line clearfix">
                             <label>
                                 <p class="s-title">类型：</p>
                                 <div class="styled-select">
+                                    <?php $type = $topic['id'] != 0 ? $topic['data']['type'] : 0; ?>
                                     <select class="type">
-                                        <option value="0">讨论</option>
-                                        <option value="1">辩论</option>
+                                        <option value="0" <?php echo $type == 0 ? 'selected' : '' ?>>讨论类型</option>
+                                        <option value="1" <?php echo $type == 1 ? 'selected' : '' ?>>辩论类型</option>
                                     </select>
                                 </div>
                             </label>
                             <label>
-                                <p class="s-title">分类：</p>
+                                <p class="s-title">领域：</p>
                                 <div class="styled-select">
                                     <select class="cid">
-                                        <option value="1">焦点话题</option>
+                                        <?php foreach( $categories as $k => $v ) { ?>
+                                            <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </label>
-                            <label>
-                                <p class="s-title">开始时间(无需自动发布则不添加时间)：</p>
-                                <input type="date" class="start-date" />
-                                <input type="time" class="start-time" />
-                            </label>
                         </div>
+                        <div class="point-area">
+                            <div class="important-tip">
+                                <h3><i class="fa fa-warning"></i> 重要提示</h3>
+                                <p>请谨慎删除已发布辩论类型话题的论点，删除前请对线上数据影响进行确认！</p>
+                            </div>
+                            <ul class="point-list">
+                                <?php foreach( $points as $point ) { ?>
+                                    <li class="points" data-point-id="<?php echo $point['id']; ?>" id="point-<?php echo $point['id']; ?>">
+                                        <a href="###" class="op modify">修改</a>
+                                        <p>
+                                            <span>观点：</span>
+                                            <span class="point-title"><?php echo htmlspecialchars( $point['title'] ); ?></span>
+                                        </p>
+                                        <p>
+                                            <span>描述：</span>
+                                            <span class="point-desc"><?php echo htmlspecialchars( $point['desc'] ); ?></span>
+                                        </p>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                            <p>
+                                <a href="###" class="btns dark add-point"><i class="fa fa-plus"></i> 添加观点</a>
+                            </p>
+                        </div>
+                        <label>
+                            <p class="s-title">论点标题(限制120字以内)：</p>
+                            <input type="text" value="<?php echo $topic['title']; ?>" class="title" placeholder="论点标题" />
+                        </label>
                         <label>
                             <p class="s-title">话题介绍：</p>
                             <textarea class="desc"><?php echo $topic['desc']; ?></textarea>
                         </label>
-                        <label>
-                            <p class="s-title">话题事件列表：（键入事件ID，多个ID之间用逗号隔开）</p>
-                            <input type="text" class="events" value="<?php echo $topic['events']; ?>" />
-                        </label>
                         <div class="warn"></div>
                         <label>
-                            <a href="###" class="btns large save">保存</a>
+                            <a href="###" class="btns save">保存</a>
                         </label>
                     </form>
-                    <?php } ?>
                 </div>
             </div>
         </div>
+        <div id="point-dialog" class="dialogs">
+            <div class="inner">
+                <form>
+                    <input type="hidden" class="id" value="0" />
+                    <div class="line">
+                        <input type="text" class="title" placeholder="观点标题" />
+                    </div>
+                    <div class="line">
+                        <textarea class="desc" placeholder="观点描述"></textarea>
+                    </div>
+                    <div class="line">
+                        <a href="###" class="btns save">保存</a>
+                        <a href="###" class="btns dark cancel">取消</a>
+                    </div>
+                </form> 
+            </div>
+        </div>
+        <textarea class="templates" id="point-tpl">
+            <li class="points" data-point-id="<%-data.id %>" id="point-<%=data.id %>">
+                <a href="###" class="op modify">修改</a>
+                <p>
+                    <span>观点：</span>
+                    <span class="point-title"><%-data.title %></span>
+                </p>
+                <p>
+                    <span>描述：</span>
+                    <span class="point-desc"><%-data.desc %></span>
+                </p>
+            </li>
+        </textarea>
         <script>
-            ( function() {
-                var showWarn = function( txt ) {
-                    $( '.warn' ).html( txt ).show();
-                };
-                var submit = function( isPublic ) {
-                    var title = $.trim( $('input.title' ).val() ),
-                        byteLen = J.byteLen( title ),
-                        desc,
-                        data = {},
-                        events;
-
-                    if( !title.length ) {
-                        showWarn( '没有填写标题' );
-                        return false;
-                    }
-
-                    if( byteLen > 120 ) {
-                        showWarn( '标题长度超出了' + ( byteLen - 120 ) + '字节' );
-                        return false;
-                    }
-
-                    desc = $.trim( $( 'textarea.desc' ).val() );
-
-                    if( !desc.length ) {
-                        showWarn( '没有填写论点介绍' );
-                        return false;
-                    }
-
-                    events = $.trim( $( 'input.events' ).val() );
-
-                    events = events.replace( /，/g, ',' ).replace( /^,|,$/g, '' );
-
-                    if( events.length && !/^[\d,]+$/.test( events ) ) {
-                        showWarn( '话题事件列表格式不正确' );
-                        return false;
-                    }
-
-                    $( '.warn' ).hide();
-
-                    data = {
-                        id : $( 'form.topic-form' ).attr( 'data-topic-id' ),
-                        title : title,
-                        desc : desc,
-                        type : $( 'select.type' ).val(),
-                        cid : $( 'select.cid' ).val(),
-                    };
-
-                    events && ( data.events = events );
-
-                    isPublic && ( data.isPublic = 1 );
-
-                    $.ajax( {
-                        url : '/mis/interface/modifytopic',
-                        method : 'POST',
-                        data : data
-                    } ).done( function( response ) {
-                        var errno = +response.errno;
-
-                        if( !errno ) {
-                            alert( '修改成功' );
-                            location.reload();
-                        }
-                    } );
-                };
-
-                $( '.save' ).on( 'click', function( e ) {
-                    if( !window.confirm( '确认填写无误，直接发布？' ) ) {
-                        return false;
-                    }
-                    submit( true );
-                } );
-            } )();
+            var idizcuz = new J();
+            idizcuz.mount( 'topic', '/static/mis/packages/Topic/bootstrap.js', {} );
         </script>
     </body>
 </html>

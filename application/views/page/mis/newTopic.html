@@ -13,20 +13,13 @@
                 <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
                 <div class="core">
                     <form class="topic-form">
+                        <input type="hidden" class="id" <?php echo $topic['id']; ?> />
+                        <input type="hidden" class="type" value="0" />
                         <label>
                             <p class="s-title">论点标题(120字字节，通常一个汉字占三个字节)：</p>
-                            <input type="text" class="title" placeholder="论点标题" />
+                            <input type="text" value="<?php echo $topic['title']; ?>" class="title" placeholder="论点标题" />
                         </label>
                         <div class="line clearfix">
-                            <label>
-                                <p class="s-title">类型：</p>
-                                <div class="styled-select">
-                                    <select class="type">
-                                        <option value="0">讨论</option>
-                                        <option value="1">辩论</option>
-                                    </select>
-                                </div>
-                            </label>
                             <label>
                                 <p class="s-title">分类：</p>
                                 <div class="styled-select">
@@ -34,11 +27,6 @@
                                         <option value="1">焦点话题</option>
                                     </select>
                                 </div>
-                            </label>
-                            <label>
-                                <p class="s-title">开始时间(无需自动发布则不添加时间)：</p>
-                                <input type="date" class="start-date" />
-                                <input type="time" class="start-time" />
                             </label>
                         </div>
                         <label>

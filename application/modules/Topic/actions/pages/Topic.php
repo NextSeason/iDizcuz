@@ -14,7 +14,7 @@ Class TopicAction extends \Local\BaseAction {
 
         $this->topicModel = new TopicModel();
 
-        $this->getTopic()->reportReasons();
+        $this->getTopic()->getPoints()->reportReasons();
 
         return $this->data;
     }
@@ -24,6 +24,34 @@ Class TopicAction extends \Local\BaseAction {
         $this->data[ 'reportReasons' ] = $reportConf;
         return $this;
     }
+    private function getPoints() {
+        $topic = $this->data['topic'];
+        if( $topic['data']['type'] == 0 ) {
+            $this->data['points'] = [];
+            return $this;
+        }
+        $points = $topic['points'];
+
+        $pointModel = new PointModel();
+
+        $points = $pointModel->gets( explode( ',', $points ) );
+
+        if( !$points ) {
+            //error
+        }
+
+        $pointDataModel = new PointDataModel();
+
+        foreach( $points as &$point ) {
+            $point['data'] = $pointDataModel->get( $point['id'] );
+        }
+
+        $this->data['points'] = $points;
+        return $this;
+
+    }
+
+
 
     private function getTopic() {
         $id = $this->params[ 'id' ];

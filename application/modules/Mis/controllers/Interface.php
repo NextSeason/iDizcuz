@@ -7,9 +7,11 @@ Class InterfaceController extends BaseInterfaceController {
         parent::init();
 
         $this->actions = array(
-            'newtopic' => $this->action_path . 'NewTopic.php',
+            'topic' => $this->action_path . 'Topic.php',
             'newevent' => $this->action_path . 'NewEvent.php',
-            'upload' => $this->action_path . 'Upload.php'
+            'upload' => $this->action_path . 'Upload.php',
+            'publictopic' => $this->action_path . 'PublicTopic.php',
+            'point' => $this->action_path . 'Point.php'
         );
     }
 }

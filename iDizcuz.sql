@@ -73,12 +73,10 @@ DROP TABLE IF EXISTS `topics`;
 CREATE TABLE `topics` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `cid` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'category id default is 0',
-    `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic type, 0 is discuss and 1 is arguments',
-    `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic status, 0 is not public and 1 is public',
     `img` char(40) NOT NULL DEFAULT '',
     `title` varchar( 80 ) NOT NULL COMMENT 'title of this topic',
     `desc` varchar( 3000 ) NOT NULL COMMENT 'description for this topic',
-    `events` varchar( 255 ) NOT NULL DEFAULT '',
+    `points` varchar( 255 ) NOT NULL DEFAULT '',
     `start` timestamp NOT NULL DEFAULT NOW() COMMENT 'the time to start this topic',
     `end` timestamp NOT NULL COMMENT 'the time to stop this topic',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
@@ -89,6 +87,8 @@ DROP TABLE IF EXISTS `topics_data`;
 
 CREATE TABLE `topics_data` (
     `id` int unsigned NOT NULL,
+    `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic type, 0 is discuss and 1 is arguments',
+    `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic status, 0 is not public and 1 is public',
     `post_cnt` int unsigned NOT NULL DEFAULT 0 COMMENT 'number of post under this topic',
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
@@ -99,7 +99,6 @@ DROP TABLE IF EXISTS `points`;
 
 CREATE TABLE `points` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
-    `topic_id` int unsigned NOT NULL,
     `title` varchar( 80 ) NOT NULL COMMENT 'title of this point',
     `desc` varchar( 255 ) NOT NULL COMMENT 'description for this post',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
@@ -110,7 +109,6 @@ DROP TABLE IF EXISTS `points_data`;
 
 CREATE TABLE `points_data` (
     `id` int unsigned NOT NULL,
-    `topic_id` int unsigned NOT NULL,
     `post_cnt` int unsigned NOT NULL DEFAULT 0,
     `agree` int unsigned NOT NULL DEFAULT 0,
     `disagree` int unsigned NOT NULL DEFAULT 0,
@@ -226,10 +224,11 @@ CREATE TABLE `comment_complaint` (
     PRIMARY KEY( `id` )
 );
 
-DROP TABLE IF EXISTS `topic_events`;
+DROP TABLE IF EXISTS `articles`;
 
-CREATE TABLE `topic_events` (
+CREATE TABLE `articles` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `topic_id` int unsigned NOT NULL DEFAULT 0,
     `title` varchar(255) NOT NULL,
     `content` text NOT NULL,
     `tip` varchar(255) NOT NULL DEFAULT '',
@@ -239,7 +238,6 @@ CREATE TABLE `topic_events` (
     `origin` varchar( 10 ) NOT NULL DEFAULT '',
     `origin_url` varchar( 128 ) NOT NULL DEFAULT '',
     `origin_logo` varchar( 128 ) NOT NULL DEFAULT '',
-    `topic_id` varchar( 255 ) NOT NULL DEFAULT '',
     `ctime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );
