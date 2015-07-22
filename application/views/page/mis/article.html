@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'iDizcuz Management Information System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/article.css" />
+        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/mis/top.inc.html'; ?>
+            <div class="main">
+                <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
+                <div class="core">
+                    <form class="article-form">
+                        <label>
+                            <p class="s-title">资料封面配图（请上传尺寸为140px*80px图片）：</p>
+                            <input type="file" class="image" />
+                            <input type="hidden" class="img" />
+                            <div class="preview-img"></div>
+                        </label>
+                        <label>
+                            <p class="s-title">资料标题：</p>
+                            <input type="text" class="title" />
+                        </label>
+                        <label>
+                            <p class="s-title">资料摘要：</p>
+                            <input type="text" class="summary" placeholder="资料内容的简单摘要，250字以内" />
+                        </label>
+                        <div class="block clearfix">
+                            <label class="l">
+                                <p class="s-title">时间：</p>
+                                <input type="date" class="time" placeholder="事件时间" />
+                            </label>
+                            <label class="l">
+                                <p class="s-title">内容来源：</p>
+                                <input type="text" class="origin" placeholder="内容来源 如：百度新闻" />
+                            </label>
+                        </div>
+                        <label>
+                            <p class="s-title">来源地址：</p>
+                            <input type="text" class="origin_url" placeholder="内容来源的正确URL" />
+                        </label>
+                        <label>
+                            <p class="s-title">来源LOGO：</p>
+                            <input type="text" class="origin_logo" placeholder="内容来源的LOGO的图片地址" />
+                        </label>
+                        <div>
+                            <p class="s-title">资料内容：</p>
+                            <div class="textbox" id="textbox">
+                                <script type="text/plain" id="editor" class="editor"></script>
+                            </div>
+                        </div>
+                        <div class="btn-line">
+                            <a href="###" class="btns large save">保存</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="/static/common/js/umeditor.mis.config.js"></script>
+        <script src="/static/common/js/umeditor.js"></script>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'Article', '/static/mis/packages/Article/bootstrap.js', {} );
+        </script>
+    </body>
+</html>

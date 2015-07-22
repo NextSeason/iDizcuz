@@ -10,9 +10,9 @@ Class PageController extends BasePageController {
             'signin' => $this->action_path . 'Signin.php',
             'index' => $this->action_path . 'Index.php',
             'topic' => $this->action_path . 'Topic.php',
-            'topiclist' => $this->action_path . 'TopicList.php',
-            'newevent' => $this->action_path . 'NewEvent.php',
-            'eventlist' => $this->action_path . 'EventList.php'
+            'topics' => $this->action_path . 'Topics.php',
+            'article' => $this->action_path . 'Article.php',
+            'articles' => $this->action_path . 'Articles.php'
         );
     }
 }

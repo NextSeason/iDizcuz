@@ -1,11 +1,11 @@
 <?php
 
-Class TopicListAction extends \Local\MisAction {
+Class TopicsAction extends \Local\MisAction {
     private $data = [];
     private $topicModel;
 
     public function __execute() {
-        $this->tpl = 'mis/topicList';
+        $this->tpl = 'mis/topics';
 
         $this->paramsProcessing()->getTopicsData()->getTopics();
 

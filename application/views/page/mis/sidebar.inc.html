@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/mis/page/topiclist" class="topiclist">
+                    <a href="/mis/page/topics" class="topics">
                         <i class="fa fa-level-up flip"></i> 话题列表
                     </a>
                 </li>
@@ -31,17 +31,17 @@
         </li>
         <li>
             <a href="###" class="l1">
-                <i class="fa fa-plus-square"></i> 话题事件管理
+                <i class="fa fa-plus-square"></i> 话题资料管理
             </a>
             <ul>
                 <li>
-                    <a href="/mis/page/newevent" class="newevent">
-                        <i class="fa fa-level-up flip"></i> 添加话题事件
+                    <a href="/mis/page/article" class="article">
+                        <i class="fa fa-level-up flip"></i> 添加话题资料
                     </a>
                 </li>
                 <li>
-                    <a href="/mis/page/eventlist" class="eventlist">
-                        <i class="fa fa-level-up flip"></i> 话题事件列表
+                    <a href="/mis/page/articles" class="articles">
+                        <i class="fa fa-level-up flip"></i> 话题资料列表
                     </a>
                 </li>
             </ul>
@@ -100,9 +100,11 @@
         </li>
     </ul>
     <script>
-        var pathname = location.pathname,
-            focus = pathname.substr( pathname.lastIndexOf( '/' ) + 1 );
+        ( function() {
+            var pathname = location.pathname,
+                focus = pathname.substr( pathname.lastIndexOf( '/' ) + 1 );
 
-        $( '.sidebar .item-list .' + focus ).addClass( 'focus' );
+            $( '.sidebar .item-list .' + focus ).addClass( 'focus' );
+        })();
     </script>
 </div>

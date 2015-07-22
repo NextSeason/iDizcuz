@@ -231,7 +231,7 @@ CREATE TABLE `articles` (
     `topic_id` int unsigned NOT NULL DEFAULT 0,
     `title` varchar(255) NOT NULL,
     `content` text NOT NULL,
-    `tip` varchar(255) NOT NULL DEFAULT '',
+    `summary` varchar(255) NOT NULL DEFAULT '',
     `author` varchar( 8 ) NOT NULL DEFAULT '',
     `time` timestamp,
     `img` char(40) NOT NULL DEFAULT '',

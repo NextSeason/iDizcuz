@@ -1,11 +1,11 @@
 <?php
 
-Class NewEventAction extends \Local\MisAction {
+Class ArticleAction extends \Local\MisAction {
     private $data = [];
 
     public function __execute() {
 
-        $this->tpl = 'mis/newEvent';
+        $this->tpl = 'mis/article';
 
         return $this->data;
     }

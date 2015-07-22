@@ -4,6 +4,7 @@
         <?php 
             $type_arr = array( '讨论', '辩论' );
             $title = '每日论点•iDizcuz';
+            $nav = 'list';
         ?>
         <?php include TPL_PATH . 'common/head.inc.html'; ?>
         <link rel="stylesheet" href="/static/topic/css/list.css" />
@@ -24,7 +25,10 @@
                         <ul class="topic-list">
                             <?php foreach( $topics as $topic ) { ?>
                                 <li>
-                                <h3><a href="/topic/<?php echo $topic['id']; ?>" target="_blank"><?php echo $topic['title']; ?></a></h3>
+                                <h3>
+                                    <span class="seal seal-<?php echo $topic['data']['type']; ?>"></span>
+                                    <a href="/topic/<?php echo $topic['id']; ?>" target="_blank"><?php echo $topic['title']; ?></a>
+                                </h3>
                                     <p class="data">
                                         <span class="r">发布时间：<?php echo substr( $topic['ctime'], 0, -9 ); ?></span>
                                         <span class="">共有论述：<?php echo $topic['data']['post_cnt']; ?></span>
