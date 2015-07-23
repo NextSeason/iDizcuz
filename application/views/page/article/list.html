@@ -10,8 +10,48 @@
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
-
+            <div class="boxes body">
+                <div class="inner">
+                    <div class="aside">o</div>
+                    <div class="main">
+                        <div class="topic-area">
+                            <h2>
+                                <a href="###" class="btns dark go r">回到话题</a>
+                                <a href="###"><span class="seal seal-0"></span> 每日论点 • iDizcuz 我们的第一个产品 修改一次</a>
+                            </h2>
+                        </div>
+                        <ul class="article-list"></ul>
+                        <div class="loading"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <textarea class="templates" id="article-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                <li>
+                    <div class="articles clearfix">
+                        <div class="aside">
+                            <a href="###" class="cover" style="background-image:url(http://topicstc.idizcuzz.com/ff3e2537db34d4ae87d181fcd5cffe97.png);"></a>
+                        </div>
+                        <div class="info main">
+                            <h3>标题啊标题</h3>
+                            <p class="summary">经费打撒酒疯拉丝机富士达发家了事件发生房东撒娇发生纠纷撒<a href="###"> [详细]</a></p>
+                            <p class="detail">
+                                <span class="time r">2013-09-99</span>
+                                <span class="item">来源：<a href="###">百度新闻</a></span>
+                                <span class="item">作者：吕承彬</span>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            <% } %>
+        </textarea>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'artiles', '/static/article/packages/Articles/bootstrap.js', {
+                topic_id : '<?php echo $topic['id']; ?>'
+            } );
+        </script>
         <?php include TPL_PATH . '/common/foot.inc.html'; ?>
     </body>
 </html>

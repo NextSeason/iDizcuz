@@ -19,9 +19,6 @@
                                 <div class="topline clearfix">
                                     <a href="/mis/page/topic?id=<?php echo $topic['id']; ?>" class="op edit r">编辑</a>
                                     <a href="###" class="op detail">详情</a>
-                                    <?php if( $topic['data']['status'] == 1 ) { ?>
-                                        <a href="/topic/<?php echo $topic['id']; ?>" class="op" target="_blank">查看</a>
-                                    <?php } ?>
                                     <a href="###" class="public op" data-status="<?php echo $topic['data']['status']; ?>">
                                         <?php echo $topic['data']['status'] == 1 ? '取消发布' : '发布'; ?>
                                     </a>
@@ -29,12 +26,23 @@
                                         <?php echo $topic['ctime']; ?>
                                     </span>
                                     <h3>
+                                        <span class="seal seal-<?php echo $topic['data']['type']; ?>"></span>
                                         <?php echo $topic['title']; ?>
+                                        <?php if( $topic['data']['status'] == 1 ) { ?>
+                                            <a href="/topic/<?php echo $topic['id']; ?>" target="_blank">[查看]</a>
+                                        <?php } ?>
                                     </h3>
                                 </div>
-                                <div class="topic-content">
-                                    <div class="content">
-                                        <?php echo $topic['desc']; ?>
+                                <div class="topic-details">
+                                    <div class="topic-content">
+                                        <div class="content">
+                                            <?php echo $topic['desc']; ?>
+                                        </div>
+                                    </div>
+                                    <div class="topic-data">
+                                        <span>论述数量：<b><?php echo $topic['data']['post_cnt']; ?></b></span>
+                                        <span>支持总量：<b><?php echo $topic['data']['agree']; ?></b></span>
+                                        <span>反对数量：<b><?php echo $topic['data']['agree']; ?></b></span>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +54,7 @@
         </div>
         <script>
             $( '.topics-list .detail' ).on( 'click', function( e ) {
-                $( this ).parent().parent().find( '.topic-content' ).toggle();
+                $( this ).parent().parent().find( '.topic-details' ).toggle();
             } );
             $( '.topics-list .public' ).on( 'click', function( e ) {
                 var self = $( this ),

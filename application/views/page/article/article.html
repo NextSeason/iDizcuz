@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php 
+            $title = '每日论点•iDizcuz';
+        ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/article/css/article.css" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/common/top.inc.html'; ?>
+            <div class="boxes main">
+                <div class="inner clearfix">
+                    <div class="main l">
+                        <div class="article">
+                            <div class="hd">
+                                <?php if( $article['origin_logo'] != '' ) { ?>
+                                    <a class="origin-logo" href="<?php echo $article['origin_url']; ?>" target="_blank" style="background-image:url(<?php echo $article['origin_logo']; ?>)"></a>
+                                <?php } ?>
+                                <h1><?php echo htmlspecialchars( $article['title'] ); ?></h1>
+                                <p class="info">
+                                    <?php if( $article['origin'] != '' ) { ?>
+                                        <span>来源：<a href="<?php echo $article['origin_url']; ?>" target="_blank"><?php echo $article['origin']; ?></a></span>
+                                    <?php } ?>
+                                    <?php if( $article['author'] != '' ) { ?>
+                                        <span>作者：<?php echo $article['author']; ?></span>
+                                    <?php } ?>
+                                    <span class="time">
+                                        <?php echo substr( $article['time'], 0, -9 ); ?>
+                                    </span>
+                                </p>
+                            </div>
+                            <?php if( $topic ) { ?>
+                                <div class="topic-area">
+                                    <div class="title-line">
+                                        <span>内容所属话题：</span>
+                                        <a href="/topic/<?php echo $topic['id']; ?>" target="_blank">
+                                            <?php echo htmlspecialchars( $topic['title'] ); ?>
+                                        </a>
+                                        <a href="/topic/<?php echo $topic['id']; ?>" target="_blank" class="show-desc">[查看话题]</a>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php if( $article['summary'] != '' ) { ?>
+                                <blockquote class="summary">
+                                    <p><span>摘要：</span><?php echo htmlspecialchars( $article['summary'] ); ?>
+                                </blockquote>
+                            <?php } ?>
+                            <div class="content">
+                                <?php echo $article['content']; ?>
+                            </div>
+                            <div class="adjacent">
+                                <ul>
+                                    <?php if( $pre ) { ?>
+                                        <li>
+                                            <span>上一篇：</span>
+                                            <a href="/article/<?php echo $pre['id']; ?>">
+                                                <?php echo $pre['title']; ?>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
+                                    <?php if( $next ) { ?>
+                                        <li>
+                                            <span>下一篇：</span>
+                                            <a href="/article/<?php echo $next['id']; ?>">
+                                                <?php echo $next['title']; ?>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                            <?php if( $topic ) { ?>
+                                <div class="bridge">
+                                    <a href="/topic/<?php echo $topic['id']; ?>">参与话题：<?php echo $topic['title']; ?></a>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="sidebar r">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js', {} );
+        </script>
+        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+    </body>
+</html>

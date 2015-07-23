@@ -24,6 +24,14 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
             'action' => 'list'
         ] ) );
 
+        $router->addRoute( 'article', new \Yaf\Route\Regex( '#/article/(\d+)#', [
+            'module' => 'article',
+            'controller' => 'page',
+            'action' => 'article'
+        ], [
+            1 => 'id'
+        ] ) );
+
         $router->addRoute( 'topic', new \Yaf\Route\Regex( '#/topic/(\d+)#', [
             'module' => 'topic',
             'controller' => 'page',

@@ -8,7 +8,7 @@ Class InterfaceController extends BaseInterfaceController {
 
         $this->actions = array(
             'topic' => $this->action_path . 'Topic.php',
-            'newevent' => $this->action_path . 'NewEvent.php',
+            'article' => $this->action_path . 'Article.php',
             'upload' => $this->action_path . 'Upload.php',
             'publictopic' => $this->action_path . 'PublicTopic.php',
             'point' => $this->action_path . 'Point.php'

@@ -1,27 +1,27 @@
-<?php
+<?php 
 
-Class ArticlesAction extends \Local\MisAction {
+Class GetArticlesAction extends \Local\BaseAction {
     private $data = [];
 
     public function __execute() {
-        $this->tpl = 'mis/articles';
+        $this->type = 'interface';
 
         $this->paramsProcessing()->getArticles();
-
         return $this->data;
     }
 
     private function getArticles() {
         $params = $this->params;
+
         $articleModel = new ArticleModel();
-        $articles = $articleModel->getArticles( [
-            'start' => $params['start'],
+        $articles = $articleModel->getArticlesByTopic( [
+            'topic_id' => $params[ 'topic_id' ],
+            'cursor' => $params['cursor'],
             'rn' => $params['rn']
         ] );
 
         if( $articles === false ) {
-            $this->data['articles'] = [];
-            return $this;
+            $this->error( 'SYSTEM_ERR' );
         }
 
         $this->data['articles'] = $articles;
@@ -32,15 +32,24 @@ Class ArticlesAction extends \Local\MisAction {
     private function paramsProcessing() {
         $request = $this->request;
 
-        $start = intval( $request->getQuery( 'start' ) );
+        $topic_id = $request->getQuery( 'topic_id' );
+
+        if( is_null( $topic_id ) ) {
+            $this->error( 'PARAMS_ERR' );
+        }
+
+        $cursor = intval( $request->getQuery( 'cursor' ) );
+
         $rn = intval( $request->getQuery( 'rn' ) );
 
-        if( $rn < 1 ) $rn = 20;
+        if( $rn <= 0 ) $rn = 20;
 
         $this->params = [
-            'start' => $start,
+            'topic_id' => $topic_id,
+            'cursor' => $cursor,
             'rn' => $rn
         ];
+
         return $this;
     }
 }

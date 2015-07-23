@@ -4,7 +4,7 @@
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
         <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/eventList.css" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/articles.css" />
     </head>
     <body>
         <div id="idizcuz">
@@ -12,46 +12,42 @@
             <div class="main">
                 <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
                 <div class="core">
-                    <ul class="events-list">
-                        <?php foreach( $events as $event ) { ?>
-                        <li class="events" id="event-<?php echo $event['id']; ?>">
+                    <ul class="article-list">
+                        <?php foreach( $articles as $article ) { ?>
+                        <li class="articles" id="article-<?php echo $article['id']; ?>">
                             <div class="inner">
                                 <div class="topline clearfix">
-                                    <a href="###" class="op edit r">编辑</a>
+                                    <a href="/mis/page/article?id=<?php echo $article['id']; ?>" class="op edit r">编辑</a>
                                     <a href="###" class="op detail r">详情</a>
-                                    <span class="r">
-                                        Event ID : <?php echo $event['id']; ?>
-                                    </span>
-                                    <h3>
-                                        <?php echo $event['title']; ?>
-                                        <?php if( strlen( $event['tip'] ) ) { ?>
-                                        <a href="###" title="<?php echo $event['tip']; ?>"><i class="fa fa-info-circle"></i></a>
-                                        <?php } ?>
-                                    </h3>
+                                    <h4>
+                                        <?php echo $article['id']; ?>.
+                                        <?php echo $article['title']; ?>
+                                        <a href="/article/<?php echo $article['id']; ?>" target="_blank">[查看]</a>
+                                    </h4>
                                 </div>
-                                <div class="event-content">
+                                <div class="article-content">
                                     <div class="content">
-                                        <?php echo $event['content']; ?>
+                                        <?php echo $article['content']; ?>
                                     </div>
-                                    <div class="event-info">
-                                        <img src="<?php echo $event['origin_logo']; ?>" class="origin_logo r" />
+                                    <div class="article-info">
+                                        <img src="<?php echo $article['origin_logo']; ?>" class="origin_logo r" />
                                         <div class="line">
-                                            <span class="s-title">事件时间：</span>
-                                            <span><?php echo $event['time']; ?></span>
+                                            <span class="s-title">时间：</span>
+                                            <span><?php echo substr( $article['time'], 0, -9 ); ?></span>
+
                                             <span class="s-title">添加时间：</span>
-                                            <span><?php echo $event['ctime']; ?></span>
+                                            <span><?php echo $article['ctime']; ?></span>
+
+                                            <span class="s-title">作者：</span>
+                                            <span><?php echo $article['author']; ?>
                                         </div>
                                         <div class="line">
-                                            <span class="s-title">事件来源：</span>
-                                            <span><?php echo $event['origin']; ?></span>
-                                            <span class="s-title">事件来源地址：</span>
-                                            <a href="<?php echo $event['origin_url']; ?>">
-                                                <?php echo $event['origin_url']; ?>
+                                            <span class="s-title">内容来源：</span>
+                                            <span><?php echo $article['origin']; ?></span>
+                                            <span class="s-title">来源地址：</span>
+                                            <a href="<?php echo $article['origin_url']; ?>">
+                                                <?php echo $article['origin_url']; ?>
                                             </a>
-                                        </div>
-                                        <div class="line">
-                                            <span class="s-title">引用该事件的TOPIC：</span>
-                                            <span><?php echo $event['topic_id']; ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -63,8 +59,8 @@
             </div>
         </div>
         <script>
-            $( '.events-list .detail' ).on( 'click', function( e ) {
-                $( this ).parent().parent().find( '.event-content' ).toggle();
+            $( '.article-list .detail' ).on( 'click', function( e ) {
+                $( this ).parent().parent().find( '.article-content' ).toggle();
             } );
         </script>
     </body>

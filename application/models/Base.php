@@ -25,6 +25,11 @@ Class BaseModel {
         }
     }
 
+    public function geti( $params ) {
+        $select = $params['select'];
+        $where = $params['where'];
+    }
+
     public function get( $id, $columns = null ) {
         try {
             $this->db->beginTransaction();
@@ -235,4 +240,32 @@ Class BaseModel {
 
         return implode( ',', $columns );
     }
+
+    /*
+    public function formatCoditions( $conditions ) {
+        // [ 'id' : 1 ]
+        if( !count( $conditions ) ) {
+            return '';
+        }
+
+        $where = 'WHERE ';
+
+        foreach( $conditions as $condition ) {
+            $cnt = count( $condition );
+
+            switch( $cnt ) {
+                case 2 :
+                    $where .= " `{$condition[0]}`=:{$condition[0]} "
+                    break;
+                case 3 :
+                    $where .= " `{$condition[0]}`{$condition[1]}:{$condition[0]} "
+                    break;
+                case 4 :
+                    break;
+                default :
+                    break;
+            }
+        }
+    }
+     */
 }

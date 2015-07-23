@@ -12,11 +12,12 @@
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . 'common/top.inc.html'; ?>
-            <div class="boxes main">
-                <div class="inner clearfix">
-                    <div class="list-area l">
-                        <div class="select-type clearfix">
-                            <ul class="clearfix r">
+            <div class="boxes body">
+                <div class="inner">
+                    <div class="aside"></div>
+                    <div class="list-area main">
+                        <div class="sub-nav clearfix">
+                            <ul class="clearfix nav">
                                 <li><a href="/list/1" class="<?php if( is_null( $type ) ) { echo 'focus'; }  ?>">全部</a></li>
                                 <li><a href="/list/1?type=0" class="<?php if( $type === '0' ) { echo 'focus'; } ?>">讨论</a></li>
                                 <li><a href="/list/1?type=1" class="<?php if( $type === '1' ) { echo 'focus'; } ?>">辩论</a></li>
@@ -41,9 +42,6 @@
                                 </li>
                             <?php } ?>
                         </ul>
-                    </div>
-                    <div class="sidebar r">
-
                     </div>
                 </div>
             </div>

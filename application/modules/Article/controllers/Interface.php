@@ -8,12 +8,7 @@ Class InterfaceController extends BaseInterfaceController {
         parent::init();
 
         $this->actions = array(
-            'sendvcode' => $this->action_path . 'SendVcode.php',
-            'signup' => $this->action_path . 'Signup.php',
-            'signin' => $this->action_path . 'Signin.php',
-            'forget' => $this->action_path . 'Forget.php',
-            'forgetreset' => $this->action_path . 'ForgetReset.php',
-            'getaccount' => $this->action_path . 'GetAccount.php'
+            'getarticles' => $this->action_path . 'GetArticles.php'
         );
     }
 }

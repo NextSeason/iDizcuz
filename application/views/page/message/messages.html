@@ -10,9 +10,11 @@
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
-            <div class="boxes main">
+            <div class="boxes body">
                 <div class="inner clearfix">
-                    <div class="content-box l">
+                    <div class="sidebar aside">
+                    </div>
+                    <div class="content-box main">
                         <div class="sub-nav clearfix">
                             <ul class="nav clearfix">
                                 <li>
@@ -52,8 +54,6 @@
                             <?php } ?>
                         </ul>
                     </div>
-                    <div class="sidebar l">
-                    </div>
                 </div> 
             </div>
         </div>
@@ -68,7 +68,7 @@
                         <% } %>
                     </div>
                 <% } %>
-                <a href="/user/activities/<%=data.id %>" class="avatar small empty l"><img src="/static/common/images/thinker.png" /></a>
+                <a href="/user/activities/<%=data.id %>" class="avatar small empty l"></a>
                 <div class="info-box l">
                     <a href="/user/activities/<%=data.id %>" class="uname"><%-data.uname %></a>
                     <div class="num-part clearfix">

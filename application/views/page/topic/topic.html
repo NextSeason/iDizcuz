@@ -15,9 +15,22 @@
             data-account-uname="<?php echo isset( $account['uname'] ) ? htmlspecialchars( $account['uname'] ) : ''; ?>"
         >
             <?php include TPL_PATH . 'common/top.inc.html'; ?>
-            <div class="boxes main">
-                <div class="inner clearfix">
-                    <div class="topic-area l" data-topic-id="<?php echo $topic[ 'id' ]; ?>">
+            <div class="boxes body">
+                <div class="inner">
+                    <div class="sidebar aside">
+                        <?php if( $account ) { ?>
+                            <div class="new-post">
+                                <p>心理所想，不吐不快</p>
+                                <a href="###" class="btns large show-editor">发表我的论述</a>
+                            </div>
+                        <?php } else { ?>
+                            <div class="about-idizcuz">
+                                <p>试着去成为一个理性且有思想的人<p>
+                                <a href="/account/page/signup" class="btns large">加入每日论点 • iDizcuz</a>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="topic-area main" data-topic-id="<?php echo $topic[ 'id' ]; ?>">
                         <?php if( !empty( $post ) ) { ?>
                             <div class="target-post">
                                 <?php if( $post['data']['status'] > 0 ) { ?>
@@ -293,19 +306,6 @@
                                 <?php } ?>
                             </div>
                         </div>
-                    </div>
-                    <div class="sidebar r">
-                        <?php if( $account ) { ?>
-                            <div class="new-post">
-                                <p>心理所想，不吐不快</p>
-                                <a href="###" class="btns large show-editor">发表我的论述</a>
-                            </div>
-                        <?php } else { ?>
-                            <div class="about-idizcuz">
-                                <p>试着去成为一个理性且有思想的人<p>
-                                <a href="/account/page/signup" class="btns large">加入每日论点 • iDizcuz</a>
-                            </div>
-                        <?php } ?>
                     </div>
                 </div>
             </div>

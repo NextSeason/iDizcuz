@@ -11,18 +11,18 @@
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
-            <div class="boxes main">
-                <div class="inner clearfix">
-                    <div class="main-area l">
+            <div class="boxes body">
+                <div class="inner">
+                    <div class="aside">
+                        <?php include TPL_PATH . '/user/card.inc.html'; ?>
+                    </div>
+                    <div class="main">
                         <?php include TPL_PATH . '/user/nav.inc.html'; ?>
                         <ul class="activity-list"></ul>
                         <a class="load-more">
                             加载更多动态
                             <i class="fa fa-angle-double-down"></i>
                         </a>
-                    </div>
-                    <div class="sidebar">
-                        <?php include TPL_PATH . '/user/card.inc.html'; ?>
                     </div>
                 </div>
             </div>

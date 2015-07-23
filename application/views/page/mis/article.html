@@ -14,42 +14,55 @@
                 <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
                 <div class="core">
                     <form class="article-form">
+                        <input type="hidden" value="<?php echo $article['id']; ?>" class="id" /d>
                         <label>
                             <p class="s-title">资料封面配图（请上传尺寸为140px*80px图片）：</p>
                             <input type="file" class="image" />
-                            <input type="hidden" class="img" />
-                            <div class="preview-img"></div>
+                            <input type="hidden" class="img" value="<?php echo $article['img']; ?>" />
+                            <div class="preview-img">
+                                <?php if( strlen( $article['img'] ) > 0 ) { ?>
+                                    <img src="http://topicstc.idizcuzz.com/<?php echo $article['img']; ?>" />
+                                <?php } ?>
+                            </div>
                         </label>
                         <label>
                             <p class="s-title">资料标题：</p>
-                            <input type="text" class="title" />
+                            <input type="text" class="title" value="<?php echo htmlspecialchars( $article['title'] ); ?>" />
                         </label>
                         <label>
                             <p class="s-title">资料摘要：</p>
-                            <input type="text" class="summary" placeholder="资料内容的简单摘要，250字以内" />
+                            <input type="text" class="summary" placeholder="资料内容的简单摘要，250字以内" value="<?php echo htmlspecialchars( $article['summary'] ); ?>" />
                         </label>
                         <div class="block clearfix">
                             <label class="l">
+                                <p class="s-title">绑定话题：</p>
+                                <input type="text" class="topic_id" placeholder="绑定的话题ID" value="<?php echo $article['topic_id'] == 0 ? '' : $article['topic_id']; ?>" />
+                            </label>
+                            <label class="l">
                                 <p class="s-title">时间：</p>
-                                <input type="date" class="time" placeholder="事件时间" />
+                                <input type="text" class="time" placeholder="格式：2015-01-31" value="<?php echo substr( $article['time'], 0, -9 ); ?>" />
                             </label>
                             <label class="l">
                                 <p class="s-title">内容来源：</p>
-                                <input type="text" class="origin" placeholder="内容来源 如：百度新闻" />
+                                <input type="text" class="origin" placeholder="内容来源 如：百度新闻" value="<?php echo htmlspecialchars( $article['origin'] ); ?>" />
+                            </label>
+                            <label class="l">
+                                <p class="s-title">作者：</p>
+                                <input type="text" class="author" placeholder="内容作者" value="<?php echo htmlspecialchars( $article['author'] ); ?>" />
                             </label>
                         </div>
                         <label>
                             <p class="s-title">来源地址：</p>
-                            <input type="text" class="origin_url" placeholder="内容来源的正确URL" />
+                            <input type="text" class="origin_url" placeholder="内容来源的正确URL" value="<?php echo htmlspecialchars( $article['origin_url'] ); ?>" />
                         </label>
                         <label>
                             <p class="s-title">来源LOGO：</p>
-                            <input type="text" class="origin_logo" placeholder="内容来源的LOGO的图片地址" />
+                            <input type="text" class="origin_logo" placeholder="内容来源的LOGO的图片地址" value="<?php echo htmlspecialchars( $article['origin_logo'] ); ?>" />
                         </label>
                         <div>
                             <p class="s-title">资料内容：</p>
                             <div class="textbox" id="textbox">
-                                <script type="text/plain" id="editor" class="editor"></script>
+                                <script type="text/plain" id="editor" class="editor"><?php echo $article['content']; ?></script>
                             </div>
                         </div>
                         <div class="btn-line">
