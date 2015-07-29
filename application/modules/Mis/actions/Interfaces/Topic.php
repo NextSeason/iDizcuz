@@ -90,7 +90,7 @@ Class TopicAction extends \Local\MisAction {
 
         $type = $request->getPost( 'type' );
 
-        if( !isset( $type ) || !in_array( $type, array( 0, 1 ) ) ) {
+        if( !isset( $type ) || !in_array( $type, array( 2, 1 ) ) ) {
             $this->error( 'PARAMS_ERR', 'You need to select a type for this topic' );
         }
 

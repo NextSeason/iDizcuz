@@ -40,7 +40,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
             1 => 'id'   
         ] ) );
 
-        $router->addRoute( 'list', new \Yaf\Route\Regex( '#/list(?>/(\d+)?(?>/(\d+)?)?)?#', [
+        $router->addRoute( 'list', new \Yaf\Route\Regex( '#/list(?>/(\d+)?(?>/(\d+))?)?#', [
             'module' => 'topic',
             'controller' => 'page',
             'action' => 'list'

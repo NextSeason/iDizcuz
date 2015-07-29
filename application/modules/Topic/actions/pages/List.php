@@ -11,6 +11,8 @@ Class ListAction extends \Local\BaseAction {
 
         $this->getTopicsData()->getTopics()->getPoints();
 
+        $this->data['cid'] = $this->params['cid'];
+
         return $this->data;
     }
 

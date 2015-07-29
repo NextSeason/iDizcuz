@@ -4,7 +4,7 @@
         <?php 
             $type_arr = array( '讨论', '辩论' );
             $title = '每日论点•iDizcuz';
-            $nav = 'list';
+            $nav = ( $cid == 1 ? 'focus' : 'list' );
         ?>
         <?php include TPL_PATH . 'common/head.inc.html'; ?>
         <link rel="stylesheet" href="/static/topic/css/list.css" />

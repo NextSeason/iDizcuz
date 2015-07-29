@@ -1,17 +1,11 @@
 <?php
 
 Class SigninAction extends \Local\BaseAction {
-    private $data = array();
+    private $data = [];
 
     public function __execute() {
-
         $this->type = 'interface';
-
         $this->paramsProcessing()->checkStatus();
-
-        if( empty( $this->accountModel ) ) {
-            $this->accountModel = new AccountModel();
-        }
 
         $this->authentication()->setSession()->updateAccountData();
 
@@ -19,8 +13,9 @@ Class SigninAction extends \Local\BaseAction {
     }
 
     private function authentication() {
+        $accountModel = new AccountModel();
         $params = $this->params;
-        $account = $this->accountModel->getAccountByEmail( $params[ 'email' ] );
+        $account = $accountModel->getAccountByEmail( $params[ 'email' ] );
 
         if( !$account ) {
             $this->error( 'ACCOUNT_NOTEXISTS' );

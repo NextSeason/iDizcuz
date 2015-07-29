@@ -8,7 +8,7 @@ Abstract Class MisAction extends \Yaf\Action_Abstract {
     protected $request;
     protected $tpl;
     protected $type = 'page';
-    protected $admin;
+    protected $admin = null;
     protected $params = array();
 
     protected $adminModel;
@@ -18,7 +18,14 @@ Abstract Class MisAction extends \Yaf\Action_Abstract {
         $this->request = $this->getRequest();
         $this->controller = $this->getController();
 
-        $this->admin = $this->session [ 'admin' ];
+        $this->admin = isset( $this->session [ 'admin' ] ) ? $this->session['admin'] : null;
+
+        if( is_null( $this->admin ) 
+            && ( !preg_match( '#^/mis/page/signin#', $_SERVER['REQUEST_URI'] ) )
+            && ( !preg_match( '#^/mis/interface/signin#', $_SERVER['REQUEST_URI'] ) )
+        ) {
+            $this->redirect( '/mis/page/signin' );
+        }
 
         if( $this->admin ) {
             $this->updateSession();

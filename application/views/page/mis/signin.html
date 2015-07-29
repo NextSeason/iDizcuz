@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <?php $title = 'iDizcuz - Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
         <link rel="stylesheet" type="text/css" href="/static/mis/css/signin.css" />
     </head>
     <body>
         <div id="idizcuz">
-            <form>
+            <form class="signin">
                 <a href="http://www.idizcuz.com" class="logo-text">iDizcuz</a>
-                <input type="text" placeholder="Email address" />
-                <input type="password" placeholder="Password" />
-                <a href="###" class="btns larger">Log in</a>
+                <input type="text" placeholder="Email address" class="email" />
+                <input type="password" placeholder="Password" class="passwd"  />
+                <input type="submit" class="btns larger" value="Submit" />
             </form>
         </div>
+        <script>
+            $( 'form.signin' ).on( 'submit', function( e ) {
+                e.preventDefault();
+
+                var email = $.trim( $( '.email' ).val() ),
+                    passwd = $.trim( $( '.passwd' ).val() );
+
+                if( !email.length || !passwd.length ) {
+                    return false;
+                }
+
+                $.ajax( {
+                    url : '/mis/interface/signin',
+                    method : 'POST',
+                    data : {
+                        email : email,
+                        passwd : passwd
+                    }
+                } ).done( function( response ) {
+                    var errno = +response.errno;
+
+                    if( !errno ) {
+                        location.href = "/mis";
+                        return;
+                    } 
+                } );
+            } );
+        </script>
     </body>
 </html>
