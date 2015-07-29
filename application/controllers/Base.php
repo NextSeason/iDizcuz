@@ -8,7 +8,7 @@ Class BaseController extends \Yaf\Controller_Abstract {
     protected $action_path;
     protected $session;
 
-    const TOKEN_COOKIE_NAME = '__ct';
+    const TOKEN_COOKIE_NAME = 'CSRF-TOKEN';
 
     public function init() {
 
@@ -28,7 +28,7 @@ Class BaseController extends \Yaf\Controller_Abstract {
         $this->setToken();
 
         if( $this->request->isPost() && $this->conf->csrf_token ) {
-            if( !$this->checkToken() ) {
+            if( !$this->csrfCheck() ) {
                 $this->error( 'PARAMS_ERR' );
             }
         }
@@ -85,10 +85,11 @@ Class BaseController extends \Yaf\Controller_Abstract {
      * check csrf token
      *
      */
-    protected function checkToken() {
+    protected function csrfCheck() {
+        $token = $this->request->getPost( 'csrf-token' );
 
+        if( is_null( $token ) ) return false;
         if( empty( $_COOKIE[ self::TOKEN_COOKIE_NAME ] ) ) return false;
-        $token = $_COOKIE[ self::TOKEN_COOKIE_NAME ];
 
         $csrfTokens = $this->session[ 'csrf_token' ];
         if( empty( $csrfTokens[ $token ] ) ) return false;

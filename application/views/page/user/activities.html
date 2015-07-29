@@ -26,6 +26,7 @@
                     </div>
                 </div>
             </div>
+            <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
         <textarea class="templates" id="activity-list-tpl">
             <% if( !data.length ) { %>
@@ -80,6 +81,6 @@
             var iDizcuz = new J();
             iDizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js', { self : <?php echo $self ? 1 : 0; ?>});
         </script>
-        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+        <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

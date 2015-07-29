@@ -27,6 +27,7 @@
                     </div>
                 </div>
             </div>
+            <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
         <textarea class="templates" id="article-tpl">
             <% for( var i = 0, l = data.length; i < l; i += 1 ) { var item = data[i]; %>
@@ -60,6 +61,6 @@
                 topic_id : '<?php echo $topic['id']; ?>'
             } );
         </script>
-        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+        <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

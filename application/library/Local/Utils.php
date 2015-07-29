@@ -70,4 +70,9 @@ Class Utils {
         header( 'Location:' . $path );
         exit;
     }
+
+    static public function pointIndex( $params ) {
+        $index = $params['post_cnt'] * 10 + floor( $params['agree'] / 20 ) - floor( $params['disagree'] / 20 );
+        return max( $index, 0 );
+    }
 }

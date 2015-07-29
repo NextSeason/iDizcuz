@@ -144,7 +144,7 @@
                                 <div class="chart-legend"><b class="brand">•</b> 各观点指数对比</div>
                             </div>
                             <div class="main">
-                                <h3><a href="/topic/1" target="_blank"><span class="seal seal-1"></span> 各地青少年犯罪频现，究竟谁该背起更多的责任</a></h3>
+                                <h3><a href="/topic/3" target="_blank"><span class="seal seal-1"></span> 各地青少年犯罪频现，究竟谁该背起更多的责任</a></h3>
                                 <div class="data-line">
                                 </div>
                                 <ul class="point-list">
@@ -168,7 +168,7 @@
                                     </li>
 
                                 </ul>
-                                <a href="/topic/1" class="view">查看话题详情</a>
+                                <a href="/topic/3" class="view">查看话题详情</a>
                             </div>
                         </div>
                         <div class="topics clearfix">
@@ -204,6 +204,7 @@
                     </div>
                 </div>
             </div>
+            <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
         <textarea class="templates" id="hot-posts-tpl">
             <% for( var i = 0, l = data.length; i < l; i += 1 ) { var item = data[i]; %>
@@ -219,15 +220,15 @@
         <script src="/static/common/js/ichart.js"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'Chart', '/static/home/packages/Chart/bootstrap.js', { id : 1 } );
+            idizcuz.mount( 'Chart', '/static/home/packages/Chart/bootstrap.js', { id : 3 } );
             idizcuz.mount( 'hotposts', '/static/home/packages/HotPosts/bootstrap.js', { blocks : [ {
-                topic_id : 1,
+                topic_id : 3,
                 rn : 4,
                 container : $( '.hot-post-list-1' )
             } ] } );
             idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js', { rn : 10 } );
 
         </script>
-        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+        <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

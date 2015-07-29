@@ -209,7 +209,7 @@
                                                         <span>支持 <b class="brand"><?php echo $point['data']['agree']; ?></b></span>
                                                         <span>反对 <b class="brand"><?php echo $point['data']['disagree']; ?></b></span>
                                                     </div>
-                                                    <span href="###" class="index">指数 <b class="brand">12345</b></span>
+                                                    <span href="###" class="index">指数 <b class="brand"><?php echo $point['data']['index']; ?></b></span>
                                                 </div>
                                                 <div class="title">
                                                     <i class="fa fa-flag point-flag-<?php echo $point['id']; ?>"></i>
@@ -231,7 +231,7 @@
                                                     <span>论述 <b class="brand"><?php echo $point['data']['post_cnt']; ?></b></span>
                                                     <span>支持 <b class="brand"><?php echo $point['data']['agree']; ?></b></span>
                                                     <span>反对 <b class="brand"><?php echo $point['data']['disagree']; ?></b></span>
-                                                    <span href="###" class="index">指数 <b class="brand">12345</b></span>
+                                                    <span href="###" class="index">指数 <b class="brand"><?php echo $point['data']['index']; ?></b></span>
                                                 </div>
                                             </div>
                                         </li>
@@ -326,10 +326,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer boxes">
-                <div class="inner">
-                </div>
-            </div>
+            <?php include TPL_PATH . 'common/foot.inc.html'; ?>
             <div id="complain-box" data-target-id="0">
                 <form>
                     <input type="hidden" class="comment_id" />
@@ -631,6 +628,6 @@
             idizcuz.mount( 'copy', '/static/topic/packages/Copy/bootstrap.js', {} );
             idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js', {} );
         </script>
-        <?php include TPL_PATH . 'common/foot.inc.html'; ?>
+        <?php include TPL_PATH . 'common/end.inc.html'; ?>
     </body>
 </html>

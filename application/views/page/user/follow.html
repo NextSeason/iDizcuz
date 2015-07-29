@@ -23,6 +23,7 @@
                     </div>
                 </div>
             </div>
+            <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
         <textarea class="templates" id="account-list-tpl">
             <% if( !data.length ) {%>
@@ -60,6 +61,6 @@
             } );
             iDizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js', {});
         </script>
-        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+        <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

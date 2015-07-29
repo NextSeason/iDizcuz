@@ -36,6 +36,7 @@
                     </div>
                 </div>
             </div>
+            <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
         <script>
             ( function() {
@@ -86,7 +87,8 @@
                         method : 'POST',
                         data : {
                             opasswd : opasswd,
-                            npasswd : npasswd
+                            npasswd : npasswd,
+                            'csrf-token' : $.cookie( 'CSRF-TOKEN' )
                         }
                     } ).done( function( response) {
                         var errno = +response.errno;
@@ -115,6 +117,6 @@
                 } );
             } )();
         </script>
-        <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+        <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

@@ -43,7 +43,9 @@ Class TopicAction extends \Local\BaseAction {
         $pointDataModel = new PointDataModel();
 
         foreach( $points as &$point ) {
-            $point['data'] = $pointDataModel->get( $point['id'] );
+            $point_data = $pointDataModel->get( $point['id'] );
+            $point_data['index'] = \Local\Utils::pointIndex( $point_data );
+            $point['data'] = $point_data;
         }
 
         $this->data['points'] = $points;
