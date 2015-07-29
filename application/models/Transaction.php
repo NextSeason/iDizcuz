@@ -339,6 +339,10 @@ Class TransactionModel extends BaseModel {
 
             $topic_id = $data[ 'topic_id' ];
 
+            if( !$post_id ) {
+                throw new PDOException( 'failed to insert data into posts' );
+            }
+
             $post_data = [
                 'id' => $post_id,
                 'topic_id' => $topic_id,

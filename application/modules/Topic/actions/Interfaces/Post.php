@@ -171,6 +171,10 @@ Class PostAction extends \Local\BaseAction {
 
         $point_id = $request->getPost( 'point_id' );
 
+        if( is_null( $point_id ) ) {
+            $point_id = 0;
+        }
+
         $title = $request->getPost( 'title' );
 
         $to = intval( $request->getPost( 'to' ) );
