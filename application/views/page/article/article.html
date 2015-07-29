@@ -10,9 +10,10 @@
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
-            <div class="boxes main">
+            <div class="boxes body">
                 <div class="inner clearfix">
-                    <div class="main l">
+                    <div class="aside"></div>
+                    <div class="main">
                         <div class="article">
                             <div class="hd">
                                 <?php if( $article['origin_logo'] != '' ) { ?>
@@ -47,7 +48,7 @@
                                     <p><span>摘要：</span><?php echo htmlspecialchars( $article['summary'] ); ?>
                                 </blockquote>
                             <?php } ?>
-                            <div class="content">
+                            <div class="content rich-text">
                                 <?php echo $article['content']; ?>
                             </div>
                             <div class="adjacent">
@@ -76,8 +77,6 @@
                                 </div>
                             <?php } ?>
                         </div>
-                    </div>
-                    <div class="sidebar r">
                     </div>
                 </div>
             </div>

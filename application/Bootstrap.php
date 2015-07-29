@@ -40,10 +40,13 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
             1 => 'id'   
         ] ) );
 
-        $router->addRoute( 'list', new \Yaf\Route\Rewrite( '/list/:id', [
+        $router->addRoute( 'list', new \Yaf\Route\Regex( '#/list(?>/(\d+)?(?>/(\d+)?)?)?#', [
             'module' => 'topic',
             'controller' => 'page',
             'action' => 'list'
+        ], [
+            1 => 'cid',
+            2 => 'pn'
         ] ) );
 
         $router->addRoute( 'post', new \Yaf\Route\Rewrite( '/post/:id', [

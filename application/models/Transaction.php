@@ -422,7 +422,6 @@ Class TransactionModel extends BaseModel {
         $type = $params['type'];
         $id = $params['id'];
         $data = [
-            'cid' => $params['cid'],
             'title' => $params['title'],
             'desc' => $params['desc']
         ];
@@ -436,7 +435,10 @@ Class TransactionModel extends BaseModel {
             if( !$res ) {
                 throw new PDOException( 'cannot update data in table topics' );
             }
-            $res = $this->_update( $id, ['type'=>$type], 'topics_data' );
+            $res = $this->_update( $id, [
+                'type' => $type,
+                'cid' => $params['cid'],
+            ], 'topics_data' );
 
             if( !$res ) {
                 throw new PDOException( 'cannot update data in table topics_data' );
@@ -455,7 +457,6 @@ Class TransactionModel extends BaseModel {
         $type = $params['type'];
 
         $data = [
-            'cid' => $params['cid'],
             'title' => $params['title'],
             'desc' => $params['desc']
         ];
@@ -476,6 +477,7 @@ Class TransactionModel extends BaseModel {
              */
             $this->_insert( [
                 'id' => $topic_id,
+                'cid' => $params['cid'],
                 'type' => $type
             ], 'topics_data' );
 

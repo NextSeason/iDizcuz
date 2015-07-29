@@ -89,21 +89,21 @@
                     </div>
                     <div class="info-part">
                         <span>所在行业：
-                            <% if( data.info.industry ) { %>
-                                <%-data.info.industry %>
+                            <% if( data.industry ) { %>
+                                <%-data.industry %>
                             <% } else { %>
                                 <span class="unknow">未知行业</span>
                             <% } %>
                         </span>
                         <span class="sp">|</span>
-                        <% if( data.info.employment ) { %>
-                            <span><%-data.info.employment %></span>
+                        <% if( data.employment ) { %>
+                            <span><%-data.employment %></span>
                         <% } else { %>
                             <span class="unknow">未知组织</span>
                         <% } %>
                         •
-                        <% if( data.info.position ) { %>
-                            <span><%-data.info.position %></span>
+                        <% if( data.position ) { %>
+                            <span><%-data.position %></span>
                         <% } else { %>
                             <span class="unknow">未知职位</span>
                         <% } %>

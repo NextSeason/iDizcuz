@@ -25,16 +25,16 @@ Class FileManage {
         return \Local\Utils::loadConf( 'oss', 'idizcuz' );
     }
 
-    static public function saveAvatar( $avatar = null ) {
-        $conf = self::conf( 'attachment', 'posts' ); 
+    static public function saveAvatar( $filename, $path ) {
+        $conf = self::conf(); 
 
         $response = self::ossservice()->upload_file_by_file(
             $conf->avatar,
-            'yangliang.png',
-            '/Users/lvchengbin/Projects/iDizcuz/application/library/Local/OSS/yl.png'
+            $filename,
+            $path
         );
 
-        var_dump( $response );
+        return $response;
     }
 
     static public function savePoststc( $filename, $path ) {

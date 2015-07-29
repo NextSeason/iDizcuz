@@ -27,11 +27,24 @@
         <?php } ?>
         <div class="info-part">
             <p class="industry lines">
-                <span><?php echo $user['info']['industry']; ?> 行业</span>
+                <?php if( $user['industry'] ) { ?>
+                    <span><?php echo $user['industry']; ?> 行业</span>
+                <?php } else { ?>
+                    <span class="unknow">未知 行业</span>
+                <?php } ?>
             </p>
             <p class="situation lines">
-                <span><?php echo $user['info']['employment']; ?>NextSeason新季</span>
-                <span><?php echo $user['info']['position']; ?>CEO</span>
+                <?php if( $user['employment'] ) { ?>
+                    <span><?php echo $user['employment']; ?></span>
+                <?php } else { ?>
+                    <span class="unknow"> 未知组织</span>
+                <?php } ?>
+                •
+                <?php if( $user['position'] ) { ?>
+                    <span><?php echo $user['position']; ?></span>
+                <?php } else { ?>
+                    <span class="unknow">未知职位</span>
+                <?php } ?>
             </p>
         </div>
         <div class="num-part l2 clearfix">

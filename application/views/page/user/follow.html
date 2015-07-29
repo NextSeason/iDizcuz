@@ -26,7 +26,23 @@
         </div>
         <textarea class="templates" id="account-list-tpl">
             <% if( !data.length ) {%>
-                <li class="empty"></li>
+                <li>
+                    <div class="empty">
+                        <?php if( $page == 'follow' ) { ?>
+                            <?php if( $self == 1 ) { ?>
+                                您还没有关注的用户
+                            <?php } else { ?>
+                                <?php echo $user['uname']; ?>还没有关注的用户
+                            <?php } ?>
+                        <?php } else { ?>
+                            <?php if( $self == 1 ) { ?>
+                                您目前还没有粉丝
+                            <?php } else { ?>
+                                <?php echo $user['uname']; ?>目前还没有粉丝
+                            <?php } ?>
+                        <?php } ?>
+                    </div>
+                </li>
             <% } else { %>
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
                     <% var card = data[i]; %>  

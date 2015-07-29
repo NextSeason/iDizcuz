@@ -1,7 +1,9 @@
 <?php
 
 Class TopicAction extends \Local\MisAction {
-    private $data = [];
+    private $data = [
+        'points' => []
+    ];
     private $topicModel;
     private $topic = [
         'id' => 0,

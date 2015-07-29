@@ -77,8 +77,6 @@ Class GetActivitiesAction extends \Local\BaseAction {
         $accountDataModel = new AccountDataModel();
         $account['data'] = $accountDataModel->get( $id );
 
-        $accountInfoModel = new AccountInfoModel();
-        $account['info'] = $accountInfoModel->get( $id );
         return $account;
     }
 

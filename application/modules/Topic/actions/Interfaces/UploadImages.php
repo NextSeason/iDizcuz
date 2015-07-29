@@ -3,6 +3,9 @@
 Class UploadImagesAction extends \Local\BaseAction {
     private $data = [];
 
+    /**
+     * response code for ueditor
+     */
     private $stateMap = array(    //上传状态映射表，国际化用户需考虑此处数据的国际化
         0 => "SUCCESS" ,                //上传成功标记，在UEditor中内不可改变
         1 => "文件大小超出 upload_max_filesize 限制" ,

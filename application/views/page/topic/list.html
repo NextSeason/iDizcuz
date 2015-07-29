@@ -16,29 +16,69 @@
                 <div class="inner">
                     <div class="aside"></div>
                     <div class="list-area main">
-                        <div class="sub-nav clearfix">
-                            <ul class="clearfix nav">
-                                <li><a href="/list/1" class="<?php if( is_null( $type ) ) { echo 'focus'; }  ?>">全部</a></li>
-                                <li><a href="/list/1?type=0" class="<?php if( $type === '0' ) { echo 'focus'; } ?>">讨论</a></li>
-                                <li><a href="/list/1?type=1" class="<?php if( $type === '1' ) { echo 'focus'; } ?>">辩论</a></li>
-                            </ul>  
-                        </div>
                         <ul class="topic-list">
                             <?php foreach( $topics as $topic ) { ?>
-                                <li>
-                                <h3>
-                                    <span class="seal seal-<?php echo $topic['data']['type']; ?>"></span>
-                                    <a href="/topic/<?php echo $topic['id']; ?>" target="_blank"><?php echo $topic['title']; ?></a>
-                                </h3>
+                                <li class="topics">
+                                    <h3>
+                                        <span class="seal seal-<?php echo $topic['data']['type']; ?>"></span>
+                                        <a href="/topic/<?php echo $topic['id']; ?>" target="_blank"><?php echo $topic['title']; ?></a>
+                                    </h3>
                                     <p class="data">
-                                        <span class="r">发布时间：<?php echo substr( $topic['ctime'], 0, -9 ); ?></span>
-                                        <span class="">共有论述：<?php echo $topic['data']['post_cnt']; ?></span>
-                                        <span>获得支持：<?php echo $topic['data']['agree']; ?></span>
-                                        <span>获得反对：<?php echo $topic['data']['disagree']; ?></span>
+                                        <span class="r">话题日期：<?php echo substr( $topic['ctime'], 0, -9 ); ?></span>
+                                        <span class="">共有 <b class="brand"><?php echo $topic['data']['post_cnt']; ?></b> 条论述</span>
+                                        <span class="cate">分类：<a href="/list/<?php echo $topic['data']['cid']; ?>"><?php echo $topic['data']['cate']; ?></a></span>
                                     </p>
-                                    <p class="desc">
+                                    <div class="desc">
                                         <?php echo $topic['desc']; ?>
-                                    </p>
+                                        <div class="bottom-line">
+                                            <a href="###" class="show-more-info">[查看更多]</a>
+                                        </div>
+                                    </div>
+                                    <?php if( $topic['points'] ) { $points = $topic['points'];  ?>
+                                        <div class="point-area">
+                                            <ul class="clearfix">
+                                                <?php $arr = ['一','二','三','四','五']; ?>
+                                                <?php $i = 0; foreach( $points as $point ) { ?>
+                                                    <li>
+                                                        <div class="points">
+                                                            <div class="point-data r">
+                                                                <div class="base-data">
+                                                                    <b class="triangle"><b class="triangle"></b></b>
+                                                                    <span>论述 <b class="brand"><?php echo $point['data']['post_cnt']; ?></b></span>
+                                                                    <span>支持 <b class="brand"><?php echo $point['data']['agree']; ?></b></span>
+                                                                    <span>反对 <b class="brand"><?php echo $point['data']['disagree']; ?></b></span>
+                                                                </div>
+                                                                <span href="###" class="index">指数 <b class="brand">12345</b></span>
+                                                            </div>
+                                                            <div class="title">
+                                                                <i class="fa fa-flag flag-<?php echo $i + 1; ?>"></i>
+                                                                <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                <?php $i++; } ?>
+                                            </ul>
+                                            <ul class="clearfix split-point-list">
+                                                <?php $i = 0; foreach( $points as $point ) { ?>
+                                                    <li>
+                                                        <div class="points ">
+                                                            <div class="title">
+                                                                <i class="fa fa-flag flag-<?php echo $i + 1; ?>"></i>
+                                                                <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
+                                                            </div>
+                                                            <div class="point-data">
+                                                                <span>论述 <b class="brand"><?php echo $point['data']['post_cnt']; ?></b></span>
+                                                                <span>支持 <b class="brand"><?php echo $point['data']['agree']; ?></b></span>
+                                                                <span>反对 <b class="brand"><?php echo $point['data']['disagree']; ?></b></span>
+                                                                <span href="###" class="index">指数 <b class="brand">12345</b></span>
+                                                            </div>
+
+                                                        </div>
+                                                    </li>
+                                                <?php $i++; } ?>
+                                            </ul>
+                                        </div>
+                                    <?php } ?>
                                 </li>
                             <?php } ?>
                         </ul>
@@ -46,6 +86,16 @@
                 </div>
             </div>
         </div>
+        <script>
+            ( function() {
+                $( '.topic-list' ).on( 'click', '.show-more-info', function( e ) {
+                    e.preventDefault();
+                    var el = $( this ).closest( 'li.topics' );
+                    el.find( '.desc p' ).show();
+                    el.find( '.bottom-line' ).hide();
+                } );
+            } )();
+        </script>
         <?php include TPL_PATH . 'common/foot.inc.html'; ?>
     </body>
 </html>

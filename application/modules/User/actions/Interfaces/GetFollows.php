@@ -32,7 +32,6 @@ Class GetFollowsAction extends \Local\BaseAction {
 
         $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
         $accountDataModel = new AccountDataModel();
-        $accountInfoModel = new AccountInfoModel();
         $followModel = new FollowModel();
 
         $accounts = [];
@@ -45,8 +44,6 @@ Class GetFollowsAction extends \Local\BaseAction {
             $account['data'] = $accountDataModel->get( $account_id, [
                 'post_cnt', 'agree', 'disagree', 'score', 'mark', 'fans', 'follow'
             ] );
-
-            $account['info'] = $accountInfoModel->get( $account_id, null );
 
             if( !$this->account ) {
                 $account['followed'] = 0;

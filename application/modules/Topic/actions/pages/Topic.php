@@ -60,7 +60,13 @@ Class TopicAction extends \Local\BaseAction {
 
         $topicDataModel = new TopicDataModel();
 
-        $topic['data'] = $topicDataModel->get( $topic[ 'id' ] );
+        $topic_data = $topicDataModel->get( $topic[ 'id' ] );
+
+        $categories = \Local\Utils::loadConf( 'categories', 'list' );
+
+        $topic_data['cate'] = $categories[ $topic_data['cid'] ];
+
+        $topic['data'] = $topic_data;
 
         $this->data[ 'topic' ] = $topic;
 

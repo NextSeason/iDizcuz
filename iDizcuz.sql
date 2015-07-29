@@ -18,12 +18,18 @@ CREATE TABLE IF NOT EXISTS `accounts` (
     `passwd` char(40) NOT NULL,
     `salt` char(32) NOT NULL,
     `uname` char(30) NOT NULL,
-    `desc` char(80) NOT NULL DEFAULT '' COMMENT 'a short description for userself',
     `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'account type reserved column',
     `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'status of account',
     `reg_ip` int NOT NULL DEFAULT 0 COMMENT 'ip address for registration',
     `login_ip` int NOT NULL DEFAULT 0 COMMENT 'ip address of last login client',
+    `img` char(40) NOT NULL DEFAULT '',
+    `sex` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'sex of user, 1 means male, 2 means female, 0 means not selected',
+    `industry` tinyint unsigned NOT NULL DEFAULT 0,
+    `employment` varchar(20) NOT NULL DEFAULT '',
+    `position` varchar(10) NOT NULL DEFAULT '',
+    `birth` date NOT NULL DEFAULT '0000-00-00',
+    `desc` varchar(255) NOT NULL DEFAULT '',
     `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
     `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last login time',
     PRIMARY KEY (`id`),
@@ -46,18 +52,6 @@ CREATE TABLE `accounts_data` (
     PRIMARY KEY( `id` )
 );
 
-DROP TABLE IF EXISTS `accounts_info`;
-
-CREATE TABLE `accounts_info` (
-    `id` int unsigned NOT NULL COMMENT 'user id, same as account id',
-    `sex` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'sex of user, 1 means male, 2 means female, 0 means not selected',
-    `industry` tinyint unsigned NOT NULL DEFAULT 0,
-    `employment` varchar(20) NOT NULL DEFAULT '',
-    `position` varchar(10) NOT NULL DEFAULT '',
-    `desc` varchar(255) NOT NULL DEFAULT '',
-    PRIMARY KEY(`id`)
-);
-
 DROP TABLE IF EXISTS `follows`;
 
 CREATE TABLE `follows` (
@@ -72,7 +66,6 @@ DROP TABLE IF EXISTS `topics`;
 
 CREATE TABLE `topics` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
-    `cid` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'category id default is 0',
     `img` char(40) NOT NULL DEFAULT '',
     `title` varchar( 80 ) NOT NULL COMMENT 'title of this topic',
     `desc` varchar( 3000 ) NOT NULL COMMENT 'description for this topic',
@@ -87,7 +80,8 @@ DROP TABLE IF EXISTS `topics_data`;
 
 CREATE TABLE `topics_data` (
     `id` int unsigned NOT NULL,
-    `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic type, 0 is discuss and 1 is arguments',
+    `cid` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'category id default is 0',
+    `type` tinyint unsigned NOT NULL COMMENT 'topic type, 0 is discuss and 1 is arguments',
     `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'topic status, 0 is not public and 1 is public',
     `post_cnt` int unsigned NOT NULL DEFAULT 0 COMMENT 'number of post under this topic',
     `agree` int unsigned NOT NULL DEFAULT 0,

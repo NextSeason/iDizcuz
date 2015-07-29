@@ -32,7 +32,9 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         if( $this->type == 'interface' ) {
             $this->controller->success( $data );
         } else {
-            $data[ 'account' ] = $this->session[ 'account' ];
+            if( empty( $data['account'] ) ) {
+                $data[ 'account' ] = $this->session[ 'account' ];
+            }
             $this->display( $this->tpl, $data );
         }
     }
@@ -55,9 +57,17 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         $account = $this->accountModel->get( $this->account[ 'id' ]  );
 
         if( $account ) {
+            $industries = \Local\Utils::loadConf( 'industries', 'list' );
+
+            if( $account['industry'] != 0 ) {
+                $account['industry_name'] = trim( $industries[$account['industry']], '-' );
+            }
+
             $this->account = array_merge( $this->account, $account );
             $this->accountDataModel = new \AccountDataModel();
             $this->account['data'] = $this->accountDataModel->get( $account['id'] );
+
+
         } else {
             $this->account = null;
         }

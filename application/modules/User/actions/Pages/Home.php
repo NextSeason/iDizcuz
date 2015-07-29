@@ -63,17 +63,14 @@ Class HomeAction extends \Local\BaseAction {
         }
 
         $accountDataModel = new AccountDataModel();
-        $accountInfoModel = new AccountInfoModel();
 
         $user[ 'data' ] = $accountDataModel->get( $id );
-        $user[ 'info' ] = $accountInfoModel->get( $id );
 
-
-        $industry = $user[ 'info' ][ 'industry' ];
+        $industry = $user[ 'industry' ];
 
         if( $industry != 0 ) {
             $industries = \Local\Utils::loadConf( 'industries', 'list' );
-            $user[ 'info' ][ 'industry' ] = trim( $industries[ $industry ], '-' );
+            $user[ 'industry' ] = trim( $industries[ $industry ], '-' );
         }
 
         $this->data[ 'user' ] = $user;

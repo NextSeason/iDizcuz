@@ -28,44 +28,52 @@
             </div>
         </div>
         <textarea class="templates" id="activity-list-tpl">
-            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
-                <% var item = data[i], type = item.type; %>
+            <% if( !data.length ) { %>
                 <li>
-                    <div class="activities">
-                        <div class="hline clearfix">
-                            <span class="date r"><%=item.ctime.substr(0,10) %></span>
-                            <a href="/user/activities/<%=item.account_id %>" target="_blank"><%-item.account.uname %></a>
-                            <% if( type == 0 ) { %>
-                                发布了新的论述
-                            <% } else if( type == 1 ) {%>
-                                支持了论述
-                            <% } else if( type == 2 ) {%>
-                                反对了论述
-                            <% } else if( type == 3 ) {%>
-                                评论了论述
-                            <% } else if( type == 4 ) {%>
-                                关注了 <a href="/user/activities/<%=item.extra.id %>"><%-item.extra.uname %></a>
-                            <% } %>
-                        </div>
-                        <div class="extra">
-                            <% if( type == 0 || type == 1 || type == 2 ) { %>
-                                <% var post = item.extra; %>
-                                <?php include TPL_PATH . '/user/post.tpl.inc.html'; ?>
-                            <% } else if( type == 3 ) {%>
-                                <% var comment = item.extra; %>
-                                <div class="extra-comments">
-                                    <p>评论内容：<%-comment.content %></p>
-                                </div>
-                                <div class="relation_post">
-                                    <p>相关论述：<a href="/post/<%=comment.post.id %>"><%-comment.post.title %></a></p>
-                                </div>
-                            <% } else if( type == 4 ) {%>
-                                <% var card = item.extra; %>
-                                <?php include TPL_PATH . '/user/card_h.tpl.html'; ?>
-                            <% } %>
-                        </div>
-                    </div>
+                    <p class="empty">
+                        暂时没有用户动态
+                    </p>
                 </li>
+            <% } else { %>
+                <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                    <% var item = data[i], type = item.type; %>
+                    <li>
+                        <div class="activities">
+                            <div class="hline clearfix">
+                                <span class="date r"><%=item.ctime.substr(0,10) %></span>
+                                <a href="/user/activities/<%=item.account_id %>" target="_blank"><%-item.account.uname %></a>
+                                <% if( type == 0 ) { %>
+                                    发布了新的论述
+                                <% } else if( type == 1 ) {%>
+                                    支持了论述
+                                <% } else if( type == 2 ) {%>
+                                    反对了论述
+                                <% } else if( type == 3 ) {%>
+                                    评论了论述
+                                <% } else if( type == 4 ) {%>
+                                    关注了 <a href="/user/activities/<%=item.extra.id %>"><%-item.extra.uname %></a>
+                                <% } %>
+                            </div>
+                            <div class="extra">
+                                <% if( type == 0 || type == 1 || type == 2 ) { %>
+                                    <% var post = item.extra; %>
+                                    <?php include TPL_PATH . '/user/post.tpl.inc.html'; ?>
+                                <% } else if( type == 3 ) {%>
+                                    <% var comment = item.extra; %>
+                                    <div class="extra-comments">
+                                        <p>评论内容：<%-comment.content %></p>
+                                    </div>
+                                    <div class="relation_post">
+                                        <p>相关论述：<a href="/post/<%=comment.post.id %>"><%-comment.post.title %></a></p>
+                                    </div>
+                                <% } else if( type == 4 ) {%>
+                                    <% var card = item.extra; %>
+                                    <?php include TPL_PATH . '/user/card_h.tpl.html'; ?>
+                                <% } %>
+                            </div>
+                        </div>
+                    </li>
+                <% } %>
             <% } %>
         </textarea>
         <script>

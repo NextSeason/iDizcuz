@@ -9,9 +9,29 @@ Class ListAction extends \Local\BaseAction {
 
         $this->paramsProcessing();
 
-        $this->getTopicsData()->getTopics();
+        $this->getTopicsData()->getTopics()->getPoints();
 
         return $this->data;
+    }
+
+    private function getPoints() {
+
+        $pointModel = new PointModel();
+        $pointDataModel = new PointDataModel();
+
+        foreach( $this->data['topics'] as &$topic ) {
+            if( $topic['data']['type'] == 1 ) {
+                $points = explode( ',', $topic['points'] );
+                $topic['points'] = [];
+                foreach( $points as $id ) {
+                    $point = $pointModel->get( $id );
+                    $point['data'] = $pointDataModel->get( $id );
+                    $topic[ 'points' ][] = $point;
+                }
+            }
+        }
+
+        return $this;
     }
 
     private function getTopics() {
@@ -26,7 +46,10 @@ Class ListAction extends \Local\BaseAction {
 
         $topics = [];
 
+        $categories = \Local\Utils::loadConf( 'categories', 'list' );
+
         foreach( $topics_data as $topic_data ) {
+            $topic_data[ 'cate' ] = $categories[ $topic_data['cid'] ];
             $topic = $topicModel->get( $topic_data['id'] );
             $topic['data'] = $topic_data;
             $topics[] = $topic;
@@ -41,10 +64,17 @@ Class ListAction extends \Local\BaseAction {
 
         $topicDataModel = new TopicDataModel();
 
-        $topics_data = $topicDataModel->getTopicsData( [
-            'type' => $params['type'],
+        $where = [ [ 'status', 1 ] ];
+
+        if( $params[ 'cid' ] != 0 ) {
+            $where[] = [ 'cid', $params['cid'] ];
+        }
+
+        $topics_data = $topicDataModel->select( [
+            'where' => $where,
+            'order' => [ [ 'id', 'DESC' ] ],
             'start' => $params['start'],
-            'rn' => $this->rn
+            'rn' => $params['rn']
         ] );
 
         if( $topics_data === false ) {
@@ -59,20 +89,19 @@ Class ListAction extends \Local\BaseAction {
     private function paramsProcessing() {
         $request = $this->request;
 
-        $type = $request->getQuery( 'type' );
+        $cid = intval( $request->getParam('cid') );
 
-        $this->data['type'] = $type;
-
-        $pn = intval( $request->getQuery( 'pn' ) );
+        $pn = intval( $request->getParam( 'pn' ) );
 
         if( $pn < 1 ) $pn = 1;
 
         $start = ( $pn - 1 ) * $this->rn;
 
         $this->params = array(
-            'type' => $type,
+            'cid' => $cid,
             'pn' => $pn,
-            'start' => $start
+            'start' => $start,
+            'rn' => 20
         );
 
         return $this;

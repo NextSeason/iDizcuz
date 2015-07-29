@@ -9,7 +9,8 @@ Class InterfaceController extends BaseInterfaceController {
 
         $this->actions = array(
             'updateinfo' => $this->action_path . 'UpdateInfo.php',
-            'passwd' => $this->action_path . 'Passwd.php'
+            'passwd' => $this->action_path . 'Passwd.php',
+            'uploadavatar' => $this->action_path . 'UploadAvatar.php'
         );
     }
 }

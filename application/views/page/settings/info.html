@@ -21,7 +21,11 @@
                                     <span>头像</span>
                                 </div>
                                 <div class="s-main l clearfix">
-                                    <a href="###" class="avatar l"></a>
+                                    <?php if( $account['img'] ) { ?>
+                                        <a href="javascript:void(0)" class="avatar l" style="background-image:url( http://avatar.idizcuzz.com/<?php echo $account['img']; ?>)"></a>
+                                    <?php } else { ?>
+                                        <a href="javascript:void(0)" class="avatar l"></a>
+                                    <?php } ?>
                                     <div class="upload-btn">
                                         <a href="###" class="btns file">选择头像</a>
                                         <input type="file" class="real-file-btn" />
@@ -37,11 +41,24 @@
                                 </div>
                                 <div class="s-main l clearfix sex-area">
                                     <label>
-                                        <input type="radio" value="1" name="sex" <?php if( $accountInfo['sex'] == 1 ) { echo 'checked'; } ?>> 男
+                                        <input type="radio" value="1" name="sex" <?php if( $account['sex'] == 1 ) { echo 'checked'; } ?>> 男
                                     </label>
                                     <label>
-                                        <input type="radio" value="2" name="sex" <?php if( $accountInfo['sex'] == 2 ) { echo 'checked'; } ?>> 女
+                                        <input type="radio" value="2" name="sex" <?php if( $account['sex'] == 2 ) { echo 'checked'; } ?>> 女
                                     </label>
+                                </div>
+                            </div>
+                            <div class="parts clearfix birth-area" date-birth="<?php echo $account['birth']; ?>">
+                                <div class="s-title l">
+                                    <span>生日</span>
+                                </div>
+                                <div class="s-main l clearfix">
+                                    <div class="select-helper"><select class="birth birth-year"></select></div>
+                                    <span class="st">年</span>
+                                    <div class="select-helper"><select class="birth birth-month"></select></div>
+                                    <span class="st">月</span>
+                                    <div class="select-helper"><select class="birth birth-date"></select></div>
+                                    <span class="st">日</span>
                                 </div>
                             </div>
                             <div class="parts clearfix">
@@ -52,7 +69,7 @@
                                     <div class="industries-selection select-helper"><select class="industries">
                                         <option value="0">选择行业</option>
                                         <?php foreach( $industries as $k => $v ) { ?>
-                                        <option value="<?php echo $k; ?>" <?php if( $k == $accountInfo['industry'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
+                                        <option value="<?php echo $k; ?>" <?php if( $k == $account['industry'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
                                         <?php } ?>
                                     </select></div>
                                 </div>
@@ -62,8 +79,8 @@
                                     <span>目前状况</span>
                                 </div>
                                 <div class="s-main l">
-                                    <input type="text" class="employment" value="<?php echo $accountInfo['employment']; ?>" placeholder="公司/学校/机构等" /> 
-                                    <input type="text" class="small position" value="<?php echo $accountInfo['position']; ?>" placeholder="职位" />
+                                    <input type="text" class="employment" value="<?php echo $account['employment']; ?>" placeholder="公司/学校/机构等" /> 
+                                    <input type="text" class="small position" value="<?php echo $account['position']; ?>" placeholder="职位" />
                                 </div>
                             </div>
                             <div class="parts clearfix">
@@ -71,7 +88,7 @@
                                     <span>个人简介</span>
                                 </div>
                                 <div class="s-main l">
-                                    <textarea class="desc"><?php echo $accountInfo['desc']; ?></textarea>
+                                    <textarea class="desc"><?php echo $account['desc']; ?></textarea>
                                 </div>
                             </div>
                             <div class="parts clearfix">
@@ -92,11 +109,12 @@
                             <img src="http://localhost:8004/static/topic/images/topic.jpg" />
                         </div>
                     </div>
+                    <div class="uploading-cover"></div>
                     <div class="img-cover"></div>
                     <div class="line"></div>
                     <div class="resize-area clearfix">
-                        <a href="###" class="plus r"><i class="fa fa-search-plus"></i></a>
-                        <a href="###" class="minus l"><i class="fa fa-search-minus"></i></a>
+                        <a href="###" class="zoom-in r"><i class="fa fa-search-plus"></i></a>
+                        <a href="###" class="zoom-out l"><i class="fa fa-search-minus"></i></a>
                         <input type="range" value="0" max="100" class="resize-bar" />
                     </div>
                     <div class="ft">
@@ -109,6 +127,7 @@
     </body>
     <script>
         var idizcuz = new J(); 
+        idizcuz.mount( 'Birth', '/static/settings/packages/Birth/bootstrap.js', {} );
         idizcuz.mount( 'Upload', '/static/settings/packages/Upload/bootstrap.js', {} );
         idizcuz.mount( 'UserInfo', '/static/settings/packages/UserInfo/bootstrap.js', {} );
     </script>

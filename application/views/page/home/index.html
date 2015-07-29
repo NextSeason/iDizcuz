@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php 
-            $title='每日论点 • iDizcuz - 尝试去成为理性且有思想的人';
+            $title='每日论点 • iDizcuz - 成为理性且有思想的人';
             $nav = 'index';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
@@ -11,59 +11,36 @@
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
-            <!--
-            <div class="boxes home-head">
-                <div class="inner">
-                    <div class="brand-area">
-                        <a href="/" class="logo-text">每日论点 • iDizcuz</a>
-                        <p class="slogan">
-                            <span class="ll"></span>
-                            <span class="text">尝试去成为理性且有思想的人</span>
-                            <span class="rl"></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            -->
             <div class="boxes banner">
                 <div class="inner clearfix">
                     <div class="account-area aside">
                         <?php if( $account ) { ?>
                             <div class="user-card clearfix">
-                                <a href="/user/activities/<?php echo $account['id']; ?>" class="avatar small"></a>
+                                <?php if( $account['img'] ) { ?>
+                                    <a href="/user/activities/<?php echo $account['id']; ?>" class="avatar" style="background-image:url(http://avatar.idizcuzz.com/<?php echo $account['img']; ?>)"></a>
+                                <?php } else { ?>
+                                    <a href="/user/activities/<?php echo $account['id']; ?>" class="avatar"></a>
+                                <?php } ?>
                                 <div class="user-info">
                                     <p class="uname"><?php echo htmlspecialchars( $account['uname'] ); ?></p>
                                     <div class="num-part clearfix">
-                                        <div class="l">
+                                        <div>
                                             <b class="num"><?php echo $account['data']['follow']; ?></b>
                                             <a href="/user/follow/<?php echo $account['id']; ?>">关注</a>
                                         </div>
-                                        <div class="m l">
+                                        <div>
                                             <b class="num"><?php echo $account['data']['fans']; ?></b>
                                             <a href="/user/fans/<?php echo $account['id']; ?>">粉丝</a>
                                         </div>
-                                        <div class="l">
-                                            <b class="num"><?php echo $account['data']['post_cnt']; ?></b>
-                                            <a href="/user/posts/<?php echo $account['id']; ?>">论述</a>
-                                        </div>
-                                    </div>
-                                    <div class="info-part">
-                                        <p class="industry lines">
-                                            <span>电子商务 行业</span>
-                                        </p>
-                                        <p class="situation lines">
-                                            <span>NextSeason新季</span>
-                                            <span>CEO</span>
-                                        </p>
                                     </div>
                                     <div class="num-part l2 clearfix">
-                                        <div class="l">
+                                        <div>
                                             <b class="num"><?php echo $account['data']['agree']; ?></b>
-                                            <a href="javascript:void(0)">获得支持</a>
+                                            <a href="javascript:void(0)">支持</a>
                                         </div>
-                                        <div class="l">
+                                        <div>
                                             <b class="num"><?php echo $account['data']['disagree']; ?></b>
-                                            <a href="javascript:void(0)">获得反对</a>
+                                            <a href="javascript:void(0)">反对</a>
                                         </div>
                                     </div>
                                 </div>
@@ -72,6 +49,7 @@
                             <a href="/signup" class="btns join-btn">加入每日论点 • iDizcuz</a>
                             <div class="sign-box">
                                 <form class="signin">
+                                    <span class="signin-tip">用户名或密码错误！</span>
                                     <p class="tt">帐号登录</p>
                                     <div class="line">
                                         <input type="text" class="email" placeholder="邮箱">
@@ -83,28 +61,173 @@
                                         <p class="tip"></p>
                                     </div>
                                     <div class="line">
-                                        <a href="/forget" class="redirect forget">忘记密码？</a>
+                                        <label>
+                                            <input type="checkbox" class="remember" />
+                                            <span>记住我</span>
+                                        </label> 
                                         <span class="sp">|</span>
-                                        <a href="/signup" class="redirect">立即注册</a>
+                                        <a href="/forget?r=http://www.idizcuz.com" class="redirect forget">忘记密码？</a>
+                                        <span class="sp">|</span>
+                                        <a href="/signup?r=http://www.idizcuz.com" class="redirect">注册</a>
                                     </div>
                                     <div class="line">
                                         <input type="submit" class="btns larger signin-btn" value="登录">
                                     </div>
                                 </form>
+                                <script>
+                                    new J().mount( 'Signin', '/static/home/packages/Signin/bootstrap.js', {} );
+                                </script>
                             </div>
                         <?php } ?>
                     </div>
-                    <div class="slide-area main">
-                        <ul>
-                            <li>
-                                <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/aaaa704x272-2.jpg)"></a>
+                    <div class="main clearfix broad-area" >
+                        <div class="cate-area broad clearfix aside">
+                            <a href="###" class="focus">焦点</a>
+                            <a href="###" class="culture">文化</a>
+                            <a href="###" class="philosophy">哲学</a>
+                            <a href="###" class="economic">经济</a>
+                            <a href="###" class="tecnology">科技</a>
+                            <a href="###" class="history">历史</a>
+                            <a href="###" class="entertainment">娱乐</a>
+                            <a href="###" class="bizarre">怪诞</a>
+                            <a href="###" class="others">其他</a>
+                            <a href="###" class="more">MORE</a>
+                        </div>
+                        <div class="slide-area main clearfix">
+                            <ul>
+                                <li>
+                                    <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/aaaa704x272-2.jpg)"></a>
+                                </li>
+                            </ul>
+                            <div class="ad"></div>
+                        </div>
+                    </div>
+                    <div class="main narrow-area">
+                        <div class="slide-area">
+                            <ul>
+                                <li>
+                                    <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/aaaa704x272-2.jpg)"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="cate-area narrow clearfix">
+                            <a href="###" class="focus aside">焦点</a>
+                            <div class="main p2">
+                                <a href="###" class="more aside">MORE</a>
+                                <div>
+                                    <a href="###" class="culture">文化</a>
+                                    <a href="###" class="philosophy">哲学</a>
+                                    <a href="###" class="economic">经济</a>
+                                    <a href="###" class="tecnology">科技</a>
+                                    <a href="###" class="history">历史</a>
+                                    <a href="###" class="entertainment">娱乐</a>
+                                    <a href="###" class="bizarre">怪诞</a>
+                                    <a href="###" class="others">其他</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="boxes focus-box">
+                <div class="inner">
+                    <div class="aside hot-posts">
+                        <h2 class="hd">热门论述</h2>
+                        <ul class="hot-post-list-1 post-list"></ul>
+                        <ul class="post-list"></ul>
+                    </div>
+                    <div class="main topic-area">
+                        <h2 class="hd">今日焦点</h2>
+                        <div class="topics debate clearfix">
+                            <div class="aside chart">
+                                <div id="focus-chart"></div>
+                                <div class="chart-legend"><b class="brand">•</b> 各观点指数对比</div>
+                            </div>
+                            <div class="main">
+                                <h3><a href="/topic/1" target="_blank"><span class="seal seal-1"></span> 各地青少年犯罪频现，究竟谁该背起更多的责任</a></h3>
+                                <div class="data-line">
+                                </div>
+                                <ul class="point-list">
+                                    <li>
+                                        <div class="points">
+                                            <i class="fa fa-flag flags flag-1"></i>
+                                            <span>观点一：加大对未成年人犯罪的处罚力度，降低限定年龄，让未成年人体会到犯罪的严重性</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="points">
+                                            <i class="fa fa-flag flags flag-2"></i>
+                                            <span>观点二：明确监护人责任，加强对监护人的处罚，能够更有效的减少未成年人犯罪的情况发生</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="points">
+                                            <i class="fa fa-flag flags flag-3"></i>
+                                            <span>观点三：未成年人没有错，错的是教育和环境，我们不能把教育的错让未成年的孩子承担</span>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                                <a href="/topic/1" class="view">查看话题详情</a>
+                            </div>
+                        </div>
+                        <div class="topics clearfix">
+                            <h3><a href="###"><span class="seal seal-1"></span> 各地青少年犯罪频现，究竟谁该背起更多的责任</a></h3>
+                            <div class="data-line">
+                            </div>
+                            <div class="desc">
+<p>近期，各种青少年犯罪的新闻和视频被曝出，其中很多手段恶劣到让我们难以想象。有人认为这种现象只是随着互联网和媒体的越来越发达，更多的相关事件被暴光在众目之下。中国青少年研究中心对12个省区市的调查研究显示，2014年14周岁以下未成年人犯罪占20.11%，相比2001年上升了7.78个百分点。同时，未成年人犯罪低龄化也可能大大增加未来社会中惯犯和累犯的可能性。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="boxes topic-box">
+                <div class="inner">
+                    <div class="aside">
+                        <h2 class="hd">最新论述</h2>
+                        <ul class="latest-post-list post-list"></ul>
+                        <h2 class="hd">关注动态</h2>
+                    </div>
+                    <div class="main topic-area">
+                        <h2 class="hd">今日话题</h2>
+                        <ul class="clearfix">
+                            <li class="topics">
+                                <a href="###" class="cate btns small dark">经济</a>
+                                <h3><span class="seal seal-0"></span> <a href="###">经济学的一个话题，我们一起来讨论</a></h3>
+                                <div class="desc">
+                                    <p>近期，各种青少年犯罪的新闻和视频被曝出，其中很多手段恶劣到让我们难以想象。有人认为这种现象只是随着互联网和媒体的越来越发达，更多的相关事件被暴光在众。</p>
+                                </div>
                             </li>
                         </ul>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
+        <textarea class="templates" id="hot-posts-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { var item = data[i]; %>
+                <li>
+                <h4><a href="/post/<%-item.id %>" target="_blank" title="<%-item.title %>"><%-item.shortTitle %></a></h4>
+                    <div class="info">
+                        <span class="r">支持 <b class="brand"><%-item.data.agree %></b></span>
+                        <a href="/user/activities/<%-item.account.id %>" target="_blank"><%-item.account.uname %></a>
+                    </div>
+                </li>
+            <% } %>
+        </textarea>
+        <script src="/static/common/js/ichart.js"></script>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'Chart', '/static/home/packages/Chart/bootstrap.js', { id : 1 } );
+            idizcuz.mount( 'hotposts', '/static/home/packages/HotPosts/bootstrap.js', { blocks : [ {
+                topic_id : 1,
+                rn : 4,
+                container : $( '.hot-post-list-1' )
+            } ] } );
+            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js', { rn : 10 } );
+
+        </script>
         <?php include TPL_PATH . '/common/foot.inc.html'; ?>
     </body>
 </html>

@@ -54,18 +54,9 @@ Class GetAccountAction extends \Local\BaseAction {
 
         $account['data' ] = $account_data;
 
-        $accountInfoModel = new AccountInfoModel();
-
-        $account_info = $accountInfoModel->get( $account_id );
-
-        if( !$account_info ) {
-            $this->error( 'SYSTEM_ERR' );
-        }
-
         $industries = \Local\Utils::loadConf( 'industries', 'list' );
 
-        $account_info[ 'industry' ] = trim( $industries[ $account_info[ 'industry' ] ], '-' );
-        $account['info'] = $account_info;
+        $account[ 'industry' ] = trim( $industries[ $account[ 'industry' ] ], '-' );
 
         $this->data['target_account'] = $account;
 

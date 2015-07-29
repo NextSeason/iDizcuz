@@ -18,14 +18,15 @@ Class UpdateInfoAction extends \Local\BaseAction {
     private function updateData() {
         $params = $this->params;
 
-        $accountInfoModel = new AccountInfoModel();
+        $accountModel = new AccountModel();
 
-        $res = $accountInfoModel->update( $this->account[ 'id' ], array(
+        $res = $accountModel->update( $this->account[ 'id' ], array(
             'sex' => $params[ 'sex' ],
             'industry' => $params[ 'industry' ],
             'employment' => $params[ 'employment' ],
             'position' => $params[ 'position' ],
-            'desc' => $params[ 'desc' ]
+            'desc' => $params[ 'desc' ],
+            'birth' => $params['birth']
         ) );
 
         if( !$res ) {
@@ -76,12 +77,19 @@ Class UpdateInfoAction extends \Local\BaseAction {
             }
         }
 
+        $birth = $request->getPost( 'birth' );
+
+        if( is_null( $birth ) || !strtotime( $birth ) ) {
+            $birth = '0000-00-00';
+        }
+
         $this->params = array(
             'sex' => $sex,
             'desc' => $desc,
             'employment' => $employment,
             'position' => $position,
-            'industry' => $industry
+            'industry' => $industry,
+            'birth' => $birth
         );
 
         return $this;

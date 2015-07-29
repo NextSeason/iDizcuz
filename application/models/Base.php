@@ -25,11 +25,6 @@ Class BaseModel {
         }
     }
 
-    public function geti( $params ) {
-        $select = $params['select'];
-        $where = $params['where'];
-    }
-
     public function get( $id, $columns = null ) {
         try {
             $this->db->beginTransaction();
@@ -233,6 +228,7 @@ Class BaseModel {
 
     public function formatColumns( $columns ) {
         if( is_null( $columns ) ) return ' * ';
+        if( is_string( $columns ) ) return $columns;
 
         foreach( $columns as &$column ) {
             $column = '`' . $column . '`';
@@ -241,31 +237,111 @@ Class BaseModel {
         return implode( ',', $columns );
     }
 
-    /*
-    public function formatCoditions( $conditions ) {
-        // [ 'id' : 1 ]
-        if( !count( $conditions ) ) {
-            return '';
+    public function _select( $params, $table = null ) {
+
+        if( is_null( $table ) ) {
+            $table = $this->table;
         }
 
-        $where = 'WHERE ';
+        $columns = isset( $params[ 'columns' ] ) ? $params['columns'] : null;
+        $conditions = isset( $params['where'] ) ? $params[ 'where' ] : null;
+        $orders = isset( $params[ 'order' ] ) ? $params['order'] : null;
+        $start = isset( $params[ 'start' ] ) ? $params['start'] : 0;
+        $len = isset( $params['rn'] ) ? $params[ 'rn' ] : 1;
 
-        foreach( $conditions as $condition ) {
-            $cnt = count( $condition );
+        $bindList = [];
 
-            switch( $cnt ) {
-                case 2 :
-                    $where .= " `{$condition[0]}`=:{$condition[0]} "
-                    break;
-                case 3 :
-                    $where .= " `{$condition[0]}`{$condition[1]}:{$condition[0]} "
-                    break;
-                case 4 :
-                    break;
-                default :
-                    break;
+
+        if( is_null( $conditions ) || !count( $conditions ) ) {
+            $where = ' ';
+        } else {
+            $where = '';
+
+            foreach( $conditions as $condition ) {
+                $key = $condition;
+                $realkey = trim( $condition[0], '|' );
+
+                switch( $condition[0]{0} ) {
+                    case '|' :
+                        $connector = ' OR ';
+                        break;
+                    default : 
+                        $connector = ' AND ';
+                        break;
+                }
+
+                if( count( $condition ) == 3 ) {
+                    $where .= $connector . " `$realkey` {$condition[1]} :$realkey ";
+                    $bindList[ ':' . $realkey ] = $condition[2];
+                } else {
+                    $where .= $connector . " `$realkey` = :$realkey ";
+                    $bindList[ ':' . $realkey ] = $condition[1];
+                }
+
+            }
+
+            if( strlen( trim( $where ) ) ) {
+                $where = ' WHERE ' . preg_replace( '#^\s*(AND|OR)#', '', $where );
             }
         }
+
+        if( is_null( $orders ) || !count( $orders ) ) {
+            $orderby = '';
+        } else {
+
+            $orderby = [];
+
+            foreach( $orders as $order ) {
+                if( is_string( $order ) ) {
+                    $orderby[] = '`' . $order . '`';
+                } else {
+                    $o = ' `' . $order[0] . '` ';
+                    if( isset( $order[1] ) ) {
+                        $o .= $order[1] . ' ';
+                    }
+                    $orderby[] = $o;
+                }
+            }
+            $orderby = implode( ',', $orderby );
+
+            if( strlen( trim( $orderby ) ) ) {
+                $orderby = ' ORDER BY ' . $orderby;
+            }
+        }
+
+        $limit = ' LIMIT :start, :len';
+
+
+        $query = 'SELECT ' . $this->formatColumns( $columns ) . ' FROM `' . $table . '` ' . $where . $orderby . $limit;
+
+        try {
+            $stmt = $this->db->prepare( $query );
+
+            foreach( $bindList as $key => $value ) {
+                $stmt->bindValue( $key, $value );
+            }
+            $stmt->bindValue( ':start', (int)$start, PDO::PARAM_INT );
+            $stmt->bindValue( ':len', (int)$len, PDO::PARAM_INT );
+            if( !$stmt->execute() ) {
+                throw new PDOException( __FILE__ . ' | ' . __CLASS__ );
+            }
+
+            return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        } catch( PDOException $e ) {
+            return false;
+        }
+
     }
-     */
+
+    public function select( $params ) {
+        try {
+            $this->db->beginTransaction();
+            $res = $this->_select( $params );
+            $this->db->commit();
+            return $res;
+        } catch( PDOException $e ) {
+            $this->db->rollback();
+            return false;
+        }
+    }
 }

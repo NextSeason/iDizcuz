@@ -32,7 +32,7 @@
                                 <div class="styled-select">
                                     <?php $type = $topic['id'] != 0 ? $topic['data']['type'] : 0; ?>
                                     <select class="type">
-                                        <option value="0" <?php echo $type == 0 ? 'selected' : '' ?>>讨论类型</option>
+                                        <option value="2" <?php echo $type == 0 ? 'selected' : '' ?>>讨论类型</option>
                                         <option value="1" <?php echo $type == 1 ? 'selected' : '' ?>>辩论类型</option>
                                     </select>
                                 </div>
@@ -42,7 +42,7 @@
                                 <div class="styled-select">
                                     <select class="cid">
                                         <?php foreach( $categories as $k => $v ) { ?>
-                                            <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                            <option value="<?php echo $k; ?>" <?php if( isset( $topic['data']['cid'] ) && $k == $topic['data']['cid'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
