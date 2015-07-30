@@ -14,7 +14,6 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     protected $pool = array();
 
     protected $accountModel;
-    protected $accountDataModel;
 
     public function execute() {
         $this->session = \Yaf\Session::getInstance();
@@ -25,6 +24,8 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
 
         if( $this->account ) {
             $this->updateSession();
+        } else {
+            $this->checkRemember();
         }
 
         $data = $this->__execute();
@@ -37,6 +38,52 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
             }
             $this->display( $this->tpl, $data );
         }
+    }
+
+    protected function checkRemember() {
+        if( !isset( $_COOKIE['ID-TOKEN'] ) ) {
+            return false;
+        }
+        $remember_str = base64_decode( $_COOKIE['ID-TOKEN'] );
+
+        $remember_arr = explode( '#', $remember_str );
+
+        if( count( $remember_arr ) != 3 ) {
+            return false;
+        }
+
+        $email = $remember_arr[0];
+        $time = $remember_arr[1];
+        $randString = $remember_arr[2];
+
+        if( $_SERVER['REQUEST_TIME'] - $time > 3600 * 24 * 7 ) {
+            return false;
+        }
+
+        $accountModel = new \AccountModel();
+
+        $account = $accountModel->getAccountByEmail( $email );
+
+        if( !$account ) return false;
+
+        if( md5( $remember_str ) != $account['remember_token'] ) {
+            return false;
+        }
+
+        $industries = \Local\Utils::loadConf( 'industries', 'list' );
+
+        if( $account['industry'] != 0 ) {
+            $account['industry_name'] = trim( $industries[$account['industry']], '-' );
+        }
+
+        $accountDataModel = new \AccountDataModel();
+        $account['data'] = $accountDataModel->get( $account['id'] );
+
+
+        $this->account = $account;
+
+        $this->session['account'] = $account;
+
     }
 
     protected function success( $response = null ) {
@@ -64,8 +111,8 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
             }
 
             $this->account = array_merge( $this->account, $account );
-            $this->accountDataModel = new \AccountDataModel();
-            $this->account['data'] = $this->accountDataModel->get( $account['id'] );
+            $accountDataModel = new \AccountDataModel();
+            $this->account['data'] = $accountDataModel->get( $account['id'] );
 
 
         } else {
