@@ -28,6 +28,7 @@ Class ListAction extends \Local\BaseAction {
                 foreach( $points as $id ) {
                     $point = $pointModel->get( $id );
                     $point['data'] = $pointDataModel->get( $id );
+                    $point['data']['index'] = \Local\Utils::pointIndex( $point['data']);
                     $topic[ 'points' ][] = $point;
                 }
             }

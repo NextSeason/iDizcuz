@@ -114,6 +114,10 @@ Class PostAction extends \Local\BaseAction {
 
         $topic['data'] = $topicDataModel->get( $topic[ 'id' ] );
 
+        $categories = \Local\Utils::loadConf( 'categories', 'list' );
+
+        $topic['data']['cate'] = $categories[$topic['data']['cid']];
+
         $this->data[ 'topic' ] = $topic;
 
         return $this;
