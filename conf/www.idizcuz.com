@@ -13,9 +13,9 @@
             index  index.php index.html index.htm;
 
             rewrite ^/(\?.*)?$ /index.php?__r=home/page/index$1 last;
+            rewrite ^/activities(\?.*)?$ /index.php?__r=activities/page/activities$1 last;
 
             if (!-e $request_filename) {
-
                 rewrite ^/mis(\?.*)?$ /index.php?__r=mis/page/index$1 last;
                 rewrite ^/signin(\?.*)?$ /index.php?__r=account/page/signin$1 last;
                 rewrite ^/signup(\?.*)?$ /index.php?__r=account/page/signup$1 last;
@@ -23,7 +23,7 @@
                 rewrite ^/forget(\?.*)?$ /index.php?__r=account/page/forget$1 last;
 
                 rewrite ^/settings(\?.*)?$ /index.php?__r=settings/page/info$1 last;
-                rewrite ^/message(\?.*)?$ /index.php?__r=message/page/messages$1 last;
+                rewrite ^/messages(\?.*)?$ /index.php?__r=message/page/messages$1 last;
 
                 rewrite ^/(.*)  /index.php?$1 last;
             }

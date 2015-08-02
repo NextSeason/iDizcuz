@@ -13,6 +13,7 @@
             index  index.php index.html index.htm;
 
             rewrite ^/(\?.*)?$ /index.php?__r=home/page/index$1 last;
+            rewrite ^/activities(\?.*)?$ /index.php?__r=activities/page/activities$1 last;
 
             if (!-e $request_filename) {
                 rewrite ^/mis(\?.*)?$ /index.php?__r=mis/page/index$1 last;

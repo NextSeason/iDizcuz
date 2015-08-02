@@ -75,4 +75,16 @@ Class Utils {
         $index = $params['post_cnt'] * 10 + floor( $params['agree'] / 20 ) - floor( $params['disagree'] / 20 );
         return max( $index, 0 );
     }
+
+    static public function pickByKey( $arr, $key = 'id', $unique = true ) {
+        $res = [];
+        foreach( $arr as $v ) $res[] = $v[ $key ];
+        return $unique ? array_unique( $res ) : $res;
+    }
+
+    static public function gather( $arr, $key = 'id' ) {
+        $res = [];
+        foreach( $arr as $v ) $res[$v[$key]] = $v;
+        return $res;
+    }
 }

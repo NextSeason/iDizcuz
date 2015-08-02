@@ -1,0 +1,52 @@
+<?php
+
+Class AccountsAction extends \Local\BaseAction {
+    private $data = [];
+
+    public function __execute() {
+        $this->type = 'interface';
+
+        $this->paramsProcessing()->getAccounts();
+
+        return $this->data;
+    }
+
+    private function getAccounts() {
+        $accountModel = new AccountModel();
+        $where = [
+            [ 'status', 0 ]
+        ];
+        if( $this->params['cursor'] != 0 ) {
+            $where[] = [ 'id', '<', $this->params['cursor'] ];
+        }
+        $accounts = $accountModel->select( [
+            'where' => $where,
+            'order' => [ [ 'id', 'DESC' ] ],
+            'rn' => $this->params['rn']
+        ] );
+
+        if( $accounts === false ) {
+            $this->error( 'SYSTEM_ERR' );
+        }
+
+        $this->data[ 'accounts' ] = $accounts;
+
+        return $this;
+    }
+
+    private function paramsProcessing() {
+        $cursor = intval( $this->request->getQuery('cursor') );
+        if( $cursor < 0 ) $cursor = 0;
+
+        $rn = intval( $this->request->getQuery( 'rn' ) );
+
+        if( $rn < 1 ) $rn = 20;
+
+        $this->params = [
+            'cursor' => $cursor,
+            'rn' => $rn
+        ];
+
+        return $this;
+    }
+}
