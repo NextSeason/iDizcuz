@@ -4,7 +4,12 @@
             <ul class="account">
                 <li>
                     <a href="/user/activities/<?php echo $account['id']; ?>">
-                        <?php echo $account[ 'uname' ]; ?>
+                        <?php if( $account['img'] ) { ?>
+                            <span class="avatar" style="background-image:url(http://avatar.idizcuzz.com/<?php echo $account['img']; ?>)"></span>
+                        <?php } else { ?>
+                            <span class="avatar"></span>
+                        <?php } ?>
+                        <span><?php echo $account[ 'uname' ]; ?></span>
                         <?php if( $account['data']['unread_msg'] > 0 ) { ?>
                             <i class="unread-msg-remind"><?php echo $account['data']['unread_msg']; ?></i>
                         <?php } ?>

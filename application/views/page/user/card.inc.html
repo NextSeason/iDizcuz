@@ -1,5 +1,9 @@
 <div class="user-card clearfix">
-    <a href="/user/activities/<?php echo $user['id']; ?>" class="avatar small"></a>
+    <?php if( $user['img'] ) { ?>
+    <a href="/user/activities/<?php echo $user['id']; ?>" class="avatar small" style="background-image:url(http://avatar.idizcuzz.com/<?php echo $user['img']; ?>)"></a>
+    <?php } else { ?>
+        <a href="/user/activities/<?php echo $user['id']; ?>" class="avatar small"></a>
+    <?php } ?>
     <div class="user-info">
         <p class="uname"><?php echo $user['uname']; ?></p>
         <div class="num-part clearfix">
@@ -27,23 +31,23 @@
         <?php } ?>
         <div class="info-part">
             <p class="industry lines">
-                <?php if( $user['industry'] ) { ?>
+                <?php if( $user['industry'] != 0 ) { ?>
                     <span><?php echo $user['industry']; ?> 行业</span>
                 <?php } else { ?>
-                    <span class="unknow">未知 行业</span>
+                    <span class="unknown">未知 行业</span>
                 <?php } ?>
             </p>
             <p class="situation lines">
                 <?php if( $user['employment'] ) { ?>
                     <span><?php echo $user['employment']; ?></span>
                 <?php } else { ?>
-                    <span class="unknow"> 未知组织</span>
+                    <span class="unknown"> 未知组织</span>
                 <?php } ?>
                 •
                 <?php if( $user['position'] ) { ?>
                     <span><?php echo $user['position']; ?></span>
                 <?php } else { ?>
-                    <span class="unknow">未知职位</span>
+                    <span class="unknown">未知职位</span>
                 <?php } ?>
             </p>
         </div>

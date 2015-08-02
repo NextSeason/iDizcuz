@@ -69,7 +69,7 @@
                         <% } %>
                     </div>
                 <% } %>
-                <a href="/user/activities/<%=data.id %>" class="avatar small empty l"></a>
+                <a href="/user/activities/<%=data.id %>" class="avatar small empty l" style="<% if( data.img.length ) { %>background-image:url(http://avatar.idizcuzz.com/<%-data.img %>);<% } %>"></a>
                 <div class="info-box l">
                     <a href="/user/activities/<%=data.id %>" class="uname"><%-data.uname %></a>
                     <div class="num-part clearfix">
@@ -89,28 +89,26 @@
                         <b class="num"><%=data.data.disagree %></b>
                     </div>
                     <div class="info-part">
-                        <span>所在行业：
-                            <% if( data.industry ) { %>
-                                <%-data.industry %>
+                            <% if( data.industry != 0 ) { %>
+                                <span><%-data.industry %></span>
                             <% } else { %>
-                                <span class="unknow">未知行业</span>
+                                <span class="unknown">未知行业</span>
                             <% } %>
-                        </span>
                         <span class="sp">|</span>
                         <% if( data.employment ) { %>
                             <span><%-data.employment %></span>
                         <% } else { %>
-                            <span class="unknow">未知组织</span>
+                            <span class="unknown">未知组织</span>
                         <% } %>
                         •
                         <% if( data.position ) { %>
                             <span><%-data.position %></span>
                         <% } else { %>
-                            <span class="unknow">未知职位</span>
+                            <span class="unknown">未知职位</span>
                         <% } %>
                     </div>
                     <div class="desc-part">
-                        <span>个人简介：创业一定会成功的！</span>
+                        <span>个人简介：<% if( data.desc.length ) { %><%-data.desc %><% } else { %><span class="unknown">暂无</span><% } %></span>
                     </div>
                 </div>
             </div>

@@ -52,7 +52,12 @@
                                 <% } else if( type == 3 ) {%>
                                     评论了论述
                                 <% } else if( type == 4 ) {%>
-                                    关注了 <a href="/user/activities/<%=item.extra.id %>"><%-item.extra.uname %></a>
+                                    关注了 
+                                    <% if( item.extra.isself ) { %>
+                                        <span>我</span>
+                                    <% } else { %>
+                                        <a href="/user/activities/<%=item.extra.id %>"><%-item.extra.uname %></a>
+                                    <% } %>
                                 <% } %>
                             </div>
                             <div class="extra">
@@ -80,6 +85,7 @@
         <script>
             var iDizcuz = new J();
             iDizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js', { self : <?php echo $self ? 1 : 0; ?>});
+            iDizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js', {});
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

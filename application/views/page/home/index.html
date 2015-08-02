@@ -100,16 +100,36 @@
                                         <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/aaaa704x272-2.jpg)"></a>
                                     </li>
                                     <li>
-                                        <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/aaaa704x272-2.jpg)"></a>
+                                        <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/xuanshang_704x272.jpg)"></a>
                                     </li>
                                 </ul>
-                                <ul class="slide-nav">
-                                    <li><a href="###" class="focus"></a></li>
-                                    <li><a href="###"></a></li>
-                                    <li><a href="###"></a></li>
-                                </ul>
+                                <ul class="slide-nav"></ul>
                             </div>
-                            <div class="ad"></div>
+                            <div class="ad clearfix">
+                                <div class="topics">
+                                    <a href="/topic/1" class="btns dark small more">更多</a>
+                                    <a href="/topic/1" class="title">关于 每日论点 • iDizcuz</a>
+                                    <ul class="clearfix">
+                                        <li><a href="###"><i class="fa fa-square"></i> 成为理性且有思想的人</a></li>
+                                        <li><a href="###"><i class="fa fa-square"></i> 成为理性且有思想的人</a></li>
+                                    </ul>
+                                </div>
+                                <div class="sp"></div>
+                                <div class="topics">
+                                    <a href="/topic/2" class="btns dark small more">更多</a>
+                                    <a href="/topic/2" class="title">用户帮助中心</a>
+                                    <ul class="clearfix">
+                                        <li><a href="###"><i class="fa fa-square"></i> 注册登录</a></li>
+                                        <li><a href="###"><i class="fa fa-square"></i> 发布论述</a></li>
+                                        <li><a href="###"><i class="fa fa-square"></i> 发布论述</a></li>
+                                        <li><a href="###"><i class="fa fa-square"></i> 发布论述</a></li>
+                                        <li><a href="###"><i class="fa fa-square"></i> 发布论述</a></li>
+                                        <li><a href="###"><i class="fa fa-square"></i> 发布论述</a></li>
+                                        <li><a href="###"><i class="fa fa-square"></i> 发布论述</a></li>
+                                        <li><a href="###"><i class="fa fa-square"></i> 发布论述</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="cate-area narrow clearfix">
                                 <a href="/list/1" class="focus aside">焦点</a>
                                 <div class="main p2">
@@ -228,6 +248,7 @@
                 container : $( '.hot-post-list-1' )
             } ] } );
             idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js', { rn : 10 } );
+            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js' );
 
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>

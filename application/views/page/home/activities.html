@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php 
+            $title='每日论点 • iDizcuz - 成为理性且有思想的人';
+            $nav = 'activities';
+        ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/home/css/activities.css" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/common/top.inc.html'; ?>
+
+            <div class="boxes body clearfix">
+                <div class="inner">
+                    <div class="aside">
+                        .
+                        <ul class="new-account-list"></ul>
+                    </div>
+                    <div class="main">
+                        <ul class="activity-list"></ul>
+                        <a class="load-more">
+                            加载更多动态
+                            <i class="fa fa-angle-double-down"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <textarea class="templates" id="activity-list-tpl">
+            <% if( !data.length ) { %>
+                <li>
+                    <p class="empty">
+                        暂时没有最新论述动态
+                    </p>
+                </li>
+            <% } else { %>
+                <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                    <% var post = data[i]; %>
+                    <li>
+                        <% var postUrl = '/post/' + post.id; %>
+                        <div class="posts" data-post-id="<%=post.id %>">
+                            <div class="data-line clearfix">
+                                <div class="vote l">
+                                    <a href="<%=postUrl %>" target="_blank" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree %></b>)</a>
+                                    <a href="<%=postUrl %>" target="_blank" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
+                                </div>
+                                <div class="title l">
+                                    <h2><a href="/post/<%=post.id %>" target="_blank"><%-post.title %></a></h2>
+                                    <a href="/user/activities/<%=post.account_id %>" target="_blank" class="uname">作者： <%-post.account.uname %><%-post.account.desc %></a>
+                                </div>
+                            </div>
+                            <div class="topic-line">
+                                <a href="/topic/<%=post.topic.id %>" target="_blank" class="uname">所在话题： <%-post.topic.title%></a>
+                            </div>
+                            <div class="contents rich-text">
+                                <p><%=post.content %></p>
+                            </div>
+                            <div class="bottom-line">
+                                <a href="<%=postUrl %>" target="_blank" class="reply r">针对本条论述发表观点</a>
+                                <span class="ctime">发表于：<%=post.ctime.substr(0,10) %></span>
+                                <% if( post.mtime != post.ctime ) { %>
+                                    <span class="mtime">修改于：<%=post.mtime.substr(0,10) %></span>
+                                <% } %>
+                                <a href="<%=postUrl %>" target="_blank" class="comments"><%-post.data.comments_cnt %>条短评</a>
+                            </div>
+                        </div>
+                    </li>
+                <% } %>
+            <% } %>
+        </textarea>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js' );
+            //idizcuz.mount( 'accounts', '/static/home/packages/Accounts/bootstrap.js' );
+        </script>
+    </body>
+</html>

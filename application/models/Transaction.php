@@ -507,8 +507,6 @@ Class TransactionModel extends BaseModel {
 
             $this->_insert( $data, 'accounts_data' ); 
 
-            $this->_insert( $data, 'accounts_info' ); 
-
             $this->db->commit();
 
             return $account_id;

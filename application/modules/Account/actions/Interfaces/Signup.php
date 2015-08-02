@@ -4,23 +4,16 @@ Class SignupAction extends \Local\BaseAction {
 
     private $data = array();
 
-    private $transactionModel;
-
     public function __execute() {
 
         $this->type = 'interface';
 
-        $this->paramsProcessing()->checkVcode();
+        $this->paramsProcessing()->checkVcode()->checkExists()->addAccount()->setSession();
 
-        if( empty( $this->accountModel ) ) {
-            $this->accountModel = new AccountModel();
-        }
-        
-        $this->checkExists();
-
-        $this->transactionModel = new TransactionModel();
-        
-        $this->addAccount()->setSession();
+        $this->record( [
+            'type' => 5,
+            'relation_id' => $this->pool['account_id']
+        ] );
 
         return $this->data;
     }
@@ -50,7 +43,9 @@ Class SignupAction extends \Local\BaseAction {
     }
 
     private function checkExists() {
-        $account =  $this->accountModel->getAccountByEmail( $this->params[ 'email' ] );
+        $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
+
+        $account =  $accountModel->getAccountByEmail( $this->params[ 'email' ] );
 
         if( $account ) {
             $this->error( 'ACCOUNT_EXISTS' );
@@ -77,11 +72,15 @@ Class SignupAction extends \Local\BaseAction {
             'login_ip' => $ip
         );
 
-        $account_id = $this->transactionModel->addAccount( $account );
+        $transactionModel = new TransactionModel();
+
+        $account_id = $transactionModel->addAccount( $account );
 
         if( !$account_id ) {
             $this->error( 'SYSTEM_ERR' );
         }
+
+        $this->pool['account_id'] = $account_id;
 
         $account[ 'id' ] = $account_id;
 
@@ -105,7 +104,13 @@ Class SignupAction extends \Local\BaseAction {
 
         $uname = $request->getPost( 'uname' );
 
-        if( is_null( $uname ) || strlen( $uname ) > 18 ) {
+        if( is_null( $uname ) ) {
+            $this->error( 'PARAMS_ERR' );
+        }
+
+        $uname = trim( $uname );
+
+        if( $uname == '' || mb_strlen( $uname ) > 12 ) {
             $this->error( 'PARAMS_ERR' );
         }
 

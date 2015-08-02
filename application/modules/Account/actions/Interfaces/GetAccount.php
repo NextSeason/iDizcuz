@@ -33,7 +33,7 @@ Class GetAccountAction extends \Local\BaseAction {
         $account_id = $this->params['account_id'];
 
         $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
-        $account = $accountModel->get( $account_id, ['id','uname'] );
+        $account = $accountModel->get( $account_id );
 
         if( !$account ) {
             $this->error( 'SYSTEM_ERR' );
@@ -52,11 +52,13 @@ Class GetAccountAction extends \Local\BaseAction {
             $this->error( 'SYSTEM_ERR' );
         }
 
-        $account['data' ] = $account_data;
+        $account['data'] = $account_data;
 
         $industries = \Local\Utils::loadConf( 'industries', 'list' );
 
-        $account[ 'industry' ] = trim( $industries[ $account[ 'industry' ] ], '-' );
+        if( $account['industry'] != 0 ) {
+            $account[ 'industry' ] = trim( $industries[ $account[ 'industry' ] ], '-' );
+        }
 
         $this->data['target_account'] = $account;
 

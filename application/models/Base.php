@@ -42,11 +42,11 @@ Class BaseModel {
         }
     }
 
-    public function _gets( $ids, $table = null ) {
+    public function _gets( $ids, $table = null, $columns = null ) {
         if( is_null( $table ) ) {
             $table = $this->table;
         }
-        $query = 'SELECT * FROM `' . $table . '` WHERE `id` = :id';
+        $query = 'SELECT ' . $this->formatColumns( $columns ) . ' FROM `' . $table . '` WHERE `id` = :id';
 
         $res = [];
 
@@ -65,11 +65,11 @@ Class BaseModel {
         
     }
 
-    public function gets( $ids ) {
+    public function gets( $ids, $columns = null ) {
         try {
             $this->db->beginTransaction();
 
-            $res = $this->_gets( $ids );
+            $res = $this->_gets( $ids, null, $columns );
 
             $this->db->commit();
 

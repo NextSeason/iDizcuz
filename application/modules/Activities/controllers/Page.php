@@ -7,6 +7,8 @@ Class PageController extends BasePageController {
     public function init() {
         parent::init();
 
-        $this->actions = array();
+        $this->actions = array(
+            'activities' => $this->action_path . 'Activities.php'
+        );
     }
 }

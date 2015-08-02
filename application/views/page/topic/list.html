@@ -31,7 +31,7 @@
                                     <div class="desc">
                                         <?php echo $topic['desc']; ?>
                                         <div class="bottom-line">
-                                            <a href="###" class="show-more-info">[查看更多]</a>
+                                            <a href="###" class="show-more-info">[显示更多介绍]</a>
                                         </div>
                                     </div>
                                     <?php if( $topic['points'] ) { $points = $topic['points'];  ?>
@@ -79,6 +79,10 @@
                                             </ul>
                                         </div>
                                     <?php } ?>
+                                    <div class="bottom">
+                                        <a href="/topic/<?php echo $topic['id']; ?>" target="_blank">[打开话题]</a>
+                                        <a href="/articles/<?php echo $topic['id']; ?>" target="_blank">[查看话题相关资料]</a>
+                                    </div>
                                 </li>
                             <?php } ?>
                         </ul>

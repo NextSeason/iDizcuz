@@ -68,7 +68,7 @@ Class GetActivitiesAction extends \Local\BaseAction {
 
     private function getAccount( $id ) {
         $accountModel = new AccountModel();
-        $account = $accountModel->get( $id, ['id','uname', 'desc'] );
+        $account = $accountModel->get( $id, ['id','uname', 'desc', 'img' ] );
 
         if( !$account ) {
             return null;
@@ -97,7 +97,29 @@ Class GetActivitiesAction extends \Local\BaseAction {
                     $activity['extra'] = $this->getComment( $activity['relation_id'] );
                     break;
                 case 4 :
-                    $activity['extra'] = $this->getAccount( $activity['relation_id'] );
+                    if( $this->account && $activity['relation_id'] == $this->account['id'] ) {
+                        $account = $this->getAccount( $activity['account_id'] );
+                        $account['isself'] = 1;
+                    } else {
+                        $account = $this->getAccount( $activity['relation_id'] );
+                    }
+
+                    $account[ 'followed' ] = 0;
+
+                    if( $this->account ) {
+                        $followModel = new FollowModel();
+
+                        $follow = $followModel->getFollowStatus( [
+                            'account_id' => $account['id'],
+                            'fans_id' => $this->account['id']
+                        ] );
+
+                        if( $follow ) {
+                            $account['followed'] = 1;
+                        }
+                    }
+
+                    $activity['extra'] = $account;
                     break;
                 default :
                     $activity['extra'] = null;
