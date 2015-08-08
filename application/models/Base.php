@@ -258,8 +258,14 @@ Class BaseModel {
             $where = '';
 
             foreach( $conditions as $condition ) {
-                $key = $condition;
-                $realkey = trim( $condition[0], '|' );
+                $key = $condition[0];
+                $bind = true;
+
+                if( strpos( $key, '-' ) === 0 ) {
+                    $bind = false;
+                }
+
+                $realkey = trim( $key, '-|' );
 
                 switch( $condition[0]{0} ) {
                     case '|' :
@@ -271,11 +277,19 @@ Class BaseModel {
                 }
 
                 if( count( $condition ) == 3 ) {
-                    $where .= $connector . " `$realkey` {$condition[1]} :$realkey ";
-                    $bindList[ ':' . $realkey ] = $condition[2];
+                    if( $bind ) {
+                        $where .= $connector . " `$realkey` {$condition[1]} :$realkey ";
+                        $bindList[ ':' . $realkey ] = $condition[2];
+                    } else {
+                        $where .= $connector . " `$realkey` {$condition[1]} {$condition[2]} ";
+                    }
                 } else {
-                    $where .= $connector . " `$realkey` = :$realkey ";
-                    $bindList[ ':' . $realkey ] = $condition[1];
+                    if( $bind ) {
+                        $where .= $connector . " `$realkey` = :$realkey ";
+                        $bindList[ ':' . $realkey ] = $condition[1];
+                    } else {
+                        $where .= $connector . " `$realkey` = {$condition[1]} ";
+                    }
                 }
 
             }

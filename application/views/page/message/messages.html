@@ -18,7 +18,10 @@
                         <div class="sub-nav clearfix">
                             <ul class="nav clearfix">
                                 <li>
-                                    <a href="/messages" class="<?php if( $tab == 1 ) { echo 'focus'; } ?>">系统通知</a>
+                                    <a href="/messages" class="<?php if( $tab == 0 ) { echo 'focus'; } ?>">全部消息</a>
+                                </li>
+                                <li>
+                                    <a href="/messages?tab=1&type=5" class="<?php if( $tab == 1 ) { echo 'focus'; } ?>">系统通知</a>
                                 </li>
                                 <li>
                                     <a href="/messages?tab=2&type=2" class="<?php if( $tab == 2 ) { echo 'focus'; } ?>">收到论述</a>
@@ -31,33 +34,37 @@
                                 </li>
                             </ul>
                         </div>
-                        <ul class="messages-list">
-                            <?php if( count( $messages ) == 0 ) { ?>
-                                <li class="empty">这里暂时没有消息</li>
-                            <?php } else { ?>
-                                <?php foreach( $messages as $message ) { ?>
-                                <li id="message-<?php echo $message['id']; ?>" class="message-item" data-read="<?php echo $message['read']; ?>" data-msg-type="<?php echo $message['type']; ?>" data-msg-id="<?php echo $message['id']; ?>">
-                                        <div class="title-line">
-                                            <a href="###" class="remove r"><i class="fa fa-trash"></i> 删除</a>
-                                            <?php if( $message['read'] == 0 ) { ?>
-                                                <span class="flag"><i class="fa fa-circle"></i></span>
-                                            <?php } ?>
-                                            <span class="time">
-                                                [<?php echo substr( $message['ctime'], 0, -9 ); ?>]
-                                            </span>
-                                            <?php echo $message['title']; ?>
-                                            <a href="###" class="open">[查看详情]</a>
-                                        </div>
-                                        <div class="content"><?php echo $message['content']; ?></div>
-                                    </li>
-                                <?php } ?>
-                            <?php } ?>
-                        </ul>
+                        <ul class="message-list"></ul>
+                        <div class="load-more">
+                            <span>加载更多消息 <i class="fa fa-angle-double-down"></i></span>
+                        </div>
                     </div>
                 </div> 
             </div>
             <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
+        <textarea class="templates" id="message-list-tpl">
+            <% if( !data.length ) { %>
+                <li class="empty">这里暂时没有消息</li>
+            <% } else { %>
+                <% for( var i = 0, l = data.length; i < l; i += 1 ) { var msg = data[i]; %>
+                    <li id="message-<%=msg.id %>" class="message-item" data-read="<%=msg.read %>" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
+                        <div class="title-line">
+                            <a href="###" class="remove r"><i class="fa fa-trash"></i> 删除</a>
+                            <% if( msg.read == 0 ) { %>
+                                <span class="flag"><i class="fa fa-circle"></i></span>
+                            <% } %>
+                            <span class="time">
+                                [<%=msg.ctime.substr( 0, 10 ) %>]
+                            </span>
+                            <%=msg.title %>
+                            <a href="###" class="open">[查看详情]</a>
+                        </div>
+                        <div class="content"><%=msg.content %></div>
+                    </li>
+                <% } %>
+            <% } %>
+        </textarea>
         <textarea class="templates" id="account-tpl">
             <div class="clearfix accounts">
                 <% if( data.self != 1 ) { %>
@@ -115,7 +122,9 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js', {} );
+            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js', {
+                type : '<?php echo $type; ?>'
+            } );
             idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>

@@ -18,7 +18,9 @@
                 <div class="inner">
                     <div class="sidebar aside">
                         <?php if( $account ) { ?>
-                            <a href="###" class="btns large show-editor">发表我的论述</a>
+                            <?php if( isset( $topic ) ) { ?>
+                                <a href="###" class="btns large show-editor">发表我的论述</a>
+                            <?php } ?>
                         <?php } else { ?>
                             <a href="/account/page/signup" class="btns large signup">加入每日论点 • iDizcuz</a>
                         <?php } ?>

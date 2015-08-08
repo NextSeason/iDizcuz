@@ -6,9 +6,20 @@ Class AccountsAction extends \Local\BaseAction {
     public function __execute() {
         $this->type = 'interface';
 
-        $this->paramsProcessing()->getAccounts();
+        $this->paramsProcessing()->getAccounts()->getFollowStatus();
 
         return $this->data;
+    }
+
+    private function getFollowStatus() {
+        if( count( $this->data['accounts'] ) == 0 ) {
+            return $this;
+        }
+        $followModel = new FollowModel();
+
+        foreach( $this->data['accounts'] as &$account ) {
+            //$acccount['followed'    
+        }
     }
 
     private function getAccounts() {
@@ -20,6 +31,7 @@ Class AccountsAction extends \Local\BaseAction {
             $where[] = [ 'id', '<', $this->params['cursor'] ];
         }
         $accounts = $accountModel->select( [
+            'columns' => [ 'id', 'uname', 'img' ],
             'where' => $where,
             'order' => [ [ 'id', 'DESC' ] ],
             'rn' => $this->params['rn']

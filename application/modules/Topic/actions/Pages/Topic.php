@@ -14,7 +14,11 @@ Class TopicAction extends \Local\BaseAction {
 
         $this->topicModel = new TopicModel();
 
-        $this->getTopic()->getPoints()->reportReasons();
+        if( $this->getTopic() === false ) {
+            $this->tpl = 'topic/none';
+            return $this->data;
+        }
+        $this->getPoints()->reportReasons();
 
         return $this->data;
     }
@@ -59,6 +63,10 @@ Class TopicAction extends \Local\BaseAction {
         $id = $this->params[ 'id' ];
 
         $topic = $this->topicModel->get( $id );
+
+        if( !$topic ) {
+            return false;
+        }
 
         $topicDataModel = new TopicDataModel();
 

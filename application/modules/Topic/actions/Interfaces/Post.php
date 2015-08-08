@@ -179,13 +179,23 @@ Class PostAction extends \Local\BaseAction {
 
         $to = intval( $request->getPost( 'to' ) );
 
+        $vocode = $reqeest->getPost( 'vcode' );
+
+        if( is_null( $vcode ) ) {
+            $this->error( 'PARAMS_ERR' );
+        }
+
+        if( $this->session[ 'vcode' ] != $vcode ) {
+            $this->error( 'VCODE_ERR' );
+        }
 
         $this->params = array(
             'content' => $content,
             'title' => $title,
             'to' => $to,
             'topic_id' => $topic_id,
-            'point_id' => $point_id
+            'point_id' => $point_id,
+            'vcode' => $vcode
         );
 
         return $this;

@@ -10,33 +10,12 @@ Class MessagesAction extends \Local\BaseAction {
             $this->redirect( '/signin' );
         }
 
-        $this->paramsProcessing()->getMessages();
+        $this->paramsProcessing();
 
         $this->data[ 'tab' ] = $this->params[ 'tab' ];
+        $this->data['type'] = $this->params['type'];
 
         return $this->data;
-    }
-
-    private function getMessages() {
-        $params = $this->params;
-
-        $messageModel = new MessageModel();
-
-        $messages = $messageModel->getAccountReceivedSystemMessagesByType(
-            $this->account[ 'id' ],
-            $params[ 'type' ],
-            $params[ 'read' ],
-            $params[ 'start' ],
-            $params[ 'rn' ]
-        );
-
-        if( $messages === false ) {
-            //$this->data[ 'messages' ] = [];
-        }
-
-        $this->data[ 'messages' ] = $messages;
-
-        return $this;
     }
 
     private function paramsProcessing() {
@@ -44,26 +23,14 @@ Class MessagesAction extends \Local\BaseAction {
 
         $tab = intval( $request->getQuery( 'tab' ) );
 
-        if( $tab < 1 || $tab > 4 ) {
-            $tab = 1;
+        if( $tab < 0 || $tab > 4 ) {
+            $tab = 0;
         }
 
-        $start = intval( $request->getQuery( 'start' ) );
-
-        $rn = intval( $request->getQuery( 'rn' ) );
-
-        if( $rn <= 0 ) $rn = 20;
-        if( $rn > 100 ) $rn = 100;
-
-        $read = $request->getQuery( 'read' );
-
-        $type = $request->getQuery( 'type' );
+        $type = intval( $request->getQuery( 'type' ) );
 
         $this->params = [
-            'start' => $start,
-            'rn' => $rn,
             'type' => $type,
-            'read' => $read,
             'tab' => $tab
         ];
 

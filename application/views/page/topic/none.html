@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php 
+            $title = '每日论点 • iDizcuz';
+        ?>
+        <?php include TPL_PATH . 'common/head.inc.html'; ?>
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . 'common/top.inc.html'; ?>
+            <div class="boxes body">
+                <div class="inner">
+                    <div class="aside"></div>
+                    <div class="main">
+                        <div class="none-tip" style="padding-top:100px;text-align:center;">
+                            <p><strong>您所访问的内容不存在或已被删除</strong></p>
+                            <p style="margin-top:10px">
+                                <strong id="time" class="brand">5</strong>
+                                秒钟后，自动跳转到主页
+                            </p>
+                            <p style="margin-top:10px">
+                                <p>如果没有跳转，请点击这里 <a href="/">返回首页</a></p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+            </script>
+            <?php include TPL_PATH . 'common/foot.inc.html'; ?>
+        </div>
+        <script>
+            ( function() {
+                var callee = arguments.callee;
+                setTimeout( function() {
+                    var i = +$('#time').html();
+                    if( i == 1 ) {
+                        location.replace('/');
+                        return;
+                    }
+                    $( '#time' ).html( i-1 );
+                    callee();
+                }, 1000 );
+            } )();
+        </script>
+        <?php include TPL_PATH . 'common/end.inc.html'; ?>
+    </body>
+</html>

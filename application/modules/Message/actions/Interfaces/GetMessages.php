@@ -10,7 +10,7 @@ Class GetMessagesAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing()->getMessages()->getExtraData();
+        $this->paramsProcessing()->getMessages();
         return $this->data;
     }
 
@@ -19,13 +19,29 @@ Class GetMessagesAction extends \Local\BaseAction {
 
         $messageModel = new MessageModel();
 
-        $messages = $messageModel->getAccountReceivedSystemMessagesByType(
-            $this->account[ 'id' ],
-            $params[ 'type' ],
-            $params[ 'read' ],
-            $params[ 'start' ],
-            $params[ 'rn' ]
-        );
+        $where = [
+            [ 'from', 0 ],
+            [ 'to', $this->account['id'] ],
+            [ '-del', 'IN', '(0,1)' ]
+        ];
+
+        if( $params['cursor'] != 0 ) {
+            $where[] = [ 'id', '<', $params['cursor'] ];
+        }
+
+        if( $params[ 'type' ] != 0 ) {
+            $where[] = [ 'type', $params[ 'type' ] ];
+        }
+
+        if( !is_null( $params[ 'read' ] ) ) {
+            $where[] = [ 'read', $params['read'] ];
+        }
+
+        $messages = $messageModel->select( [
+            'where' => $where,
+            'order' => [ [ 'id', 'DESC' ] ],
+            'rn' => $params['rn']
+        ] );
 
         if( $messages === false ) {
             $this->error( 'SYSTEM_ERR' );
@@ -40,7 +56,7 @@ Class GetMessagesAction extends \Local\BaseAction {
         $request = $this->request;
 
 
-        $start = intval( $request->getQuery( 'start' ) );
+        $cursor = intval( $request->getQuery( 'cursor' ) );
 
         $rn = intval( $request->getQuery( 'rn' ) );
 
@@ -49,10 +65,10 @@ Class GetMessagesAction extends \Local\BaseAction {
 
         $read = $request->getQuery( 'read' );
 
-        $type = $request->getQuery( 'type' );
+        $type = intval( $request->getQuery( 'type' ) );
 
         $this->params = [
-            'start' => $start,
+            'cursor' => $cursor,
             'rn' => $rn,
             'type' => $type,
             'read' => $read

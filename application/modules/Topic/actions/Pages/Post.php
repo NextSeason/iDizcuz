@@ -12,7 +12,14 @@ Class PostAction extends \Local\BaseAction {
 
         $this->tpl = 'topic/topic';
 
-        $this->paramsProcessing()->getPost()->getAccount()->getTopic()->getPoints()->reportReasons();
+        $this->paramsProcessing();
+        
+        if( $this->getPost() === false ) {
+            $this->tpl = 'topic/none';
+            return $this->data;
+        }
+        
+        $this->getAccount()->getTopic()->getPoints()->reportReasons();
 
         return $this->data;
     }
@@ -33,17 +40,12 @@ Class PostAction extends \Local\BaseAction {
 
         $post_data = $postDataModel->get( $id );
 
-        if( !$post_data ) {
-            $this->data['post'] = false;
-            return $this;
-        }
+        if( !$post_data ) return false; 
         
         $postModel = new PostModel();
         $post = $postModel->get( $id );
 
-        if( !$post ) {
-            $this->redirect( '404' );
-        }
+        if( !$post ) return false;
 
         $post['mine'] = false;
         $post['marked'] = false;

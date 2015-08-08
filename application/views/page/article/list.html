@@ -22,45 +22,42 @@
                                 </h1>
                             </div>
                         <?php } ?>
-                        <ul class="article-list"></ul>
-                        <div class="loading"></div>
+                        <ul class="article-list">
+                            <?php foreach( $articles as $article ) { ?>
+                                <li>
+                                    <div class="articles clearfix">
+                                        <?php if( $article['img'] ) { ?>
+                                            <div class="aside">
+                                                <a href="/article/<?php echo $article['id']; ?>" class="cover" style="background-image:url(http://topicstc.idizcuzz.com/<?php echo $article['img']; ?>);"></a>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="info main">
+                                            <h2><a href="/article/<?php echo $article['id']; ?>"><?php echo htmlspecialchars( $article['title'] ); ?></a></h2>
+                                            <p class="summary">
+                                                <?php echo htmlspecialchars( $article['summary'] ); ?>
+                                                <a href="/article/<?php echo $article['id']; ?>"> [详细]</a>
+                                            </p>
+                                            <p class="detail">
+                                                <span class="time r">
+                                                    <?php echo substr( $article['time'], 0, -9 ); ?>
+                                                </span>
+                                                <?php if( $article['origin'] ) { ?>
+                                                    <span class="item">来源：<a href="<?php echo $article['origin_url']; ?>" target="_blank"><?php echo $article['origin']; ?></a></span>
+                                                <?php } ?>
+                                                <?php if( $article['author'] ) { ?>
+                                                    <span class="item">作者：<?php echo $article['author']; ?></span>
+                                                <?php } ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php } ?>
+                        </ul>
                     </div>
                 </div>
             </div>
             <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
-        <textarea class="templates" id="article-tpl">
-            <% for( var i = 0, l = data.length; i < l; i += 1 ) { var item = data[i]; %>
-                <li>
-                    <div class="articles clearfix">
-                        <% if( item.img.length ) { %>
-                            <div class="aside">
-                                <a href="/article/<%=item.id %>" class="cover" style="background-image:url(http://topicstc.idizcuzz.com/<%-item.img %>);"></a>
-                            </div>
-                        <% } %>
-                        <div class="info main">
-                            <h2><a href="/article/<%-item.id %>"><%-item.title %></a></h2>
-                            <p class="summary"><%-item.summary %><a href="/article/<%-item.id %>"> [详细]</a></p>
-                            <p class="detail">
-                            <span class="time r"><%-item.time.substr( 0, 10 ) %></span>
-                                <% if( item.origin.length ) { %>
-                                    <span class="item">来源：<a href="<%-item.origin_url %>" target="_blank"><%-item.origin%></a></span>
-                                <% } %>
-                                <% if( item.author.length ) { %>
-                                    <span class="item">作者：<%-item.author %></span>
-                                <% } %>
-                            </p>
-                        </div>
-                    </div>
-                </li>
-            <% } %>
-        </textarea>
-        <script>
-            var idizcuz = new J();
-            idizcuz.mount( 'artiles', '/static/article/packages/Articles/bootstrap.js', {
-                topic_id : '<?php echo $topic['id']; ?>'
-            } );
-        </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

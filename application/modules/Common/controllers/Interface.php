@@ -7,6 +7,8 @@ Class InterfaceController extends BaseInterfaceController {
     public function init() {
         parent::init();
 
-        $this->actions = [];
+        $this->actions = array(
+            'imagecode' => $this->action_path . 'ImageCode.php'
+        );
     }
 }
