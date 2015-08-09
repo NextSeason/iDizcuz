@@ -295,16 +295,25 @@
                                             <p>在此输入您想发表的内容</p>
                                         </script>
                                     </div>
-                                    <div class="line clearfix to-line">
-                                        <span>针对论述：</span>
-                                        <a href="###" class="to-title" target="_blank"></a>
-                                        <input type="hidden" class="to" />
-                                        <a href="###" class="remove-to"><i class="fa fa-times-circle"></i></a>
+                                    <div class="line tip-line clearfix">
+                                        <div class="to-line l">
+                                            <span>针对论述：</span>
+                                            <a href="###" class="to-title" target="_blank"></a>
+                                            <input type="hidden" class="to" />
+                                            <a href="###" class="remove-to"><i class="fa fa-times-circle"></i></a>
+                                        </div>
+                                        <div class="vcode-area r">
+                                            <input type="text" class="imagecode short" />
+                                            <img src="/common/interface/imagecode" class="refresh-imagecode l" />
+                                            <a href="###" class="refresh-imagecode">
+                                                <i class="fa fa-refresh"></i> 
+                                                看不清，换一张
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="submit-line clearfix">
-                                        <p class="post-tip"></p>
-                                        <p class="post-warn"></p>
-                                        <a href="###" class="btns large public">发布观点</a>
+                                        <a href="###" class="r btns large public">发布观点</a>
+                                        <p class="post-warn r"></p>
                                     </div>
                                 <?php } else { ?>
                                     <div id="textbox" class="textbox">

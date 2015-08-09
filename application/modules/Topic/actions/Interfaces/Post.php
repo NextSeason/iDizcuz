@@ -179,13 +179,13 @@ Class PostAction extends \Local\BaseAction {
 
         $to = intval( $request->getPost( 'to' ) );
 
-        $vocode = $reqeest->getPost( 'vcode' );
+        $imagecode = $request->getPost( 'imagecode' );
 
-        if( is_null( $vcode ) ) {
+        if( is_null( $imagecode ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        if( $this->session[ 'vcode' ] != $vcode ) {
+        if( strtolower( $this->session[ 'imagecode' ] ) != strtolower( $imagecode ) ) {
             $this->error( 'VCODE_ERR' );
         }
 
@@ -195,7 +195,7 @@ Class PostAction extends \Local\BaseAction {
             'to' => $to,
             'topic_id' => $topic_id,
             'point_id' => $point_id,
-            'vcode' => $vcode
+            'imagecode' => $imagecode
         );
 
         return $this;

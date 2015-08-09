@@ -44,14 +44,28 @@ Class ImageCodeAction extends \Local\BaseAction {
         }
 
         for( $i = 0; $i < $len; ++$i ) {
-            $color = imagecolorallocate(
-                $im, mt_rand( 0, 255 ), mt_rand( 0, 255 ), mt_rand( 0, 255 )
-            );
+            $r = mt_rand( 0, 255 );
+            $g = mt_rand( 0, 255 );
+            $b = mt_rand( 0, 255 );
+            $color = imagecolorallocate( $im, $r, $g, $b );
 
             $fontSize = mt_rand( $width / $len - 14, $width / $len - 9 );
             $x = floor( ( $width - $len ) / $len ) * $i + 5;
-            $y = ( $height - $fontSize + 30 ) / 2;
-            imagettftext( $im, $fontSize, mt_rand( -30, 30 ), $x, $y, $color, APP_PATH . '/resources/Noteworthy.ttc', $this->code{$i} );
+            $y = ( $height - $fontSize + 35 ) / 2;
+
+            $c = $this->code{$i};
+
+            imagettftext( $im, $fontSize + 10, mt_rand( -30, 30 ), $x, $y, imagecolorallocatealpha( $im, $r, $g, $b, 100 ), APP_PATH . '/resources/BodoniOrnaments.ttf', $c );
+
+            $angle = mt_rand( -30, 30 );
+
+            if( $c === 1 || $c === 0 ) {
+                imagettftext( $im, $fontSize + 2, $angle + 1, $x, $y, imagecolorallocate( $im, 0, 0, 0 ), APP_PATH . '/resources/AndaleMono.ttf', $c );
+                imagettftext( $im, $fontSize, $angle, $x, $y, $color, APP_PATH . '/resources/AndaleMono.ttf', $c );
+            } else {
+                imagettftext( $im, $fontSize + 2, $angle + 1, $x, $y, imagecolorallocate( $im, 0, 0, 0 ), APP_PATH . '/resources/AmericanTypewriter.ttc', $c );
+                imagettftext( $im, $fontSize, $angle, $x, $y, $color, APP_PATH . '/resources/AmericanTypewriter.ttc', $c );
+            }
         }
 
         $this->image = $im;
