@@ -22,7 +22,14 @@
                                     <a href="/user/activities/<?php echo $account['id']; ?>" class="avatar"></a>
                                 <?php } ?>
                                 <div class="user-info">
-                                    <p class="uname"><?php echo htmlspecialchars( $account['uname'] ); ?></p>
+                                    <p class="uname">
+                                        <?php if( $account['sex'] == 1 ) { ?>
+                                            <i class="fa fa-mars male"></i>
+                                        <?php } else if( $account['sex'] == 2 ) { ?>
+                                            <i class="fa fa-venus female"></i>
+                                        <?php } ?>
+                                        <?php echo htmlspecialchars( $account['uname'] ); ?>
+                                    </p>
                                     <div class="num-part clearfix">
                                         <div>
                                             <b class="num"><?php echo $account['data']['follow']; ?></b>

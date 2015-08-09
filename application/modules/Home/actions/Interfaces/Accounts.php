@@ -8,6 +8,8 @@ Class AccountsAction extends \Local\BaseAction {
 
         $this->paramsProcessing()->getAccounts()->getFollowStatus();
 
+        print_r( $_SERVER );
+
         return $this->data;
     }
 
@@ -31,7 +33,7 @@ Class AccountsAction extends \Local\BaseAction {
             $where[] = [ 'id', '<', $this->params['cursor'] ];
         }
         $accounts = $accountModel->select( [
-            'columns' => [ 'id', 'uname', 'img' ],
+            'columns' => [ 'id', 'uname', 'img', 'sex' ],
             'where' => $where,
             'order' => [ [ 'id', 'DESC' ] ],
             'rn' => $this->params['rn']

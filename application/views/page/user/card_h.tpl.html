@@ -15,6 +15,11 @@
     <% } %>
     <div class="info-box l">
         <a href="/user/activities/<%=card.id %>" class="uname"><%-card.uname %></a>
+        <?php if( $user['sex'] == 1 ) { ?>
+            <i class="fa fa-mars male"></i>
+        <?php } else if( $user['sex'] == 2 ) { ?>
+            <i class="fa fa-venus female"></i>
+        <?php } ?>
         <div class="num-part clearfix">
             <a href="/user/follow/<%=card.id %>">关注</a>
             <b class="num"><%=card.data.follow %></b>

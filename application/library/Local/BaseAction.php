@@ -28,7 +28,13 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
             $this->checkRemember();
         }
 
-        $data = $this->__execute();
+        $detect = new \Local\MobileDetect();
+
+        if( $detect->isMobile() && !$detect->isTablet() ) {
+            $data = $this->__mobile();
+        } else {
+            $data = $this->__execute();
+        }
 
         if( $this->type == 'interface' ) {
             $this->controller->success( $data );
@@ -153,4 +159,5 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     }
 
     abstract protected function __execute();
+    abstract protected function __mobile();
 }

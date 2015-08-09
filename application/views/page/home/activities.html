@@ -35,7 +35,12 @@
                     <div class="new-accounts clearfix">
                         <a href="/user/activities/<%=item.id %>" class="avatar smaller l" style="<% if( item.img ) { %>background-image:url(http://avatar.idizcuzz.com/<%-item.img%>)<% } %>"></a>
                         <div class="uname-area l">
-                            <a href="/uaer/activities/<%=item.id %>" class="uname"><%-item.uname %></a>
+                            <% if( item.sex == 1 ) { %>
+                                <i class="fa fa-mars male"></i>
+                            <% } else if( item.sex == 2 ) { %>
+                                <i class="fa fa-venus female"></i>
+                            <% } %>
+                            <a href="/user/activities/<%=item.id %>" class="uname"><%-item.uname %></a>
                             <a href="###" class="btns follow">关注</a>
                         </div>
                     </div>
