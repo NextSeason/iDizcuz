@@ -1,16 +1,16 @@
 <?php
 
-Class ForgetAction extends \Yaf\Action_Abstract {
+Class ForgetAction extends \Local\BaseAction {
 
-    private $request;
-    private $params;
+    private $data;
 
-    private $controller;
-    private $session;
+    public function __execute() {
+        $this->tpl = 'account/forget';
+        return $this->data;
+    }
 
-    private $accountModel;
-
-    public function execute() {
-        $this->display( 'account/forget' );
+    public function __mobile() {
+        $this->tpl = 'accountMobile/forget';
+        return $this->data;
     }
 }

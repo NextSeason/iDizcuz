@@ -23,6 +23,10 @@ Class TopicAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function reportReasons() {
         $reportConf = \Local\Utils::loadConf( 'report', 'reasons' );
         $this->data[ 'reportReasons' ] = $reportConf;

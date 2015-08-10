@@ -1,11 +1,16 @@
 <?php
 
 Class SigninAction extends \Local\BaseAction {
+    private $data = [];
     public function __execute() {
-        $data = array();
 
         $this->tpl = 'account/signin';
 
-        return $data;
+        return $this->data;
+    }
+
+    public function __mobile() {
+        $this->tpl = 'accountMobile/signin';
+        return $this->data;
     }
 }

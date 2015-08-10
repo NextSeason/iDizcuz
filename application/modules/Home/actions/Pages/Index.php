@@ -10,4 +10,8 @@ Class IndexAction extends \Local\BaseAction {
 
         return $this->data;
     }
+
+    public function __mobile() {
+        return $this->__execute();
+    }
 }
