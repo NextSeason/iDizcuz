@@ -1,0 +1,22 @@
+<div class="top boxes">
+    <?php if( $account ) { ?>
+        <div class="account">
+            <ul>
+                <li>
+                    <a href="###"> 
+                        <span class="avatar smaller radius" style="background-image:url(http://avatar.idizcuzz.com/<?php echo $account['img']; ?>)"></span>
+                    </a>
+                    <ul>
+                        <li><a href="/user/activities/<?php echo $account['id']; ?>">主页</a></li>
+                        <li><a href="/messages">消息</a></li>
+                        <li><a href="/settings">设置</a></li>
+                        <li><a href="/signout">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    <?php } else { ?>
+        <a href="/signup" class="r">注册</a>
+    <?php } ?>
+    <div class="logo-text brand">每日论点 • iDizcuz</div>
+</div>

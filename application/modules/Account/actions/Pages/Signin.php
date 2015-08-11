@@ -2,6 +2,7 @@
 
 Class SigninAction extends \Local\BaseAction {
     private $data = [];
+
     public function __execute() {
 
         $this->tpl = 'account/signin';

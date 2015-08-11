@@ -7,8 +7,11 @@ Class ForgetAction extends \Local\BaseAction {
         $this->type = 'interface';
 
         $this->paramsProcessing()->checkVcode()->createToken();
-
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function createToken() {

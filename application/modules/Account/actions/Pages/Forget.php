@@ -1,8 +1,7 @@
 <?php
 
 Class ForgetAction extends \Local\BaseAction {
-
-    private $data;
+    private $data = [];
 
     public function __execute() {
         $this->tpl = 'account/forget';

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/accountMobile/css/account.css" />
+        <style>
+            .out-of-date {
+                padding : 15px;
+                text-align : center;
+                font-size : 12px;
+                line-height : 1.6em;
+            }
+            .out-of-date span {
+                font-size : 10px;
+                color : #999;
+                position : relative;
+                top : -2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="idizcuz">
+            <div class="top boxes">
+                <div class="sign">
+                    <a href="/signin" class="r">登录</a>
+                </div>
+                <div class="logo-text brand">每日论点 • iDizcuz</div>
+            </div>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <div class="boxes sign">
+                <?php if( $error > 0 ) { ?>
+                    <div class="out-of-date">
+                        由于您操作时间过长，此密码重置页面已经失效。如果忘记密码，请返回 
+                        [<a href="/forget">忘记密码</a>] 页面重新进行验证
+                        <br>
+                        <a href="/signin">帐号登录</a>
+                        <span> | </span>
+                        <a href="/signup">帐号注册</a>
+                    </div>
+                <?php } else { ?>
+                    <form class="forget-reset sign">
+                        <input type="hidden" class="token" value="<?php echo $token; ?>" />
+                        <input type="text" class="email large" value="<?php echo $email; ?>" disabled />
+                        <input type="password" class="passwd large" placeholder="新密码" />
+                        <input type="password" class="rpasswd large" placeholder="再次输入新密码" />
+                        <div class="btn-line clearfix">
+                            <input type="submit" class="btns small r submit" value="提交新密码" />
+                        </div>
+                        <div class="warn"></div>
+                        <div class="tip">
+                            勿将此页面链接泄露给他人。
+                            请于 <b class="brand">2分钟</b> 之内完成新密码设置操作
+                            <span> | </span>
+                            <a href="/signin">返回登录</a>
+                            <span> | </span>
+                            <a href="/signup">注册帐号</a>
+                        </div>
+                    </form>
+                <?php } ?>
+            </div>
+        </div>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'forgetreset', '/static/accountMobile/packages/ForgetReset/bootstrap.js', {
+                form : $( 'form.forget-reset' )
+            } );
+        </script>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>

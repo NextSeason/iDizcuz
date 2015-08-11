@@ -9,6 +9,9 @@ Class TopicPointsDataAction extends \Local\BaseAction {
         $this->paramsProcessing()->getPoints()->getPointsData();
         return $this->data;
     }
+    public function __mobile() {
+        return $this->__execute();
+    }
 
     private function getPointsData() {
         if( !isset( $this->pool['points'] ) ) {

@@ -13,6 +13,10 @@ Class SendVcodeAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function checkParams() {
         if( $this->params['type'] == 'email' ) {
             $this->checkEmail();

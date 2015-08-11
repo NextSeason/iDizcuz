@@ -14,8 +14,11 @@ Class SignupAction extends \Local\BaseAction {
             'type' => 5,
             'relation_id' => $this->pool['account_id']
         ] );
-
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function setSession() {

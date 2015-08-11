@@ -13,6 +13,14 @@ Class ForgetResetAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        $this->tpl = 'accountMobile/forgetreset';
+
+        $this->paramsProcessing()->check();
+       
+        return $this->data;
+    }
+
     private function check() {
         if( !isset( $this->session[ 'forget_passwd_token' ] ) ) {
             $this->redirect( '/' );

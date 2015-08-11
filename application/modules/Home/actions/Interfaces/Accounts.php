@@ -5,12 +5,12 @@ Class AccountsAction extends \Local\BaseAction {
 
     public function __execute() {
         $this->type = 'interface';
-
         $this->paramsProcessing()->getAccounts()->getFollowStatus();
-
-        print_r( $_SERVER );
-
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function getFollowStatus() {

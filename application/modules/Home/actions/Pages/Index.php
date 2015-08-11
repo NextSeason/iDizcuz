@@ -7,11 +7,11 @@ Class IndexAction extends \Local\BaseAction {
 
     public function __execute() {
         $this->tpl = 'home/index';
-
         return $this->data;
     }
 
     public function __mobile() {
-        return $this->__execute();
+        $this->tpl = 'homeMobile/index';
+        return $this->data;
     }
 }

@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="/static/accountMobile/css/account.css" />
+<div class="boxes sign">
+    <form class="signin sign">
+        <input type="text" class="email large" placeholder="邮箱" />
+        <input type="password" class="passwd large" placeholder="密码" />
+        <div class="btn-line clearfix">
+            <input type="submit" class="btns small r signin" value="登录" />
+            <label>
+                <input type="checkbox" class="remember" /> 记住登录
+            </label>
+        </div>
+        <div class="warn"></div>
+        <div class="tip">
+            请使用注册时使用的电子邮箱和密码登录
+            <br>
+            <a href="/signup">没有帐号</a>
+            <span> | </span>
+            <a href="/forget">忘记密码</a>
+        </div>
+    </form>
+    <script>
+        var idizcuz = new J();
+        idizcuz.mount( 'signin', '/static/accountMobile/packages/Signin/bootstrap.js', {
+            form : $( 'form.signin' )
+        } );
+    </script>
+</div>

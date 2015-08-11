@@ -5,11 +5,14 @@ Class PostsAction extends \Local\BaseAction {
 
     public function __execute() {
         $this->type = 'interface';
-
         $this->paramsProcessing()->getPosts();
-
         return $this->data;
     }
+
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getPosts() {
 
         $postDataModel = new PostDataModel();

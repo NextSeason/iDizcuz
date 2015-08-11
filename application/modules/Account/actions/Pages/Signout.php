@@ -14,4 +14,8 @@ Class SignoutAction extends \Local\BaseAction {
 
         $this->redirect( $_SERVER['HTTP_REFERER'] );
     }
+
+    public function __mobile() {
+        return $this->__execute();
+    }
 }

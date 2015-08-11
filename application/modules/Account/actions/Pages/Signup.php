@@ -1,16 +1,15 @@
 <?php
 
-Class SignupAction extends \Yaf\Action_Abstract {
+Class SignupAction extends \Local\BaseAction {
+    private $data = [];
 
-    private $request;
-    private $params;
+    public function __execute() {
+        $this->tpl = 'account/signup';
+        return $this->data;
+    }
 
-    private $controller;
-    private $session;
-
-    private $accountModel;
-
-    public function execute() {
-        $this->display( 'account/signup' );
+    public function __mobile() {
+        $this->tpl = 'accountMobile/signup';
+        return $this->data;
     }
 }
