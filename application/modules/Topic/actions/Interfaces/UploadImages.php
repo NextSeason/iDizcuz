@@ -48,6 +48,10 @@ Class UploadImagesAction extends \Local\BaseAction {
         $this->_success();
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function save() {
         $image = $this->params[ 'image' ];
 

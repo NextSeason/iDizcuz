@@ -7,8 +7,11 @@ Class PostListAction extends \Local\BaseAction {
         $this->type = 'interface';
 
         $this->paramsProcessing()->getPosts();
-
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function getPosts() {

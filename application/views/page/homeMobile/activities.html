@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/homeMobile//css/index.css" />
+        <link rel="stylesheet" href="/static/homeMobile//css/activities.css?_t=1439406104400" />
     </head>
     <body>
         <div id="idizcuz">
@@ -14,6 +14,13 @@
 
             <div class="boxes">
                 <ul class="post-list"></ul>
+            </div>
+            <div class="dialog tip-dialog">
+                <div class="wrap">
+                    <div class="inner">
+                        <p class="brand tip"></p>
+                    </div>
+                </div>
             </div>
         </div>
         <textarea class="templates" id="post-list-tpl">
@@ -28,30 +35,49 @@
                     <% var post = data[i]; %>
                     <li>
                         <% var postUrl = '/post/' + post.id; %>
-                        <div class="posts" data-post-id="<%=post.id %>">
-                            <div class="data-line clearfix">
-                                <div class="vote l">
-                                    <a href="<%=postUrl %>" target="_blank" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree %></b>)</a>
-                                    <a href="<%=postUrl %>" target="_blank" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
+                        <div class="posts clearfix" data-post-id="<%=post.id %>">
+                            <div class="aside">
+                                <span class="op-btn btns agree" data-action="vote" data-intent="1" data-need-signin="1">
+                                    <b><%=post.data.agree %></b>
+                                    <span>支持</span>
+                                </span>
+                                <span class="op-btn btns disagree" data-action="vote" data-intent="0" data-need-signin="1">
+                                    <b><%=post.data.disagree %></b>
+                                    <span>反对</span>
+                                </span>
+                                <span class="op-btn btns dark" data-action="share">分享</span>
+                                <span class="op-btn btns <% if( post.mark != 1 ) { %>dark<% } %>" data-marked="<%-post.mark %>" data-action="mark" data-need-signin="1">收藏</span>
+                                <span class="op-btn btns dark" data-action="to" data-need-signin="1">针对</span>
+                            </div>
+                            <div class="main">
+                                <h2><a href="/post/<%=post.id %>"><%-post.title %></a></h2>
+                                <div class="info">
+                                    <div class="clearfix">
+                                        <span class="aside">作者：</span>
+                                        <a href="/user/activities/<%=post.account_id %>" class="main">
+                                            <%-post.account.uname %>
+                                            <%-post.account.desc %>
+                                        </a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <span class="aside">话题：</span>
+                                        <a href="/topic/<%=post.topic.id %>" class="main" >
+                                            <%-post.topic.title%>
+                                        </a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <span class="aside">发表：</span>
+                                        <span class="main"><%=post.ctime.substr(0,10) %></span>
+                                    </div>
                                 </div>
-                                <div class="title l">
-                                    <h2><a href="/post/<%=post.id %>" target="_blank"><%-post.title %></a></h2>
-                                    <a href="/user/activities/<%=post.account_id %>" target="_blank" class="uname">作者： <%-post.account.uname %><%-post.account.desc %></a>
+                                <div class="contents rich-text">
+                                    <p><%=post.content %></p>
                                 </div>
-                            </div>
-                            <div class="topic-line">
-                                <a href="/topic/<%=post.topic.id %>" target="_blank" class="uname">所在话题： <%-post.topic.title%></a>
-                            </div>
-                            <div class="contents rich-text">
-                                <p><%=post.content %></p>
-                            </div>
-                            <div class="bottom-line">
-                                <a href="<%=postUrl %>" target="_blank" class="reply r">针对本条论述发表观点</a>
-                                <span class="ctime">发表于：<%=post.ctime.substr(0,10) %></span>
-                                <% if( post.mtime != post.ctime ) { %>
-                                    <span class="mtime">修改于：<%=post.mtime.substr(0,10) %></span>
-                                <% } %>
-                                <a href="<%=postUrl %>" target="_blank" class="comments"><%-post.data.comments_cnt %>条短评</a>
+                                <div class="bottom-line">
+                                    <a href="javascript:void(0)" class="comments">
+                                        论述有 <%-post.data.comments_cnt %> 条短评
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -60,7 +86,10 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/homeMobile/packages/Posts/bootstrap.js' );
+            idizcuz.mount( 'posts', '/static/homeMobile/packages/Posts/bootstrap.js?_t=1439406104373' );
+            idizcuz.mount( 'operate', '/static/homeMobile/packages/PostOperate/bootstrap.js?_t=1439406104373', {
+                signin : +'<?php echo $account ? 1 : 0; ?>'
+            } );
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>

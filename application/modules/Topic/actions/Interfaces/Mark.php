@@ -3,8 +3,6 @@
 Class MarkAction extends \Local\BaseAction {
     private $data = array();
 
-    private $postDataModel;
-
     public function __execute() {
         $this->type = 'interface';
 
@@ -12,15 +10,12 @@ Class MarkAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing();
-        
-        $this->postDataModel = new PostDataModel();
-        
-        $this->checkPost();
-
-        $this->action();
-
+        $this->paramsProcessing()->checkPost()->action();
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function action() {
@@ -32,7 +27,8 @@ Class MarkAction extends \Local\BaseAction {
 
         if( $act == 0 ) {
             $res = $transactionModel->removeMark( [
-                'mark_id' => $params[ 'mark_id' ] 
+                'post_id' => $params['post_id'],
+                'account_id' => $this->account['id']
             ] );
 
             if( !$res ) $this->error( 'SYSTEM_ERR' );
@@ -41,20 +37,21 @@ Class MarkAction extends \Local\BaseAction {
         }
         if( $act == 1 ) {
             $markModel = new MarkModel();
-            $mark = $markModel->getMarkByPostAndAccount( $params[ 'post_id' ], $this->account[ 'id' ] );
 
-            if( $mark ) {
-                $this->data[ 'mark' ] = $mark[ 'id' ];
-            } else {
+            $mark = $markModel->select( [
+                'where' => [
+                    [ 'post_id', $params[ 'post_id'] ],
+                    [ 'accout_id', $this->account['id'] ]
+                ]
+            ] );
 
+            if( !$mark ) {
                 $mark = $transactionModel->addMark( array(
                     'account_id' => $this->account[ 'id' ],
                     'post_id' => $params[ 'post_id' ]
                 ) );
 
                 if( !$mark ) $this->error( 'SYSTEM_ERR' );
-
-                $this->data[ 'mark' ] = $mark;
             }
         }
 
@@ -62,7 +59,10 @@ Class MarkAction extends \Local\BaseAction {
     }
 
     private function checkPost() {
-        $post = $this->postDataModel->get( $this->params[ 'post_id' ] );
+        $postDataModel = new PostDataModel();
+
+        $post = $postDataModel->get( $this->params[ 'post_id' ] );
+
         if( !$post ) {
             $this->error( 'POST_NOTEXISTS' );
         }
@@ -86,15 +86,8 @@ Class MarkAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $mark_id = $request->getPost( 'mark_id' );
-
-        if( $act == 0 && is_null( $mark_id ) ) {
-            $this->error( 'PARAMS_ERR' );
-        }
-
         $this->params = array(
             'post_id' => $post_id,
-            'mark_id' => $mark_id,
             'act' => $act
         );
 

@@ -54,7 +54,8 @@ Class TransactionModel extends BaseModel {
     }
 
     public function removeMark( $params ) {
-        $mark_id = $params['mark_id'];
+        $post_id = $params['post_id'];
+        $account_id = $params['account_id'];
 
         try {
             $this->db->beginTransaction();

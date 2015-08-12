@@ -16,6 +16,10 @@ Class ImageCodeAction extends \Local\BaseAction {
         exit;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function createImage() {
         $params = $this->params;
 

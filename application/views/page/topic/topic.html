@@ -4,16 +4,16 @@
         <?php 
             $title = $topic[ 'title' ] . ' - 每日论点 • iDizcuz';
         ?>
-        <?php include TPL_PATH . 'common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topic/css/topic.css" />
-        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css" />
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1439388121058" />
+        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1439388121058" />
     </head>
     <body>
         <div id="idizcuz" 
             data-account-id="<?php echo isset( $account['id'] ) ? $account['id'] : 0; ?>" 
             data-account-uname="<?php echo isset( $account['uname'] ) ? htmlspecialchars( $account['uname'] ) : ''; ?>"
         >
-            <?php include TPL_PATH . 'common/top.inc.html'; ?>
+            <?php include TPL_PATH . '/common/top.inc.html'; ?>
             <div class="boxes body">
                 <div class="inner">
                     <div class="sidebar aside">
@@ -331,7 +331,7 @@
                     </div>
                 </div>
             </div>
-            <?php include TPL_PATH . 'common/foot.inc.html'; ?>
+            <?php include TPL_PATH . '/common/foot.inc.html'; ?>
             <div id="complain-box" data-target-id="0">
                 <form>
                     <input type="hidden" class="comment_id" />
@@ -371,7 +371,7 @@
             </div>
         </div>
         <!-- templates area start -->
-        <?php include TPL_PATH . 'common/pagination.inc.html'; ?>
+        <?php include TPL_PATH . '/common/pagination.inc.html'; ?>
         <textarea class="templates" id="post-list-tpl">
             <% if( !data.length ) { %>
                 <li class="empty">此话题目前还没有论述，快发布您的论述，并分享给您的好友吧</li>
@@ -604,11 +604,11 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/umeditor.config.js"></script>
-        <script src="/static/common/js/umeditor.js"></script>
-        <script src="/static/common/js/qrcode.js"></script>
-        <script src="/static/common/js/qrcode.js"></script>
-        <script src="/static/common/js/ZeroClipboard.js"></script>
+        <script src="/static/common/js/umeditor.config.js?_t=1439388121058"></script>
+        <script src="/static/common/js/umeditor.js?_t=1439388121058"></script>
+        <script src="/static/common/js/qrcode.js?_t=1439388121058"></script>
+        <script src="/static/common/js/qrcode.js?_t=1439388121058"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1439388121058"></script>
         <script>
             var idizcuz = new J();
 
@@ -622,17 +622,17 @@
                 $( '#editor-dialog' ).hide();
             };
 
-            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js', { 'topic' : {
+            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1439388121012', { 'topic' : {
                 id : "<?php echo $topic['id']; ?>",
                 type : "<?php echo $topic['data']['type']; ?>" 
             } } );
-            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js', {} );
-            idizcuz.mount( 'operate', '/static/topic/packages/Operate/bootstrap.js', {} );
-            idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js', {} );
-            idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js', {} );
-            idizcuz.mount( 'copy', '/static/topic/packages/Copy/bootstrap.js', {} );
-            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js', {} );
+            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1439388121012', {} );
+            idizcuz.mount( 'operate', '/static/topic/packages/Operate/bootstrap.js?_t=1439388121012', {} );
+            idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js?_t=1439388121012', {} );
+            idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js?_t=1439388121012', {} );
+            idizcuz.mount( 'copy', '/static/topic/packages/Copy/bootstrap.js?_t=1439388121012', {} );
+            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1439388121012', {} );
         </script>
-        <?php include TPL_PATH . 'common/end.inc.html'; ?>
+        <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

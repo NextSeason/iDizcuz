@@ -24,6 +24,10 @@ Class PostAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getAccount() {
         $accountModel = $this->accountModel ? $this->accountModel : new AccountModel(); 
 

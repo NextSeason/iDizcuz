@@ -4,7 +4,10 @@
             <ul>
                 <li>
                     <a href="###"> 
-                        <span class="avatar smaller radius" style="background-image:url(http://avatar.idizcuzz.com/<?php echo $account['img']; ?>)"></span>
+                        <?php
+                            $avatar = $account['img'] ? 'http://avatar.idizcuzz.com/' . $account['img'] : '/static/common/images/avatar.png?_t=1439395126489';
+                        ?>
+                        <span class="avatar smaller radius" style="background-image:url(<?php echo $avatar; ?>)"></span>
                     </a>
                     <ul>
                         <li><a href="/user/activities/<?php echo $account['id']; ?>">主页</a></li>

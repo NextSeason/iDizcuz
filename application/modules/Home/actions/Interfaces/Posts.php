@@ -51,7 +51,19 @@ Class PostsAction extends \Local\BaseAction {
 
         $posts_data = \Local\Utils::gather( $posts_data );
 
+        $account_id = $this->account ? $this->account['id'] : null;
+
+        $markModel = new MarkModel();
+
         foreach( $posts as &$post ) {
+            $post['mine'] = $account_id == $post['account_id'] ? 1 : 0;
+
+            if( $markModel->getMarkByPostAndAccount( $post['id'], $account_id ) ) {
+                $post['mark'] = 1;
+            } else {
+                $post['mark'] = 0;
+            }
+
             $post['data'] = $posts_data[ $post['id'] ];
             $post['account'] = $accounts[ $post['account_id'] ];
             $post['topic'] = $topics[ $post['topic_id'] ];
