@@ -2,9 +2,10 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/homeMobile//css/activities.css?_t=1439406104400" />
+        <link rel="stylesheet" href="/static/homeMobile/css/activities.css?_t=1439490241597" />
     </head>
     <body>
+        <?php $nav = 'activities'; ?>
         <div id="idizcuz">
             <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
             <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
@@ -14,6 +15,7 @@
 
             <div class="boxes">
                 <ul class="post-list"></ul>
+                <div class="btns load-more">点击加载更多</div>
             </div>
             <div class="dialog tip-dialog">
                 <div class="wrap">
@@ -22,7 +24,42 @@
                     </div>
                 </div>
             </div>
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
+        <textarea class="templates" id="comment-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                <li id="comment-<%=data[i].id %>" class="comment-item" data-comment-id="<%=data[i].id %>">
+                    <a href="/user/activities/<%=data[i].account_id %>" class="u-link">
+                        <%-data[i].account.uname %>
+                    </a>
+                    <p class="comment-text">
+                        <% if( data[i].reply_account ) { %>
+                            [ 
+                            <span>回复 </span>     
+                            <a href="/user/activities/<%=data[i].reply_account.id %>">
+                                <%-data[i].reply_account.uname %>
+                            </a>
+                            ]
+                        <% } %>
+                        <%-data[i].content %>
+                    </p>
+                    <div class="op-line">
+                        <span><%=data[i].ctime %></span>
+                        <% if( data[i].own == 1 ) { %>
+                            <a href="###" class="remove">删除</a>
+                        <% } %>
+                        <a href="###" class="reply">回复</a>
+                    </div>
+                    <form class="comment-form reply-form" data-comment-id="<%=data[i].id %>" data-account-id="<%-data[i].account.id %>">
+                        <textarea class="content" placeholder="输入短评内容">&lt;/textarea>
+                        <div class="btns-line">
+                            <a href="###" class="clear">清空</a>
+                            <input type="submit" class="btns submit small" value="发布" />
+                        </div>
+                    </form>
+                </li>
+            <% } %>
+        </textarea>
         <textarea class="templates" id="post-list-tpl">
             <% if( !data.length ) { %>
                 <li>
@@ -46,7 +83,9 @@
                                     <span>反对</span>
                                 </span>
                                 <span class="op-btn btns dark" data-action="share">分享</span>
-                                <span class="op-btn btns <% if( post.mark != 1 ) { %>dark<% } %>" data-marked="<%-post.mark %>" data-action="mark" data-need-signin="1">收藏</span>
+                                <% if( post.own != 1 ) { %>
+                                    <span class="op-btn btns <% if( post.mark != 1 ) { %>dark<% } %>" data-marked="<%-post.mark %>" data-action="mark" data-need-signin="1">收藏</span>
+                                <% } %>
                                 <span class="op-btn btns dark" data-action="to" data-need-signin="1">针对</span>
                             </div>
                             <div class="main">
@@ -74,10 +113,24 @@
                                     <p><%=post.content %></p>
                                 </div>
                                 <div class="bottom-line">
-                                    <a href="javascript:void(0)" class="comments">
+                                    <a href="javascript:void(0)" class="comments" data-cursor="0">
                                         论述有 <%-post.data.comments_cnt %> 条短评
                                     </a>
                                 </div>
+                            </div>
+                            <div class="comment-box">
+                                <ul class="comment-list"></ul>
+                                <div class="btns load-more">点击加载更多短评</div>
+                                <ul class="new-comment-list"></ul>
+                                <form class="comment-form">
+                                    <textarea class="content" placeholder="输入短评内容">&lt;/textarea>
+                                    <div class="btns-line">
+
+                                        <span class="hide btns dark small l">收起短评</span>
+                                        <a href="###" class="clear">清空</a>
+                                        <input type="submit" class="btns submit small" value="发布" />
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </li>
@@ -86,8 +139,11 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/homeMobile/packages/Posts/bootstrap.js?_t=1439406104373' );
-            idizcuz.mount( 'operate', '/static/homeMobile/packages/PostOperate/bootstrap.js?_t=1439406104373', {
+            idizcuz.mount( 'posts', '/static/homeMobile/packages/Posts/bootstrap.js?_t=1439490241566' );
+            idizcuz.mount( 'operate', '/static/homeMobile/packages/PostOperate/bootstrap.js?_t=1439490241566', {
+                signin : +'<?php echo $account ? 1 : 0; ?>'
+            } );
+            idizcuz.mount( 'comments', '/static/homeMobile/packages/Comments/bootstrap.js?_t=1439490241566', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
         </script>

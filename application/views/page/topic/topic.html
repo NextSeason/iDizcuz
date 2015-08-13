@@ -5,8 +5,8 @@
             $title = $topic[ 'title' ] . ' - 每日论点 • iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1439388121058" />
-        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1439388121058" />
+        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1439483161720" />
+        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1439483161720" />
     </head>
     <body>
         <div id="idizcuz" 
@@ -39,17 +39,19 @@
                                     <div class="posts" id="post-<?php echo $post['id']; ?>" data-post-id="<?php echo $post['id']; ?>">
                                         <div class="data-line clearfix">
                                             <div class="operates r">
-                                                <?php if( !$post['mine'] ) { ?>
-                                                    <a href="###" class="op-btn op-<?php echo $post['marked'] ? 'unmark' : 'mark'; ?>" data-action="mark" data-mark-id="<?php echo $post['marked']; ?>">
-                                                        <?php if( $post['marked'] ) { ?>
+                                                <?php if( !$post['own'] ) { ?>
+                                                    <?php if( $post['mark'] ) { ?>
+                                                        <a href="###" class="op-btn op-unmark" data-action="mark" data-marked="1">
                                                             <i class="fa fa-star"></i> 取消收藏
-                                                        <?php } else { ?>
+                                                        </a>
+                                                    <?php } else { ?>
+                                                        <a href="###" class="op-btn op-mark" data-action="mark" data-marked="0">
                                                             <i class="fa fa-star-o"></i> 收藏
-                                                        <?php } ?>
-                                                    </a>
+                                                        </a>
+                                                    <?php } ?>
                                                 <?php } ?>
                                                 <a href="###" class="op-btn op-share" data-action="share">分享</a>
-                                                <?php if( !$post['mine'] ) { ?>
+                                                <?php if( !$post['own'] ) { ?>
                                                     <a href="###" class="op-btn" data-action="report">举报</a>
                                                 <?php } ?>
                                             </div>
@@ -143,18 +145,23 @@
                                             <?php if( $post['ctime'] != $post['mtime'] ) { ?>
                                                 <span class="mtime">最后修改于：<?php echo substr( $post['mtime'], 0, -9 ); ?></span>
                                             <?php } ?>
-                                            <a href="###" class="comments"><?php echo $post['data']['comments_cnt']; ?> 条短评</a>
-                                            <?php if( $post['mine'] ) { ?>
+                                            <a href="###" class="comments" data-cursor="0">
+                                                <?php echo $post['data']['comments_cnt']; ?> 条短评
+                                            </a>
+                                            <?php if( $post['own'] ) { ?>
                                                 <a href="###" class="remove-post" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
                                             <?php } ?>
                                         </div>
-                                        <div class="comments-box">
+                                        <div class="comment-box">
                                             <div class="loading"></div>
-                                            <ul class="comments-list"></ul>
-                                            <div class="comment-pagination pagination clearfix"></div>
-                                            <form class="comments-form clearfix">
-                                                <input type="text" class="comment l" placeholder="输入评论内容" />
-                                                <input type="submit" class="btns submit l" value="评论" />
+                                            <ul class="comment-list"></ul>
+                                            <div class="load-more">加载更多短评</div>
+                                            <ul class="new-comment-list"></ul>
+                                            <form class="comment-form clearfix">
+                                                <input type="submit" class="btns submit aside" value="发布" />
+                                                <div class="main">
+                                                    <input type="text" class="comment" placeholder="输入短评内容" />
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -376,17 +383,17 @@
             <% if( !data.length ) { %>
                 <li class="empty">此话题目前还没有论述，快发布您的论述，并分享给您的好友吧</li>
             <% } else { %>
-                <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
-                    <% if( data[i].hide ) { continue } %>
-                    <li class="posts" id="post-<%=data[i].id %>" data-post-id="<%=data[i].id %>">
+                <% for( var i = 0, l = data.length; i < l; i += 1 ) { var post = data[i]; %>
+                    <% if( post.hide ) { continue } %>
+                    <li class="posts" id="post-<%=post.id %>" data-post-id="<%=post.id %>">
                         <div class="data-line clearfix">
-                            <% if( data[i].point_id != 0 ) {  %>
-                                <span href="###" class="flags"><i class="fa fa-flag point-flag-<%-data[i].point_id %>"></i></span>
+                            <% if( post.point_id != 0 ) {  %>
+                                <span href="###" class="flags"><i class="fa fa-flag point-flag-<%-post.point_id %>"></i></span>
                             <% } %>
                             <div class="operates r">
-                                <% if( !data[i].own ) { %>
-                                    <% var mark = +data[i].mark %>
-                                    <a href="###" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-mark-id="<%=mark %>">
+                                <% if( !post.own ) { %>
+                                    <% var mark = +post.mark %>
+                                    <a href="###" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-marked="<%-mark %>">
                                         <% if ( mark ) { %>
                                             <i class="fa fa-star"></i> 取消收藏
                                         <% } else { %>
@@ -395,17 +402,17 @@
                                     </a>
                                 <% } %>
                                 <a href="###" class="op-btn op-share" data-action="share">分享</a>
-                                <% if( !data[i].own ) { %>
+                                <% if( !post.own ) { %>
                                     <a href="###" class="op-btn" data-action="report">举报</a>
                                 <% } %>
                             </div>
                             <div class="vote l">
-                                <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=data[i].data.agree %></b>)</a>
-                                <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=data[i].data.disagree %></b>)</a>
+                                <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree %></b>)</a>
+                                <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
                             </div>
                             <div class="title l">
-                                <h2><a href="/post/<%=data[i].id %>" target="_blank"><%-data[i].title %></a></h2>
-                                <a href="/user/activities/<%=data[i].account.id %>" class="uname" target="_blank">作者： <%=data[i].account.uname %></a>
+                                <h2><a href="/post/<%=post.id %>" target="_blank"><%-post.title %></a></h2>
+                                <a href="/user/activities/<%=post.account.id %>" class="uname" target="_blank">作者： <%=post.account.uname %></a>
                             </div>
                         </div>
                         <div class="bubbles op-bubbles">
@@ -437,14 +444,14 @@
                                         <div class="share-link">
                                             <div class="line clearfix">
                                                 <span class="l">分享此条论述：</span>
-                                                <a href="http://www.idizcuz.com/post/<%=data[i].id %>?fr=share" data-title="<%-data[i].title %>" target="_blank" class="share-post-link link l">
-                                                    http://www.idizcuz.com/post/<%=data[i].id %>?fr=share
+                                                <a href="http://www.idizcuz.com/post/<%=post.id %>?fr=share" data-title="<%-post.title %>" target="_blank" class="share-post-link link l">
+                                                    http://www.idizcuz.com/post/<%=post.id %>?fr=share
                                                 </a>
                                                 <a href="###" class="btns l copy-link">复制链接</a>
                                             </div>
                                             <div class="line clearfix">
                                                 <span class="l">分享当前话题：</span>
-                                                <a href="http://www.idizcuz.com/topic/<%=data[i].topic_id %>?fr=share" data-title="<?php echo $topic['title']; ?>>" target="_blank" class="share-topic-link link l">
+                                                <a href="http://www.idizcuz.com/topic/<%=post.topic_id %>?fr=share" data-title="<?php echo $topic['title']; ?>>" target="_blank" class="share-topic-link link l">
                                                     http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share
                                                 </a>
                                                 <a href="###" class="btns l copy-link">复制链接</a>
@@ -456,7 +463,7 @@
                                     <div class="reasons l">
                                         <?php foreach( $reportReasons as $key => $value ) { ?>
                                             <label>
-                                                <input type="radio" name="reasons-<%=data[i].id %>" value="<?php echo $key; ?>" />
+                                                <input type="radio" name="reasons-<%=post.id %>" value="<?php echo $key; ?>" />
                                                 <span class="msg"><?php echo $value; ?></span>
                                             </label>
                                         <?php } ?>
@@ -473,32 +480,37 @@
                             </div>
                         </div>
                         <div class="contents rich-text">
-                            <p><%=data[i].content %></p>
+                            <p><%=post.content %></p>
                         </div>
-                        <% if( data[i].to != 0 ) { %>
+                        <% if( post.to != 0 ) { %>
                             <div class="to-area">
                                 <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
-                                <a href="/post/<%=data[i].to.id %>" target="_blank"><%=data[i].to.title %></a>
+                                <a href="/post/<%=post.to.id %>" target="_blank"><%=post.to.title %></a>
                             </div>
                         <% } %>
                         <div class="bottom-line">
                             <a href="#editor" class="reply-to r">针对本条论述发表观点</a>
-                            <span class="ctime">发表于：<%=data[i].ctime %></span>
-                            <% if( data[i].mtime != data[i].ctime ) { %>
-                                <span class="mtime">修改于：<%=data[i].mtime %></span>
+                            <span class="ctime">发表于：<%=post.ctime %></span>
+                            <% if( post.mtime != post.ctime ) { %>
+                                <span class="mtime">修改于：<%=post.mtime %></span>
                             <% } %>
-                            <a href="###" class="comments"><%=data[i].data.comments_cnt %>条短评</a>
-                            <% if( data[i].own ) { %>
+                            <a href="###" class="comments" data-cursor="0">
+                                <%=post.data.comments_cnt %>条短评
+                            </a>
+                            <% if( post.own ) { %>
                                 <a href="###" class="remove-post" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
                             <% } %>
                         </div>
-                        <div class="comments-box">
+                        <div class="comment-box">
                             <div class="loading"></div>
-                            <ul class="comments-list"></ul>
-                            <div class="comment-pagination pagination clearfix"></div>
-                            <form class="comments-form clearfix">
-                                <input type="text" class="comment l" placeholder="输入评论内容" />
-                                <input type="submit" class="btns submit l" value="评论" />
+                            <ul class="comment-list"></ul>
+                            <div class="load-more">加载更多短评</div>
+                            <ul class="new-comment-list"></ul>
+                            <form class="comment-form clearfix">
+                                <input type="submit" class="btns submit aside" value="发布" />
+                                <div class="main">
+                                    <input type="text" class="comment" placeholder="输入短评内容" />
+                                </div>
                             </form>
                         </div>
                     </li>
@@ -575,11 +587,11 @@
                 </div>
             </li>
         </textarea>
-        <textarea class="templates" id="comments-list-tpl">
+        <textarea class="templates" id="comment-list-tpl">
             <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
-                <li id="comment-<%=data[i].id %>" class="comments-item" data-comment-id="<%=data[i].id %>">
+                <li id="comment-<%=data[i].id %>" class="comment-item" data-comment-id="<%=data[i].id %>">
                     <a href="/user/activities/<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
-                    <p class="comments-text">
+                    <p class="comment-text">
                         <% if( data[i].reply_account ) { %>
                             [ 
                             <span>回复 </span>     
@@ -590,25 +602,27 @@
                     </p>
                     <div class="op-line">
                         <span><%=data[i].ctime %></span>
-                        <% if( data[i].isSelf ) { %>
+                        <% if( data[i].own == 1 ) { %>
                             <a href="###" class="remove-comment" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
                         <% } else { %>
                             <a href="###" class="reply"><i class="fa fa-reply"></i> 回复</a>
                             <a href="###" class="complaint"><i class="fa fa-flag"></i> 举报</a>
                         <% } %>
                     </div>
-                    <form class="comments-form reply-form clearfix" data-comment-id="<%=data[i].id %>" data-account-id="<%-data[i].account.id %>">
-                        <input type="text" class="comment l" placeholder="输入评论内容" />
-                        <input type="submit" class="btns submit l" value="评论" />
+                    <form class="comment-form reply-form clearfix" data-comment-id="<%=data[i].id %>" data-account-id="<%-data[i].account.id %>">
+                        <input type="submit" class="btns submit aside" value="发布" />
+                        <div class="main">
+                            <input type="text" class="comment" placeholder="输入短评内容" />
+                        </div>
                     </form>
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/umeditor.config.js?_t=1439388121058"></script>
-        <script src="/static/common/js/umeditor.js?_t=1439388121058"></script>
-        <script src="/static/common/js/qrcode.js?_t=1439388121058"></script>
-        <script src="/static/common/js/qrcode.js?_t=1439388121058"></script>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1439388121058"></script>
+        <script src="/static/common/js/umeditor.config.js?_t=1439483161720"></script>
+        <script src="/static/common/js/umeditor.js?_t=1439483161720"></script>
+        <script src="/static/common/js/qrcode.js?_t=1439483161720"></script>
+        <script src="/static/common/js/qrcode.js?_t=1439483161720"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1439483161720"></script>
         <script>
             var idizcuz = new J();
 
@@ -622,16 +636,16 @@
                 $( '#editor-dialog' ).hide();
             };
 
-            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1439388121012', { 'topic' : {
+            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1439483161666', { 'topic' : {
                 id : "<?php echo $topic['id']; ?>",
                 type : "<?php echo $topic['data']['type']; ?>" 
             } } );
-            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1439388121012', {} );
-            idizcuz.mount( 'operate', '/static/topic/packages/Operate/bootstrap.js?_t=1439388121012', {} );
-            idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js?_t=1439388121012', {} );
-            idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js?_t=1439388121012', {} );
-            idizcuz.mount( 'copy', '/static/topic/packages/Copy/bootstrap.js?_t=1439388121012', {} );
-            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1439388121012', {} );
+            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1439483161666', {} );
+            idizcuz.mount( 'operate', '/static/topic/packages/Operate/bootstrap.js?_t=1439483161666', {} );
+            idizcuz.mount( 'comments', '/static/topic/packages/Comments/bootstrap.js?_t=1439483161666', {} );
+            idizcuz.mount( 'share', '/static/topic/packages/Share/bootstrap.js?_t=1439483161666', {} );
+            idizcuz.mount( 'copy', '/static/topic/packages/Copy/bootstrap.js?_t=1439483161666', {} );
+            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1439483161666', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

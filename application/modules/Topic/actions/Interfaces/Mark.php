@@ -52,6 +52,7 @@ Class MarkAction extends \Local\BaseAction {
                 ) );
 
                 if( !$mark ) $this->error( 'SYSTEM_ERR' );
+                $this->data['mark'] = $mark;
             }
         }
 

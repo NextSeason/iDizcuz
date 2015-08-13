@@ -68,7 +68,7 @@ Class PostListAction extends \Local\BaseAction {
                     $account_id
                 );
 
-                $post['mark'] = $mark ? $mark['id'] : 0;
+                $post['mark'] = $mark ? 1 : 0;
                 $post['own'] = $account_id == $post['account_id'] ? 1 : 0;
             }
         }

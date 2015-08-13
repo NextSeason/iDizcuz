@@ -56,7 +56,7 @@ Class PostsAction extends \Local\BaseAction {
         $markModel = new MarkModel();
 
         foreach( $posts as &$post ) {
-            $post['mine'] = $account_id == $post['account_id'] ? 1 : 0;
+            $post['own'] = $account_id == $post['account_id'] ? 1 : 0;
 
             if( $markModel->getMarkByPostAndAccount( $post['id'], $account_id ) ) {
                 $post['mark'] = 1;

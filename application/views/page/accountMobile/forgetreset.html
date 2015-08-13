@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/accountMobile/css/account.css?_t=1439388090310" />
+        <link rel="stylesheet" href="/static/accountMobile/css/account.css?_t=1439491131824" />
         <style>
             .out-of-date {
                 padding : 15px;
@@ -58,10 +58,11 @@
                     </form>
                 <?php } ?>
             </div>
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'forgetreset', '/static/accountMobile/packages/ForgetReset/bootstrap.js?_t=1439388090276', {
+            idizcuz.mount( 'forgetreset', '/static/accountMobile/packages/ForgetReset/bootstrap.js?_t=1439491131781', {
                 form : $( 'form.forget-reset' )
             } );
         </script>

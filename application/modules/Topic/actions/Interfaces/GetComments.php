@@ -12,6 +12,10 @@ Class GetCommentsAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getTotal() {
         $postDataModel = new PostDataModel();
 
@@ -51,6 +55,7 @@ Class GetCommentsAction extends \Local\BaseAction {
 
         foreach( $this->data[ 'comments'] as &$comment ) {
             $comment[ 'account' ] = $accountModel->get( $comment[ 'account_id' ], [ 'id', 'uname' ] );
+            $comment['own'] = $this->account && $comment['account_id'] == $this->account['id'] ? 1 : 0;
         }
 
         return $this;
@@ -61,11 +66,19 @@ Class GetCommentsAction extends \Local\BaseAction {
 
         $commentModel = new CommentModel();
 
-        $comments = $commentModel->getCommentsByPost(
-            $params[ 'post_id' ],
-            $params[ 'start' ],
-            $params[ 'rn' ]
-        );
+        $where = [
+            [ 'post_id', $params[ 'post_id' ] ],
+        ];
+
+        if( $params[ 'cursor' ] != 0 ) {
+            $where[] = [ 'id', '<', $params[ 'cursor' ] ];
+        }
+
+        $comments = $commentModel->select( [
+            'where' => $where,
+            'order' => [ [ 'id', 'DESC' ] ],
+            'rn' => $params[ 'rn' ]
+        ] );
 
         if( $comments === false ) {
             $this->error( 'SYSTEM_ERR' );
@@ -84,7 +97,7 @@ Class GetCommentsAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $start = intval( $request->getQuery( 'start' ) );
+        $cursor = intval( $request->getQuery( 'cursor' ) );
 
         $rn = intval( $request->getQuery( 'rn' ) );
 
@@ -93,7 +106,7 @@ Class GetCommentsAction extends \Local\BaseAction {
 
         $this->params = [
             'post_id' => $post_id,
-            'start' => $start,
+            'cursor' => $cursor,
             'rn' => $rn
         ];
 

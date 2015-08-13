@@ -4,15 +4,11 @@ Class TopicAction extends \Local\BaseAction {
 
     private $data = array();
 
-    private $topicModel;
-
     public function __execute() {
 
         $this->tpl = 'topic/topic';
 
         $this->paramsProcessing();
-
-        $this->topicModel = new TopicModel();
 
         if( $this->getTopic() === false ) {
             $this->tpl = 'topic/none';
@@ -24,7 +20,14 @@ Class TopicAction extends \Local\BaseAction {
     }
 
     public function __mobile() {
-        return $this->__execute();
+        $this->tpl = 'topicMobile/topic';
+        $this->paramsProcessing();
+        if( $this->getTopic() === false ) {
+            $this->tpl = 'topicMobile/none';
+            return $this->data;
+        }
+        $this->getPoints();
+        return $this->data;
     }
 
     private function reportReasons() {
@@ -66,7 +69,9 @@ Class TopicAction extends \Local\BaseAction {
     private function getTopic() {
         $id = $this->params[ 'id' ];
 
-        $topic = $this->topicModel->get( $id );
+        $topicModel = new TopicModel();
+
+        $topic = $topicModel->get( $id );
 
         if( !$topic ) {
             return false;

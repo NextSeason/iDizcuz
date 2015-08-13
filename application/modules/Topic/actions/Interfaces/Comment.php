@@ -12,10 +12,7 @@ Class CommentAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing();
-
-        // get post of the post which user comment to.
-        $this->getPost();
+        $this->paramsProcessing()->getPost();
 
         
 
@@ -29,16 +26,23 @@ Class CommentAction extends \Local\BaseAction {
 
         $this->transactionModel = new TransactionModel();
 
-        $this->addComment();
-
-        $this->sendMessage();
+        $this->addComment()->sendMessage();
 
         $this->record( [
             'type' => 3,
             'relation_id' => $this->data['comment_id']
         ] );
 
+        $this->data['account'] = [
+            'id' => $this->account[ 'id' ],
+            'uname' => $this->account[ 'uname' ]
+        ];
+
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function sendMessage() {
@@ -181,10 +185,8 @@ Class CommentAction extends \Local\BaseAction {
 
         $content = $request->getPost( 'content' );
 
-        if( is_null( $content ) ) {
+        if( is_null( $content ) || strlen( $content ) == 0 ) {
             $this->error( 'PARAMS_ERR' );
-        }
-        if( strlen( $content ) == 0 ) {
         }
 
         if( mb_strlen( $content ) > 400 ) {
@@ -198,8 +200,6 @@ Class CommentAction extends \Local\BaseAction {
             'content' => $content,
             'reply_comment_id' => $reply_comment_id
         ];
-
-
         return $this;
     }
 }

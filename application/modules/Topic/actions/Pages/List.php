@@ -7,13 +7,17 @@ Class ListAction extends \Local\BaseAction {
     public function __execute() {
         $this->tpl = 'topic/list';
 
-        $this->paramsProcessing();
-
-        $this->getTopicsData()->getTopics()->getPoints();
+        $this->paramsProcessing()->getTopicsData()->getTopics()->getPoints();
 
         $this->data['cid'] = $this->params['cid'];
 
         return $this->data;
+    }
+
+    public function __mobile() {
+        $data = $this->__execute();
+        $this->tpl = 'topicMobile/list';
+        return $data;
     }
 
     private function getPoints() {

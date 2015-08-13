@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+    </head>
+    <body>
+        <?php $nav = $cid == 1 ? 'focus' : 'list'; ?>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <?php if( !$account ) { ?>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } ?>
+            <div class="boxes">
+                <ul class="topic-list">
+                    <?php foreach( $topics as $topic ) { ?>
+                        <li class="topics">
+                            <div class="first-line">
+                                <span class="date r">
+                                    <?php echo substr( $topic['ctime'], 0, -9 ); ?>
+                                </span>
+                                <span class="brand">
+                                    <?php echo $topic['data']['cate']; ?>
+                                </span>
+                                <span> • </span>
+                                <span class="brand">
+                                    <?php echo $topic['data']['type'] == 1 ? '辩论' : '讨论'; ?>
+                                </span>
+                            </div>
+                            <h2>
+                                <a href="/topic/<?php echo $topic['id']; ?>">
+                                    <?php echo $topic['title']; ?>
+                                </a>
+                            </h2>
+
+                            <div class="desc">
+                                <div class="rich-text">
+                                    <?php echo $topic['desc']; ?>
+                                </div>
+                                <div class="bottom-line">
+                                    <a href="###" class="show-more-info">[显示更多介绍]</a>
+                                </div>
+                            </div>
+                            <?php if( $topic['points'] ) { $points = $topic['points'];  ?>
+                                <?php $arr = ['一','二','三','四','五']; ?>
+                                <ul class="point-list">
+                                    <?php $i = 0; foreach( $points as $point ) { ?>
+                                        <li>
+                                            <div class="points">
+                                                <i class="flags flag-<?php echo $i + 1; ?>"></i>
+                                                <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
+                                            </div>
+                                        </li>
+                                    <?php $i++; } ?>
+                                </ul>
+                            <?php } ?>
+                            <a href="/topic/<?php echo $topic['id']; ?>" class="open-topic btns dark">点击查看话题</a>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+        </div>
+        <script>
+            ( function() {
+                $( '.topic-list' ).on( 'click', '.show-more-info', function( e ) {
+                    e.preventDefault();
+                    var el = $( this ).closest( 'li.topics' );
+                    el.find( '.desc p' ).show();
+                    el.find( '.bottom-line' ).hide();
+                } );
+            } )();
+        </script>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>

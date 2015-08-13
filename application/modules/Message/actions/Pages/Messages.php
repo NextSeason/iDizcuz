@@ -18,6 +18,13 @@ Class MessagesAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        $this->tpl = 'messageMobile/messages';
+        if( $this->account ) {
+            return $this->data;
+        }
+    }
+
     private function paramsProcessing() {
         $request = $this->request;
 

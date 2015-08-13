@@ -51,17 +51,17 @@ Class PostAction extends \Local\BaseAction {
 
         if( !$post ) return false;
 
-        $post['mine'] = false;
-        $post['marked'] = false;
+        $post['own'] = false;
+        $post['mark'] = false;
 
         if( $this->account ) {
             if( $this->account['id'] == $post['account_id'] ) {
-                $post['mine'] = true;
+                $post['own'] = true;
             }
             $markModel = new MarkModel();
             $mark = $markModel->getMarkByPostAndAccount( $id, $this->account['id'] );
             if( $mark ) {
-                $post['marked'] = $mark['id'];
+                $post['mark'] = true;
             }
         }
         if( $post['to'] != 0 ) {

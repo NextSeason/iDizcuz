@@ -60,19 +60,20 @@ Class TransactionModel extends BaseModel {
         try {
             $this->db->beginTransaction();
 
-            $mark = $this->_get( $mark_id, 'marks' );
+            $query = 'DELETE FROM `marks` WHERE `post_id`=:post_id AND `account_id`=:account_id LIMIT 1';
 
-            if( !$mark ) {
-                throw new PDOException( 'mark is not exists' );
-            }
-
-            $res = $this->_remove( $mark_id, 'marks' );
-
-            if( !$res ) {
+            $stmt = $this->db->prepare( $query );
+            $stmt->bindValue( ':post_id', $post_id );
+            $stmt->bindValue( ':account_id', $account_id );
+            if( !$stmt->execute() ) {
                 throw new PDOException( 'failed to remove data from marks' );
             }
 
-            $this->increment( $mark['account_id'], ['mark'=>-1], 'accounts_data' );
+            if( $stmt->rowCount() == 0 ) {
+                throw new PDOException( 'failed to remove data from marks' );
+            }
+
+            $this->increment( $account_id, ['mark'=>-1], 'accounts_data' );
 
             return $this->db->commit();
 
