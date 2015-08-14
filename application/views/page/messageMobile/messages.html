@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/messageMobile/css/activities.css?_t=1439532349172" />
+    </head>
+    <body>
+        <?php $nav = 'activities'; ?>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <?php if( !$account ) { ?>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } ?>
+            <div class="boxes operate">
+
+            </div>
+        </div>
+    </body>
+</html>

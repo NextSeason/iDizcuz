@@ -1,0 +1,28 @@
+<li id="comment-<%=comment.id %>" class="comment-item" data-comment-id="<%=comment.id %>">
+    <a href="/user/activities/<%=comment.account_id %>" class="u-link">
+        <%-comment.account.uname %>
+    </a>
+    <p class="comment-text">
+        <% if( comment.reply_account ) { %>
+            [ <span>回复 </span>     
+            <a href="/user/activities/<%=comment.reply_account.id %>">
+                <%-comment.reply_account.uname %>
+            </a> ]
+        <% } %>
+        <%-comment.content %>
+    </p>
+    <div class="op-line">
+        <span><%=comment.ctime %></span>
+        <% if( comment.own == 1 ) { %>
+            <a href="###" class="remove">删除</a>
+        <% } %>
+        <a href="###" class="reply">回复</a>
+    </div>
+    <form class="comment-form reply-form" data-comment-id="<%=comment.id %>" data-account-id="<%-comment.account.id %>">
+        <textarea class="content" placeholder="输入短评内容">&lt;/textarea>
+        <div class="btns-line">
+            <a href="###" class="clear">清空</a>
+            <input type="submit" class="btns submit small" value="发布" />
+        </div>
+    </form>
+</li>

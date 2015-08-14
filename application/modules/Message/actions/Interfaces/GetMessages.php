@@ -14,6 +14,9 @@ Class GetMessagesAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+    }
+
     private function getMessages() {
         $params = $this->params;
 

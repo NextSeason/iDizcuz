@@ -9,6 +9,10 @@ Class GetActivitiesAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getPost( $id ) {
         $postDataModel = new PostDataModel();
 
@@ -87,6 +91,14 @@ Class GetActivitiesAction extends \Local\BaseAction {
 
         foreach( $this->data['activities'] as &$activity ) {
 
+            /**
+             * 0 post 
+             * 1 agree 
+             * 2 disagree 
+             * 3 comment
+             * 4 follow 
+             * 5 signup
+             */
             switch( $activity['type'] ) {
                 case 0 :
                 case 1 :
@@ -97,6 +109,7 @@ Class GetActivitiesAction extends \Local\BaseAction {
                     $activity['extra'] = $this->getComment( $activity['relation_id'] );
                     break;
                 case 4 :
+                case 5 :
                     if( $this->account && $activity['relation_id'] == $this->account['id'] ) {
                         $account = $this->getAccount( $activity['account_id'] );
                         $account['isself'] = 1;

@@ -26,6 +26,28 @@ Class HomeAction extends \Local\BaseAction {
 
         return $this->data;
     }
+
+    public function __mobile() {
+        $tpls = [
+            'posts' => 'userMobile/posts',
+            'mark' => 'userMobile/mark',
+            'activities' => 'userMobile/activities',
+            'follow' => 'userMobile/follow',
+            'fans' => 'userMobile/follow'
+        ];
+
+        
+        $this->paramsProcessing();
+
+        $page = $this->params['page'];
+        $this->tpl = $tpls[ $page ];
+        $this->data['page'] = $page;
+
+        $this->check()->getData()->getFollowStatus()->reportReasons();
+
+        return $this->data;
+    }
+
     private function getFollowStatus() {
         if( !$this->account ) {
             $this->data['followed'] = false;

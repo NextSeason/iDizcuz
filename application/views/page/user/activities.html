@@ -5,8 +5,8 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1439388126274" />
-        <link rel="stylesheet" type="text/css" href="/static/user/css/activities.css?_t=1439388126274" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1439532545567" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/activities.css?_t=1439532545567" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -19,10 +19,10 @@
                     <div class="main">
                         <?php include TPL_PATH . '/user/nav.inc.html'; ?>
                         <ul class="activity-list"></ul>
-                        <a class="load-more">
+                        <div class="load-more">
                             加载更多动态
                             <i class="fa fa-angle-double-down"></i>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,8 +86,8 @@
         </textarea>
         <script>
             var iDizcuz = new J();
-            iDizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js?_t=1439388126227', { self : <?php echo $self ? 1 : 0; ?>});
-            iDizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1439388126227', {});
+            iDizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js?_t=1439532545513', { self : <?php echo $self ? 1 : 0; ?>});
+            iDizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1439532545513', {});
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
