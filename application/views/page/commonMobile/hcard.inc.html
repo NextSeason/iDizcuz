@@ -1,0 +1,58 @@
+<div class="ucards clearfix">
+    <div class="aside">
+        <% if( card.img ) { %>
+            <a href="/user/activities/<%=card.id %>" class="avatar small" style="background-image:url( http://avatar.idizcuzz.com/<%-card.img %>)"></a>
+        <% } else { %>
+            <a href="/user/activities/<%=card.id %>" class="avatar small"></a>
+        <% } %>
+        <% if( card.self != 1 ) { %>
+            <div class="btns-part">
+                <% if( card.followed == 1 ) { %>
+                    <a href="###" class="btns dark unfollow" data-account-id="<%=card.id %>">取消关注</a>
+                <% } else { %>
+                    <a href="###" class="btns follow" data-account-id="<%=card.id %>">关 注</a>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+    <div class="main">
+        <a href="/user/activities/<%=card.id %>" class="uname"><%-card.uname %></a>
+        <div class="info-part">
+            <% if( card.industry == 0 ) { %>
+                <span class="unknown">未知行业</span>
+            <% } else { %>
+                <span><%=card.industry %> 行业</span>
+            <% } %>
+            •
+            <% if( card.employment ) { %>
+                <span><%=card.employment %></span>
+            <% } else { %>
+                <span class="unknown">未知组织</span>
+            <% } %>
+            •
+            <% if( card.position ) { %>
+                <span><%=card.position %></span>
+            <% } else { %>
+                <span class="unknown">未知职位</span>
+            <% } %>
+        </div>
+        <div class="num-part clearfix">
+            <div>
+                <span>共有：</span>
+                <b class="num"><%=card.data.post_cnt %></b>
+                <span>论述</span>
+                <b class="num"><%=card.data.follow %></b>
+                <span>关注</span>
+                <b class="num"><%=card.data.fans %></b>
+                <span>粉丝</span>
+            </div>
+            <div>
+                <span>获得：</span>
+                <b class="num"><%=card.data.agree %></b>
+                <span>支持</span>
+                <b class="num"><%=card.data.disagree %></b>
+                <span>反对</span>
+            </div>
+        </div>
+    </div>
+</div>

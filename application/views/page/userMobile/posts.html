@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1439644144813" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <?php if( !$account ) { ?>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } ?>
+            <?php include TPL_PATH . '/userMobile/card.inc.html'; ?>
+            <?php include TPL_PATH . '/userMobile/subnav.inc.html'; ?>
+            <div class="boxes">
+                <ul class="post-list"></ul>
+                <div class="btns load-more">点击加载更多</div>
+            </div>
+            <div class="dialog tip-dialog">
+                <div class="wrap">
+                    <div class="inner">
+                        <p class="brand tip"></p>
+                    </div>
+                </div>
+            </div>
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+        </div>
+        <textarea class="templates" id="post-list-tpl">
+            <% if( !data.length ) { %>
+                <li class="empty">
+                    用户还没有发布论述
+                </li>
+            <% } else { %>
+                <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                    <% var post = data[i]; %>
+                    <li><?php include TPL_PATH . '/commonMobile/post.inc.html'; ?></li>
+                <% } %>
+            <% } %>
+        </textarea>
+        <textarea class="templates" id="comment-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                <% var comment = data[i]; %>                
+                <?php include TPL_PATH . '/commonMobile/comment.inc.html'; ?>
+            <% } %>
+        </textarea>
+        <?php $signin = $account ? 1 : 0; ?>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'posts', '/static/userMobile/packages/Posts/bootstrap.js?_t=1439644144779', {
+                signin : +'<?php echo $signin; ?>',
+                userId : +'<?php echo $user['id']; ?>',
+                url : '/user/interface/userposts'
+            } );
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439644144779', {
+                signin : +'<?php echo $signin; ?>'
+            } );
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439644144779', {
+                signin : +'<?php echo $signin ?>'
+            } );
+        </script>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>
