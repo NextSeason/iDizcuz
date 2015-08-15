@@ -11,6 +11,10 @@ Class GetFansAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getTotal() {
         $accountDataModel = new AccountDataModel();
         $account_data = $accountDataModel->get( $this->params['account'] );

@@ -15,6 +15,10 @@ Class UserPostsAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getMarked() {
         if( !count( $this->data[ 'posts' ] ) ) {
             return $this;
@@ -41,11 +45,11 @@ Class UserPostsAction extends \Local\BaseAction {
     }
 
     private function getAccount() {
-        if( $this->account && $this->params['account'] == $this->account['id'] ) {
+        if( $this->account && $this->params['account_id'] == $this->account['id'] ) {
             $account = $this->account;
         } else {
             $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
-            $account = $accountModel->get( $this->params[ 'account' ], array( 'id', 'uname', 'desc' ) );
+            $account = $accountModel->get( $this->params[ 'account_id' ], array( 'id', 'uname', 'desc' ) );
         }
 
         $this->pool['account'] = $account;
@@ -76,11 +80,19 @@ Class UserPostsAction extends \Local\BaseAction {
 
         $params = $this->params;
 
-        $posts_data = $postDataModel->getPostsByAccount( [
-            'account' => $params[ 'account' ],
-            'start' => $params['start'],
-            'rn' => $params['rn'],
-            'columns' => null
+        $where = [
+            [ 'account_id', $params['account_id'] ],
+            [ 'status', 0 ]
+        ];
+
+        if( $params['cursor'] != 0 ) {
+            $where[] = [ 'id', '<', $params[ 'cursor' ] ];
+        }
+
+        $posts_data = $postDataModel->select( [
+            'where' => $where,
+            'order' => [ [ 'id', 'DESC' ] ],
+            'rn' => $params['rn']
         ] );
 
         if( $posts_data === false ) {
@@ -118,15 +130,15 @@ Class UserPostsAction extends \Local\BaseAction {
     private function paramsProcessing() {
         $request = $this->request;
 
-        $account = $request->getQuery( 'account' );
+        $account_id = $request->getQuery( 'account_id' );
 
-        if( is_null( $account ) ) {
+        if( is_null( $account_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $start = $request->getQuery( 'start' );
+        $cursor = intval( $request->getQuery( 'cursor' ) );
 
-        $start = intval( $start );
+        if( $cursor < 0 ) $cursor = 0;
 
         $rn = $request->getQuery( 'rn' );
 
@@ -137,8 +149,8 @@ Class UserPostsAction extends \Local\BaseAction {
         if( $rn > 100 ) $rn = 100;
 
         $this->params = array(
-            'account' => $account,
-            'start' => $start,
+            'account_id' => $account_id,
+            'cursor' => $cursor,
             'rn' => $rn
         );
 

@@ -47,26 +47,4 @@ Class MarkModel extends BaseModel {
             return false;
         }
     }
-
-    public function getMarksByAccount( $account, $order, $start, $len ) {
-        $query = sprintf( 'SELECT * FROM `marks` WHERE `account_id`=:account ORDER BY %s LIMIT :start, :len', $order );
-
-        try {
-            $this->db->beginTransaction();
-            $stmt = $this->db->prepare( $query );
-
-            $stmt->bindValue( ':account', $account );
-            $stmt->bindValue( ':start', (int)$start, PDO::PARAM_INT );
-            $stmt->bindValue( ':len', (int)$len, PDO::PARAM_INT );
-
-            $stmt->execute();
-
-            $marks = $stmt->fetchAll( PDO::FETCH_ASSOC );
-            $this->db->commit();
-            return $marks;
-        } catch( PDOException $e ) {
-            $this->db->rollback();
-            return false;
-        }
-    }
 }

@@ -2,79 +2,17 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/userMobile/css/activities.css?_t=1439575157931" />
+        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1439644144810" />
     </head>
     <body>
-        <?php $nav = 'activities'; ?>
         <div id="idizcuz">
             <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
             <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
             <?php if( !$account ) { ?>
                 <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
             <?php } ?>
-            <div class="user boxes">
-                <?php if( $user['img'] ) { ?>
-                    <a href="###" class="avatar radius" style="background-image:url(http://avatar.idizcuzz.com/<?php echo $user['img']; ?>)"></a>
-                <?php } else { ?>
-                    <a href="###" class="avatar radius"></a>
-                <?php } ?>
-                <p class="lines">
-                    <a href="###">
-                        <?php echo htmlspecialchars( $user['uname'] ); ?>
-                    </a>
-                </p>
-                <?php if( !$self ) { ?>
-                    <div class="lines">
-                        <?php if( $followed ) { ?>
-                            <a href="###" class="btns dark unfollow" data-account-id="<?php echo $user['id']; ?>">取消关注</a>
-                        <?php } else { ?>
-                            <a href="###" class="btns follow" data-account-id="<?php echo $user['id']; ?>">关 注</a>
-                        <?php } ?>
-                    </div>
-                <?php } ?>
-                <div class="lines">
-                    <?php if( $user['industry'] != 0 ) { ?>
-                        <span><?php echo $user['industry']; ?> 行业</span>
-                    <?php } else { ?>
-                        <span class="unknown">未知 行业</span>
-                    <?php } ?>
-                    •  
-                    <?php if( $user['employment'] ) { ?>
-                        <span><?php echo $user['employment']; ?></span>
-                    <?php } else { ?>
-                        <span class="unknown"> 未知组织</span>
-                    <?php } ?>
-                    •   
-                    <?php if( $user['position'] ) { ?>
-                        <span><?php echo $user['position']; ?></span>
-                    <?php } else { ?>
-                        <span class="unknown">未知职位</span>
-                    <?php } ?>
-                </div>
-                <div class="lines num-part clearfix">
-                    <a href="/user/posts/<?php echo $user['id']; ?>" class="piece">
-                        <b class="num"><?php echo $user['data']['post_cnt']; ?></b>
-                        <span>论述</span>
-                    </a>
-
-                    <a href="/user/follow/<?php echo $user['id']; ?>" class="piece">
-                        <b class="num"><?php echo $user['data']['follow']; ?></b>
-                        <span>关注</span>
-                    </a>
-                    <a href="/user/fans/<?php echo $user['id']; ?>" class="piece">
-                        <b class="num"><?php echo $user['data']['fans']; ?></b>
-                        <span>粉丝</span>
-                    </a>
-                    <span class="piece">
-                        <b class="num"><?php echo $user['data']['agree']; ?></b>
-                        <span>支持</span>
-                    </span>
-                    <span class="piece">
-                        <b class="num"><?php echo $user['data']['disagree']; ?></b>
-                        <span>反对</span>
-                    </span>
-                </div>
-            </div>
+            <?php include TPL_PATH . '/userMobile/card.inc.html'; ?>
+            <?php include TPL_PATH . '/userMobile/subnav.inc.html'; ?>
             <div class="boxes">
                 <ul class="activity-list"></ul>
                 <div class="btns load-more">点击加载更多</div>
@@ -104,7 +42,7 @@
                     <li class="activities">
                         <div class="hline clearfix">
                             <span class="date r"><%=item.ctime.substr(0,10) %></span>
-                            <a href="/user/activities/<%=item.account_id %>" target="_blank"><%-item.account.uname %></a>
+                            <a href="/user/activities/<%=item.account_id %>"><%-item.account.uname %></a>
                             <% if( type == 4 ) {%>
                                 关注了 
                                 <% if( item.extra.isself ) { %>
@@ -130,68 +68,7 @@
                                 </div>
                             <% } else if( type == 4 || type == 5 ) {%>
                                 <% var card = item.extra; %>
-                                <!-- hCard -->
-<div class="ucards clearfix">
-    <div class="aside">
-        <% if( card.img ) { %>
-            <a href="/user/activities/<%=card.id %>" class="avatar small" style="background-image:url( http://avatar.idizcuzz.com/<%-card.img %>)"></a>
-        <% } else { %>
-            <a href="/user/activities/<%=card.id %>" class="avatar small"></a>
-        <% } %>
-        <% if( card.self != 1 ) { %>
-            <div class="btns-part">
-                <% if( card.followed == 1 ) { %>
-                    <a href="###" class="btns dark unfollow" data-account-id="<%=card.id %>">取消关注</a>
-                <% } else { %>
-                    <a href="###" class="btns follow" data-account-id="<%=card.id %>">关 注</a>
-                <% } %>
-            </div>
-        <% } %>
-    </div>
-    <div class="main">
-                <div class="info-box l">
-            <a href="/user/activities/<%=card.id %>" class="uname"><%-card.uname %></a>
-            <i class="<% if( card.sex == 1 ) { %>male<% } else if( card.sex == 2 ) { %>female<% } %>"></i>
-            <div class="info-part">
-                <% if( card.industry == 0 ) { %>
-                    <span class="unknown">未知行业</span>
-                <% } else { %>
-                    <span><%=card.industry %> 行业</span>
-                <% } %>
-                <span class="sp">|</span>
-                <% if( card.employment ) { %>
-                    <span><%=card.employment %></span>
-                <% } else { %>
-                    <span class="unknown">未知组织</span>
-                <% } %>
-                •
-                <% if( card.position ) { %>
-                    <span><%=card.position %></span>
-                <% } else { %>
-                    <span class="unknown">未知职位</span>
-                <% } %>
-            </div>
-            <div class="num-part clearfix">
-                <span>关注</span>
-                <b class="num"><%=card.data.follow %></b>
-                <span class="sp">|</span>
-                <span>粉丝</span>
-                <b class="num"><%=card.data.fans %></b>
-                <span class="sp">|</span>
-                <span>论述</span>
-                <b class="num"><%=card.data.post_cnt %></b>
-                <span class="sp">|</span>
-                <span>支持</span>
-                <b class="num"><%=card.data.agree %></b>
-                <span class="sp">|</span>
-                <span>反对</span>
-                <b class="num"><%=card.data.disagree %></b>
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- hCard -->
+                                <?php include TPL_PATH . '/commonMobile/hcard.inc.html'; ?>
                             <% } %>
                         </div>
                     </li>
@@ -206,18 +83,18 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'activities', '/static/userMobile/packages/Activities/bootstrap.js?_t=1439575157914', {
+            idizcuz.mount( 'activities', '/static/userMobile/packages/Activities/bootstrap.js?_t=1439644144775', {
                 accountId : '<?php echo $account['id']; ?>',
                 userId : '<?php echo $user['id']; ?>',
                 self : +'<?php echo $account['id'] == $user['id'] ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'postoperate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439575157914', {
+            idizcuz.mount( 'postoperate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439644144775', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439575157914', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439644144775', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'follow', '/static/commonMobile/packages/Follow/bootstrap.js?_t=1439575157914', {
+            idizcuz.mount( 'follow', '/static/commonMobile/packages/Follow/bootstrap.js?_t=1439644144775', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
         </script>

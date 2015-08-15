@@ -72,10 +72,26 @@ Class GetActivitiesAction extends \Local\BaseAction {
 
     private function getAccount( $id ) {
         $accountModel = new AccountModel();
-        $account = $accountModel->get( $id, ['id','uname', 'desc', 'img' ] );
+        $account = $accountModel->get( $id, ['id','uname', 'desc', 'img', 'industry', 'employment', 'position' ] );
 
         if( !$account ) {
             return null;
+        }
+
+        $industry = $account['industry'];
+
+        /**
+         * if the value of industry is not 0, get industry info from configuration file
+         */
+        if( $industry != 0 ) {
+            $industries = \Local\Utils::loadConf( 'industries', 'list' );
+
+            if( !isset( $industries[ $industry ] ) ) {
+                // if the industry cannot be found in industry list, set the value to 0
+                $account['industry'] = 0;
+            } else {
+                $account[ 'industry' ] = $industries[ $industry ];
+            }
         }
 
         $accountDataModel = new AccountDataModel();

@@ -5,10 +5,10 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1439532545572" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1439632615875" />
     </head>
     <body>
-        <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
+        <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
             <div class="boxes body">
                 <div class="inner">
@@ -19,20 +19,20 @@
                         <?php include TPL_PATH . '/user/nav.inc.html'; ?>
                         <div class="loading"></div>
                         <ul class="post-list"></ul>
-                        <div id="list-pagination" class="pagination"></div>
+                        <div class="load-more">加载更多论述</div>
                     </div>
                 </div>
             </div>
             <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
         <?php include TPL_PATH . '/user/posts.tpl.html'; ?>
-        <?php include TPL_PATH . '/common/pagination.inc.html'; ?>
         <script>
             var iDizcuz = new J();
-            iDizcuz.mount( 'posts', '/static/user/packages/Posts/bootstrap.js?_t=1439532545521', {
-                url : '/user/interface/userposts'
+            iDizcuz.mount( 'posts', '/static/user/packages/Posts/bootstrap.js?_t=1439632615827', {
+                url : '/user/interface/userposts',
+                userId : +'<?php echo $user['id']; ?>'
             } );
-            iDizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1439532545521', {});
+            iDizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1439632615827', {});
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

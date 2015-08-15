@@ -25,12 +25,14 @@
                     <%-post.account.desc %>
                 </a>
             </div>
-            <div class="clearfix">
-                <span class="aside">话题：</span>
-                <a href="/topic/<%=post.topic.id %>" class="main" >
-                    <%-post.topic.title%>
-                </a>
-            </div>
+            <% if( post.topic ) { %>
+                <div class="clearfix">
+                    <span class="aside">话题：</span>
+                    <a href="/topic/<%=post.topic.id %>" class="main" >
+                        <%-post.topic.title%>
+                    </a>
+                </div>
+            <% } %>
             <div class="clearfix">
                 <span class="aside">发表：</span>
                 <span class="main"><%=post.ctime.substr(0,10) %></span>

@@ -76,7 +76,7 @@ Class ActivityModel extends BaseModel {
         if( $cursor <= 0 ) {
             $query = 'SELECT * FROM `activities` WHERE `account_id` IN ( SELECT `account_id` FROM `follows`  WHERE `fans_id`=:fans_id ) ORDER BY `id` DESC LIMIT :rn';
         } else {
-            $query = 'SELECT * FROM `activities` WHERE `id`<:cursor `account_id` IN ( SELECT `account_id` FROM `follows` WHERE `fans_id`=:fans_id ) ORDER BY `id` DESC LIMIT :rn';
+            $query = 'SELECT * FROM `activities` WHERE `id`<:cursor AND `account_id` IN ( SELECT `account_id` FROM `follows` WHERE `fans_id`=:fans_id ) ORDER BY `id` DESC LIMIT :rn';
         }
 
         try {

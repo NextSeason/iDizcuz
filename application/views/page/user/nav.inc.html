@@ -1,12 +1,12 @@
-<div class="sub-nav clearfix">
-    <ul class="nav clearfix">
-        <li><a href="/user/activities/<?php echo $user['id']; ?>" data-page="activities" <?php if( $page == 'activities' ) { echo 'class="focus"'; } ?>>最新动态</a></li>
-        <li><a href="/user/posts/<?php echo $user['id']; ?>" data-page="posts" <?php if( $page == 'posts' ) { echo 'class="focus"'; } ?>>发表的论述</a></li>
-        <li><a href="/user/mark/<?php echo $user['id']; ?>" data-page="mark" <?php if( $page == 'mark' ) { echo 'class="focus"'; } ?>>收藏</a></li>
-        <li><a href="/user/follow/<?php echo $user['id']; ?>" data-page="mark" <?php if( $page == 'follow' ) { echo 'class="focus"'; } ?>>关注</a></li>
-        <li><a href="/user/fans/<?php echo $user['id']; ?>" data-page="mark" <?php if( $page == 'fans' ) { echo 'class="focus"'; } ?>>粉丝</a></li>
+<div class="sub-nav">
+    <ul class="nav">
+        <li><a href="/user/activities/<?php echo $user['id']; ?>" <?php if( $page == 'activities' ) { echo 'class="focus"'; } ?>>最新动态</a></li>
+        <li><a href="/user/posts/<?php echo $user['id']; ?>" <?php if( $page == 'posts' ) { echo 'class="focus"'; } ?>>发表的论述</a></li>
+        <li><a href="/user/mark/<?php echo $user['id']; ?>" <?php if( $page == 'mark' ) { echo 'class="focus"'; } ?>>收藏</a></li>
+        <li><a href="/user/follow/<?php echo $user['id']; ?>" <?php if( $page == 'follow' ) { echo 'class="focus"'; } ?>>关注</a></li>
+        <li><a href="/user/fans/<?php echo $user['id']; ?>" <?php if( $page == 'fans' ) { echo 'class="focus"'; } ?>>粉丝</a></li>
         <?php if( $self === 'aaa' ) { ?>
-            <li><a href="/user/removed" data-page="removed" <?php if( $page == 'removed' ) { echo 'class="focus"'; } ?>>已删除的</a></li>
+            <li><a href="/user/removed" <?php if( $page == 'removed' ) { echo 'class="focus"'; } ?>>已删除的</a></li>
         <?php } ?>
     </ul>
 </div>

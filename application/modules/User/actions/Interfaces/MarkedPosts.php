@@ -16,10 +16,14 @@ Class MarkedPostsAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getTotal() {
         $accountDataModel = new AccountDataModel();
 
-        $account_data = $accountDataModel->get( $this->params['account'] );
+        $account_data = $accountDataModel->get( $this->params['account_id'] );
 
         $this->data['total'] = $account_data['mark'];
         return $this;
@@ -49,12 +53,13 @@ Class MarkedPostsAction extends \Local\BaseAction {
 
         $markModel = new MarkModel();
 
-        $marks = $markModel->getMarksByAccount(
-            $params[ 'account' ],
-            '`id` DESC',
-            $params[ 'start' ],
-            $params[ 'rn' ]
-        );
+        $marks = $markModel->select( [
+            'where' => [
+                [ 'account_id', $params['account_id'] ]
+            ],
+            'order' => [ [ 'id', 'DESC' ] ],
+            'rn' => $params[ 'rn' ]
+        ] );
 
         if( $marks === false ) {
             $this->error( 'SYSTEM_ERR' );
@@ -109,15 +114,15 @@ Class MarkedPostsAction extends \Local\BaseAction {
     private function paramsProcessing() {
         $request = $this->request;
 
-        $account = $request->getQuery( 'account' );
+        $account_id = $request->getQuery( 'account_id' );
 
-        if( is_null( $account ) ) {
+        if( is_null( $account_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $start = intval( $request->getQuery( 'start' ) );
+        $cursor = intval( $request->getQuery( 'cursor' ) );
 
-        if( $start < 0 ) $start = 0;
+        if( $cursor < 0 ) $cursor = 0;
 
         $rn = intval( $request->getQuery( 'rn' ) );
 
@@ -125,8 +130,8 @@ Class MarkedPostsAction extends \Local\BaseAction {
         if( $rn > 100 ) $rn = 100;
 
         $this->params = array(
-            'account' => $account,
-            'start' => $start,
+            'account_id' => $account_id,
+            'cursor' => $cursor,
             'rn' => $rn
         );
 
