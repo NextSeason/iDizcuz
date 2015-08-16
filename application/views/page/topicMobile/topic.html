@@ -11,77 +11,95 @@
                 <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
             <?php } ?>
             <div class="boxes topic">
-                <div class="title-line">
-                <h1>
-                    <span class="seal seal-<?php echo $topic['data']['type']; ?>"></span>
-                    <?php echo htmlspecialchars( $topic['title'] ); ?>
-                </h1>
-                <p class="info">
-                    <a href="/list" class="btns dark r">更多话题</a>
-                    <span>话题日期：<?php echo substr( $topic['ctime'], 0, -9 ); ?></span>
-                    <span>分类：<a href="/list/<?php echo $topic['data']['cid']; ?>"><?php echo $topic['data']['cate']; ?></a></span>
-                </p>
-            </div>
-            <div class="desc">
-                <?php echo $topic[ 'desc' ]; ?>
-                <div class="bottom-line">
-                    <a href="/articles/<?php echo $topic['id']; ?>" target="_blank">[更多相关资料和信息]</a>
-                </div>
-            </div>
-            <?php if( $topic['data']['type'] == 1 ) { ?>
-                <style>
-                    <?php 
-                        $colors = ['#E9733C', '#3BA1E0', '#b13011'];
-                        $i = 0;
-                        foreach( $points as $point ) { 
-                    ?>
-                    .point-flag-<?php echo $point['id']; ?> { color : <?php echo $colors[$i]; ?>; }
-                    <?php $i++; } ?>
-                </style>
-                <div class="point-area">
-                    <?php $arr = ['一','二','三','四','五']; ?>
-                    <ul class="clearfix split-point-list">
-                        <?php $i = 0; foreach( $points as $point ) { ?>
-                            <li>
-                                <div class="points ">
-                                    <div class="title">
-                                        <i class="fa fa-flag point-flag-<?php echo $point['id']; ?>"></i>
-                                        <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
-                                    </div>
-                                    <div class="point-data">
-                                        <span>论述 <b class="brand"><?php echo $point['data']['post_cnt']; ?></b></span>
-                                        <span>支持 <b class="brand"><?php echo $point['data']['agree']; ?></b></span>
-                                        <span>反对 <b class="brand"><?php echo $point['data']['disagree']; ?></b></span>
-                                        <span href="###" class="index">指数 <b class="brand"><?php echo $point['data']['index']; ?></b></span>
-                                    </div>
-                                </div>
-                            </li>
-                        <?php $i++; } ?>
-                    </ul>
-                </div>
-            <?php } ?>
-            <div class="list-area">
-                <div class="operate-line clearfix">
-                    <span class="count">本话题共 <i class="brand"><?php echo $topic['data']['post_cnt']; ?></i> 条讨论</span>
-                    <ul class="sort-list r clearfix">
-                        <li><a href="###" class="focus sort" data-order-type="0">最新讨论</a></li>
-                        <li><a href="###" class="sort" data-order="1">最多支持</a></li>
-                        <li><a href="###" class="sort" data-order="2" >最多反对</a></li>
-                    </ul>  
-                    <?php if( $topic['data']['type'] == 1 ) { ?>
-                        <div class="filter-box">
-                            <a href="###" class="current"><i class="fa fa-flag-o"></i></a>
-                            <div class="filter-list">
-                                <a href="###"><i class="fa fa-flag-o"></i></a>
-                                <?php foreach( $points as $point ) { ?>
-                                    <a href="###" data-point-id="<?php echo $point['id']; ?>">
-                                        <i class="fa fa-flag point-flag-<?php echo $point['id']; ?>"></i>
-                                    </a>
-                                <?php } ?>
-                            </div>
+                <div class="topics">
+                    <div class="first-line">
+                        <span class="date r">
+                            <?php echo substr( $topic['ctime'], 0, -9 ); ?>
+                        </span>
+                        <span class="brand">
+                            <?php echo $topic['data']['cate']; ?>
+                        </span>
+                        <span> • </span>
+                        <span class="brand">
+                            <?php echo $topic['data']['type'] == 1 ? '辩论' : '讨论'; ?>
+                        </span>
+                    </div>
+                    <h2>
+                        <a href="/topic/<?php echo $topic['id']; ?>">
+                            <?php echo $topic['title']; ?>
+                        </a>
+                    </h2>
+                    <div class="desc">
+                        <div class="rich-text">
+                            <?php echo $topic['desc']; ?>
                         </div>
+                        <div class="bottom-line">
+                            <a href="###" class="show-more-info">[显示更多介绍]</a>
+                        </div>
+                    </div>
+                    <?php if( $topic['data']['type'] == 1 ) { ?>
+                        <style>
+                            <?php 
+                                $colors = ['#E9733C', '#3BA1E0', '#b13011'];
+                                $i = 0;
+                                foreach( $points as $point ) { 
+                            ?>
+                                .point-flag-<?php echo $point['id']; ?> { background : <?php echo $colors[$i]; ?>; }
+                            <?php $i++; } ?>
+                        </style>
+                        <?php $arr = ['一','二','三','四','五']; ?>
+                        <ul class="point-list">
+                            <?php $i = 0; foreach( $points as $point ) { ?>
+                                <?php $d = $point['data']; ?>
+                                <li>
+                                    <div class="points">
+                                        <div class="point-data">
+                                            <div class="aside">
+                                                <i class="flags point-flag-<?php echo $point['id']; ?>"></i>
+                                                <span>观点<?php echo $arr[$i]; ?></span>
+                                            </div>
+                                            <div class="main">
+                                                <span> 论述 
+                                                    <b class="brand">
+                                                        <?php echo $d['post_cnt']; ?>
+                                                    </b>
+                                                </span>
+                                                <span> 支持 
+                                                    <b class="brand">
+                                                        <?php echo $d['agree']; ?>
+                                                    </b>
+                                                </span>
+                                                <span> 反对 
+                                                    <b class="brand">
+                                                        <?php echo $d['disagree']; ?>
+                                                    </b>
+                                                </span>
+                                                <span class="index"> 指数 
+                                                    <b class="brand">
+                                                        <?php echo $d['index']; ?>
+                                                    </b>
+                                                </span>
+                                            </div>
+                                            <p><?php echo $point['title']; ?></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php $i++; } ?>
+                        </ul>
                     <?php } ?>
                 </div>
+            </div>
+            <div class="boxes" style="margin-top:10px;padding:0 5px">
+                本话题共 
+                <b class="brand"><?php echo $topic['data']['post_cnt']; ?></b> 
+                条讨论
+            </div>
+            <div class="boxes sub-nav">
+                <ul>
+                    <li><a href="###" class="focus sort" data-order-type="0">最新</a></li>
+                    <li><a href="###" class="sort" data-order="1">最多支持</a></li>
+                    <li><a href="###" class="sort" data-order="2" >最多反对</a></li>
+                </ul>
             </div>
             <div class="boxes">
                 <ul class="post-list"></ul>
@@ -109,13 +127,13 @@
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1439666227055', {
+            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1439745214617', {
                 topic : '<?php echo $topic['id']; ?>'
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439666227055', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439745214617', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439666227055', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439745214617', {
                 signin : +'<?php echo $signin; ?>'
             } );
         </script>
