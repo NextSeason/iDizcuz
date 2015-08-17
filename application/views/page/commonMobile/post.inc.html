@@ -29,8 +29,14 @@
                 <div class="clearfix">
                     <span class="aside">话题：</span>
                     <a href="/topic/<%=post.topic.id %>" class="main" >
-                        <%-post.topic.title%>
+                        <%-post.topic.title %>
                     </a>
+                </div>
+            <% } %>
+            <% if( post.point ) {%>
+                <div class="clearfix">
+                    <span class="aside">观点：</span>
+                    <span class="main"><%-post.point.title %></span>
                 </div>
             <% } %>
             <div class="clearfix">

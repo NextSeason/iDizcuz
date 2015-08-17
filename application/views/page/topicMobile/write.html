@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/topicMobile/css/write.css?_t=1439845944468" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <div class="boxes top clearfix">
+                <a href="###" class="public btns small dark r">发布</a>
+                <a href="###" class="cancel l">返回</a>
+            </div>
+            <div class="boxes topic">
+                <a href="/topic/<?php echo $topic['id']; ?>" class="title">
+                    话题：<?php echo $topic['title']; ?>
+                </a>
+            </div>
+            <div class="boxes">
+                <p class="selected">点击选择您支持的观点</p>
+            </div>
+            <div class="boxes form-area">
+                <form>
+                    <input type="text" class="title full" placeholder="论述标题" />
+                    <textarea class="content full" placeholder="请输入论述内容"></textarea>
+                </form>
+            </div>
+            <div class="boxes points">
+                <div class="top clearfix">
+                    <a href="###" class="r done">完成</a>
+                </div>
+                <?php if( $topic['data']['type'] == 1 ) { ?>
+                    <style>
+                        <?php 
+                            $colors = ['#E9733C', '#3BA1E0', '#b13011'];
+                            $i = 0;
+                            foreach( $points as $point ) { 
+                        ?>
+                            .point-flag-<?php echo $point['id']; ?> { background : <?php echo $colors[$i]; ?>; }
+                        <?php $i++; } ?>
+                    </style>
+                    <?php $arr = ['一','二','三','四','五']; ?>
+                    <ul class="point-list">
+                        <?php $i = 0; foreach( $points as $point ) { ?>
+                            <li>
+                                <i class="flags point-flag-<?php echo $point['id']; ?>"></i>
+                                观点<?php echo $arr[$i]; ?>：
+                                <?php echo $point['title']; ?>
+                            </li>
+                        <?php $i++; } ?>
+                    </ul>
+                <?php } ?>
+            </div>
+
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+            <script>
+                var idizcuz = new J();
+                idizcuz.mount( 'editor', '/static/topicMobile/packages/Editor/bootstrap.js?_t=1439845944442', {} );
+            </script>
+        </div>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>

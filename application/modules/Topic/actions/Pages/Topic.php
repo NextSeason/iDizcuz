@@ -37,7 +37,7 @@ Class TopicAction extends \Local\BaseAction {
     }
     private function getPoints() {
         $topic = $this->data['topic'];
-        if( $topic['data']['type'] == 0 ) {
+        if( $topic['data']['type'] == 2 ) {
             $this->data['points'] = [];
             return $this;
         }
@@ -52,6 +52,7 @@ Class TopicAction extends \Local\BaseAction {
         }
 
         $pointDataModel = new PointDataModel();
+
 
         foreach( $points as &$point ) {
             $point_data = $pointDataModel->get( $point['id'] );

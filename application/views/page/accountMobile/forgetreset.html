@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/accountMobile/css/account.css?_t=1439491131824" />
+        <link rel="stylesheet" href="/static/accountMobile/css/account.css?_t=1439829712473" />
         <style>
             .out-of-date {
                 padding : 15px;
@@ -40,9 +40,9 @@
                 <?php } else { ?>
                     <form class="forget-reset sign">
                         <input type="hidden" class="token" value="<?php echo $token; ?>" />
-                        <input type="text" class="email large" value="<?php echo $email; ?>" disabled />
-                        <input type="password" class="passwd large" placeholder="新密码" />
-                        <input type="password" class="rpasswd large" placeholder="再次输入新密码" />
+                        <input type="text" class="email full" value="<?php echo $email; ?>" disabled />
+                        <input type="password" class="passwd full" placeholder="新密码" />
+                        <input type="password" class="rpasswd full" placeholder="再次输入新密码" />
                         <div class="btn-line clearfix">
                             <input type="submit" class="btns small r submit" value="提交新密码" />
                         </div>
@@ -62,7 +62,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'forgetreset', '/static/accountMobile/packages/ForgetReset/bootstrap.js?_t=1439491131781', {
+            idizcuz.mount( 'forgetreset', '/static/accountMobile/packages/ForgetReset/bootstrap.js?_t=1439829712440', {
                 form : $( 'form.forget-reset' )
             } );
         </script>

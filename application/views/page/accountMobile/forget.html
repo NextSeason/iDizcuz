@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/accountMobile/css/account.css?_t=1439491131822" />
+        <link rel="stylesheet" href="/static/accountMobile/css/account.css?_t=1439829712473" />
     </head>
     <body>
         <div id="idizcuz">
@@ -17,9 +17,9 @@
                 <form class="forget">
                     <div class="email-line">
                         <a href="###" class="btns send disabled">发送验证码</a>
-                        <input type="text" class="email large" placeholder="邮箱" />
+                        <input type="text" class="email full" placeholder="邮箱" />
                     </div>
-                    <input type="text" class="vcode large" placeholder="验证码" />
+                    <input type="text" class="vcode full" placeholder="验证码" />
                     <div class="btn-line clearfix">
                         <input type="submit" class="btns small r" value="设置新密码" />
                     </div>
@@ -37,7 +37,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'forget', '/static/accountMobile/packages/Forget/bootstrap.js?_t=1439491131779', {
+            idizcuz.mount( 'forget', '/static/accountMobile/packages/Forget/bootstrap.js?_t=1439829712438', {
                 form : $( 'form.forget' )
             } );
         </script>

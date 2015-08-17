@@ -10,7 +10,8 @@ Class PageController extends BasePageController {
         $this->actions = array(
             'topic' => $this->action_path . 'Topic.php',
             'post' => $this->action_path . 'Post.php',
-            'list' => $this->action_path . 'List.php'
+            'list' => $this->action_path . 'List.php',
+            'write' => $this->action_path . 'Write.php'
         );
     }
 }

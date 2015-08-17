@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/accountMobile/css/account.css?_t=1439491131829" />
+        <link rel="stylesheet" href="/static/accountMobile/css/account.css?_t=1439829712476" />
     </head>
     <body>
         <div id="idizcuz">
@@ -17,11 +17,11 @@
                 <form class="signup sign">
                     <div class="email-line">
                         <a href="###" class="btns send disabled">发送验证码</a>
-                        <input type="text" class="email large" placeholder="邮箱" />
+                        <input type="text" class="email full" placeholder="邮箱" />
                     </div>
-                    <input type="text" class="uname large" placeholder="姓名" />
-                    <input type="password" class="passwd large" placeholder="密码" />
-                    <input type="text" class="vcode large" placeholder="验证码" />
+                    <input type="text" class="uname full" placeholder="姓名" />
+                    <input type="password" class="passwd full" placeholder="密码" />
+                    <input type="text" class="vcode full" placeholder="验证码" />
                     <div class="btn-line clearfix">
                         <input type="submit" class="btns small r signup" value="注册" />
                     </div>
@@ -38,7 +38,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'signin', '/static/accountMobile/packages/Signup/bootstrap.js?_t=1439491131784', {
+            idizcuz.mount( 'signin', '/static/accountMobile/packages/Signup/bootstrap.js?_t=1439829712443', {
                 form : $( 'form.signup' )
             } );
         </script>
