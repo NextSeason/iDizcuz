@@ -13,7 +13,7 @@
         <% if( post.own != 1 ) { %>
             <span class="op-btn btns <% if( post.mark != 1 ) { %>dark<% } %>" data-marked="<%-post.mark %>" data-action="mark" data-need-signin="1">收藏</span>
         <% } %>
-        <span class="op-btn btns dark" data-action="to" data-need-signin="1">针对</span>
+        <a href="/write?post=<%=post.id %>" class="op-btn btns dark" data-action="to">针对</a>
     </div>
     <div class="main">
         <h2><a href="/post/<%=post.id %>"><%-post.title %></a></h2>
@@ -37,6 +37,12 @@
                 <div class="clearfix">
                     <span class="aside">观点：</span>
                     <span class="main"><%-post.point.title %></span>
+                </div>
+            <% } %>
+            <% if( post.to != 0 ) { %>
+                <div class="clearfix">
+                    <span class="aside">针对：</span>
+                    <a href="/post/<%-post.to.id %>" class="main"><%-post.to.title %></a>
                 </div>
             <% } %>
             <div class="clearfix">

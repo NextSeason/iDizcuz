@@ -9,16 +9,25 @@ Class WriteAction extends \Local\BaseAction {
     public function __mobile() {
         $this->tpl = 'topicMobile/write';
 
-        $this->paramsProcessing();
-
-        if( $this->getTopic() === false ) {
-            $this->tpl = 'topicMobile/none';
-            return $this->data;
-        }
-
-        $this->getPoints();
+        $this->paramsProcessing()->getPost()->getTopic()->getPoints();
 
         return $this->data;
+    }
+
+    /**
+     * get data of post in view of
+     */
+    private function getPost() {
+        if( is_null( $this->params['post'] ) ) {
+            return $this;
+        }
+
+        $postModel = new PostModel();
+        $post = $postModel->get( $this->params[ 'post' ], [ 'id', 'title', 'topic_id' ] );
+
+        $this->data[ 'post' ] = $post;
+
+        return $this;
     }
 
     private function getPoints() {
@@ -40,7 +49,11 @@ Class WriteAction extends \Local\BaseAction {
     }
 
     private function getTopic() {
-        $id = $this->params[ 'id' ];
+        if( isset( $this->data[ 'post' ] ) ) {
+            $id = $this->data['post']['topic_id'];
+        } else if( !is_null( $this->params['topic' ] ) ) {
+            $id = $this->params['topic'];
+        }
 
         $topicDataModel = new TopicDataModel();
 
@@ -70,13 +83,18 @@ Class WriteAction extends \Local\BaseAction {
     private function paramsProcessing() {
         $request = $this->request;
 
-        $id = $request->getParam( 'id' );
+        $topic = $request->getQuery( 'topic' );
 
-        if( is_null( $id ) ) {
+        $post = $request->getQuery( 'post' );
+
+        if( is_null( $topic ) && is_null( $post ) ) {
             $this->redirect( '/' );
         }
 
-        $this->params['id'] = $id;
+        $this->params = [
+            'topic' => $topic,
+            'post' => $post
+        ];
 
         return $this;
     }

@@ -108,7 +108,7 @@
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
-                <textarea class="templates" id="post-list-tpl">
+        <textarea class="templates" id="post-list-tpl">
             <% if( !data.length ) { %>
                 <li class="empty">
                     暂时没有论述
@@ -129,14 +129,14 @@
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1439845944440', {
+            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1439987603508', {
                 topic : '<?php echo $topic['id']; ?>',
                 points : <?php echo $points ? json_encode( $points ) : 'null'; ?>
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439845944440', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439987603508', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439845944440', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439987603508', {
                 signin : +'<?php echo $signin; ?>'
             } );
         </script>

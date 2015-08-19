@@ -2,61 +2,92 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topicMobile/css/write.css?_t=1439845944468" />
+        <link rel="stylesheet" href="/static/topicMobile/css/write.css?_t=1439987603541" />
     </head>
     <body>
         <div id="idizcuz">
-            <div class="boxes top clearfix">
-                <a href="###" class="public btns small dark r">发布</a>
-                <a href="###" class="cancel l">返回</a>
-            </div>
-            <div class="boxes topic">
-                <a href="/topic/<?php echo $topic['id']; ?>" class="title">
-                    话题：<?php echo $topic['title']; ?>
-                </a>
-            </div>
-            <div class="boxes">
-                <p class="selected">点击选择您支持的观点</p>
-            </div>
-            <div class="boxes form-area">
-                <form>
-                    <input type="text" class="title full" placeholder="论述标题" />
-                    <textarea class="content full" placeholder="请输入论述内容"></textarea>
-                </form>
-            </div>
-            <div class="boxes points">
-                <div class="top clearfix">
-                    <a href="###" class="r done">完成</a>
+            <?php if( !$account ) { ?>
+                <div class="boxes top">
+                    <a href="/topic/<?php echo $topic['id']; ?>" class="cancel l">返回</a>
+                </div>
+                <div class="boxes tip">
+                    <p>您需要先登录才可以发布论述</p>
+                </div>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } else { ?>
+                <div class="boxes top clearfix">
+                    <a href="###" class="public btns small dark r">发布</a>
+                    <a href="/topic/<?php echo $topic['id']; ?>" class="cancel l">返回</a>
+                </div>
+                <div class="boxes topic">
+                    <a href="/topic/<?php echo $topic['id']; ?>" class="title">
+                        题：<?php echo $topic['title']; ?>
+                    </a>
                 </div>
                 <?php if( $topic['data']['type'] == 1 ) { ?>
-                    <style>
-                        <?php 
-                            $colors = ['#E9733C', '#3BA1E0', '#b13011'];
-                            $i = 0;
-                            foreach( $points as $point ) { 
-                        ?>
-                            .point-flag-<?php echo $point['id']; ?> { background : <?php echo $colors[$i]; ?>; }
-                        <?php $i++; } ?>
-                    </style>
-                    <?php $arr = ['一','二','三','四','五']; ?>
-                    <ul class="point-list">
-                        <?php $i = 0; foreach( $points as $point ) { ?>
-                            <li>
-                                <i class="flags point-flag-<?php echo $point['id']; ?>"></i>
-                                观点<?php echo $arr[$i]; ?>：
-                                <?php echo $point['title']; ?>
-                            </li>
-                        <?php $i++; } ?>
-                    </ul>
+                    <div class="boxes">
+                        <p class="select">点击选择您支持的观点</p>
+                        <p class="selected"></p>
+                    </div>
                 <?php } ?>
-            </div>
-
-            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
-            <script>
-                var idizcuz = new J();
-                idizcuz.mount( 'editor', '/static/topicMobile/packages/Editor/bootstrap.js?_t=1439845944442', {} );
-            </script>
+                <div class="boxes form-area">
+                    <form>
+                        <input type="hidden" class="point_id" value="0" />
+                        <input type="hidden" class="to" value="<?php echo $post['id']; ?>" />
+                        <input type="text" class="title full" placeholder="输入论述标题" />
+                        <textarea class="content full" placeholder="请输入论述内容"></textarea>
+                        <div class="imagecode-area clearfix">
+                            <input type="text" class="small r imagecode" />
+                            <img src="/common/interface/imagecode" class="imagecode r" />
+                        </div>
+                    </form>
+                </div>
+                <?php if( isset( $post ) && $post != 0 ) { ?>
+                    <div class="boxes to">
+                        <a href="/post/<?php $post['id']; ?>" class="title">
+                            针对论述：<?php echo htmlspecialchars( $post['title'] ); ?>
+                        </a>
+                        <a href="###" class="remove">删除</a>
+                    </div>
+                <?php } ?>
+                <?php if( $topic['data']['type'] == 1 ) { ?>
+                    <div class="boxes points" tabindex="-1">
+                        <div class="top clearfix">
+                            <a href="###" class="r done">完成</a>
+                        </div>
+                        <style>
+                            <?php 
+                                $colors = ['#E9733C', '#3BA1E0', '#b13011'];
+                                $i = 0;
+                                foreach( $points as $point ) { 
+                            ?>
+                                .point-flag-<?php echo $point['id']; ?> { 
+                                    background : <?php echo $colors[$i]; ?>;
+                                }
+                            <?php $i++; } ?>
+                        </style>
+                        <?php $arr = ['一','二','三','四','五']; ?>
+                        <ul class="point-list">
+                            <?php $i = 0; foreach( $points as $point ) { ?>
+                                <li class="points" data-point-id="<?php echo $point['id']; ?>">
+                                    <i class="flags point-flag-<?php echo $point['id']; ?>"></i>
+                                    观点<?php echo $arr[$i]; ?>：
+                                    <?php echo $point['title']; ?>
+                                </li>
+                            <?php $i++; } ?>
+                        </ul>
+                    </div>
+                <?php } ?>
+                <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+            <?php } ?>
         </div>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'write', '/static/topicMobile/packages/Write/bootstrap.js?_t=1439987603509', {
+                topicId : +'<?php echo $topic['id']; ?>',
+                needPoint : +'<?php echo $topic['data']['type'] == 1 ? 1 : 0; ?>'
+            } );
+        </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>
 </html>

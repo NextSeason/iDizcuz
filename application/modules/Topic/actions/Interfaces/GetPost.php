@@ -6,64 +6,97 @@ Class GetPostAction extends \Local\BaseAction {
 
     public function __execute() {
         $this->type = 'interface';
-
-        $this->paramsProcessing();
-
-        $this->postModel = new PostModel();
-
-        $this->getPost();
+        $this->paramsProcessing()->getPost()->getAccount()->getTopic()->getPoint()->getMark();
 
         return $this->data;
     }
 
-    private function getPost() {
-        $post = $this->postModel->get( $this->params[ 'id' ] );
+    public function __mobile() {
+        return $this->__execute(); 
+    }
 
-        if( !$post ) {
-            $this->error( 'POST_NOTEXISTS' );
+    private function getMark() {
+        $markModel = new MarkModel();
+    }
+
+    private function getPoint() {
+        if( $this->data['post']['point_id'] == 0 ) {
+            return $this;
         }
+        $pointModel = new PointModel();
+
+        $point = $pointModel->get( $this->data['post']['point_id'], 'title' );
+
+        $this->data['post']['point'] = $point;
+
+        return $this;
+    }
+
+    private function getTopic() {
+        $topicModel = new TopicModel();
+        $topic = $topicModel->get( $this->data['post']['topic_id'], [ 'id', 'title' ] );
+
+        $this->data['post']['topic'] = $topic;
+        return $this;
+    }
+
+    private function getAccount() {
+        $accountModel = new AccountModel();
+
+        $account = $accountModel->get( $this->data['post']['account_id'], [ 'id', 'uname' ] );
+
+        if( !$account ) {
+            $this->error( 'SYSTEM_ERR' );
+        }
+
+        $this->data['post']['account'] = $account;
+        return $this;
+    }
+
+    private function getPost() {
+        $post_id = $this->params[ 'post_id' ];
 
         $postDataModel = new PostDataModel();
 
-        $post[ 'data' ] = $postDataModel->get( $this->params[ 'id' ] );
+        $post_data = $postDataModel->select( [
+            'where' => [
+                ['id', $post_id],
+                ['status', 0]
+            ]
+        ] );
 
-        if( !is_null( $this->account ) ) {
-            $markModel = new MarkModel();
-
-            $account_id = $this->account[ 'id' ];
-
-            $mark = $markModel->getMarkByPostAndAccount( $post['id'], $account_id );
-
-            $post[ 'mark' ] = $mark ? $mark[ 'id' ] : 0;
+        if( !$post_data || !count( $post_data ) ) {
+            $this->error( 'POST_NOTEXISTS' );
         }
 
-        $accountModel = new AccountModel();
+        $post_data = $post_data[0];
 
-        $account = $accountModel->get( $post[ 'account_id' ], [ 'id', 'uname', 'desc' ] );
+        $postModel = new PostModel();
 
-        $post[ 'account' ] = $account;
+        $post = $postModel->get( $post_data[ 'id' ] );
 
-        if( $post['to'] != 0 ) {
-            $to = $this->postModel->get( $post[ 'to' ] );
-            $post['to'] = array(
-                'id' => $to['id'],
-                'title' => $to['title']
-            );
+        $post['data'] = $post_data;
+
+        if( $this->account && $this->account['id'] == $post['account_id'] ) {
+            $post[ 'own' ] = 1;
+        } else {
+            $post['own'] = 0;
         }
 
-        $this->data[ 'post' ] = $post;
+        $this->data['post'] = $post;
+
         return $this;
     }
 
     private function paramsProcessing() {
-        $id = $this->request->getQuery( 'id' );
+        $post_id = $this->request->getQuery( 'post_id' );
 
-        if( is_null( $id ) ) {
+        if( is_null( $post_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
         $this->params = [
-            'id' => $id
+            'post_id' => $post_id
         ];
 
         return $this;

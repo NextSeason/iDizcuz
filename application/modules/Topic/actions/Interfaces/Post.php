@@ -157,8 +157,8 @@ Class PostAction extends \Local\BaseAction {
 
         $len = strlen( $contentTxt );
 
-        if( $len < 10 ) {
-            $this->error( 'CONTENT_TOOSHORT' );
+        if( $len == 0 ) {
+            $this->error( 'PARAMS_ERR' );
         }
 
         if( $len > 60000 ) {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/topicMobile/css/post.css?_t=1439987603539" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <?php if( !$account ) { ?>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } ?>
+            <div class="boxes post">
+                <textarea class="templates" id="post-tpl">
+                    <?php include TPL_PATH . '/commonMobile/post.inc.html'; ?>
+                </textarea>
+            </div>
+            <div class="boxes topic">
+                <a href="/topic/<?php echo $topic['id']; ?>">
+                    <span>查看话题此论述所在话题</span>
+                    <?php echo $topic['title']; ?>
+                </a>
+            </div>
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+            <textarea class="templates" id="comment-list-tpl">
+                <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                    <% var comment = data[i]; %>                
+                    <?php include TPL_PATH . '/commonMobile/comment.inc.html'; ?>
+                <% } %>
+            </textarea>
+        </div>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'post', '/static/topicMobile/packages/Post/bootstrap.js?_t=1439987603507', {
+                postId : '<?php echo $post['id']; ?>'
+            } );
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439987603507', {
+                signin : +'<?php echo $account ? 1 : 0; ?>'
+            } );
+
+            idizcuz.mount( 'comment', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439987603507', {
+                signin : +'<?php echo $account ? 1 : 0; ?>'
+            } );
+        </script>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>

@@ -67,6 +67,10 @@ Class PostsAction extends \Local\BaseAction {
             $post['data'] = $posts_data[ $post['id'] ];
             $post['account'] = $accounts[ $post['account_id'] ];
             $post['topic'] = $topics[ $post['topic_id'] ];
+
+            if( $post['to'] != 0 ) {
+                $post['to'] = $postModel->get( $post['to'], [ 'id', 'title' ] );
+            }
         }
 
         $this->data['posts'] = $posts;

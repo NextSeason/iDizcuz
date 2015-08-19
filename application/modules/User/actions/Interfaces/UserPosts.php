@@ -119,6 +119,9 @@ Class UserPostsAction extends \Local\BaseAction {
         foreach( $posts_data as $post_data ) {
             $post = $postModel->get( $post_data['id'] );
             $post['data'] = $post_data;
+            if( $post['to'] != 0 ) {
+                $post['to'] = $postModel->get( $post['to'], [ 'id', 'title' ] );
+            }
             $posts[] = $post;
         }
 

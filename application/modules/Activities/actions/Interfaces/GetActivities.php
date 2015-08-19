@@ -26,7 +26,13 @@ Class GetActivitiesAction extends \Local\BaseAction {
 
         $post = $combinationModel->getPost( [ 'id' => $id ] );
 
+
         if( !$post ) return null;
+
+        if( $post['to'] != 0 ) {
+            $postModel = new PostModel();
+            $post['to'] = $postModel->get( $post['to'], [ 'id', 'title' ] );
+        }
 
         $post['mark'] = 0; 
         $post['mine'] = 0;

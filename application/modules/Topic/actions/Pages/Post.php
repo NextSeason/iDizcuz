@@ -25,7 +25,10 @@ Class PostAction extends \Local\BaseAction {
     }
 
     public function __mobile() {
-        return $this->__execute();
+        $this->tpl = 'topicMobile/post';
+
+        $this->paramsProcessing()->getPost()->getTopic()->getAccount();
+        return $this->data;
     }
 
     private function getAccount() {
