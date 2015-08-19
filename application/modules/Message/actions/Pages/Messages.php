@@ -8,6 +8,7 @@ Class MessagesAction extends \Local\BaseAction {
 
         if( !$this->account ) {
             $this->redirect( '/signin' );
+            exit;
         }
 
         $this->paramsProcessing();

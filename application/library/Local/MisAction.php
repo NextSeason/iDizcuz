@@ -25,6 +25,7 @@ Abstract Class MisAction extends \Yaf\Action_Abstract {
             && ( !preg_match( '#^/mis/interface/signin#', $_SERVER['REQUEST_URI'] ) )
         ) {
             $this->redirect( '/mis/page/signin' );
+            exit;
         }
 
         if( $this->admin ) {

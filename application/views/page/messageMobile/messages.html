@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/messageMobile/css/activities.css?_t=1439532349172" />
+        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1440013162625" />
     </head>
     <body>
         <?php $nav = 'activities'; ?>
@@ -11,10 +11,46 @@
             <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
             <?php if( !$account ) { ?>
                 <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } else { ?>
+                <div class="boxes sub-nav">
+                    <ul>
+                        <li><a href="###" class="focus">全部</a></li>
+                        <li><a href="###">未读</a></li>
+                    </ul>
+                </div>
+                <div class="boxes">
+                    <ul class="message"></ul>
+                </div>
+                <textarea class="templates" id="message-list-tpl">
+                    <% if( !data.length ) { %>
+                        <li class="empty">没有消息</li>
+                    <% } else { %>
+                        <% for( var i = 0, l = data.length; i < l; i += 1 ) { var msg = data[i]; %>
+                            <li id="message-<%=msg.id %>" class="message-item" data-read="<%=msg.read %>" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
+                                <div class="title-line">
+                                    <a href="###" class="remove r"><i class="fa fa-trash"></i> 删除</a>
+                                    <% if( msg.read == 0 ) { %>
+                                        <span class="flag"><i class="fa fa-circle"></i></span>
+                                    <% } %>
+                                    <span class="time">
+                                        [<%=msg.ctime.substr( 0, 10 ) %>]
+                                    </span>
+                                    <%=msg.title %>
+                                    <a href="###" class="open">[查看详情]</a>
+                                </div>
+                                <div class="content"><%=msg.content %></div>
+                            </li>
+                        <% } %>
+                    <% } %>
+                </textarea>
+                <script>
+                    var idizcuz = new J();
+                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1440013162606', {
+                        accountId : '<?php echo $account['id']; ?>'
+                    } );
+                </script>
             <?php } ?>
-            <div class="boxes operate">
-
-            </div>
         </div>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>
 </html>

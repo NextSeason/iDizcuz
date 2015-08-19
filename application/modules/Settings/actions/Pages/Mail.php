@@ -7,7 +7,8 @@ Class MailAction extends \Local\BaseAction {
         $this->tpl = 'settings/mail';
 
         if( !$this->account ) {
-            \Local\Utils::redirect( '/signin' );
+            $this->redirect( '/signin' );
+            exit;
         }
 
         $this->data['page'] = 'mail';

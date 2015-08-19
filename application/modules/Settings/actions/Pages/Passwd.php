@@ -7,7 +7,8 @@ Class PasswdAction extends \Local\BaseAction {
         $this->tpl = 'settings/passwd';
 
         if( !$this->account ) {
-            \Local\Utils::redirect( '/signin' );
+            $this->redirect( '/signin' );
+            exit;
         }
 
         $this->data['page'] = 'passwd';

@@ -19,7 +19,8 @@ Class HomeAction extends \Local\BaseAction {
         $this->tpl = $this->tpls[ $page ];
 
         if( $page == 'removed' && !$this->account ) {
-            \Local\Utils::redirect( '/signin' );
+            $this->redirect( '/signin' );
+            exit;
         }
 
         $this->data[ 'page' ] = $page;

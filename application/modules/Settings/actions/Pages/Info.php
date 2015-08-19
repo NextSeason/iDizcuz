@@ -8,7 +8,9 @@ Class InfoAction extends \Local\BaseAction {
         $this->tpl = 'settings/info';
 
         if( !$this->account ) {
-            \Local\Utils::redirect( '/signin' );
+            $this->redirect( '/signin' );
+            exit;
+
         }
 
         $this->getIndustries();

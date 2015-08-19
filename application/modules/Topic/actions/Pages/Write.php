@@ -4,6 +4,23 @@ Class WriteAction extends \Local\BaseAction {
     private $data = [];
 
     public function __execute() {
+
+        $this->paramsProcessing();
+
+        $params = $this->params;
+
+        if( !is_null( $params['post'] ) ) {
+            $this->redirect( '/post/' . $params['post'] );
+            exit;
+        }
+
+        if( !is_null( $params['topic'] ) ) {
+            $this->redirect( '/topic/' . $params['topic'] );
+            exit;
+        }
+
+        $this->redirect( '/' );
+        exit;
     }
 
     public function __mobile() {
@@ -89,6 +106,7 @@ Class WriteAction extends \Local\BaseAction {
 
         if( is_null( $topic ) && is_null( $post ) ) {
             $this->redirect( '/' );
+            exit;
         }
 
         $this->params = [

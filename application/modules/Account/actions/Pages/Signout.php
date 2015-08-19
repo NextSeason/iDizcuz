@@ -10,9 +10,11 @@ Class SignoutAction extends \Local\BaseAction {
 
         if( $_SERVER[ 'HTTP_REFERER' ] == '' ) {
             $this->redirect( 'http://www.idizcuz.com' );
+            exit;
         }
 
         $this->redirect( $_SERVER['HTTP_REFERER'] );
+        exit;
     }
 
     public function __mobile() {

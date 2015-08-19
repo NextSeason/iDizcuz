@@ -7,7 +7,8 @@ Class NotificationAction extends \Local\BaseAction {
         $this->tpl = 'settings/notification';
 
         if( !$this->account ) {
-            \Local\Utils::redirect( '/signin' );
+            $this->redirect( '/signin' );
+            exit;
         }
 
         $this->data['page'] = 'notification';

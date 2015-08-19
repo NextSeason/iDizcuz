@@ -38,7 +38,7 @@ Class ForgetResetAction extends \Local\BaseAction {
     private function check() {
 
         if( !isset( $this->session[ 'forget_passwd_token' ] ) ) {
-            $this->redirect( 'SYSTEM_ERR' );
+            $this->error( 'SYSTEM_ERR' );
         }
 
         $token = $this->session[ 'forget_passwd_token' ];

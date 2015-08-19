@@ -24,11 +24,13 @@ Class ForgetResetAction extends \Local\BaseAction {
     private function check() {
         if( !isset( $this->session[ 'forget_passwd_token' ] ) ) {
             $this->redirect( '/' );
+            exit;
         }
         $token = $this->session[ 'forget_passwd_token' ];
 
         if( !is_array( $token ) ) {
             $this->redirect( '/' );
+            exit;
         }
 
         $time = $token['time'];
@@ -48,6 +50,7 @@ Class ForgetResetAction extends \Local\BaseAction {
 
         if( is_null( $token ) || !strlen( $token ) ) {
             $this->redirect( '/' );
+            exit;
         }
 
         $this->params['token'] = $token;

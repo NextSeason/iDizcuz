@@ -2,9 +2,9 @@
 
 Class GetMessagesAction extends \Local\BaseAction {
     private $data = [];
+    protected $type = 'interface';
 
     public function __execute() {
-        $this->type = 'interface';
 
         if( !$this->account ) {
             $this->error( 'NOTLOGIN_ERR' );
@@ -15,6 +15,7 @@ Class GetMessagesAction extends \Local\BaseAction {
     }
 
     public function __mobile() {
+        return $this->__execute();
     }
 
     private function getMessages() {

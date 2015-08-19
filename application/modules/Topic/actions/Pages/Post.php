@@ -138,6 +138,7 @@ Class PostAction extends \Local\BaseAction {
 
         if( is_null( $id ) ) {
             $this->redirect( '/' );
+            exit;
         }
 
         $this->params[ 'id' ] = $id;

@@ -21,6 +21,7 @@
                 rewrite ^/signup(\?.*)?$ /index.php?__r=account/page/signup$1 last;
                 rewrite ^/signout(\?.*)?$ /index.php?__r=account/page/signout$1 last;
                 rewrite ^/forget(\?.*)?$ /index.php?__r=account/page/forget$1 last;
+                rewrite ^/write(\?.*)?$ /index.php?__r=topic/page/write$1 last;
 
                 rewrite ^/settings(\?.*)?$ /index.php?__r=settings/page/info$1 last;
                 rewrite ^/messages(\?.*)?$ /index.php?__r=message/page/messages$1 last;
