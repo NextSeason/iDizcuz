@@ -103,8 +103,8 @@
             </div>
             <div class="boxes">
                 <ul class="post-list"></ul>
-                <div class="load-more">加载更多论述</div>
-                <div class="load-more">下一页</div>
+                <div class="loading">正在加载数据...</div>
+                <div class="pagination"></div>
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
@@ -126,17 +126,20 @@
                 <?php include TPL_PATH . '/commonMobile/comment.inc.html'; ?>
             <% } %>
         </textarea>
+        <textarea class="templates" id="pagination-tpl">
+            <?php include TPL_PATH . '/commonMobile/pagination.inc.html'; ?>
+        </textarea>
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1439987603508', {
+            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1440083414452', {
                 topic : '<?php echo $topic['id']; ?>',
                 points : <?php echo $points ? json_encode( $points ) : 'null'; ?>
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439987603508', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1440083414452', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439987603508', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1440083414452', {
                 signin : +'<?php echo $signin; ?>'
             } );
         </script>

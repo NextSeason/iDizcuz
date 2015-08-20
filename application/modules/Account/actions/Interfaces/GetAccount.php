@@ -2,29 +2,34 @@
 
 Class GetAccountAction extends \Local\BaseAction {
     private $data = [];
+    protected $type = 'interface';
 
     public function __execute() {
-        $this->type = 'interface';
         $this->paramsProcessing()->getAccount();
 
         if( $this->account ) {
-            if( $this->account['id'] == $this->data['target_account']['id'] ) {
-                $this->data['target_account']['self'] = 1;
+            if( $this->account['id'] == $this->data['user']['id'] ) {
+                $this->data['user']['self'] = 1;
             } else {
                 $this->getFollowStatus();
             }
         }
         return $this->data;
     }
+
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getFollowStatus() {
         $followModel = new FollowModel();
 
         $follow = $followModel->getFollowStatus( [
-            'account_id' => $this->data['target_account']['id'],
+            'account_id' => $this->data['user']['id'],
             'fans_id' => $this->account['id']
         ] );
 
-        $this->data['target_account']['followed'] = $follow ? 1 : 0;
+        $this->data['user']['followed'] = $follow ? 1 : 0;
 
         return $this;
     }
@@ -60,7 +65,7 @@ Class GetAccountAction extends \Local\BaseAction {
             $account[ 'industry' ] = trim( $industries[ $account[ 'industry' ] ], '-' );
         }
 
-        $this->data['target_account'] = $account;
+        $this->data['user'] = $account;
 
         return $this;
     }

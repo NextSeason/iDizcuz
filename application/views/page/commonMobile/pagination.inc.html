@@ -1,0 +1,15 @@
+<% if( data.total > 1 ) { %>
+    <a href="###" data-pn="<%=data.current - 1 %>" class="<% if( data.current == 1 ) { %>disabled<% } %>">上一页</a>
+    <% var list = data.list, l = list.length; %>
+    <a href="###">
+        <div class="select-wrap">
+            <select>
+                <% for( var i = 0; i < l; i += 1 ) { %>
+                <option <% if( list[i].pn == data.current ) { %>selected<% } %> value="<%=list[i].pn %>">第<%=list[i].pn %>页</option>
+                <% } %>
+            </select>
+            <span>第<%=data.current %>页</span>
+        </div>
+    </a>
+    <a href="###" data-pn="<%=+data.current + 1 %>" class="<% if( data.total == 0 || data.current == data.total ) { %>disabled<% } %>">下一页</a>
+<% } %>

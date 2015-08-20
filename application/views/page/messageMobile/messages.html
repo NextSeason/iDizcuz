@@ -2,10 +2,9 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1440013162625" />
+        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1440056657688" />
     </head>
     <body>
-        <?php $nav = 'activities'; ?>
         <div id="idizcuz">
             <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
             <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
@@ -19,22 +18,24 @@
                     </ul>
                 </div>
                 <div class="boxes">
-                    <ul class="message"></ul>
+                    <ul class="message-list"></ul>
                 </div>
                 <textarea class="templates" id="message-list-tpl">
                     <% if( !data.length ) { %>
                         <li class="empty">没有消息</li>
                     <% } else { %>
                         <% for( var i = 0, l = data.length; i < l; i += 1 ) { var msg = data[i]; %>
-                            <li id="message-<%=msg.id %>" class="message-item" data-read="<%=msg.read %>" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
-                                <div class="title-line">
-                                    <a href="###" class="remove r"><i class="fa fa-trash"></i> 删除</a>
-                                    <% if( msg.read == 0 ) { %>
-                                        <span class="flag"><i class="fa fa-circle"></i></span>
-                                    <% } %>
+                            <li id="message-<%=msg.id %>" class="messages" data-read="<%=msg.read %>" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
+                                <div class="first-line">
                                     <span class="time">
                                         [<%=msg.ctime.substr( 0, 10 ) %>]
                                     </span>
+                                    <% if( msg.read == 0 ) { %>
+                                        <span class="flag"></span>
+                                    <% } %>
+                                </div>
+                                <div class="title-line">
+                                    <a href="###" class="remove r">删除</a>
                                     <%=msg.title %>
                                     <a href="###" class="open">[查看详情]</a>
                                 </div>
@@ -43,9 +44,12 @@
                         <% } %>
                     <% } %>
                 </textarea>
+                <textarea class="templates" id="account-tpl">
+                    <?php include TPL_PATH . '/commonMobile/hcard.inc.html'; ?>
+                </textarea>
                 <script>
                     var idizcuz = new J();
-                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1440013162606', {
+                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1440056657671', {
                         accountId : '<?php echo $account['id']; ?>'
                     } );
                 </script>
