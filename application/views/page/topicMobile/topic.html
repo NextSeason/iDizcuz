@@ -89,6 +89,9 @@
                     <?php } ?>
                 </div>
             </div>
+            <div class="boxes">
+                <a href="/articles/<?php echo $topic['id']; ?>" class="full-width-link">查看话题相关资料</a>
+            </div>
             <div class="boxes" style="margin-top:10px;padding:0 5px">
                 本话题共 
                 <b class="brand"><?php echo $topic['data']['post_cnt']; ?></b> 
@@ -132,16 +135,22 @@
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1440083414452', {
+            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1440348753487', {
                 topic : '<?php echo $topic['id']; ?>',
                 points : <?php echo $points ? json_encode( $points ) : 'null'; ?>
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1440083414452', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1440348753487', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1440083414452', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1440348753487', {
                 signin : +'<?php echo $signin; ?>'
             } );
+            ( function() {
+                $( '.show-more-info' ).on( 'click', function( e ) {
+                    e.preventDefault();
+                    $( '.topics .desc p' ).show();
+                } );
+            } )();
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>

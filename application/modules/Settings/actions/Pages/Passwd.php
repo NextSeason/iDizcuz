@@ -1,7 +1,9 @@
 <?php
 
 Class PasswdAction extends \Local\BaseAction {
-    private $data = [];
+    private $data = [
+        'page' => 'passwd'
+    ];
 
     public function __execute() {
         $this->tpl = 'settings/passwd';
@@ -13,6 +15,11 @@ Class PasswdAction extends \Local\BaseAction {
 
         $this->data['page'] = 'passwd';
 
+        return $this->data;
+    }
+
+    public function __mobile() {
+        $this->tpl = 'settingsMobile/passwd';
         return $this->data;
     }
 }

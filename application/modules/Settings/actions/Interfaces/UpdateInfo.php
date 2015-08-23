@@ -2,9 +2,9 @@
 
 Class UpdateInfoAction extends \Local\BaseAction {
     private $data = array();
+    protected $type = 'interface';
 
     public function __execute() {
-        $this->type = 'interface';
 
         if( !$this->account ) {
             $this->error( 'NOTLOGIN_ERR' );
@@ -13,6 +13,10 @@ Class UpdateInfoAction extends \Local\BaseAction {
         $this->paramsProcessing()->updateData();
 
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function updateData() {
@@ -42,7 +46,7 @@ Class UpdateInfoAction extends \Local\BaseAction {
         $sex = $request->getPost( 'sex' );
 
         if( is_null( $sex ) || !in_array( $sex, [ 0, 1, 2 ] ) ) {
-            $this->error( 'PARAMS_ERR', 'sex' );
+            $this->error( 'PARAMS_ERR' );
         }
 
         $desc = $request->getPost( 'desc' );

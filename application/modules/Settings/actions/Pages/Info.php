@@ -2,7 +2,9 @@
 
 Class InfoAction extends \Local\BaseAction {
 
-    private $data = [];
+    private $data = [
+        'page' => 'info'
+    ];
 
     public function __execute() {
         $this->tpl = 'settings/info';
@@ -10,14 +12,24 @@ Class InfoAction extends \Local\BaseAction {
         if( !$this->account ) {
             $this->redirect( '/signin' );
             exit;
-
         }
 
         $this->getIndustries();
 
-        $this->data[ 'page' ] = 'info';
+        return $this->data;
+    }
+
+    public function __mobile() {
+        $this->tpl = 'settingsMobile/info';
+
+        if( !$this->account ) {
+            return $this->data;
+        }
+
+        $this->getIndustries();
 
         return $this->data;
+
     }
 
     private function getIndustries() {

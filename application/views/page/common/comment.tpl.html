@@ -1,0 +1,25 @@
+<div id="comment-<%=data[i].id %>" class="comment-item" data-comment-id="<%=data[i].id %>">
+    <a href="/user/activities/<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
+    <p class="comment-text">
+        <% if( data[i].reply_account ) { %>
+            [ <span>回复 </span>     
+            <a href="/user/activities/<%=data[i].reply_account.id %>" target="_blank"%><%-data[i].reply_account.uname %></a> ]
+        <% } %>
+        <%-data[i].content %>
+    </p>
+    <div class="op-line">
+        <span><%=data[i].ctime %></span>
+        <% if( data[i].own == 1 ) { %>
+            <a href="###" class="remove-comment" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
+        <% } else { %>
+            <a href="###" class="reply"><i class="fa fa-reply"></i> 回复</a>
+            <a href="###" class="complaint"><i class="fa fa-flag"></i> 举报</a>
+        <% } %>
+    </div>
+    <form class="comment-form reply-form clearfix" data-comment-id="<%=data[i].id %>" data-account-id="<%-data[i].account.id %>">
+        <input type="submit" class="btns submit aside" value="发布" />
+        <div class="main">
+            <input type="text" class="comment" placeholder="输入短评内容" />
+        </div>
+    </form>
+</div>

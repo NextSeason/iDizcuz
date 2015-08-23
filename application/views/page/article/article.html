@@ -5,7 +5,7 @@
             $title = '每日论点•iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/article/css/article.css?_t=1439388093559" />
+        <link rel="stylesheet" href="/static/article/css/article.css?_t=1440351534449" />
     </head>
     <body>
         <div id="idizcuz">
@@ -45,7 +45,7 @@
                             <?php } ?>
                             <?php if( $article['summary'] != '' ) { ?>
                                 <blockquote class="summary">
-                                    <p><span>摘要：</span><?php echo htmlspecialchars( $article['summary'] ); ?>
+                                    <span>摘要：</span><?php echo htmlspecialchars( $article['summary'] ); ?>
                                 </blockquote>
                             <?php } ?>
                             <div class="content rich-text">
@@ -84,7 +84,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js?_t=1439388093536', {} );
+            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js?_t=1440351534426', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

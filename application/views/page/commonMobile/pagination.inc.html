@@ -1,7 +1,7 @@
 <% if( data.total > 1 ) { %>
     <a href="###" data-pn="<%=data.current - 1 %>" class="<% if( data.current == 1 ) { %>disabled<% } %>">上一页</a>
     <% var list = data.list, l = list.length; %>
-    <a href="###">
+    <a href="javascript:;">
         <div class="select-wrap">
             <select>
                 <% for( var i = 0; i < l; i += 1 ) { %>

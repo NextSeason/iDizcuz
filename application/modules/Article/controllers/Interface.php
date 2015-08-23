@@ -7,6 +7,7 @@ Class InterfaceController extends BaseInterfaceController {
     public function init() {
         parent::init();
 
-        $this->actions = [];
+        $this->actions = [
+        ];
     }
 }

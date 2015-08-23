@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/articleMobile/css/list.css?_t=1440352298043" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <?php if( !$account ) { ?>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } ?>
+            <?php if( !empty( $topic ) ) { ?>
+                <div class="boxes topic clearfix">
+                    <span>资料所属话题：</span>
+                    <a href="/topic/<?php echo $topic['id']; ?>">
+                        <?php echo $topic['title']; ?>
+                    </a>
+                </div>
+            <?php } ?>
+            <div class="boxes article">
+                <ul class="article-list">
+                    <?php foreach( $articles as $article ) { ?>
+                        <li>
+                            <div class="articles clearfix">
+                                <?php if( $article['img'] ) { ?>
+                                    <div class="aside">
+                                        <a href="/article/<?php echo $article['id']; ?>" class="cover" style="background-image:url(http://topicstc.idizcuzz.com/<?php echo $article['img']; ?>);"></a>
+                                    </div>
+                                <?php } ?>
+                                <div class="info main">
+                                    <h2><a href="/article/<?php echo $article['id']; ?>"><?php echo htmlspecialchars( $article['title'] ); ?></a></h2>
+                                    <div class="detail">
+                                        <span class="time r">
+                                            <?php echo substr( $article['time'], 0, -9 ); ?>
+                                        </span>
+                                        <?php if( $article['origin'] ) { ?>
+                                            <span class="item">来源：<a href="<?php echo $article['origin_url']; ?>" target="_blank"><?php echo $article['origin']; ?></a></span>
+                                        <?php } ?>
+                                        <?php if( $article['author'] ) { ?>
+                                            <span class="item">作者：<?php echo $article['author']; ?></span>
+                                        <?php } ?>
+                                    </div>
+                                    <a href="/article/<?php echo $article['id']; ?>" class="summary">
+                                        <?php echo htmlspecialchars( $article['summary'] ); ?>
+                                        <span class="view">[详细]</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+        </div>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>

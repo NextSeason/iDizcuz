@@ -9,6 +9,12 @@ Class ArticleAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        $this->tpl = 'articleMobile/article';
+        $this->paramsProcessing()->getArticle()->getTopic();
+        return $this->data;
+    }
+
     private function getAdjacent() {
         $topic = $this->data['topic'];
 

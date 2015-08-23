@@ -2,17 +2,19 @@
 
 Class RemoveCommentAction extends \Local\BaseAction {
     private $data = [];
+    protected $type = 'interface';
 
     public function __execute() {
-        $this->type = 'interface';
-
         if( is_null( $this->account ) ) {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
         $this->paramsProcessing()->removeComment();
-
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function removeComment() {

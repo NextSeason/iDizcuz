@@ -6,13 +6,13 @@ Class ListAction extends \Local\BaseAction {
 
     public function __execute() {
         $this->tpl = 'article/list';
-
         $this->paramsProcessing()->getTopic()->getArticles();
+        return $this->data;
+    }
 
-        echo '<pre>';
-        print_r( $this->data );
-        echo '</pre>';
-
+    public function __mobile() {
+        $this->tpl = 'articleMobile/list';
+        $this->paramsProcessing()->getTopic()->getArticles();
         return $this->data;
     }
 

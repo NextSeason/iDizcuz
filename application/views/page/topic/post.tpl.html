@@ -1,0 +1,129 @@
+<div class="posts" id="post-<%=post.id %>" data-post-id="<%=post.id %>">
+    <div class="data-line clearfix">
+        <% if( post.point_id != 0 ) {  %>
+            <span href="###" class="flags"><i class="fa fa-flag point-flag-<%-post.point_id %>"></i></span>
+        <% } %>
+        <div class="operates r">
+            <% if( !post.own ) { %>
+                <% var mark = +post.mark %>
+                <a href="###" class="op-btn op-<% if( mark ) { %>unmark<% } else { %>mark<% } %>" data-action="mark" data-marked="<%-mark %>">
+                    <% if ( mark ) { %>
+                        <i class="fa fa-star"></i> 取消收藏
+                    <% } else { %>
+                        <i class="fa fa-star-o"></i> 收藏
+                    <% } %>
+                </a>
+            <% } %>
+            <a href="###" class="op-btn op-share" data-action="share">分享</a>
+            <% if( !post.own ) { %>
+                <a href="###" class="op-btn" data-action="report">举报</a>
+            <% } %>
+        </div>
+        <div class="vote l">
+            <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree %></b>)</a>
+            <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
+        </div>
+        <div class="title l">
+            <h2><a href="/post/<%=post.id %>" target="_blank"><%-post.title %></a></h2>
+            <a href="/user/activities/<%=post.account.id %>" class="uname" target="_blank">作者： <%=post.account.uname %></a>
+        </div>
+    </div>
+    <div class="bubbles op-bubbles">
+        <a href="###" class="close"><i class="fa fa-times"></i></a>
+        <div class="triangle"><div class="triangle"></div></div>
+        <div class="inner">
+            <div class="mark box clearfix">
+                <p class="l">收藏成功！您可以在<a href="/user/mark/<?php echo $account['id']; ?>">我的主页</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
+                <div class="share-box l">
+                    <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
+                    <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
+                    <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
+                    <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
+                    <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
+                    <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="share box clearfix">
+                <div class="qrcode l"></div>
+                <div class="share-part l">
+                    <div class="bdsharebuttonbox share-btn-boxes share-box" data-tag="share_1">
+                        <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
+                        <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
+                        <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
+                        <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
+                        <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
+                        <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
+                    </div> 
+                    <div class="share-link">
+                        <div class="line clearfix">
+                            <span class="l">分享此条论述：</span>
+                            <a href="http://www.idizcuz.com/post/<%=post.id %>?fr=share" data-title="<%-post.title %>" target="_blank" class="share-post-link link l">
+                                http://www.idizcuz.com/post/<%=post.id %>?fr=share
+                            </a>
+                            <a href="###" class="btns l copy-link">复制链接</a>
+                        </div>
+                        <div class="line clearfix">
+                            <span class="l">分享当前话题：</span>
+                            <a href="http://www.idizcuz.com/topic/<%=post.topic_id %>?fr=share" data-title="<?php echo $topic['title']; ?>>" target="_blank" class="share-topic-link link l">
+                                http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share
+                            </a>
+                            <a href="###" class="btns l copy-link">复制链接</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="report box clearfix">
+                <div class="reasons l">
+                    <?php foreach( $reportReasons as $key => $value ) { ?>
+                        <label>
+                            <input type="radio" name="reasons-<%=post.id %>" value="<?php echo $key; ?>" />
+                            <span class="msg"><?php echo $value; ?></span>
+                        </label>
+                    <?php } ?>
+                </div>
+                <div class="l desc-area">
+                    <textarea class="desc" placeholder="请对您举报的内容做简单描述，长度不可超过250字">&lt;/textarea>
+                    <p class="brand alert">*  核实举报后此论述会被删除，作者将受到相关惩罚。恶意举报也将面对相关策略惩罚</p>
+                    <div class="btn-line">
+                        <span class="tip"></span>
+                        <a href="###" class="btns report-submit">提交举报</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contents rich-text">
+        <p><%=post.content %></p>
+    </div>
+    <% if( post.to != 0 ) { %>
+        <div class="to-area">
+            <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
+            <a href="/post/<%=post.to.id %>" target="_blank"><%=post.to.title %></a>
+        </div>
+    <% } %>
+    <div class="bottom-line">
+        <a href="#editor" class="reply-to r">针对本条论述发表观点</a>
+        <span class="ctime">发表于：<%=post.ctime %></span>
+        <% if( post.mtime != post.ctime ) { %>
+            <span class="mtime">修改于：<%=post.mtime %></span>
+        <% } %>
+            <a href="###" class="comments" data-cursor="0">
+            <%=post.data.comments_cnt %>条短评
+        </a>
+        <% if( post.own ) { %>
+            <a href="###" class="remove-post" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
+        <% } %>
+    </div>
+    <div class="comment-box">
+        <div class="loading"></div>
+        <ul class="comment-list"></ul>
+        <div class="load-more">加载更多短评</div>
+        <ul class="new-comment-list"></ul>
+        <form class="comment-form clearfix">
+            <input type="submit" class="btns submit aside" value="发布" />
+            <div class="main">
+                <input type="text" class="comment" placeholder="输入短评内容" />
+            </div>
+        </form>
+    </div>
+</div>

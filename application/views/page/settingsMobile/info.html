@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/settingsMobile/css/info.css?_t=1440163940775" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <?php if( !$account ) { ?>
+                <div class="boxes tip">
+                    <p>需要登录后才可以操作</p>
+                </div>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } else { ?>
+                <div class="boxes sub-nav">
+                    <ul>
+                        <li><a href="/settings" class="focus">个人信息</a></li>
+                        <li><a href="/settings/page/passwd">密码</a></li>
+                    </ul>
+                </div>
+                <div class="boxes">
+                    <form class="info-form" id="avatar-form">
+                        <div class="parts">
+                            <p class="s-title">头像</p>
+                            <div class="s-main clearfix">
+                                <?php if( $account['img'] ) { ?>
+                                    <a href="javascript:void(0)" class="avatar aside" style="background-image:url( http://avatar.idizcuzz.com/<?php echo $account['img']; ?>)"></a>
+                                <?php } else { ?>
+                                    <a href="javascript:void(0)" class="avatar aside"></a>
+                                <?php } ?>
+                                <div class="upload-btn main">
+                                    <a href="###" class="btns file">选择头像</a>
+                                    <input type="file" class="real-file-btn" accept="image/png,image/jpeg,image/bmp" />
+                                    <p>请上传小于2M的JPG或PNG图片，（建议尺寸160px * 160px）</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="info-form" id="info-form">
+                        <div class="parts">
+                            <p class="s-title">性别</p>
+                            <div class="s-main clearfix sex-area">
+                                <label>
+                                    <input type="radio" value="1" name="sex" <?php if( $account['sex'] == 1 ) { echo 'checked'; } ?>> 男
+                                </label>
+                                <label>
+                                    <input type="radio" value="2" name="sex" <?php if( $account['sex'] == 2 ) { echo 'checked'; } ?>> 女
+                                </label>
+                            </div>
+                        </div>
+                        <div class="parts birth-area" date-birth="<?php echo $account['birth']; ?>">
+                            <p class="s-title">生日</p>
+                            <div class="s-main clearfix">
+                                <div class="select-helper"><select class="birth birth-year"></select></div>
+                                <span class="st">年</span>
+                                <div class="select-helper"><select class="birth birth-month"></select></div>
+                                <span class="st">月</span>
+                                <div class="select-helper"><select class="birth birth-date"></select></div>
+                                <span class="st">日</span>
+                            </div>
+                        </div>
+                        <div class="parts">
+                            <p class="s-title">所在行业</p>
+                            <div class="s-main">
+                                <div class="industries-selection select-helper"><select class="industries">
+                                    <option value="0">选择行业</option>
+                                    <?php foreach( $industries as $k => $v ) { ?>
+                                        <option value="<?php echo $k; ?>" <?php if( $k == $account['industry'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
+                                    <?php } ?>
+                                </select></div>
+                            </div>
+                        </div>
+                        <div class="parts">
+                            <p class="s-title">目前状况</p>
+                            <div class="s-main">
+                                <input type="text" class="employment" value="<?php echo $account['employment']; ?>" placeholder="公司/学校/机构等" /> 
+                                <input type="text" class="small position" value="<?php echo $account['position']; ?>" placeholder="职位" />
+                            </div>
+                        </div>
+                        <div class="parts">
+                            <p class="s-title">个人简介</p>
+                            <div class="s-main">
+                                <textarea class="desc"><?php echo $account['desc']; ?></textarea>
+                            </div>
+                        </div>
+                        <div class="parts">
+                            <div class="s-main">
+                                <a href="###" class="btns submit">提交</a>
+                                <span class="submit-tip"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+                <script>
+                    var idizcuz = new J();
+                    idizcuz.mount( 'birth', '/static/settingsMobile/packages/Birth/bootstrap.js?_t=1440163940751' );
+                    idizcuz.mount( 'userinfo', '/static/settingsMobile/packages/UserInfo/bootstrap.js?_t=1440163940751' );
+                </script>
+            <?php } ?> 
+        </div>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>

@@ -6,7 +6,8 @@
             $nav = 'activities';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/home/css/activities.css?_t=1439446281233" />
+        <link rel="stylesheet" href="/static/home/css/activities.css?_t=1440358463457" />
+        <link rel="stylesheet" href="/static/common/css/post.css?_t=1440358463457" />
     </head>
     <body>
         <div id="idizcuz">
@@ -58,41 +59,29 @@
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
                     <% var post = data[i]; %>
                     <li>
-                        <% var postUrl = '/post/' + post.id; %>
-                        <div class="posts" data-post-id="<%=post.id %>">
-                            <div class="data-line clearfix">
-                                <div class="vote l">
-                                    <a href="<%=postUrl %>" target="_blank" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree %></b>)</a>
-                                    <a href="<%=postUrl %>" target="_blank" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
-                                </div>
-                                <div class="title l">
-                                    <h2><a href="/post/<%=post.id %>" target="_blank"><%-post.title %></a></h2>
-                                    <a href="/user/activities/<%=post.account_id %>" target="_blank" class="uname">作者： <%-post.account.uname %><%-post.account.desc %></a>
-                                </div>
-                            </div>
-                            <div class="topic-line">
-                                <a href="/topic/<%=post.topic.id %>" target="_blank" class="uname">所在话题： <%-post.topic.title%></a>
-                            </div>
-                            <div class="contents rich-text">
-                                <p><%=post.content %></p>
-                            </div>
-                            <div class="bottom-line">
-                                <a href="<%=postUrl %>" target="_blank" class="reply r">针对本条论述发表观点</a>
-                                <span class="ctime">发表于：<%=post.ctime.substr(0,10) %></span>
-                                <% if( post.mtime != post.ctime ) { %>
-                                    <span class="mtime">修改于：<%=post.mtime.substr(0,10) %></span>
-                                <% } %>
-                                <a href="<%=postUrl %>" target="_blank" class="comments"><%-post.data.comments_cnt %>条短评</a>
-                            </div>
-                        </div>
+                        <?php include TPL_PATH . '/common/post.tpl.html'; ?>
                     </li>
                 <% } %>
             <% } %>
         </textarea>
+        <textarea class="templates" id="comment-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                <li>
+                    <?php include TPL_PATH . '/common/comment.tpl.html'; ?>
+                </li>
+            <% } %>
+        </textarea>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1440358463457"></script>
+        <script src="/static/common/js/qrcode.js?_t=1440358463457"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js?_t=1439446281182' );
-            idizcuz.mount( 'accounts', '/static/home/packages/Accounts/bootstrap.js?_t=1439446281182' );
+            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js?_t=1440358463413' );
+            idizcuz.mount( 'accounts', '/static/home/packages/Accounts/bootstrap.js?_t=1440358463413' );
+
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1440358463413', {} );
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1440358463413', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1440358463413', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1440358463413', {} );
         </script>
     </body>
 </html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/articleMobile/css/article.css?_t=1440352298041" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <?php if( !$account ) { ?>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } ?>
+            <div class="boxes article">
+                <div class="hd">
+                    <h1><?php echo htmlspecialchars( $article['title'] ); ?></h1>
+                    <p class="info clearfix">
+                        <span class="time r">
+                            <?php echo substr( $article['time'], 0, -9 ); ?>
+                        </span>
+                        <?php if( $article['origin'] != '' ) { ?>
+                            <span>来源：<a href="<?php echo $article['origin_url']; ?>" target="_blank"><?php echo $article['origin']; ?></a></span>
+                        <?php } ?>
+                        <?php if( $article['author'] != '' ) { ?>
+                            <span>作者：<?php echo $article['author']; ?></span>
+                        <?php } ?>
+                    </p>
+                </div>
+                <?php if( $topic ) { ?>
+                    <div class="topic-area">
+                        <div class="title-line">
+                            <span>内容所属话题：</span>
+                            <a href="/topic/<?php echo $topic['id']; ?>" target="_blank">
+                                <?php echo htmlspecialchars( $topic['title'] ); ?>
+                            </a>
+                            <a href="/topic/<?php echo $topic['id']; ?>" target="_blank" class="show-desc">[查看话题]</a>
+                        </div>
+                    </div>
+                <?php } ?>
+                <div class="content rich-text">
+                    <?php echo $article['content']; ?>
+                </div>
+                <?php if( $topic ) { ?>
+                    <div class="bridge">
+                        <a href="/topic/<?php echo $topic['id']; ?>">参与话题：<?php echo $topic['title']; ?></a>
+                    </div>
+                <?php } ?>
+            </div>
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+        </div>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>

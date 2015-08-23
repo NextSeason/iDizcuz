@@ -24,7 +24,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
             'action' => 'list'
         ] ) );
 
-        $router->addRoute( 'article', new \Yaf\Route\Regex( '#/article/(\d+)#', [
+        $router->addRoute( 'article', new \Yaf\Route\Regex( '#^/article/(\d+)#', [
             'module' => 'article',
             'controller' => 'page',
             'action' => 'article'
@@ -32,7 +32,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
             1 => 'id'
         ] ) );
 
-        $router->addRoute( 'topic', new \Yaf\Route\Regex( '#/topic/(\d+)#', [
+        $router->addRoute( 'topic', new \Yaf\Route\Regex( '#^/topic/(\d+)#', [
             'module' => 'topic',
             'controller' => 'page',
             'action' => 'topic'
@@ -40,7 +40,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
             1 => 'id'   
         ] ) );
 
-        $router->addRoute( 'list', new \Yaf\Route\Regex( '#/list(?>/(\d+)?(?>/(\d+))?)?#', [
+        $router->addRoute( 'list', new \Yaf\Route\Regex( '#^/list(?>/(\d+)?(?>/(\d+))?)?#', [
             'module' => 'topic',
             'controller' => 'page',
             'action' => 'list'

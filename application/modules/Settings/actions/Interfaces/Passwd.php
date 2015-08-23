@@ -2,17 +2,19 @@
 
 Class PasswdAction extends \Local\BaseAction {
     private $data = array();
+    protected $type = 'interface';
 
     public function __execute() {
-        $this->type = 'interface';
-
         if( !$this->account ) {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
         $this->paramsProcessing()->checkPasswd()->updatePasswd();
-
         return $this->data;
+    }
+
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function updatePasswd() {
