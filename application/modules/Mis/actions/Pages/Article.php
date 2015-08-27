@@ -47,7 +47,7 @@ Class ArticleAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $id = intval( $this->request->getQuery( 'id' ) );
+        $id = intval( $this->__getQuery( 'id' ) );
 
         $this->params = [
             'id' => $id

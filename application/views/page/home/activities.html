@@ -6,8 +6,8 @@
             $nav = 'activities';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/home/css/activities.css?_t=1440358463457" />
-        <link rel="stylesheet" href="/static/common/css/post.css?_t=1440358463457" />
+        <link rel="stylesheet" href="/static/common/css/post.css?_t=1440613969150" />
+        <link rel="stylesheet" href="/static/home/css/activities.css?_t=1440613969150" />
     </head>
     <body>
         <div id="idizcuz">
@@ -29,6 +29,7 @@
                     </div>
                 </div>
             </div>
+            <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
         <textarea class="templates" id="new-accounts-tpl">
             <% for( var i = 0, l = data.length; i < l; i += 1 ) { var item = data[i]; %>
@@ -71,17 +72,23 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1440358463457"></script>
-        <script src="/static/common/js/qrcode.js?_t=1440358463457"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1440613969150"></script>
+        <script src="/static/common/js/qrcode.js?_t=1440613969150"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js?_t=1440358463413' );
-            idizcuz.mount( 'accounts', '/static/home/packages/Accounts/bootstrap.js?_t=1440358463413' );
+            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js?_t=1440613969106' );
+            idizcuz.mount( 'accounts', '/static/home/packages/Accounts/bootstrap.js?_t=1440613969106' );
 
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1440358463413', {} );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1440358463413', {} );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1440358463413', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1440358463413', {} );
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1440613969106', {
+                signin : +'<?php echo $account ? 1 : 0; ?>',
+                fullFunction : false
+            } );
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1440613969106', {
+                signin : +'<?php echo $account ? 1 : 0; ?>'
+            } );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1440613969106', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1440613969106', {} );
         </script>
+        <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

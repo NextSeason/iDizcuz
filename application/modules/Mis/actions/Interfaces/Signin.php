@@ -46,10 +46,8 @@ Class SigninAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $email = $request->getPost( 'email' );
-        $passwd = $request->getPost( 'passwd' );
+        $email = $this->__getPost( 'email' );
+        $passwd = $this->__getPost( 'passwd' );
 
         if( is_null( $email ) || is_null( $passwd ) ) {
             $this->error( 'PARAMS_ERR' );

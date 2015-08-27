@@ -45,14 +45,12 @@ Class PasswdAction extends \Local\BaseAction {
 
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $opasswd = $request->getPost( 'opasswd' );
+        $opasswd = $this->__getPost( 'opasswd' );
 
         if( is_null( $opasswd ) || strlen( $opasswd ) == 0 ) {
             $this->error( 'PARAMS_ERR' );
         }
-        $npasswd = $request->getPost( 'npasswd' );
+        $npasswd = $this->__getPost( 'npasswd' );
 
         if( is_null( $npasswd ) || strlen( $npasswd ) < 6 || strlen( $npasswd ) > 20 ) {
             $this->error( 'PARAMS_ERR' );

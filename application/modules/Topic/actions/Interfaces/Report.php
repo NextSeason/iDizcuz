@@ -68,21 +68,19 @@ Class ReportAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $post_id = $request->getPost( 'post_id' );
+        $post_id = $this->__getPost( 'post_id' );
 
         if( is_null( $post_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $reason = $request->getPost( 'reason' );
+        $reason = $this->__getPost( 'reason' );
 
         if( is_null( $reason ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $desc = $request->getPost( 'desc' );
+        $desc = $this->__getPost( 'desc' );
 
         $this->params = [
             'post_id' => $post_id,

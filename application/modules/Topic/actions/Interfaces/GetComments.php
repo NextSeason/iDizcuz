@@ -89,17 +89,15 @@ Class GetCommentsAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $post_id = $request->getQuery( 'post_id' );
+        $post_id = $this->__getQuery( 'post_id' );
 
         if( is_null( $post_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $cursor = intval( $request->getQuery( 'cursor' ) );
+        $cursor = intval( $this->__getQuery( 'cursor' ) );
 
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn == 0 ) $rn = 20;
         if( $rn > 100 ) $rn = 100;

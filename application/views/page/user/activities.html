@@ -5,8 +5,9 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1439632615867" />
-        <link rel="stylesheet" type="text/css" href="/static/user/css/activities.css?_t=1439632615867" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1440616672057" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/activities.css?_t=1440616672057" />
+        <link rel="stylesheet" type="text/css" href="/static/common/css/post.css?_t=1440616672057" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -36,58 +37,79 @@
                     </p>
                 </li>
             <% } else { %>
+                <% var txts = { 
+                    '0' : '发布了新的论述', 
+                    '1' : '支持了论述',
+                    '2' : '反对了论述',
+                    '3' : '评论了论述',
+                    '5' : '加入了 每日论点 • iDizcuz'
+                }; %>
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
                     <% var item = data[i], type = item.type; %>
-                    <li>
-                        <div class="activities">
-                            <div class="hline clearfix">
-                                <span class="date r"><%=item.ctime.substr(0,10) %></span>
-                                <a href="/user/activities/<%=item.account_id %>" target="_blank"><%-item.account.uname %></a>
-                                <% if( type == 0 ) { %>
-                                    发布了新的论述
-                                <% } else if( type == 1 ) {%>
-                                    支持了论述
-                                <% } else if( type == 2 ) {%>
-                                    反对了论述
-                                <% } else if( type == 3 ) {%>
-                                    评论了论述
-                                <% } else if( type == 4 ) {%>
-                                    关注了 
-                                    <% if( item.extra.isself ) { %>
-                                        <span>我</span>
-                                    <% } else { %>
-                                        <a href="/user/activities/<%=item.extra.id %>"><%-item.extra.uname %></a>
-                                    <% } %>
-                                <% } else if( type == 5 ) { %>
-                                    加入了 每日论点 • iDizcuz
+                    <li class="activities">
+                        <div class="hline clearfix">
+                            <span class="date r"><%=item.ctime.substr(0,10) %></span>
+                            <a href="/user/activities/<%=item.account_id %>" target="_blank"><%-item.account.uname %></a>
+                            <% if( type == 4 ) {%>
+                                关注了 
+                                <% if( item.extra.isself ) { %>
+                                    <span>我</span>
+                                <% } else { %>
+                                    <a href="/user/activities/<%=item.extra.id %>"><%-item.extra.uname %></a>
                                 <% } %>
-                            </div>
-                            <div class="extra">
-                                <% if( type == 0 || type == 1 || type == 2 ) { %>
-                                    <% var post = item.extra; %>
-                                    <?php include TPL_PATH . '/user/post.tpl.inc.html'; ?>
-                                <% } else if( type == 3 ) {%>
-                                    <% var comment = item.extra; %>
-                                    <div class="extra-comments">
-                                        <p>评论内容：<%-comment.content %></p>
-                                    </div>
+                            <% } else { %>
+                                <%=txts[type] %>
+                            <% } %>
+                        </div>
+                        <div class="extra">
+                            <% if( type == 0 || type == 1 || type == 2 ) { %>
+                                <% var post = item.extra; %>
+                                <?php include TPL_PATH . '/common/post.tpl.html'; ?>
+                            <% } else if( type == 3 ) {%>
+                                <% var comment = item.extra; %>
+                                <div class="extra-comments">
+                                    <p>评论内容：<%-comment.content %></p>
+                                </div>
+                                <% if( comment.post ) { %>
                                     <div class="relation_post">
-                                        <p>相关论述：<a href="/post/<%=comment.post.id %>"><%-comment.post.title %></a></p>
+                                        <p>论述：<a href="/post/<%=comment.post.id %>"><%-comment.post.title %></a></p>
                                     </div>
-                                <% } else if( type == 4 ) {%>
-                                    <% var card = item.extra; %>
-                                    <?php include TPL_PATH . '/user/card_h.tpl.html'; ?>
                                 <% } %>
-                            </div>
+                            <% } else if( type == 4 ) {%>
+                                <% var card = item.extra; %>
+                                <?php include TPL_PATH . '/user/card_h.tpl.html'; ?>
+                            <% } %>
                         </div>
                     </li>
                 <% } %>
             <% } %>
         </textarea>
+        <textarea class="templates" id="comment-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                <li>
+                    <?php include TPL_PATH . '/common/comment.tpl.html'; ?>
+                </li>
+            <% } %>
+        </textarea>
+        <script src="/static/common/js/qrcode.js?_t=1440616672057"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1440616672057"></script>
         <script>
-            var iDizcuz = new J();
-            iDizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js?_t=1439632615820', { self : <?php echo $self ? 1 : 0; ?>});
-            iDizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1439632615820', {});
+            var idizcuz = new J();
+            idizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js?_t=1440616672013', { 
+                self : +'<?php echo $self ? 1 : 0; ?>',
+                accountId : +'<?php echo $user['id']; ?>'
+            } );
+            idizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1440616672013', {});
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1440616672013', {
+                signin : +'<?php echo $account ? 1 : 0; ?>',
+                fullFunction : false
+            } );
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1440616672013', {
+                signin : +'<?php echo $account ? 1 : 0; ?>'
+            } );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1440616672013', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1440616672013', {} );
+ 
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

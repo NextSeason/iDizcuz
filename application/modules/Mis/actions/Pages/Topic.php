@@ -68,7 +68,7 @@ Class TopicAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $id = $this->request->getQuery( 'id' );
+        $id = $this->__getQuery( 'id' );
         $this->params[ 'id' ] = $id;
         return $this;
     }

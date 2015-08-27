@@ -30,10 +30,8 @@ Class ArticlesAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $start = intval( $request->getQuery( 'start' ) );
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $start = intval( $this->__getQuery( 'start' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn < 1 ) $rn = 20;
 

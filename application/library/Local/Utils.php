@@ -87,4 +87,41 @@ Class Utils {
         foreach( $arr as $v ) $res[$v[$key]] = $v;
         return $res;
     }
+
+    static public function encodeId( $id ) {
+        if( $id === 0 ) return 0;
+        return $id ^ 0x11080509;  
+    }
+
+    static public function decodeId( $sid ) {
+        if( $sid === 0 ) return 0;
+        if( !is_numeric( $sid ) ) return 0;  
+        return $sid ^ 0x11080509;  
+    }
+
+    static function traverseEncodeId( $arr ) {
+        foreach( $arr as $k => &$v ) {
+            if( is_array( $v ) ) {
+                $v = Utils::traverseEncodeId( $v );
+            } else {
+                if( $k === 'id' || preg_match( '#_id$#', $k ) ) {
+                    $v = Utils::encodeId( $v );
+                }
+            }
+        }
+        return $arr;
+    }
+
+    static function traverseDecodeId( $arr ) {
+        foreach( $arr as $k => &$v ) {
+            if( is_array( $v ) ) {
+                $v = Utils::traverseDecodeId( $v );
+            } else {
+                if( $k === 'id' || preg_match( '#_id$#', $k ) ) {
+                    $v = Utils::decodeId( $v );
+                }
+            }
+        }
+        return $arr;
+    }
 }

@@ -149,9 +149,7 @@ Class PostAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $content = $request->getPost( 'content' );
+        $content = $this->__getPost( 'content' );
 
         $contentTxt = strip_tags( $content );
 
@@ -167,23 +165,23 @@ Class PostAction extends \Local\BaseAction {
 
         $content = \Local\EditorPurifier::purify( $content );
 
-        $topic_id = $request->getPost( 'topic_id' );
+        $topic_id = $this->__getPost( 'topic_id' );
 
         if( is_null( $topic_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $point_id = $request->getPost( 'point_id' );
+        $point_id = $this->__getPost( 'point_id' );
 
         if( is_null( $point_id ) ) {
             $point_id = 0;
         }
 
-        $title = $request->getPost( 'title' );
+        $title = $this->__getPost( 'title' );
 
-        $to = intval( $request->getPost( 'to' ) );
+        $to = intval( $this->__getPost( 'to' ) );
 
-        $imagecode = $request->getPost( 'imagecode' );
+        $imagecode = $this->__getPost( 'imagecode' );
 
         if( is_null( $imagecode ) ) {
             $this->error( 'PARAMS_ERR' );

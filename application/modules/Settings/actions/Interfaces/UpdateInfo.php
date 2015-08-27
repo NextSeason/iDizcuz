@@ -41,33 +41,31 @@ Class UpdateInfoAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $sex = $request->getPost( 'sex' );
+        $sex = $this->__getPost( 'sex' );
 
         if( is_null( $sex ) || !in_array( $sex, [ 0, 1, 2 ] ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $desc = $request->getPost( 'desc' );
+        $desc = $this->__getPost( 'desc' );
 
         if( is_null( $desc ) ) {
             $desc = '';
         }
 
-        $employment = $request->getPost( 'employment' );
+        $employment = $this->__getPost( 'employment' );
 
         if( is_null( $employment ) ) {
             $employment = '';
         }
 
-        $position = $request->getPost( 'position' );
+        $position = $this->__getPost( 'position' );
 
         if( is_null( $position ) ) {
             $position = '';
         }
 
-        $industry = $request->getPost( 'industry' );
+        $industry = $this->__getPost( 'industry' );
 
         if( is_null( $industry ) ) {
             $this->error( 'PARAMS_ERR' );
@@ -81,7 +79,7 @@ Class UpdateInfoAction extends \Local\BaseAction {
             }
         }
 
-        $birth = $request->getPost( 'birth' );
+        $birth = $this->__getPost( 'birth' );
 
         if( is_null( $birth ) || !strtotime( $birth ) ) {
             $birth = '0000-00-00';

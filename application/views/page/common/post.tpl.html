@@ -1,7 +1,7 @@
 <div class="posts" id="post-<%=post.id %>" data-post-id="<%=post.id %>">
     <div class="data-line clearfix">
         <% if( post.point_id != 0 ) {  %>
-            <span href="###" class="flags"><i class="fa fa-flag point-flag-<%-post.point_id %>"></i></span>
+            <span class="flags"><i class="fa fa-flag point-flag-<%-post.point_id %>"></i></span>
         <% } %>
         <div class="operates r">
             <% if( !post.own ) { %>
@@ -62,7 +62,7 @@
                     <div class="share-link">
                         <div class="line clearfix">
                             <span class="l">分享此条论述：</span>
-                            <a href="http://www.idizcuz.com/post/<%=post.id %>?fr=share" data-title="<%-post.title %>" target="_blank" class="share-post-link link l">
+                            <a href="/post/<%=post.id %>?fr=share" data-title="<%-post.title %>" target="_blank" class="share-post-link link l">
                                 http://www.idizcuz.com/post/<%=post.id %>?fr=share
                             </a>
                             <a href="###" class="btns l copy-link">复制链接</a>

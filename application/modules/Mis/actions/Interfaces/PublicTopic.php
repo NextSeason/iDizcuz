@@ -26,10 +26,8 @@ Class PublicTopicAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $id = $request->getPost('id');
-        $status = $request->getPost( 'status' );
+        $id = $this->__getPost('id');
+        $status = $this->__getPost( 'status' );
 
         $this->params = [
             'id' => $id,

@@ -55,7 +55,7 @@ Class TopicPointsDataAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $id = $this->request->getQuery( 'id' );
+        $id = $this->__getQuery( 'id' );
 
         if( is_null( $id ) ) {
             $this->error( 'PARAMS_ERR' );

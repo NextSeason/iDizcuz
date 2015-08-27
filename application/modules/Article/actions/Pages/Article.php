@@ -58,7 +58,7 @@ Class ArticleAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $id = $this->request->getParam( 'id' );
+        $id = $this->__getParam( 'id' );
 
         $this->params = [
             'id' => $id

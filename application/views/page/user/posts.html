@@ -5,7 +5,8 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1439632615875" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1440616672077" />
+        <link rel="stylesheet" type="text/css" href="/static/common/css/post.css?_t=1440616672078" />
     </head>
     <body>
         <div id="idizcuz">
@@ -17,7 +18,6 @@
                     </div>
                     <div class="main">
                         <?php include TPL_PATH . '/user/nav.inc.html'; ?>
-                        <div class="loading"></div>
                         <ul class="post-list"></ul>
                         <div class="load-more">加载更多论述</div>
                     </div>
@@ -25,14 +25,46 @@
             </div>
             <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
-        <?php include TPL_PATH . '/user/posts.tpl.html'; ?>
+        <textarea class="templates" id="post-list-tpl">
+            <% if( !data.length ) { %>
+                <li>
+                    <p class="empty">
+                        暂时没有最新论述动态
+                    </p>
+                </li>
+            <% } else { %>
+                <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                    <% var post = data[i]; %>
+                    <li>
+                        <?php include TPL_PATH . '/common/post.tpl.html'; ?>
+                    </li>
+                <% } %>
+            <% } %>
+        </textarea>
+        <textarea class="templates" id="comment-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
+                <li>
+                    <?php include TPL_PATH . '/common/comment.tpl.html'; ?>
+                </li>
+            <% } %>
+        </textarea>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1440616672078"></script>
+        <script src="/static/common/js/qrcode.js?_t=1440616672078"></script>
         <script>
-            var iDizcuz = new J();
-            iDizcuz.mount( 'posts', '/static/user/packages/Posts/bootstrap.js?_t=1439632615827', {
+            var idizcuz = new J();
+            idizcuz.mount( 'posts', '/static/user/packages/Posts/bootstrap.js?_t=1440616672020', {
                 url : '/user/interface/userposts',
                 userId : +'<?php echo $user['id']; ?>'
             } );
-            iDizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1439632615827', {});
+
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1440616672020', {
+                signin : +'<?php echo $account ? 1 : 0; ?>',
+                fullFunction : 0
+            } );
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1440616672020', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1440616672020', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1440616672020', {} );
+            idizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1440616672020', {});
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

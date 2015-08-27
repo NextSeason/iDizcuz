@@ -134,7 +134,7 @@ Class PostAction extends \Local\BaseAction {
 
     private function paramsProcessing() {
         
-        $id = $this->request->getParam( 'id' );
+        $id = $this->__getParam( 'id' );
 
         if( is_null( $id ) ) {
             $this->redirect( '/' );

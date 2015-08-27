@@ -57,19 +57,16 @@ Class GetMessagesAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
+        $cursor = intval( $this->__getQuery( 'cursor' ) );
 
-
-        $cursor = intval( $request->getQuery( 'cursor' ) );
-
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn <= 0 ) $rn = 20;
         if( $rn > 100 ) $rn = 100;
 
-        $read = $request->getQuery( 'read' );
+        $read = $this->__getQuery( 'read' );
 
-        $type = intval( $request->getQuery( 'type' ) );
+        $type = intval( $this->__getQuery( 'type' ) );
 
         $this->params = [
             'cursor' => $cursor,

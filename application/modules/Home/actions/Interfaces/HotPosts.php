@@ -48,14 +48,13 @@ Class HotPostsAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-        $topic_id = $request->getQuery( 'topic_id' );
+        $topic_id = $this->__getQuery( 'topic_id' );
 
         if( is_null( $topic_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         $this->params = [
             'topic_id' => $topic_id,

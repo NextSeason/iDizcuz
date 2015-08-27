@@ -89,7 +89,7 @@ Class GetPostAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $post_id = $this->request->getQuery( 'post_id' );
+        $post_id = $this->__getQuery( 'post_id' );
 
         if( is_null( $post_id ) ) {
             $this->error( 'PARAMS_ERR' );

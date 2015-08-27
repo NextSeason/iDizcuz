@@ -98,11 +98,9 @@ Class WriteAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
+        $topic = $this->__getQuery( 'topic' );
 
-        $topic = $request->getQuery( 'topic' );
-
-        $post = $request->getQuery( 'post' );
+        $post = $this->__getQuery( 'post' );
 
         if( is_null( $topic ) && is_null( $post ) ) {
             $this->redirect( '/' );

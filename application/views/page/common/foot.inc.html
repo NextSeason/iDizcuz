@@ -23,3 +23,37 @@
         </small>
     </div>
 </div>
+<div id="signin-dialog">
+    <div class="wrap">
+        <div class="inner">
+            <a href="###" class="close"><i class="fa fa-close"></i></a>
+            <form class="global-signin">
+                <p class="tt">帐号登录</p>
+                <div class="line">
+                    <input type="text" class="email" placeholder="邮箱">
+                </div>
+                <div class="line">
+                    <input type="password" class="passwd" placeholder="密码">
+                </div>
+                <p class="signin-tip"></p>
+                <div class="line link-line">
+                    <label>
+                        <input type="checkbox" class="remember" />
+                        <span>记住我</span>
+                    </label> 
+                    <span class="sp">|</span>
+                    <a href="/forget">忘记密码？</a>
+                    <span class="sp">|</span>
+                    <a href="/signup">注册</a>
+                </div>
+                <div class="line">
+                    <input type="submit" class="btns larger signin-btn" value="登录">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    new J().mount( 'iDizcuz-Signin', '/static/common/packages/Signin/bootstrap.js?_t=1440618193333' );
+</script>
+

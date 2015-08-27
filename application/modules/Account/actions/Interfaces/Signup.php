@@ -97,15 +97,14 @@ Class SignupAction extends \Local\BaseAction {
 
 
     private function paramsProcessing() {
-        $request = $this->request;
 
-        $email = $request->getPost( 'email' );
+        $email = $this->__getPost( 'email' );
 
         if( is_null( $email ) || !filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $uname = $request->getPost( 'uname' );
+        $uname = $this->__getPost( 'uname' );
 
         if( is_null( $uname ) ) {
             $this->error( 'PARAMS_ERR' );
@@ -117,7 +116,7 @@ Class SignupAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $passwd = $request->getPost( 'passwd' );
+        $passwd = $this->__getPost( 'passwd' );
 
         if( is_null( $passwd ) ) {
             $this->error( 'PARAMS_ERR' );
@@ -128,7 +127,7 @@ Class SignupAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $vcode = $request->getPost( 'vcode' );
+        $vcode = $this->__getPost( 'vcode' );
 
         if( is_null( $vcode ) || strlen( $vcode ) != 6 ) {
             $this->error( 'PARAMS_ERR' );

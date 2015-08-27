@@ -27,15 +27,13 @@ Class MessagesAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $tab = intval( $request->getQuery( 'tab' ) );
+        $tab = intval( $this->__getQuery( 'tab' ) );
 
         if( $tab < 0 || $tab > 4 ) {
             $tab = 0;
         }
 
-        $type = intval( $request->getQuery( 'type' ) );
+        $type = intval( $this->__getQuery( 'type' ) );
 
         $this->params = [
             'type' => $type,

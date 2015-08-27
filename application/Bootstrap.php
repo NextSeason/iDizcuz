@@ -87,7 +87,6 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
     }
 
     public function _initSession() {
-        // session_start();
         \Yaf\Session::getInstance()->start();
     }
 }

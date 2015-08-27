@@ -84,10 +84,8 @@ Class SigninAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
         // get email from post data
-        $email = $request->getPost( 'email' );
+        $email = $this->__getPost('email');
 
         /**
          * check if email is validate before check it from database
@@ -97,7 +95,7 @@ Class SigninAction extends \Local\BaseAction {
         }
 
         // get password
-        $passwd = $request->getPost( 'passwd' );
+        $passwd = $this->__getPost('passwd');
 
         // check password is exists
         if( is_null( $passwd ) ) {
@@ -111,7 +109,7 @@ Class SigninAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $remember = intval( $request->getPost( 'remember' ) );
+        $remember = intval( $this->__getPost('remember') );
 
         $this->params = array(
             'email' => $email,

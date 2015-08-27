@@ -72,16 +72,13 @@ Class MarkAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-
-        $request = $this->request;
-
-        $post_id = $request->getPost( 'post_id' );
+        $post_id = $this->__getPost( 'post_id' );
 
         if( is_null( $post_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $act = $request->getPost( 'act' );
+        $act = $this->__getPost( 'act' );
 
         if( is_null( $act ) || !in_array( $act, [ 0, 1 ] ) ) {
             $this->error( 'PARAMS_ERR' );

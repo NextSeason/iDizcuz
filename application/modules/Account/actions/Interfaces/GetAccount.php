@@ -71,7 +71,7 @@ Class GetAccountAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $account_id = $this->request->getQuery( 'account_id' );
+        $account_id = $this->__getQuery('account_id');
 
         $this->params = [
             'account_id' => $account_id     

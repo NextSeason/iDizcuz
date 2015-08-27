@@ -60,22 +60,20 @@ Class VotedPostsAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $account = $request->getQuery( 'account' );
+        $account = $this->__getQuery( 'account' );
         if( is_null( $account ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $opinion = $request->getQuery( 'opinion' );
+        $opinion = $this->__getQuery( 'opinion' );
 
         if( is_null( $opinion ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $start = intval( $request->getQuery( 'start' ) );
+        $start = intval( $this->__getQuery( 'start' ) );
 
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn == 0 ) $rn = 20;
 

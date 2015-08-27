@@ -82,17 +82,15 @@ Class ArticleAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $title = $request->getPost( 'title' );
+        $title = $this->__getPost( 'title' );
 
         if( is_null( $title ) || !strlen( $title ) ) {
             $this->error( 'PARAMS_ERR', 'event title is required' ); 
         }
 
-        $topic_id = intval( $request->getPost( 'topic_id' ) );
+        $topic_id = intval( $this->__getPost( 'topic_id' ) );
 
-        $time = $request->getPost( 'time' );
+        $time = $this->__getPost( 'time' );
 
         if( is_null( $time ) || !strlen( $time ) ) {
             $time = date( 'Y-m-d', $_SERVER['REQUEST_TIME'] );
@@ -101,17 +99,17 @@ Class ArticleAction extends \Local\MisAction {
         }
 
         $this->params = [
-            'id' => intval( $request->getPost('id') ),
+            'id' => intval( $this->__getPost('id') ),
             'topic_id' => $topic_id,
             'title' => $title,
-            'img' => $request->getPost( 'img' ),
-            'summary' => $request->getPost( 'summary' ),
+            'img' => $this->__getPost( 'img' ),
+            'summary' => $this->__getPost( 'summary' ),
             'time' => $time, 
-            'origin' => $request->getPost( 'origin' ),
-            'origin_url' => $request->getPost( 'origin_url' ),
-            'origin_logo' => $request->getPost( 'origin_logo' ),
-            'author' => $request->getPost( 'author' ),
-            'content' => $request->getPost( 'content' )
+            'origin' => $this->__getPost( 'origin' ),
+            'origin_url' => $this->__getPost( 'origin_url' ),
+            'origin_logo' => $this->__getPost( 'origin_logo' ),
+            'author' => $this->__getPost( 'author' ),
+            'content' => $this->__getPost( 'content' )
         ];
 
         return $this;

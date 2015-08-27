@@ -26,7 +26,7 @@ Class RemoveAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $id = $this->request->getPost( 'id' );
+        $id = $this->__getPost( 'id' );
 
         if( is_null( $id ) ) {
             $this->error( 'PARAMS_ERR' );

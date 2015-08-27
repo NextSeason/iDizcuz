@@ -77,32 +77,30 @@ Class GetPostsAction extends \Local\BaseAction {
         }
 
         foreach( $postsData as &$postData ) {
-            $postData = $postData['id'];
+            $postData = \Local\Utils::encodeId( $postData['id'] );
         }
 
         return $postsData;
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $topic_id = $request->getQuery( 'topic' );
+        $topic_id = $this->__getQuery( 'topic_id' );
 
         if( is_null( $topic_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $point_id = intval( $request->getQuery( 'point' ) );
+        $point_id = intval( $this->__getQuery( 'point_id' ) );
 
-        $order = intval( $request->getQuery( 'order' ) );
+        $order = intval( $this->__getQuery( 'order' ) );
 
         if( $order > 2 ) $order = 0;
 
-        $start = intval( $request->getQuery( 'start' ) );
+        $start = intval( $this->__getQuery( 'start' ) );
 
         if( $start < 0 ) $start = 0;
 
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn == 0 ) $rn = 20;
         if( $rn > 100 ) $rn = 100;

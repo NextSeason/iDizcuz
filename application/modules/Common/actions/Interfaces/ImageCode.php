@@ -82,21 +82,19 @@ Class ImageCodeAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $width = intval( $request->getQuery( 'width' ) );
+        $width = intval( $this->__getQuery( 'width' ) );
 
         if( $width == 0 ) {
             $width = 120;
         }
 
-        $height = intval( $request->getQuery( 'height' ) );
+        $height = intval( $this->__getQuery( 'height' ) );
 
         if( $height == 0 ) {
             $height = 40;
         }
 
-        $len = intval( $request->getQuery( 'len' ) );
+        $len = intval( $this->__getQuery( 'len' ) );
 
         if( $len == 0 ) {
             $len = 4;

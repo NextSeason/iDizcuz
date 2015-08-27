@@ -79,13 +79,19 @@ Class PostListAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $ids = $this->request->getQuery( 'ids' );
+        $ids = $this->__getQuery( 'ids' );
 
         if( is_null( $ids ) || !strlen( $ids ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $this->params['ids'] = explode( ',', $ids );
+        $ids = explode( ',', $ids );
+
+        foreach( $ids as &$id ) {
+            $id = \Local\Utils::decodeId( $id );
+        }
+
+        $this->params['ids'] = $ids;
 
         return $this;
     }

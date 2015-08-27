@@ -49,10 +49,10 @@ Class AccountsAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $cursor = intval( $this->request->getQuery('cursor') );
+        $cursor = intval( $this->__getQuery('cursor') );
         if( $cursor < 0 ) $cursor = 0;
 
-        $rn = intval( $this->request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn < 1 ) $rn = 20;
 

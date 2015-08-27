@@ -46,11 +46,9 @@ Class TopicsAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $type = $request->getQuery( 'type' );
-        $start = intval( $request->getQuery( 'start' ) );
-        $rn = $request->getQuery( 'rn' );
+        $type = $this->__getQuery( 'type' );
+        $start = intval( $this->__getQuery( 'start' ) );
+        $rn = $this->__getQuery( 'rn' );
         if( $rn < 1 ) $rn = 20;
 
         $this->params = [

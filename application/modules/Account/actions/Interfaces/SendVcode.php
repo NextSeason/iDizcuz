@@ -117,14 +117,14 @@ Class SendVcodeAction extends \Local\BaseAction {
     private function paramsProcessing() {
         $actions_list = array( 'signin', 'signup', 'forget', 'reset_passwd' );
 
-        $do = $this->request->getPost( 'do' );
+        $do = $this->__getPost('do');
 
         if( !in_array( $do, $actions_list ) ) $this->error( 'PARAMS_ERR' );
 
         /**
          * get email address or cellphone number which user typed in
          */
-        $to = $this->request->getPost( 'to' );
+        $to = $this->__getPost('to');
 
         if( filter_var( $to, FILTER_VALIDATE_EMAIL ) ) {
             $type = 'email';

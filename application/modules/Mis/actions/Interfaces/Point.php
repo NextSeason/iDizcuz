@@ -49,17 +49,15 @@ Class PointAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
+        $id = $this->__getPost( 'id' );
 
-        $id = $request->getPost( 'id' );
-
-        $title = $request->getPost('title');
+        $title = $this->__getPost('title');
 
         if( is_null( $title ) || strlen( $title ) == 0 ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $desc = $request->getPost( 'desc' );
+        $desc = $this->__getPost( 'desc' );
 
         if( is_null( $desc ) || strlen( $desc ) == 0 ) {
             $this->error( 'PARAMS_ERR' );

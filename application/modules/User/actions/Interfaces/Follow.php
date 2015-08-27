@@ -93,7 +93,7 @@ Class FollowAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $account_id = $this->request->getPost( 'account_id' );
+        $account_id = $this->__getPost( 'account_id' );
 
         if( is_null( $account_id ) ) {
             $this->error( 'PARAMS_ERR' );

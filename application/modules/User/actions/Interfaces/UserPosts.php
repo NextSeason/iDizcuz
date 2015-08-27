@@ -32,7 +32,6 @@ Class UserPostsAction extends \Local\BaseAction {
                 $post[ 'id' ], 
                 $account_id
             );
-
             $post[ 'mark' ] = $mark ? $mark[ 'id' ] : 0;
         }
         return $this;
@@ -122,6 +121,12 @@ Class UserPostsAction extends \Local\BaseAction {
             if( $post['to'] != 0 ) {
                 $post['to'] = $postModel->get( $post['to'], [ 'id', 'title' ] );
             }
+
+            if( $this->account && $post['account_id'] == $this->account['id'] ) {
+                $post['own'] = 1;
+            } else {
+                $post['own'] = 0;
+            }
             $posts[] = $post;
         }
 
@@ -131,19 +136,17 @@ Class UserPostsAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $account_id = $request->getQuery( 'account_id' );
+        $account_id = $this->__getQuery( 'account_id' );
 
         if( is_null( $account_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $cursor = intval( $request->getQuery( 'cursor' ) );
+        $cursor = intval( $this->__getQuery( 'cursor' ) );
 
         if( $cursor < 0 ) $cursor = 0;
 
-        $rn = $request->getQuery( 'rn' );
+        $rn = $this->__getQuery( 'rn' );
 
         $rn = intval( $rn );
 

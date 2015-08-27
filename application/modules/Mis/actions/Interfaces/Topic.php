@@ -62,11 +62,9 @@ Class TopicAction extends \Local\MisAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
+        $id = $this->__getPost( 'id' );
 
-        $id = $request->getPost( 'id' );
-
-        $title = $request->getPost( 'title' );
+        $title = $this->__getPost( 'title' );
 
         if( is_null( $title ) ) {
             $this->error( 'PARAMS_ERR', 'Topic title is null' );
@@ -82,25 +80,25 @@ Class TopicAction extends \Local\MisAction {
             $this->error( 'PARAMS_ERR', 'Topic title is too long' );
         }
 
-        $desc = $request->getPost( 'desc' );
+        $desc = $this->__getPost( 'desc' );
 
         if( is_null( $desc ) || !strlen( $desc) ) {
             $this->error( 'PARAMS_ERR', 'Topic description is empty' );
         }
 
-        $type = $request->getPost( 'type' );
+        $type = $this->__getPost( 'type' );
 
         if( !isset( $type ) || !in_array( $type, array( 2, 1 ) ) ) {
             $this->error( 'PARAMS_ERR', 'You need to select a type for this topic' );
         }
 
-        $cid = $request->getPost( 'cid' );
+        $cid = $this->__getPost( 'cid' );
 
         if( empty( $cid ) ) {
             $this->error( 'PARAMS_ERR', 'You must to select a category for this topic' ); 
         }
 
-        $points = $request->getPost( 'points' );
+        $points = $this->__getPost( 'points' );
 
         if( $type == 1 && ( is_null( $points ) || !strlen( $points ) ) ) {
             $this->error( 'PARAMS_ERR', 'points is required' );

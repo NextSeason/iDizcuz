@@ -83,7 +83,7 @@ Class LatestPostsAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $rn = $this->request->getQuery( 'rn' );
+        $rn = $this->__getQuery( 'rn' );
 
         $this->params = [
             'rn' => $rn

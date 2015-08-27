@@ -60,11 +60,9 @@ Class ListAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
+        $id = $this->__getParam( 'id' );
 
-        $id = $request->getParam( 'id' );
-
-        $pn = intval( $request->getParam( 'pn' ) );
+        $pn = intval( $this->__getParam( 'pn' ) );
 
         if( $pn < 1 ) $pn = 1;
 

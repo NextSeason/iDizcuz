@@ -13,10 +13,12 @@ Class VoteAction extends \Local\BaseAction {
 
         $this->paramsProcessing()->checkPost()->addVote();
 
+        /*
         $this->record( [
             'type' => $this->params['opinion'] == 1 ? 1 : 2,
             'relation_id' => $this->params['post_id']
         ] );
+         */
 
         return $this->data;
     }
@@ -56,27 +58,25 @@ Class VoteAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $post_id = $request->getPost( 'post_id' );
+        $post_id = $this->__getPost( 'post_id' );
 
         if( is_null( $post_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $opinion = $request->getPost( 'opinion' );
+        $opinion = $this->__getPost( 'opinion' );
 
         if( is_null( $opinion ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $type = $request->getPost( 'type' );
+        $type = $this->__getPost( 'type' );
 
         if( is_null( $type ) || !in_array( $type, [ 0, 1, 2 ] ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $value = intval( $request->getPost( 'value' ) );
+        $value = intval( $this->__getPost( 'value' ) );
 
         if( $value <= 0 ) {
             $this->error( 'PARAMS_ERR' );

@@ -15,6 +15,10 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
 
     protected $accountModel;
 
+    public $__posts = [];
+    public $__queries = [];
+    public $__params = [];
+
     public function execute() {
         $this->session = \Yaf\Session::getInstance();
         $this->request = $this->getRequest();
@@ -28,6 +32,8 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
             $this->checkRemember();
         }
 
+        $this->decodeParams();
+
         $detect = new \Local\MobileDetect();
 
         if( $detect->isMobile() && !$detect->isTablet() ) {
@@ -37,13 +43,31 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         }
 
         if( $this->type == 'interface' ) {
-            $this->controller->success( $data );
+            $this->controller->success( Utils::traverseEncodeId( $data ) );
         } else {
             if( empty( $data['account'] ) ) {
                 $data[ 'account' ] = $this->session[ 'account' ];
             }
-            $this->display( $this->tpl, $data );
+            $this->display( $this->tpl, Utils::traverseEncodeId( $data ) );
         }
+    }
+
+    private function decodeParams() {
+        $this->__queries = Utils::traverseDecodeId( $this->request->getQuery() );
+        $this->__posts = Utils::traverseDecodeId( $this->request->getPost() );
+        $this->__params = Utils::traverseDecodeId( $this->request->getParams() );
+    }
+
+    public function __getPost( $key ) {
+        return isset( $this->__posts[ $key ] ) ? $this->__posts[ $key ] : null;
+    }
+
+    public function __getParam( $key ) {
+        return isset( $this->__params[ $key ] ) ? $this->__params[ $key ] : null;
+    }
+
+    public function __getQuery( $key ) {
+        return isset( $this->__queries[ $key ] ) ? $this->__queries[ $key ] : null;
     }
 
     protected function checkRemember() {

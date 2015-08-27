@@ -65,20 +65,19 @@ Class ForgetResetAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
+        $email = $this->__getPost('email');
 
-        $email = $request->getPost( 'email' );
         if( is_null( $email ) || !filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
             $this->error( 'PARAMS_ERR' );
         } 
 
-        $token = $request->getPost( 'token' );
+        $token = $this->__getPost('token');
 
         if( is_null( $token ) || !strlen( $token ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $passwd = $request->getPost( 'passwd' );
+        $passwd = $this->__getPost('passwd');
 
         if( is_null( $passwd ) || strlen( $passwd ) > 20 || strlen( $passwd ) < 6 ) {
             $this->error( 'PARAMS_ERR' );

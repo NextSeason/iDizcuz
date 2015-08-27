@@ -28,10 +28,12 @@ Class CommentAction extends \Local\BaseAction {
 
         $this->addComment()->sendMessage();
 
+        /*
         $this->record( [
             'type' => 3,
             'relation_id' => $this->data['comment_id']
         ] );
+         */
 
         $this->data['account'] = [
             'id' => $this->account[ 'id' ],
@@ -175,15 +177,13 @@ Class CommentAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $post_id = $request->getPost( 'post_id' );
+        $post_id = $this->__getPost( 'post_id' );
 
         if( is_null( $post_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $content = $request->getPost( 'content' );
+        $content = $this->__getPost( 'content' );
 
         if( is_null( $content ) || strlen( $content ) == 0 ) {
             $this->error( 'PARAMS_ERR' );
@@ -193,7 +193,7 @@ Class CommentAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $reply_comment_id = intval( $request->getPost( 'comment_id' ) );
+        $reply_comment_id = intval( $this->__getPost( 'comment_id' ) );
 
         $this->params = [
             'post_id' => $post_id,

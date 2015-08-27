@@ -49,15 +49,13 @@ Class ForgetAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $email = $request->getPost( 'email' );
+        $email = $this->__getPost('email');
 
         if( is_null( $email ) || !filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $vcode = $request->getPost( 'vcode' );
+        $vcode = $this->__getPost('vcode');
 
         if( is_null( $vcode ) || strlen( $vcode ) != 6 ) {
             $this->error( 'VCODE_ERR' );

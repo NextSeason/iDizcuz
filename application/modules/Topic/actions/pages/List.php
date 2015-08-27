@@ -94,11 +94,9 @@ Class ListAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
+        $cid = intval( $this->__getParam('cid') );
 
-        $cid = intval( $request->getParam('cid') );
-
-        $pn = intval( $request->getParam( 'pn' ) );
+        $pn = intval( $this->__getParam( 'pn' ) );
 
         if( $pn < 1 ) $pn = 1;
 

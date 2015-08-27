@@ -46,7 +46,7 @@ Class ForgetResetAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $token = $this->request->getQuery( 'token' );
+        $token = $this->__getQuery( 'token' );
 
         if( is_null( $token ) || !strlen( $token ) ) {
             $this->redirect( '/' );

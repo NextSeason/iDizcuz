@@ -35,11 +35,11 @@ Class GetActivitiesAction extends \Local\BaseAction {
         }
 
         $post['mark'] = 0; 
-        $post['mine'] = 0;
+        $post['own'] = 0;
 
         if( $this->account ) {
             if( $this->account['id'] == $post['account_id'] ) {
-                $post['mine'] = 1;
+                $post['own'] = 1;
             } else {
                 $markModel = new MarkModel();
                 $mark = $markModel->getMarkByPostAndAccount( 
@@ -204,17 +204,15 @@ Class GetActivitiesAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $cursor = intval( $request->getQuery( 'cursor' ) );
+        $cursor = intval( $this->__getQuery( 'cursor' ) );
 
         if( $cursor < 0 ) $cursor = 0;
 
-        $account_id = $request->getQuery( 'account_id' );
+        $account_id = $this->__getQuery( 'account_id' );
 
-        $follower_id = $request->getQuery( 'follower_id' );
+        $follower_id = $this->__getQuery( 'follower_id' );
 
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn < 1 ) $rn = 20;
 

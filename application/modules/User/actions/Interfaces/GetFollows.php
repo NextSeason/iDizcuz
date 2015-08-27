@@ -94,15 +94,13 @@ Class GetFollowsAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
+        $account = $this->__getQuery( 'account' );
 
-        $account = $request->getQuery( 'account' );
-
-        $start = intval( $request->getQuery( 'start' ) );
+        $start = intval( $this->__getQuery( 'start' ) );
 
         if( $start < 0 ) $start = 0;
 
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn <= 0 ) $rn = 20;
         if( $rn > 100 ) $rn = 100;

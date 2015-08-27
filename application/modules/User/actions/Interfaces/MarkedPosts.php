@@ -103,6 +103,12 @@ Class MarkedPostsAction extends \Local\BaseAction {
             $post['data'] = $post_data;
             $post['account'] = $accountModel->get( $post[ 'account_id' ], array( 'id', 'uname', 'desc' ) );
             $post['topic'] = $topicModel->get( $post['topic_id'] );
+
+            if( $this->account && $this->account['id'] == $post['account_id'] ) {
+                $post['own'] = 1;
+            } else {
+                $post['own'] = 0;
+            }
             $posts[] = $post;
         }
 
@@ -112,19 +118,17 @@ Class MarkedPostsAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $request = $this->request;
-
-        $account_id = $request->getQuery( 'account_id' );
+        $account_id = $this->__getQuery( 'account_id' );
 
         if( is_null( $account_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
-        $cursor = intval( $request->getQuery( 'cursor' ) );
+        $cursor = intval( $this->__getQuery( 'cursor' ) );
 
         if( $cursor < 0 ) $cursor = 0;
 
-        $rn = intval( $request->getQuery( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn <= 0 ) $rn = 20;
         if( $rn > 100 ) $rn = 100;
