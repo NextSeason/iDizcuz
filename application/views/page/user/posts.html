@@ -5,8 +5,8 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1440616672077" />
-        <link rel="stylesheet" type="text/css" href="/static/common/css/post.css?_t=1440616672078" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1440700563815" />
+        <link rel="stylesheet" type="text/css" href="/static/common/css/post.css?_t=1440700563815" />
     </head>
     <body>
         <div id="idizcuz">
@@ -48,23 +48,23 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1440616672078"></script>
-        <script src="/static/common/js/qrcode.js?_t=1440616672078"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1440700563815"></script>
+        <script src="/static/common/js/qrcode.js?_t=1440700563815"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/user/packages/Posts/bootstrap.js?_t=1440616672020', {
+            idizcuz.mount( 'posts', '/static/user/packages/Posts/bootstrap.js?_t=1440700563769', {
                 url : '/user/interface/userposts',
                 userId : +'<?php echo $user['id']; ?>'
             } );
 
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1440616672020', {
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1440700563769', {
                 signin : +'<?php echo $account ? 1 : 0; ?>',
                 fullFunction : 0
             } );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1440616672020', {} );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1440616672020', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1440616672020', {} );
-            idizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1440616672020', {});
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1440700563769', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1440700563769', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1440700563769', {} );
+            idizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1440700563769', {});
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

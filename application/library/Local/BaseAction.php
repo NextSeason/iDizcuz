@@ -52,7 +52,7 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         }
     }
 
-    private function decodeParams() {
+    protected function decodeParams() {
         $this->__queries = Utils::traverseDecodeId( $this->request->getQuery() );
         $this->__posts = Utils::traverseDecodeId( $this->request->getPost() );
         $this->__params = Utils::traverseDecodeId( $this->request->getParams() );

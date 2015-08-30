@@ -17,7 +17,7 @@ Class GetFansAction extends \Local\BaseAction {
 
     private function getTotal() {
         $accountDataModel = new AccountDataModel();
-        $account_data = $accountDataModel->get( $this->params['account'] );
+        $account_data = $accountDataModel->get( $this->params['account_id'] );
         if( !$account_data ) {
             $this->error( 'SYSTEM_ERR' );
         }
@@ -39,9 +39,15 @@ Class GetFansAction extends \Local\BaseAction {
 
         $accounts = [];
 
+        $industries = \Local\Utils::loadConf( 'industries', 'list' );
+
         foreach( $follows as $follow ) {
             $account_id = $follow['fans_id'];
-            $account = $accountModel->get( $account_id, ['id', 'uname'] );
+            $account = $accountModel->get( $account_id, ['id', 'uname', 'industry', 'employment', 'position' ] );
+
+            if( $account['industry'] != 0 ) {
+                $account['industry'] = $industries[ $account[ 'industry'] ];
+            }
 
             $account['data'] = $accountDataModel->get( $account_id, [
                 'post_cnt', 'agree', 'disagree', 'score', 'mark', 'fans', 'follow'
@@ -74,7 +80,7 @@ Class GetFansAction extends \Local\BaseAction {
         $params = $this->params;
 
         $follows = $followModel->getFansByAccount( [
-            'account_id' => $params['account'],
+            'account_id' => $params['account_id'],
             'columns' => [ 'fans_id' ],
             'start' => $params['start'],
             'rn' => $params['rn']
@@ -89,7 +95,7 @@ Class GetFansAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $account = $this->__getQuery( 'account' );
+        $account_id = $this->__getQuery( 'account_id' );
 
         $start = intval( $this->__getQuery( 'start' ) );
 
@@ -101,7 +107,7 @@ Class GetFansAction extends \Local\BaseAction {
         if( $rn > 100 ) $rn = 100;
 
         $this->params = [
-            'account' => $account,
+            'account_id' => $account_id,
             'start' => $start,
             'rn' => $rn
         ];

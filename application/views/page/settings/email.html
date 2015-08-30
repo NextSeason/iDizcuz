@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php 
+            $title = '';
+        ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/settings/css/message.css?_t=1440712625252" />
+
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/common/top.inc.html'; ?>
+            <div class="boxes body">
+                <div class="inner">
+                    <div class="aside">.</div>
+                    <div class="main">
+                        <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
+                        <div>
+                            <form class="message-settings-form">
+                                <div class="block clearfix">
+                                    <div class="s-tt">收到针对我的论述</div>
+                                    <div class="s-bd">
+                                        <div class="line">
+                                            <label>
+                                                <input type="radio" name="view-to" value="1" checked />
+                                                接收所有人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="view-to" value="2" />
+                                                只接收关注的人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="view-to" value="3" />
+                                                不接收任何人的邮件
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block clearfix">
+                                    <div class="s-tt">论述收到短评</div>
+                                    <div class="s-bd">
+                                        <div class="line">
+                                            <label>
+                                                <input type="radio" name="comment" value="1" checked />
+                                                接收所有人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="comment" value="2" />
+                                                只接收关注的人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="comment" value="3" />
+                                                不接收任何人的邮件
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block clearfix">
+                                    <div class="s-tt">回复我的短评</div>
+                                    <div class="s-bd">
+                                        <div class="line">
+                                            <label>
+                                                <input type="radio" name="" checked />
+                                                接收所有人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="" />
+                                                只接收关注的人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="" />
+                                                不接收任何人的邮件
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block clearfix">
+                                    <div class="s-tt">支持我的论述</div>
+                                    <div class="s-bd">
+                                        <div class="line">
+                                            <label>
+                                                <input type="radio" name="" checked />
+                                                接收所有人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="" />
+                                                只接收关注的人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="" />
+                                                不接收任何人的邮件
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block clearfix">
+                                    <div class="s-tt">反对我的论述</div>
+                                    <div class="s-bd">
+                                        <div class="line">
+                                            <label>
+                                                <input type="radio" name="" checked />
+                                                接收所有人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="" />
+                                                只接收关注的人的邮件
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="" />
+                                                不接收任何人的邮件
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php include TPL_PATH . '/common/foot.inc.html'; ?>
+        </div>
+        <?php include TPL_PATH . '/common/end.inc.html'; ?>
+    </body>
+</html>

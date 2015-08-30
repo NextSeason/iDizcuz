@@ -2,15 +2,7 @@
 
 namespace Local;
 
-Abstract Class MisAction extends \Yaf\Action_Abstract {
-    protected $session;
-    protected $controller;
-    protected $request;
-    protected $tpl;
-    protected $type = 'page';
-    protected $admin = null;
-    protected $params = array();
-
+Abstract Class MisAction extends \Local\BaseAction {
     protected $adminModel;
 
     public function execute() {
@@ -19,6 +11,8 @@ Abstract Class MisAction extends \Yaf\Action_Abstract {
         $this->controller = $this->getController();
 
         $this->admin = isset( $this->session [ 'admin' ] ) ? $this->session['admin'] : null;
+
+        $this->decodeParams();
 
         if( is_null( $this->admin ) 
             && ( !preg_match( '#^/mis/page/signin#', $_SERVER['REQUEST_URI'] ) )
@@ -35,10 +29,10 @@ Abstract Class MisAction extends \Yaf\Action_Abstract {
         $data = $this->__execute();
 
         if( $this->type == 'interface' ) {
-            $this->controller->success( $data );
+            $this->controller->success( Utils::traverseEncodeId( $data ) );
         } else {
             $data[ 'admin' ] = $this->session[ 'admin' ];
-            $this->display( $this->tpl, $data );
+            $this->display( $this->tpl, Utils::traverseEncodeId( $data ) );
         }
     }
 
@@ -71,5 +65,8 @@ Abstract Class MisAction extends \Yaf\Action_Abstract {
         if( empty( $this->adminModel ) ) {
             $this->adminModel = new \AdminModel();
         }
+    }
+
+    protected function __mobile() {
     }
 }

@@ -52,6 +52,23 @@ CREATE TABLE `accounts_data` (
     PRIMARY KEY( `id` )
 );
 
+DROP TABLE IF EXISTS `accounts_settings`;
+
+CREATE TABLE `accounts_settings` (
+    `id` int unsigned NOT NULL,
+    `msg_view_to` tinyint unsigned NOT NULL DEFAULT 1,
+    `msg_comment` tinyint unsigned NOT NULL DEFAULT 1,
+    `msg_reply_comment` tinyint unsigned NOT NULL DEFAULT 1,
+    `msg_agree` tinyint unsigned NOT NULL DEFAULT 2,
+    `msg_disagree` tinyint unsigned NOT NULL DEFAULT 2,
+    `mail_view_to` tinyint unsigned NOT NULL DEFAULT 2,
+    `mail_comment` tinyint unsigned NOT NULL DEFAULT 2,
+    `mail_reply_comment` tinyint unsigned NOT NULL DEFAULT 3,
+    `mail_agree` tinyint unsigned NOT NULL DEFAULT 3,
+    `mail_disagree` tinyint unsigned NOT NULL DEFAULT 3,
+    PRIMARY KEY( `id` )
+);
+
 DROP TABLE IF EXISTS `follows`;
 
 CREATE TABLE `follows` (

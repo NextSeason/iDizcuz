@@ -1,7 +1,9 @@
 <?php
 
 Class MailAction extends \Local\BaseAction {
-    private $data = [];
+    private $data = [
+        'page' => 'mail'
+    ];
 
     public function __execute() {
         $this->tpl = 'settings/mail';
@@ -11,7 +13,9 @@ Class MailAction extends \Local\BaseAction {
             exit;
         }
 
-        $this->data['page'] = 'mail';
         return $this->data;
+    }
+
+    public function __mobile() {
     }
 }

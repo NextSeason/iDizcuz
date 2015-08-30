@@ -5,7 +5,7 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/message/css/messages.css?_t=1440049847067" />
+        <link rel="stylesheet" type="text/css" href="/static/message/css/messages.css?_t=1440799885175" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -15,25 +15,6 @@
                     <div class="sidebar aside">
                     </div>
                     <div class="content-box main">
-                        <div class="sub-nav clearfix">
-                            <ul class="nav clearfix">
-                                <li>
-                                    <a href="/messages" class="<?php if( $tab == 0 ) { echo 'focus'; } ?>">全部消息</a>
-                                </li>
-                                <li>
-                                    <a href="/messages?tab=1&type=5" class="<?php if( $tab == 1 ) { echo 'focus'; } ?>">系统通知</a>
-                                </li>
-                                <li>
-                                    <a href="/messages?tab=2&type=2" class="<?php if( $tab == 2 ) { echo 'focus'; } ?>">收到论述</a>
-                                </li>
-                                <li>
-                                    <a href="/messages?tab=3&type=3" class="<?php if( $tab == 3 ) { echo 'focus'; } ?>">收到评论</a>
-                                </li>
-                                <li>
-                                    <a href="/messages?tab=4&type=4" class="<?php if( $tab == 4 ) { echo 'focus'; } ?>">收到回复</a>
-                                </li>
-                            </ul>
-                        </div>
                         <ul class="message-list"></ul>
                         <div class="load-more">
                             <span>加载更多消息 <i class="fa fa-angle-double-down"></i></span>
@@ -49,16 +30,11 @@
             <% } else { %>
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { var msg = data[i]; %>
                     <li id="message-<%=msg.id %>" class="message-item" data-read="<%=msg.read %>" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
+                        <div class="top-line">
+                            <b><%=msg.ctime.substr( 0, 10 ) %></b>
+                        </div>
                         <div class="title-line">
-                            <a href="###" class="remove r"><i class="fa fa-trash"></i> 删除</a>
-                            <% if( msg.read == 0 ) { %>
-                                <span class="flag"><i class="fa fa-circle"></i></span>
-                            <% } %>
-                            <span class="time">
-                                [<%=msg.ctime.substr( 0, 10 ) %>]
-                            </span>
                             <%=msg.title %>
-                            <a href="###" class="open">[查看详情]</a>
                         </div>
                         <div class="content"><%=msg.content %></div>
                     </li>
@@ -122,10 +98,10 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js?_t=1440049847045', {
+            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js?_t=1440799885145', {
                 type : '<?php echo $type; ?>'
             } );
-            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1440049847045', {} );
+            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1440799885145', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

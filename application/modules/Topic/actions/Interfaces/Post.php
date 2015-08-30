@@ -49,19 +49,15 @@ Class PostAction extends \Local\BaseAction {
             'to' => $this->pool[ 'to_post_data' ][ 'account_id' ],
             'type' => $conf->type,
             'title' => $view->render( $conf->template, array(
-                '_part' => 'title',
-                'account' => $this->account
-            ) ),
-            'content' => $view->render( $conf->template, array(
-                '_part' => 'content',
                 'account' => $this->account,
-                'post' => array(
-                    'id' => $this->data['id'],
-                    'ctime' => date( 'Y-m-d H:i:s', $_SERVER[ 'REQUEST_TIME' ] ),
+                'post' => [
+                    'id' => \Local\Utils::encodeId( $this->data['id'] ),
                     'title' => $this->params[ 'title' ]
-                )
-            ) )
+                ]
+            ) ),
+            'content' => ''
         ];
+
         $this->transactionModel->sendMessage( $data );
     }
 
@@ -179,7 +175,7 @@ Class PostAction extends \Local\BaseAction {
 
         $title = $this->__getPost( 'title' );
 
-        $to = intval( $this->__getPost( 'to' ) );
+        $post_id = intval( $this->__getPost( 'post_id' ) );
 
         $imagecode = $this->__getPost( 'imagecode' );
 
@@ -194,12 +190,11 @@ Class PostAction extends \Local\BaseAction {
         $this->params = array(
             'content' => $content,
             'title' => $title,
-            'to' => $to,
+            'to' => $post_id,
             'topic_id' => $topic_id,
             'point_id' => $point_id,
             'imagecode' => $imagecode
         );
-
         return $this;
     }
 }

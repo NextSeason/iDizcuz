@@ -15,6 +15,10 @@ Class RemoveAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function remove() {
         $transactionModel = new TransactionModel();
 

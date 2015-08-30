@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1440056657688" />
+        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1440781187240" />
     </head>
     <body>
         <div id="idizcuz">
@@ -11,12 +11,6 @@
             <?php if( !$account ) { ?>
                 <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
             <?php } else { ?>
-                <div class="boxes sub-nav">
-                    <ul>
-                        <li><a href="###" class="focus">全部</a></li>
-                        <li><a href="###">未读</a></li>
-                    </ul>
-                </div>
                 <div class="boxes">
                     <ul class="message-list"></ul>
                 </div>
@@ -49,7 +43,7 @@
                 </textarea>
                 <script>
                     var idizcuz = new J();
-                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1440056657671', {
+                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1440781187222', {
                         accountId : '<?php echo $account['id']; ?>'
                     } );
                 </script>
