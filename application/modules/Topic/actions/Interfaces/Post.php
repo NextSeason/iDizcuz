@@ -40,6 +40,12 @@ Class PostAction extends \Local\BaseAction {
     }
 
     private function sendMessage() {
+        $accountId = $this->pool['to_post_data']['account_id'];
+
+        $accountSettingsModel = new AccountSettingsModel();
+
+        $accountSettings = $accountSettingsModel->get( $accountId );
+
         $view = $this->getView();
 
         $conf = \Local\Utils::loadConf( 'message', 'post' );
@@ -59,6 +65,8 @@ Class PostAction extends \Local\BaseAction {
         ];
 
         $this->transactionModel->sendMessage( $data );
+
+        return $this;
     }
 
     private function getToPostData() {

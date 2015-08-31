@@ -5,6 +5,7 @@ Class GetActivitiesAction extends \Local\BaseAction {
     protected $type = 'interface';
 
     public function __execute() {
+        print_r( \Message\Send::viewTo() );
         $this->paramsProcessing()->getActivities()->getExtra();
         return $this->data;
     }
