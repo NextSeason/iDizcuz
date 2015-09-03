@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/settingsMobile/css/message.css?_t=1441194508799" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/commonMobile/top.inc.html'; ?>
+            <?php include TPL_PATH . '/commonMobile/nav.inc.html'; ?>
+            <?php if( !$account ) { ?>
+                <div class="boxes tip">
+                    <p>需要登录后才可以操作</p>
+                </div>
+                <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
+            <?php } else { ?>
+                <?php $subpage = 'message'; ?>
+                <?php include TPL_PATH . '/settingsMobile/nav.inc.html'; ?>
+                <div class="boxes message">
+                    <form class="message-settings-form">
+                        <div class="block">
+                            <p>有人关注了我</p>
+                            <div>
+                                <label>
+                                    <input type="checkbox" class="settings" data-settings-key="msg_new_fans" data-on-checked="1" data-no-checked="2" <?php if( $settings['msg_new_fans'] == '1' ) echo 'checked'; ?>>
+                                    给我发送消息
+                                </label>
+                                <label>
+                                    <input type="checkbox" class="settings" data-settings-key="mail_new_fans" data-on-checked="1" data-no-checked="2" <?php if( $settings['mail_new_fans'] == '1' ) echo 'checked'; ?>>
+                                    给我发送邮件
+                                </label>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <p>收到针对我的论述</p>
+                            <div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'msg_view_to' ]; ?>
+                                    <select class="settins" data-settings-key="msg_view_to">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的消息</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的消息</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的消息</option>
+                                    </select>
+                                </div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'mail_view_to' ]; ?>
+                                    <select class="settings" data-settings-key="mail_view_to">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的邮件</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的邮件</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的邮件</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <p>论述收到短评</p>
+                            <div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'msg_comment' ]; ?>
+                                    <select class="settings" data-settings-key="msg_comment">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的消息</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的消息</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的消息</option>
+                                    </select>
+                                </div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'mail_comment' ]; ?>
+                                    <select class="settings" data-settings-key="mail_comment">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的邮件</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的邮件</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的邮件</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <p>回复我的短评</p>
+                            <div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'msg_reply_comment' ]; ?>
+                                    <select class="settings" data-settings-key="msg_reply_comment">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的消息</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的消息</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的消息</option>
+                                    </select>
+                                </div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'mail_reply_comment' ]; ?>
+                                    <select class="settings" data-settings-key="mail_reply_comment">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的邮件</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的邮件</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的邮件</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <p>支持我的论述</p>
+                            <div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'msg_agree' ]; ?>
+                                    <select class="settings" data-settings-key="msg_agree">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的消息</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的消息</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的消息</option>
+                                    </select>
+                                </div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'mail_agree' ]; ?>
+                                    <select class="settings" data-settings-key="mail_agree">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的邮件</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的邮件</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的邮件</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <p>反对我的论述</p>
+                            <div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'msg_disagree' ]; ?>
+                                    <select class="settings" data-settings-key="msg_disagree">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的消息</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的消息</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的消息</option>
+                                    </select>
+                                </div>
+                                <div class="select-helper">
+                                    <?php $s = $settings[ 'mail_disagree' ]; ?>
+                                    <select class="settings" data-settings-key="mail_disagree">
+                                        <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的邮件</option>
+                                        <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的邮件</option>
+                                        <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的邮件</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="boxes tip"></div>
+            <?php } ?>
+            <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
+        </div>
+        <script>
+            var idizcuz = new J();
+            idizcuz.mount( 'SaveSettings', '/static/settingsMobile/packages/SaveSettings/bootstrap.js?_t=1441194508761', {} );
+        </script>
+        <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+    </body>
+</html>

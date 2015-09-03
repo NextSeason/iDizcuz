@@ -19,6 +19,11 @@ Class MessageAction extends \Local\BaseAction {
     }
 
     public function __mobile() {
+        $this->tpl = 'settingsMobile/message';
+        if( $this->account ) {
+            $this->getSettings();
+        }
+        return $this->data;
     }
 
     private function getSettings() {

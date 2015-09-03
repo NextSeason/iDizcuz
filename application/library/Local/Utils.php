@@ -89,13 +89,14 @@ Class Utils {
     }
 
     static public function encodeId( $id ) {
+        $id = (int)$id;
         if( $id === 0 ) return 0;
         return $id ^ 0x11080509;  
     }
 
     static public function decodeId( $sid ) {
+        $sid = (int)$sid;
         if( $sid === 0 ) return 0;
-        if( !is_numeric( $sid ) ) return 0;  
         return $sid ^ 0x11080509;  
     }
 

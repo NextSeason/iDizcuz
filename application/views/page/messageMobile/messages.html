@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1440781187240" />
+        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1441212846325" />
     </head>
     <body>
         <div id="idizcuz">
@@ -20,20 +20,14 @@
                     <% } else { %>
                         <% for( var i = 0, l = data.length; i < l; i += 1 ) { var msg = data[i]; %>
                             <li id="message-<%=msg.id %>" class="messages" data-read="<%=msg.read %>" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
-                                <div class="first-line">
-                                    <span class="time">
-                                        [<%=msg.ctime.substr( 0, 10 ) %>]
-                                    </span>
-                                    <% if( msg.read == 0 ) { %>
-                                        <span class="flag"></span>
-                                    <% } %>
-                                </div>
+                            <p><%=msg.ctime.substr( 0, 10 ) %></p>
                                 <div class="title-line">
-                                    <a href="###" class="remove r">删除</a>
+                                    <a href="/user/activities/<%=msg.from.id %>"><%-msg.from.uname %></a>
                                     <%=msg.title %>
-                                    <a href="###" class="open">[查看详情]</a>
                                 </div>
-                                <div class="content"><%=msg.content %></div>
+                                <% if( msg.content.length ) { %>
+                                    <div class="content"><%-msg.content %></div>
+                                <% } %>
                             </li>
                         <% } %>
                     <% } %>
@@ -43,7 +37,7 @@
                 </textarea>
                 <script>
                     var idizcuz = new J();
-                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1440781187222', {
+                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1441212846303', {
                         accountId : '<?php echo $account['id']; ?>'
                     } );
                 </script>

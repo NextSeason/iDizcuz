@@ -5,7 +5,7 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/message/css/messages.css?_t=1440799885175" />
+        <link rel="stylesheet" type="text/css" href="/static/message/css/messages.css?_t=1441209319937" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -29,79 +29,28 @@
                 <li class="empty">这里暂时没有消息</li>
             <% } else { %>
                 <% for( var i = 0, l = data.length; i < l; i += 1 ) { var msg = data[i]; %>
-                    <li id="message-<%=msg.id %>" class="message-item" data-read="<%=msg.read %>" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
+                    <li id="message-<%=msg.id %>" class="message-item">
                         <div class="top-line">
                             <b><%=msg.ctime.substr( 0, 10 ) %></b>
                         </div>
                         <div class="title-line">
-                            <%=msg.title %>
+                            <a href="/user/activities/<%=msg.from.id %>"><%-msg.from.uname %></a> <%=msg.title %>
                         </div>
-                        <div class="content"><%=msg.content %></div>
+                        <% if( msg.content.length ) { %>
+                            <div class="content">
+                                <i class="fa fa-quote-left"></i>
+                                <%-msg.content %>
+                                <i class="fa fa-quote-right"></i>
+                            </div>
+                        <% } %>
                     </li>
                 <% } %>
             <% } %>
         </textarea>
-        <textarea class="templates" id="account-tpl">
-            <div class="clearfix accounts">
-                <% if( data.self != 1 ) { %>
-                    <div class="btns-part r">
-                        <% if( data.followed == 1 ) { %>
-                            <a href="###" class="btns dark unfollow" data-account-id="<%=data.id %>">取消关注</a>
-                        <% } else { %>
-                            <a href="###" class="btns follow" data-account-id="<%=data.id%>">关 注</a>
-                        <% } %>
-                    </div>
-                <% } %>
-                <a href="/user/activities/<%=data.id %>" class="avatar small empty l" style="<% if( data.img.length ) { %>background-image:url(http://avatar.idizcuzz.com/<%-data.img %>);<% } %>"></a>
-                <div class="info-box l">
-                    <a href="/user/activities/<%=data.id %>" class="uname"><%-data.uname %></a>
-                    <div class="num-part clearfix">
-                        <a href="/user/follow/<%=data.id %>" target="_blank">关注</a>
-                        <b class="num"><%=data.data.follow %></b>
-                        <span class="sp">|</span>
-                        <a href="/user/fans/<%=data.id %>" target="_blank">粉丝</a>
-                        <b class="num"><%=data.data.fans %></b>
-                        <span class="sp">|</span>
-                        <a href="/user/posts/<%=data.id %>" target="_blank">论述</a>
-                        <b class="num"><%=data.data.post_cnt %></b>
-                        <span class="sp">|</span>
-                        <a href="javascript:void(0)">获得支持</a>
-                        <b class="num"><%=data.data.agree %></b>
-                        <span class="sp">|</span>
-                        <a href="javascript:void(0)">获得反对</a>
-                        <b class="num"><%=data.data.disagree %></b>
-                    </div>
-                    <div class="info-part">
-                            <% if( data.industry != 0 ) { %>
-                                <span><%-data.industry %></span>
-                            <% } else { %>
-                                <span class="unknown">未知行业</span>
-                            <% } %>
-                        <span class="sp">|</span>
-                        <% if( data.employment ) { %>
-                            <span><%-data.employment %></span>
-                        <% } else { %>
-                            <span class="unknown">未知组织</span>
-                        <% } %>
-                        •
-                        <% if( data.position ) { %>
-                            <span><%-data.position %></span>
-                        <% } else { %>
-                            <span class="unknown">未知职位</span>
-                        <% } %>
-                    </div>
-                    <div class="desc-part">
-                        <span>个人简介：<% if( data.desc.length ) { %><%-data.desc %><% } else { %><span class="unknown">暂无</span><% } %></span>
-                    </div>
-                </div>
-            </div>
-        </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js?_t=1440799885145', {
-                type : '<?php echo $type; ?>'
-            } );
-            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1440799885145', {} );
+            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js?_t=1441209319908', {} );
+            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1441209319908', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

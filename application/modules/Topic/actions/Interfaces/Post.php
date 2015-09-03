@@ -3,8 +3,6 @@
 Class PostAction extends \Local\BaseAction {
     private $data;
 
-    private $transactionModel;
-
     public function __execute() {
         $this->type = 'interface';
 
@@ -18,14 +16,7 @@ Class PostAction extends \Local\BaseAction {
             $this->getToPostData();
         }
 
-        $this->transactionModel = new TransactionModel();
-        
-        $this->addPost();
-
-        // if this post is for another post, send message to notice another account
-        if( $this->params[ 'to' ] != 0 && $this->pool['to_post_data']['account_id'] != $this->account['id'] ) {
-            $this->sendMessage();
-        }
+        $this->addPost()->sendMessage();
 
         $this->record( [
             'type' => 0,
@@ -40,31 +31,16 @@ Class PostAction extends \Local\BaseAction {
     }
 
     private function sendMessage() {
-        $accountId = $this->pool['to_post_data']['account_id'];
+        if( $this->params[ 'to' ] == 0 ) return;
 
-        $accountSettingsModel = new AccountSettingsModel();
+        $account_id = $this->pool['to_post_data']['account_id'];
 
-        $accountSettings = $accountSettingsModel->get( $accountId );
+        if( $account_id == $this->account['id'] ) return;
 
-        $view = $this->getView();
-
-        $conf = \Local\Utils::loadConf( 'message', 'post' );
-
-        $data = [
-            'from' => 0,
-            'to' => $this->pool[ 'to_post_data' ][ 'account_id' ],
-            'type' => $conf->type,
-            'title' => $view->render( $conf->template, array(
-                'account' => $this->account,
-                'post' => [
-                    'id' => \Local\Utils::encodeId( $this->data['id'] ),
-                    'title' => $this->params[ 'title' ]
-                ]
-            ) ),
-            'content' => ''
-        ];
-
-        $this->transactionModel->sendMessage( $data );
+        \Message\Send::viewToMessage( $this->account['id'], $account_id, [ 'post' => [
+            'id' => $this->data['id'],
+            'title' => $this->params['title']
+        ] ] );
 
         return $this;
     }
@@ -94,7 +70,9 @@ Class PostAction extends \Local\BaseAction {
             'ip' => ip2long( $_SERVER[ 'REMOTE_ADDR' ] )
         );
 
-        $post_id = $this->transactionModel->addPost( $params );
+        $transactionModel = new TransactionModel();
+
+        $post_id = $transactionModel->addPost( $params );
 
         if( !$post_id ) {
             $this->error( 'SYSTEM_ERR' );
@@ -153,6 +131,7 @@ Class PostAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
+
         $content = $this->__getPost( 'content' );
 
         $contentTxt = strip_tags( $content );

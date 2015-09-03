@@ -5,7 +5,7 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/settings/css/message.css?_t=1440778154359" />
+        <link rel="stylesheet" href="/static/settings/css/message.css?_t=1441219684275" />
 
     </head>
     <body>
@@ -19,11 +19,24 @@
                         <div>
                             <form class="message-settings-form">
                                 <div class="block clearfix">
+                                    <div class="s-tt">有人关注了我</div>
+                                    <div class="l">
+                                        <label>
+                                            <input type="checkbox" class="settings" data-settings-key="msg_new_fans" data-on-checked="1" data-no-checked="2" <?php if( $settings['msg_new_fans'] == '1' ) echo 'checked'; ?>>
+                                            给我发送消息
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="settings" data-settings-key="mail_new_fans" data-on-checked="1" data-no-checked="2" <?php if( $settings['mail_new_fans'] == '1' ) echo 'checked'; ?>>
+                                            给我发送邮件
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="block clearfix">
                                     <div class="s-tt">收到针对我的论述</div>
                                     <div class="l">
                                         <div class="select-helper">
                                             <?php $s = $settings[ 'msg_view_to' ]; ?>
-                                            <select class="settins" data-settings-key="msg_view_to">
+                                            <select class="settings" data-settings-key="msg_view_to">
                                                 <option value="1" <?php if( $s == '1' ) echo 'selected'; ?>>接收所有人的消息</option>
                                                 <option value="2" <?php if( $s == '2' ) echo 'selected'; ?>>只接收关注的人的消息</option>
                                                 <option value="3" <?php if( $s == '3' ) echo 'selected'; ?>>不接收任何人的消息</option>
@@ -135,7 +148,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'SaveSettings', '/static/settings/packages/SaveSettings/bootstrap.js?_t=1440778154303', {} );
+            idizcuz.mount( 'SaveSettings', '/static/settings/packages/SaveSettings/bootstrap.js?_t=1441219684236', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

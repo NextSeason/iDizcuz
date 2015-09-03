@@ -2,7 +2,6 @@
 
 Class VoteAction extends \Local\BaseAction {
     private $data = array();
-    private $targetPostData = null;
 
     public function __execute() {
         $this->type = 'interface';
@@ -11,20 +10,34 @@ Class VoteAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing()->checkPost()->addVote();
-
-        /*
-        $this->record( [
-            'type' => $this->params['opinion'] == 1 ? 1 : 2,
-            'relation_id' => $this->params['post_id']
-        ] );
-         */
+        $this->paramsProcessing()->checkPost()->addVote()->sendMessage();
 
         return $this->data;
     }
 
     public function __mobile() {
         return $this->__execute();
+    }
+
+    private function sendMessage() {
+        if( $this->params[ 'opinion' ] == 1 ) {
+            \Message\Send::agreeMessage(
+                $this->account['id'],
+                $this->pool['post']['account_id'],
+                array(
+                    'post' => $this->pool['post']
+                )
+            );
+        } else {
+            \Message\Send::disagreeMessage(
+                $this->account['id'],
+                $this->pool['post']['account_id'],
+                array(
+                    'post' => $this->pool['post']
+                )
+            );
+        }
+        return $this;
     }
 
     private function addVote() {
@@ -51,8 +64,27 @@ Class VoteAction extends \Local\BaseAction {
                 'opinion' => $params[ 'opinion' ],
                 'type' => $params[ 'type' ],
                 'value' => $params[ 'value' ]
-            ),  $this->targetPostData );
+            ),  $this->pool['post'] );
         }
+
+        return $this;
+    }
+
+    private function checkPost() {
+        $postModel = new PostModel();
+
+        $post = $postModel->get( $this->params[ 'post_id' ] );
+
+        if( !$post ) {
+            $this->error( 'POST_NOTEXISTS' );
+        }
+
+        if( $this->account['id'] == $post['account_id'] ) {
+            echo 'fdfkafsa';
+            $this->error( 'PARAMS_ERR' );
+        }
+
+        $this->pool[ 'post' ] = $post;
 
         return $this;
     }
@@ -101,23 +133,4 @@ Class VoteAction extends \Local\BaseAction {
 
         return $this;
     }
-
-    private function checkPost() {
-        $postDataModel = new PostDataModel();
-
-        $post_data = $postDataModel->get( $this->params[ 'post_id' ] );
-
-        if( !$post_data ) {
-            $this->error( 'POST_NOTEXISTS' );
-        }
-
-        if( $this->account['id'] == $post_data['account_id'] ) {
-            $this->error( 'PARAMS_ERR' );
-        }
-
-        $this->targetPostData = $post_data;
-
-        return $this;
-    }
-
 }

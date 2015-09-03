@@ -10,11 +10,7 @@ Class MessagesAction extends \Local\BaseAction {
             $this->redirect( '/signin' );
             exit;
         }
-
-        $this->paramsProcessing();
-
-        $this->data[ 'tab' ] = $this->params[ 'tab' ];
-        $this->data['type'] = $this->params['type'];
+        $this->clearUnread();
 
         return $this->data;
     }
@@ -22,23 +18,17 @@ Class MessagesAction extends \Local\BaseAction {
     public function __mobile() {
         $this->tpl = 'messageMobile/messages';
         if( $this->account ) {
+            $this->clearUnread();
             return $this->data;
         }
     }
 
-    private function paramsProcessing() {
-        $tab = intval( $this->__getQuery( 'tab' ) );
+    private function clearUnread() {
+        $accountDataModel = new AccountDataModel();
 
-        if( $tab < 0 || $tab > 4 ) {
-            $tab = 0;
-        }
-
-        $type = intval( $this->__getQuery( 'type' ) );
-
-        $this->params = [
-            'type' => $type,
-            'tab' => $tab
-        ];
+        $accountDataModel->update( $this->account['id'], [
+            'unread_msg' => 0
+        ] );
 
         return $this;
     }

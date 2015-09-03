@@ -61,11 +61,13 @@ CREATE TABLE `accounts_settings` (
     `msg_reply_comment` tinyint unsigned NOT NULL DEFAULT 1,
     `msg_agree` tinyint unsigned NOT NULL DEFAULT 2,
     `msg_disagree` tinyint unsigned NOT NULL DEFAULT 2,
+    `msg_new_fans` tinyint unsigned NOT NULL DEFAULT 1,
     `mail_view_to` tinyint unsigned NOT NULL DEFAULT 2,
     `mail_comment` tinyint unsigned NOT NULL DEFAULT 2,
     `mail_reply_comment` tinyint unsigned NOT NULL DEFAULT 3,
     `mail_agree` tinyint unsigned NOT NULL DEFAULT 3,
     `mail_disagree` tinyint unsigned NOT NULL DEFAULT 3,
+    `mail_new_fans` tinyint unsigned NOT NULL DEFAULT 1,
     PRIMARY KEY( `id` )
 );
 

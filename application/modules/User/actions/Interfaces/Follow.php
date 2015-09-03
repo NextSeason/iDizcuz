@@ -16,8 +16,6 @@ Class FollowAction extends \Local\BaseAction {
 
         $this->paramsProcessing()->check();
 
-        $this->transactionModel = new TransactionModel();
-            
         $this->action()->sendMessage();
 
         $this->record( [
@@ -33,25 +31,16 @@ Class FollowAction extends \Local\BaseAction {
     }
 
     private function sendMessage() {
-        $view = $this->getView();
-
-        $conf = \Local\Utils::loadConf( 'message', 'newfans' );
-
-        $data = [
-            'from' => 0,
-            'to' => $this->params['account_id'],
-            'type' => $conf->type,
-            'title' => $view->render( $conf->template, [
-                'account' => $this->account
-            ] ),
-            'content' => $this->account['id']
-        ];
-
-        $this->transactionModel->sendMessage( $data );
+        \Message\Send::newFansMessage(
+            $this->account['id'],
+            $this->params['account_id']
+        );
     }
 
     private function action() {
-        $follow = $this->transactionModel->follow( [
+        $transactionModel = new TransactionModel();
+
+        $follow = $transactionModel->follow( [
             'account_id' => $this->params[ 'account_id' ],
             'fans_id' => $this->account['id']
         ] );

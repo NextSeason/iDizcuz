@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/settingsMobile/css/info.css?_t=1440163940775" />
+        <link rel="stylesheet" href="/static/settingsMobile/css/info.css?_t=1441194508797" />
     </head>
     <body>
         <div id="idizcuz">
@@ -14,12 +14,8 @@
                 </div>
                 <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
             <?php } else { ?>
-                <div class="boxes sub-nav">
-                    <ul>
-                        <li><a href="/settings" class="focus">个人信息</a></li>
-                        <li><a href="/settings/page/passwd">密码</a></li>
-                    </ul>
-                </div>
+                <?php $subpage = 'info'; ?>
+                <?php include TPL_PATH . '/settingsMobile/nav.inc.html'; ?>
                 <div class="boxes">
                     <form class="info-form" id="avatar-form">
                         <div class="parts">
@@ -96,8 +92,8 @@
                 <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
                 <script>
                     var idizcuz = new J();
-                    idizcuz.mount( 'birth', '/static/settingsMobile/packages/Birth/bootstrap.js?_t=1440163940751' );
-                    idizcuz.mount( 'userinfo', '/static/settingsMobile/packages/UserInfo/bootstrap.js?_t=1440163940751' );
+                    idizcuz.mount( 'birth', '/static/settingsMobile/packages/Birth/bootstrap.js?_t=1441194508759' );
+                    idizcuz.mount( 'userinfo', '/static/settingsMobile/packages/UserInfo/bootstrap.js?_t=1441194508759' );
                 </script>
             <?php } ?> 
         </div>

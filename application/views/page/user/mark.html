@@ -5,8 +5,8 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1440700563803" />
-        <link rel="stylesheet" type="text/css" href="/static/common/css/post.css?_t=1440700563803" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1441207777518" />
+        <link rel="stylesheet" type="text/css" href="/static/common/css/post.css?_t=1441207777518" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -48,20 +48,22 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1440700563803"></script>
-        <script src="/static/common/js/qrcode.js?_t=1440700563803"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1441207777518"></script>
+        <script src="/static/common/js/qrcode.js?_t=1441207777518"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/user/packages/Posts/bootstrap.js?_t=1440700563767', {
+            idizcuz.mount( 'posts', '/static/user/packages/Posts/bootstrap.js?_t=1441207777471', {
                 url : '/user/interface/markedposts',
                 userId : '<?php echo $user['id']; ?>'
             } );
 
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1440700563767', {} );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1440700563767', {} );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1440700563767', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1440700563767', {} );
-            idizcuz.mount( 'follow', '/static/user/packages/Follow/bootstrap.js?_t=1440700563767', {});
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1441207777471', {} );
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1441207777471', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1441207777471', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1441207777471', {} );
+            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1441207777471', {
+                 signin : +'<?php echo $account ? 1 : 0; ?>'
+            });
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

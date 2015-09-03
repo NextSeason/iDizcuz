@@ -10,12 +10,26 @@ Class GetMessagesAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing()->getMessages();
+        $this->paramsProcessing()->getMessages()->getFrom();
         return $this->data;
     }
 
     public function __mobile() {
         return $this->__execute();
+    }
+
+    private function getFrom() {
+        if( count( $this->data['messages'] ) == 0 ) {
+            return $this;
+        }
+
+        $accountModel = new AccountModel();
+
+        foreach( $this->data['messages'] as &$message ) {
+            $message[ 'from' ] = $accountModel->get( $message['from'], [ 'id', 'uname' ] );
+        }
+
+        return $this;
     }
 
     private function getMessages() {
@@ -24,21 +38,11 @@ Class GetMessagesAction extends \Local\BaseAction {
         $messageModel = new MessageModel();
 
         $where = [
-            [ 'from', 0 ],
-            [ 'to', $this->account['id'] ],
-            [ '-del', 'IN', '(0,1)' ]
+            [ 'to', $this->account['id'] ]
         ];
 
         if( $params['cursor'] != 0 ) {
             $where[] = [ 'id', '<', $params['cursor'] ];
-        }
-
-        if( $params[ 'type' ] != 0 ) {
-            $where[] = [ 'type', $params[ 'type' ] ];
-        }
-
-        if( !is_null( $params[ 'read' ] ) ) {
-            $where[] = [ 'read', $params['read'] ];
         }
 
         $messages = $messageModel->select( [
@@ -64,15 +68,12 @@ Class GetMessagesAction extends \Local\BaseAction {
         if( $rn <= 0 ) $rn = 20;
         if( $rn > 100 ) $rn = 100;
 
-        $read = $this->__getQuery( 'read' );
-
         $type = intval( $this->__getQuery( 'type' ) );
 
         $this->params = [
             'cursor' => $cursor,
             'rn' => $rn,
             'type' => $type,
-            'read' => $read
         ];
 
         return $this;
