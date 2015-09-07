@@ -6,7 +6,7 @@
             $nav = 'index';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/home/css/index.css?_t=1440613969151" />
+        <link rel="stylesheet" href="/static/home/css/index.css?_t=1441361835626" />
     </head>
     <body>
         <div id="idizcuz">
@@ -82,7 +82,7 @@
                                     </div>
                                 </form>
                                 <script>
-                                    new J().mount( 'Signin', '/static/home/packages/Signin/bootstrap.js?_t=1440613969107', {} );
+                                    new J().mount( 'Signin', '/static/home/packages/Signin/bootstrap.js?_t=1441361835579', {} );
                                 </script>
                             </div>
                         <?php } ?>
@@ -172,7 +172,7 @@
                                 <div class="chart-legend"><b class="brand">•</b> 各观点指数对比</div>
                             </div>
                             <div class="main">
-                                <h3><a href="/topic/3" target="_blank"><span class="seal seal-1"></span> 各地青少年犯罪频现，究竟谁该背起更多的责任</a></h3>
+                                <h3><a href="/topic/285738250" target="_blank"><span class="seal seal-1"></span> 各地青少年犯罪频现，究竟谁该背起更多的责任</a></h3>
                                 <div class="data-line">
                                 </div>
                                 <ul class="point-list">
@@ -196,7 +196,7 @@
                                     </li>
 
                                 </ul>
-                                <a href="/topic/3" class="view">查看话题详情</a>
+                                <a href="/topic/285738250" class="view">查看话题详情</a>
                             </div>
                         </div>
                         <div class="topics clearfix">
@@ -245,17 +245,17 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ichart.js?_t=1440613969151"></script>
+        <script src="/static/common/js/ichart.js?_t=1441361835626"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1440613969107', { id : 3 } );
-            idizcuz.mount( 'hotposts', '/static/home/packages/HotPosts/bootstrap.js?_t=1440613969107', { blocks : [ {
-                topic_id : 3,
+            idizcuz.mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1441361835579', { id : 285738250 } );
+            idizcuz.mount( 'hotposts', '/static/home/packages/HotPosts/bootstrap.js?_t=1441361835579', { blocks : [ {
+                topic_id : 285738250,
                 rn : 4,
                 container : $( '.hot-post-list-1' )
             } ] } );
-            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1440613969107', { rn : 10 } );
-            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1440613969107' );
+            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1441361835579', { rn : 10 } );
+            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1441361835579' );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

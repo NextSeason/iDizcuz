@@ -12,7 +12,9 @@ Class PageController extends BasePageController {
             'topic' => $this->action_path . 'Topic.php',
             'topics' => $this->action_path . 'Topics.php',
             'article' => $this->action_path . 'Article.php',
-            'articles' => $this->action_path . 'Articles.php'
+            'articles' => $this->action_path . 'Articles.php',
+            'reports' => $this->action_path . 'Reports.php',
+            'report' => $this->action_path . 'Report.php'
         );
     }
 }

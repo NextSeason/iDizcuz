@@ -5,7 +5,7 @@ Class ArticleAction extends \Local\BaseAction {
 
     public function __execute() {
         $this->tpl = 'article/article';
-        $this->paramsProcessing()->getArticle()->getTopic()->getAdjacent();
+        $this->paramsProcessing()->getArticle()->getTopic()->getRelated();
         return $this->data;
     }
 
@@ -15,18 +15,20 @@ Class ArticleAction extends \Local\BaseAction {
         return $this->data;
     }
 
-    private function getAdjacent() {
-        $topic = $this->data['topic'];
-
-        if( !$topic ) {
-            $this->data['pre'] = null;
-            $this->data['next'] = null;
-        }
-
+    private function getRelated() {
         $articleModel = new ArticleModel();
 
-        $this->data['pre'] = $articleModel->getPrevious( $this->params['id'], $topic['id'] );
-        $this->data['next'] = $articleModel->getNext( $this->params['id'], $topic['id'] );
+        $related_articles = $articleModel->select( [
+            'columns' => [ 'id', 'title', 'time' ],
+            'where' => [
+                [ 'topic_id', $this->data['topic']['id'] ]
+            ],
+            'order' => [ 'RAND()' ],
+            'rn' => 6
+        ] );
+
+        $this->data[ 'related_articles' ] = $related_articles;
+        return $this;
 
     }
 

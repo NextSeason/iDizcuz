@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'iDizcuz Management Information System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441651834539" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/reports.css?_t=1441651834539" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <div class="main">
+                <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
+                <div class="core">
+                    <ul class="report-list">
+                        <?php foreach( $reports as $report ) { $post = $report['post']; ?>
+                            <li class="reports" data-report-id="<?php echo $topic['id']; ?>">
+                                <div class="inner">                            
+                                    <div class="topline clearfix">
+                                        <a href="###" class="r op">操作</a>
+                                        <a href="###" class="op detail r">详情</a>
+                                        <span class="r ctime">
+                                            <?php echo substr( $report['ctime'], 0, -3 ); ?>
+                                        </span>
+                                        <a href="/post/<?php echo $post['id']; ?>" class="post-title">
+                                            <b>论述：</b>
+                                            <?php echo htmlspecialchars( $post['title'] ); ?>
+                                            <b class="deleted">已删除</b>
+                                        </a>
+                                        <?php $account = $report['target_account_id']; ?>
+                                        <a href="/user/activities/<?php echo $
+                                    </div>
+                                </div>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

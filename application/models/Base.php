@@ -307,9 +307,17 @@ Class BaseModel {
 
             foreach( $orders as $order ) {
                 if( is_string( $order ) ) {
-                    $orderby[] = '`' . $order . '`';
+                    if( !preg_match( '#^[\w\d_-]+$#', $order ) ) {
+                        $orderby[] = $order;
+                    } else {
+                        $orderby[] = '`' . $order . '`';
+                    }
                 } else {
-                    $o = ' `' . $order[0] . '` ';
+                    if( !preg_match( '#^[\w\d_-]+$#', $order[0] ) ) {
+                        $o = $order[0];
+                    } else {
+                        $o = ' `' . $order[0] . '` ';
+                    }
                     if( isset( $order[1] ) ) {
                         $o .= $order[1] . ' ';
                     }

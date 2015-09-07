@@ -39,7 +39,7 @@
         <div class="inner">
             <div class="mark box clearfix">
                 <p class="l">收藏成功！您可以在<a href="/user/mark/<?php echo $account['id']; ?>">我的主页</a>中查看。您也可以分享这条论述，让更多人参与讨论</p>
-                <div class="share-box l">
+                <div class="share-box l" data-share-title="[ <%-post.title %> ](分享自 每日论点 • iDizcuz)">
                     <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
                     <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
                     <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
@@ -51,7 +51,7 @@
             <div class="share box clearfix">
                 <div class="qrcode l"></div>
                 <div class="share-part l">
-                    <div class="bdsharebuttonbox share-btn-boxes share-box" data-tag="share_1">
+                    <div class="share-box" data-tag="share_1" data-share-title="[ <%-post.title %> ](分享自 每日论点 • iDizcuz)">
                         <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
                         <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
                         <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>

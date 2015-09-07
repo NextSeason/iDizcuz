@@ -134,6 +134,21 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         $account = $this->accountModel->get( $this->account[ 'id' ]  );
 
         if( $account ) {
+
+            $ban_start = $account['ban_start'];
+            $ban_end = $account['ban_end'];
+
+            if( $ban_start == '0000-00-00' || $ban_end == '0000-00-00' ) {
+                if( $account['status'] == 1 ) {
+                    $account['status'] = 0;
+                }
+            }
+
+            $account['mtime'] = date( 'Y-m-d H:i:s', $_SERVER['REQUEST_TIME'] );
+            $account['login_ip'] = ip2long( $_SERVER['REMOTE_ADDR'] );
+
+            $this->accountModel->update( $account['id'], $account );
+
             $industries = \Local\Utils::loadConf( 'industries', 'list' );
 
             if( $account['industry'] != 0 ) {

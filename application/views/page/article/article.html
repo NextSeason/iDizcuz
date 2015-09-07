@@ -5,14 +5,16 @@
             $title = '每日论点•iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/article/css/article.css?_t=1441241932525" />
+        <link rel="stylesheet" href="/static/article/css/article.css?_t=1441405108065" />
     </head>
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
             <div class="boxes body">
                 <div class="inner clearfix">
-                    <div class="aside"></div>
+                    <div class="aside">
+                        <a href="###" class="btns large show-editor">查看所在论述</a>
+                    </div>
                     <div class="main">
                         <div class="article">
                             <div class="hd">
@@ -51,31 +53,27 @@
                             <div class="content rich-text">
                                 <?php echo $article['content']; ?>
                             </div>
-                            <div class="adjacent">
-                                <ul>
-                                    <?php if( $pre ) { ?>
-                                        <li>
-                                            <span>上一篇：</span>
-                                            <a href="/article/<?php echo $pre['id']; ?>">
-                                                <?php echo $pre['title']; ?>
-                                            </a>
-                                        </li>
-                                    <?php } ?>
-                                    <?php if( $next ) { ?>
-                                        <li>
-                                            <span>下一篇：</span>
-                                            <a href="/article/<?php echo $next['id']; ?>">
-                                                <?php echo $next['title']; ?>
-                                            </a>
-                                        </li>
-                                    <?php } ?>
-                                </ul>
-                            </div>
                             <?php if( $topic ) { ?>
                                 <div class="bridge">
                                     <a href="/topic/<?php echo $topic['id']; ?>">参与话题：<?php echo $topic['title']; ?></a>
                                 </div>
                             <?php } ?>
+                        </div>
+                        <div class="related-part">
+                            <div class="hd clearfix">
+                                <a href="/articles/<?php echo $topic['id']; ?>" class="r more">更多</a>
+                                <h3 class="l">相关资讯</h3>
+                            </div>
+                            <ul>
+                                <?php foreach( $related_articles as $related_article ) { if( $related_article['id'] == $article['id'] ) {} ?>
+                                    <li>
+                                        <a href="/article/<?php echo $related_article['id']; ?>">
+                                            <?php echo $related_article['title']; ?>
+                                        </a>
+                                        <span class="time"><?php echo substr( $related_article['time'], 0, -9 ); ?></span>
+                                    </li>
+                                <?php } ?>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -84,7 +82,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js?_t=1441241932497', {} );
+            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js?_t=1441405108035', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

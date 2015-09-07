@@ -2,7 +2,6 @@
 
 Class ReportAction extends \Local\BaseAction {
     private $data = array();
-    private $postDataModel;
     private $reportModel;
 
     public function __execute() {
@@ -12,26 +11,24 @@ Class ReportAction extends \Local\BaseAction {
             $this->error( 'NOTLOGIN_ERR' );
         }
 
-        $this->paramsProcessing();
-
-        $this->postDataModel = new PostDataModel();
-
-        $this->checkPost();
+        $this->paramsProcessing()->checkPost();
 
         $this->reportModel = new ReportModel();
 
-        $this->checkReport();
-
-        $this->addReport();
+        $this->checkReport()->addReport();
 
         return $this->data;
+    }
 
+    public function __mobile() {
+        return $this->__execute();
     }
 
     private function addReport() {
         $report = $this->reportModel->insert( array(
             'post_id' => $this->params[ 'post_id' ],
             'account_id' => $this->account[ 'id' ],
+            'target_account_id' => $this->pool['post_data']['account_id'],
             'reason' => $this->params[ 'reason' ],
             'desc' => $this->params[ 'desc' ]
         ) );
@@ -59,10 +56,14 @@ Class ReportAction extends \Local\BaseAction {
     }
 
     private function checkPost() {
-        $post = $this->postDataModel->get( $this->params[ 'post_id' ] );
-        if( !$post ) {
+        $postDataModel = new PostDataModel();
+
+        $post_data = $postDataModel->get( $this->params[ 'post_id' ] );
+        if( !$post_data ) {
             $this->error( 'POST_NOTEXISTS' );
         }
+
+        $this->pool[ 'post_data' ] = $post_data;
 
         return $this;
     }

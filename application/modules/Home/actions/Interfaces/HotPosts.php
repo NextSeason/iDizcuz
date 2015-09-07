@@ -10,6 +10,10 @@ Class HotPostsAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getPosts() {
         $postModel = new PostModel();
         $accountModel = new AccountModel();
