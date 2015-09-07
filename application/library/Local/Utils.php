@@ -125,4 +125,23 @@ Class Utils {
         }
         return $arr;
     }
+
+    static function str2timestamp( $str ) {
+        // today, this week, this month, this year
+        switch( $str ) {
+            case 'this week' :
+                break;
+            case 'this month' :
+                return date( 'Y-m', $_SERVER['REQUEST_TIME'] );
+                break;
+            case 'this year' :
+                return date( 'Y', $_SERVER['REQUEST_TIME'] );
+                break;
+            case 'today' :
+            default :
+                return date( 'Y-m-d', $_SERVER['REQUEST_TIME'] );
+                break;
+        }
+
+    }
 }

@@ -3,88 +3,86 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441651834542" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/topic.css?_t=1441651834542" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441661387353" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/topic.css?_t=1441661387353" />
     </head>
     <body>
         <div id="idizcuz">
+            <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
             <div class="main">
-                <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
-                <div class="core">
-                    <h1>
-                        <?php if( $topic['id'] != 0 ) { ?>
-                            <span>修改已添加话题</span>
-                            <span>[状态：<?php echo $topic['data']['status'] == 1 ? '已发布' : '未发布'; ?>]</span>
-                        <?php } else { ?>
-                            添加新话题
-                        <?php }?>
-                    </h1>
-                    <form class="topic-form">
-                        <input type="hidden" class="id" value="<?php echo $topic['id']; ?>" />
+                <h1>
+                    <?php if( $topic['id'] != 0 ) { ?>
+                        <span>修改已添加话题</span>
+                        <span>[状态：<?php echo $topic['data']['status'] == 1 ? '已发布' : '未发布'; ?>]</span>
+                    <?php } else { ?>
+                        添加新话题
+                    <?php }?>
+                </h1>
+                <form class="topic-form">
+                    <input type="hidden" class="id" value="<?php echo $topic['id']; ?>" />
+                    <div class="important-tip">
+                        <h3><i class="fa fa-warning"></i> 重要提示</h3>
+                        <p>谨慎修改话题类型，修改已发布的话题的类型可能回到只数据严重错误，添加话题时请务必确保准确性！</p>
+                    </div>
+                    <div class="line clearfix">
+                        <label>
+                            <p class="s-title">类型：</p>
+                            <div class="styled-select">
+                                <?php $type = $topic['id'] != 0 ? $topic['data']['type'] : 0; ?>
+                                <select class="type">
+                                    <option value="2" <?php echo $type == 0 ? 'selected' : '' ?>>讨论类型</option>
+                                    <option value="1" <?php echo $type == 1 ? 'selected' : '' ?>>辩论类型</option>
+                                </select>
+                            </div>
+                        </label>
+                        <label>
+                            <p class="s-title">领域：</p>
+                            <div class="styled-select">
+                                <select class="cid">
+                                    <?php foreach( $categories as $k => $v ) { ?>
+                                        <option value="<?php echo $k; ?>" <?php if( isset( $topic['data']['cid'] ) && $k == $topic['data']['cid'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="point-area">
                         <div class="important-tip">
                             <h3><i class="fa fa-warning"></i> 重要提示</h3>
-                            <p>谨慎修改话题类型，修改已发布的话题的类型可能回到只数据严重错误，添加话题时请务必确保准确性！</p>
+                            <p>请谨慎删除已发布辩论类型话题的论点，删除前请对线上数据影响进行确认！</p>
                         </div>
-                        <div class="line clearfix">
-                            <label>
-                                <p class="s-title">类型：</p>
-                                <div class="styled-select">
-                                    <?php $type = $topic['id'] != 0 ? $topic['data']['type'] : 0; ?>
-                                    <select class="type">
-                                        <option value="2" <?php echo $type == 0 ? 'selected' : '' ?>>讨论类型</option>
-                                        <option value="1" <?php echo $type == 1 ? 'selected' : '' ?>>辩论类型</option>
-                                    </select>
-                                </div>
-                            </label>
-                            <label>
-                                <p class="s-title">领域：</p>
-                                <div class="styled-select">
-                                    <select class="cid">
-                                        <?php foreach( $categories as $k => $v ) { ?>
-                                            <option value="<?php echo $k; ?>" <?php if( isset( $topic['data']['cid'] ) && $k == $topic['data']['cid'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="point-area">
-                            <div class="important-tip">
-                                <h3><i class="fa fa-warning"></i> 重要提示</h3>
-                                <p>请谨慎删除已发布辩论类型话题的论点，删除前请对线上数据影响进行确认！</p>
-                            </div>
-                            <ul class="point-list">
-                                <?php foreach( $points as $point ) { ?>
-                                    <li class="points" data-point-id="<?php echo $point['id']; ?>" id="point-<?php echo $point['id']; ?>">
-                                        <a href="###" class="op modify">修改</a>
-                                        <p>
-                                            <span>观点：</span>
-                                            <span class="point-title"><?php echo htmlspecialchars( $point['title'] ); ?></span>
-                                        </p>
-                                        <p>
-                                            <span>描述：</span>
-                                            <span class="point-desc"><?php echo htmlspecialchars( $point['desc'] ); ?></span>
-                                        </p>
-                                    </li>
-                                <?php } ?>
-                            </ul>
-                            <p>
-                                <a href="###" class="btns dark add-point"><i class="fa fa-plus"></i> 添加观点</a>
-                            </p>
-                        </div>
-                        <label>
-                            <p class="s-title">论点标题(限制120字以内)：</p>
-                            <input type="text" value="<?php echo $topic['title']; ?>" class="title" placeholder="论点标题" />
-                        </label>
-                        <label>
-                            <p class="s-title">话题介绍：</p>
-                            <textarea class="desc"><?php echo $topic['desc']; ?></textarea>
-                        </label>
-                        <div class="warn"></div>
-                        <label>
-                            <a href="###" class="btns save">保存</a>
-                        </label>
-                    </form>
-                </div>
+                        <ul class="point-list">
+                            <?php foreach( $points as $point ) { ?>
+                                <li class="points" data-point-id="<?php echo $point['id']; ?>" id="point-<?php echo $point['id']; ?>">
+                                    <a href="###" class="op modify">修改</a>
+                                    <p>
+                                        <span>观点：</span>
+                                        <span class="point-title"><?php echo htmlspecialchars( $point['title'] ); ?></span>
+                                    </p>
+                                    <p>
+                                        <span>描述：</span>
+                                        <span class="point-desc"><?php echo htmlspecialchars( $point['desc'] ); ?></span>
+                                    </p>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                        <p>
+                            <a href="###" class="btns dark add-point"><i class="fa fa-plus"></i> 添加观点</a>
+                        </p>
+                    </div>
+                    <label>
+                        <p class="s-title">论点标题(限制120字以内)：</p>
+                        <input type="text" value="<?php echo $topic['title']; ?>" class="title" placeholder="论点标题" />
+                    </label>
+                    <label>
+                        <p class="s-title">话题介绍：</p>
+                        <textarea class="desc"><?php echo $topic['desc']; ?></textarea>
+                    </label>
+                    <div class="warn"></div>
+                    <label>
+                        <a href="###" class="btns save">保存</a>
+                    </label>
+                </form>
             </div>
         </div>
         <div id="point-dialog" class="dialogs">
@@ -119,7 +117,7 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'topic', '/static/mis/packages/Topic/bootstrap.js?_t=1441651834503', {} );
+            idizcuz.mount( 'topic', '/static/mis/packages/Topic/bootstrap.js?_t=1441661387301', {} );
         </script>
     </body>
 </html>

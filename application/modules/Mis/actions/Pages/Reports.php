@@ -18,7 +18,9 @@ Class ReportsAction extends \Local\MisAction {
 
     private function getAccounts() {
         foreach( $this->data['reports'] as &$report ) {
-            $account = \Accounts\Api::get( $report['post_id'] );
+            $target_account = \Accounts\Api::get( $report['target_account_id' ], [ 'id', 'uname' ] );
+            $report['target_account'] = $target_account;
+            $account = \Accounts\Api::get( $report[ 'account_id' ], [ 'id', 'uname' ] );
             $report['account'] = $account;
         }
         return $this;

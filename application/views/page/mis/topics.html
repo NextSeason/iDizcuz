@@ -3,16 +3,15 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441651834544" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/topics.css?_t=1441651834544" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441661387354" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/topics.css?_t=1441661387354" />
     </head>
     <body>
         <div id="idizcuz">
+            <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
             <div class="main">
-                <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
-                <div class="core">
-                    <ul class="topics-list">
-                        <?php foreach( $topics as $topic ) { ?>
+                <ul class="topics-list">
+                    <?php foreach( $topics as $topic ) { ?>
                         <li class="topics" data-topic-id="<?php echo $topic['id']; ?>" id="topic-<?php echo $topic['id']; ?>">
                             <div class="inner">
                                 <div class="topline clearfix">
@@ -46,9 +45,8 @@
                                 </div>
                             </div>
                         </li>
-                        <?php } ?>
-                    </ul>
-                </div>
+                    <?php } ?>
+                </ul>
             </div>
         </div>
         <script>

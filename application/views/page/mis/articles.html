@@ -3,58 +3,56 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441651834537" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/articles.css?_t=1441651834537" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441661387346" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/articles.css?_t=1441661387346" />
     </head>
     <body>
         <div id="idizcuz">
+            <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
             <div class="main">
-                <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
-                <div class="core">
-                    <ul class="article-list">
-                        <?php foreach( $articles as $article ) { ?>
-                        <li class="articles" id="article-<?php echo $article['id']; ?>">
-                            <div class="inner">
-                                <div class="topline clearfix">
-                                    <a href="/mis/page/article?id=<?php echo $article['id']; ?>" class="op edit r">编辑</a>
-                                    <a href="###" class="op detail r">详情</a>
-                                    <p>
-                                        <?php echo $article['id']; ?>.
-                                        <?php echo $article['title']; ?>
-                                        <a href="/article/<?php echo $article['id']; ?>" target="_blank">[查看]</a>
-                                    </p>
+                <ul class="article-list">
+                    <?php foreach( $articles as $article ) { ?>
+                    <li class="articles" id="article-<?php echo $article['id']; ?>">
+                        <div class="inner">
+                            <div class="topline clearfix">
+                                <a href="/mis/page/article?id=<?php echo $article['id']; ?>" class="op edit r">编辑</a>
+                                <a href="###" class="op detail r">详情</a>
+                                <p>
+                                    <?php echo $article['id']; ?>.
+                                    <?php echo $article['title']; ?>
+                                    <a href="/article/<?php echo $article['id']; ?>" target="_blank">[查看]</a>
+                                </p>
+                            </div>
+                            <div class="article-content">
+                                <div class="content">
+                                    <?php echo $article['content']; ?>
                                 </div>
-                                <div class="article-content">
-                                    <div class="content">
-                                        <?php echo $article['content']; ?>
+                                <div class="article-info">
+                                    <img src="<?php echo $article['origin_logo']; ?>" class="origin_logo r" />
+                                    <div class="line">
+                                        <span class="s-title">时间：</span>
+                                        <span><?php echo substr( $article['time'], 0, -9 ); ?></span>
+
+                                        <span class="s-title">添加时间：</span>
+                                        <span><?php echo $article['ctime']; ?></span>
+
+                                        <span class="s-title">作者：</span>
+                                        <span><?php echo $article['author']; ?>
                                     </div>
-                                    <div class="article-info">
-                                        <img src="<?php echo $article['origin_logo']; ?>" class="origin_logo r" />
-                                        <div class="line">
-                                            <span class="s-title">时间：</span>
-                                            <span><?php echo substr( $article['time'], 0, -9 ); ?></span>
-
-                                            <span class="s-title">添加时间：</span>
-                                            <span><?php echo $article['ctime']; ?></span>
-
-                                            <span class="s-title">作者：</span>
-                                            <span><?php echo $article['author']; ?>
-                                        </div>
-                                        <div class="line">
-                                            <span class="s-title">内容来源：</span>
-                                            <span><?php echo $article['origin']; ?></span>
-                                            <span class="s-title">来源地址：</span>
-                                            <a href="<?php echo $article['origin_url']; ?>">
-                                                <?php echo $article['origin_url']; ?>
-                                            </a>
-                                        </div>
+                                    <div class="line">
+                                        <span class="s-title">内容来源：</span>
+                                        <span><?php echo $article['origin']; ?></span>
+                                        <span class="s-title">来源地址：</span>
+                                        <a href="<?php echo $article['origin_url']; ?>">
+                                            <?php echo $article['origin_url']; ?>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                        <?php } ?>
-                    </ul>
-                </div>
+                        </div>
+                    </li>
+                    <?php } ?>
+                </ul>
             </div>
         </div>
         <script>
