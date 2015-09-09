@@ -6,7 +6,7 @@
             $nav = 'index';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/home/css/index.css?_t=1441361835626" />
+        <link rel="stylesheet" href="/static/home/css/index.css?_t=1441780095180" />
     </head>
     <body>
         <div id="idizcuz">
@@ -82,7 +82,7 @@
                                     </div>
                                 </form>
                                 <script>
-                                    new J().mount( 'Signin', '/static/home/packages/Signin/bootstrap.js?_t=1441361835579', {} );
+                                    new J().mount( 'Signin', '/static/home/packages/Signin/bootstrap.js?_t=1441780095114', {} );
                                 </script>
                             </div>
                         <?php } ?>
@@ -162,7 +162,7 @@
                     <div class="aside hot-posts">
                         <h2 class="hd">热门论述</h2>
                         <ul class="hot-post-list-1 post-list"></ul>
-                        <ul class="post-list"></ul>
+                        <ul class="hot-post-list-2 post-list"></ul>
                     </div>
                     <div class="main topic-area">
                         <h2 class="hd">今日焦点</h2>
@@ -200,11 +200,11 @@
                             </div>
                         </div>
                         <div class="topics clearfix">
-                            <h3><a href="###"><span class="seal seal-1"></span> 各地青少年犯罪频现，究竟谁该背起更多的责任</a></h3>
+                            <h3><a href="/topic/285738253"><span class="seal seal-1"></span> 我们是否对“国民素质”的问题有太少的“实质性关注”？该怎样来改善现状？</a></h3>
                             <div class="data-line">
                             </div>
                             <div class="desc">
-<p>近期，各种青少年犯罪的新闻和视频被曝出，其中很多手段恶劣到让我们难以想象。有人认为这种现象只是随着互联网和媒体的越来越发达，更多的相关事件被暴光在众目之下。中国青少年研究中心对12个省区市的调查研究显示，2014年14周岁以下未成年人犯罪占20.11%，相比2001年上升了7.78个百分点。同时，未成年人犯罪低龄化也可能大大增加未来社会中惯犯和累犯的可能性。</p>
+                                 <p>“景点挂出的供人欣赏的风铃遭游人哄抢一空”，“私人承包500亩油蛤养殖地遭群众哄抢”，我们发现不断的有类似的新闻让我们一次又一次的倍感“震惊”。但其实在震惊的同时，似乎又感觉对类似事情已经见怪不怪。谈到类似的事情，总让我们离不开一个词“国民素质”，这些让我们震惊的新闻一次又一次的让我们对中国“国民素质”的现状失去信心。</p>
                             </div>
                         </div>
                     </div>
@@ -245,17 +245,21 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ichart.js?_t=1441361835626"></script>
+        <script src="/static/common/js/ichart.js?_t=1441780095180"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1441361835579', { id : 285738250 } );
-            idizcuz.mount( 'hotposts', '/static/home/packages/HotPosts/bootstrap.js?_t=1441361835579', { blocks : [ {
+            idizcuz.mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1441780095114', { id : 285738250 } );
+            idizcuz.mount( 'hotposts', '/static/home/packages/HotPosts/bootstrap.js?_t=1441780095114', { blocks : [ {
                 topic_id : 285738250,
                 rn : 4,
                 container : $( '.hot-post-list-1' )
+            }, {
+                topic_id : 285738253,
+                rn : 3,
+                container : $( '.hot-post-list-2' )
             } ] } );
-            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1441361835579', { rn : 10 } );
-            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1441361835579' );
+            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1441780095114', { rn : 10 } );
+            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1441780095114' );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

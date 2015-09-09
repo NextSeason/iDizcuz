@@ -20,8 +20,8 @@ Class ReportAction extends \Local\BaseAction {
     }
 
     private function getAccount() {
-        $account = \Accounts\Api::get( $this->data['report']['account_id'] );
-        $this->data['account'] = $account;
+        $report_account = \Accounts\Api::get( $this->data['report']['account_id'] );
+        $this->data['report_account'] = $report_account;
         return $this;
     }
 

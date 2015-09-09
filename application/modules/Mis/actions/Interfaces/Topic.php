@@ -104,6 +104,17 @@ Class TopicAction extends \Local\MisAction {
             $this->error( 'PARAMS_ERR', 'points is required' );
         }
 
+        if( $type == 1 ) {
+
+            $points = explode( ',', $points );
+
+            foreach( $points as &$point ) {
+                $point = \Local\Utils::decodeId( $point );
+            }
+
+            $points = implode( ',', $points );
+        }
+
         $this->params = array(
             'id' => $id,
             'title' => $title,

@@ -25,4 +25,10 @@ Class Api {
         return count( $reports ) > 0 ? $reports[0] : false;
     }
 
+    static public function recentReports( $account_id, $len ) {
+        $count = self::getReportModel()->select( [
+            'columns' => ''
+        ] );
+    }
+
 }

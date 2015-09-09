@@ -3,23 +3,50 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441661387349" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/report.css?_t=1441661387349" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441777373352" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/report.css?_t=1441777373352" />
     </head>
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
             <div class="main">
-                <div class="account-part clearfix">
+                <div class="account-part parts clearfix">
+                    <p class="topline">举报人：
+                        <a href="/user/activities/<?php echo $report_account['id']; ?>">
+                            <?php echo htmlspecialchars( $report_account['uname'] ); ?>
+                        </a>
+                    </p>
                     <div>
-                        <span>举报人：</span>
                     </div>
                 </div>
-                <div class="target-account-part">
+                <div class="target-account-part parts">
+                    <p class="topline">
+                        被举报人：
+                        <a href="/user/activities/<?php echo $target_account['id']; ?>">
+                            <?php echo htmlspecialchars( $target_account['uname'] ); ?>
+                        </a>
+                    </p>
+                    <div>
+                    </div>
                 </div>
-                <div class="post-part">
+                <div class="post-part parts">
+                    <p class="topline">被举报论述：</p>
+                    <div class="posts">
+                        <h2><a href="/post/<?php echo $post['id']; ?>" target="_blank"><?php echo htmlspecialchars( $post['title'] ); ?></a></h2>
+                        <p>
+                            <span class="ctime">发表于：<?php echo substr( $post['ctime'], 0, -9 ); ?></span>
+                        </p>
+                        <?php if( isset( $post['topic'] ) ) { ?>
+                            <div class="topic-line">
+                                <a href="/topic/<%=post.topic.id %>" target="_blank">所在话题： <%-post.topic.title%></a>
+                            </div>
+                        <?php } ?>
+                        <div class="contents rich-text">
+                            <p><?php echo $post['content']; ?></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="operation-part">
+                <div class="operation-part parts>
                 </div>
             </div>
         </div>
