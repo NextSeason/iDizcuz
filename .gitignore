@@ -1,3 +1,6 @@
 html/
 static/
 .DS_Store
+email.ini
+oss.ini
+db.ini
