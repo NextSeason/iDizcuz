@@ -9,6 +9,8 @@ Class ReportsAction extends \Local\MisAction {
 
         $this->paramsProcessing()->getReports()->getPosts()->getAccounts();
 
+        $this->data['status'] = $this->params['status'];
+
         return $this->data;
     }
 

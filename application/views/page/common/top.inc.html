@@ -1,6 +1,6 @@
 <div class="boxes top">
     <div class="inner">
-        <?php if( $account ) { ?>
+        <?php if( isset( $account ) && $account ) { ?>
             <ul class="account">
                 <li>
                     <a href="/user/activities/<?php echo $account['id']; ?>">

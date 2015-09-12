@@ -42,7 +42,12 @@ Class ArticleAction extends \Local\MisAction {
 
         $articleModel = new ArticleModel();
         
-        $res = $articleModel->update( $this->params['id'], $data );
+        $res = $articleModel->update( [
+            'set' => $data,
+            'where' => [
+                [ 'id', $this->params['id'] ]
+            ]
+        ] );
 
         if( !$res ) {
             $this->error('SYSTEM_ERR' );

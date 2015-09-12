@@ -29,9 +29,11 @@ Class Api {
         return self::getAccountModel()->get( $id, $columns );
     }
 
-    static public function getData() {
+    static public function getData( $id, $columns = null ) {
+        return self::getAccountDataModel()->get( $id, $columns );
 
     }
-    static public function getSettings() {
+    static public function getSettings( $id, $columns = null ) {
+        return self::getAccountSettingModel()->get( $id, $columns );
     }
 }

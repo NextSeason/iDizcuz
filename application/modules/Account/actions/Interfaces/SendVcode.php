@@ -94,7 +94,7 @@ Class SendVcodeAction extends \Local\BaseAction {
     private function sendEmail() {
         $to = $this->params[ 'to' ];
 
-        $conf = \Local\Utils::loadConf( 'email', 'forget' );
+        $conf = \Local\Utils::loadConf( 'email', $this->params['do'] );
 
         $params = array(
             'Subject' => $conf->subject,

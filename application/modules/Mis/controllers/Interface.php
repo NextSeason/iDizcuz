@@ -12,7 +12,9 @@ Class InterfaceController extends BaseInterfaceController {
             'article' => $this->action_path . 'Article.php',
             'upload' => $this->action_path . 'Upload.php',
             'publictopic' => $this->action_path . 'PublicTopic.php',
-            'point' => $this->action_path . 'Point.php'
+            'point' => $this->action_path . 'Point.php',
+            'editoruploadimages' => $this->action_path . 'EditorUploadImages.php',
+            'deletepost' => $this->action_path . 'DeletePost.php'
         );
     }
 }

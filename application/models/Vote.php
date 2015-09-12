@@ -54,24 +54,4 @@ Class VoteModel extends BaseModel {
             return false;
         }
     }
-
-    public function updateVoteOpinion( $id, $opinion, $value = 1 ) {
-        $query = 'UPDATE `votes` SET `opinion` = :opinion, `value` = :value';
-
-        try {
-            $this->db->beginTransaction();
-            $stmt = $this->db->prepare( $query );
-            $stmt->bindValue( ':opinion', $opinion );
-            $stmt->bindValue( ':value', $value );
-
-            if( !$stmt->execute() ) {
-                throw new PDOException( 'failed to update data in vote' );
-            }
-
-            return $this->db->commit();
-        } catch( PDOException $e ) {
-            $this->db->rollback();
-            return false;
-        }
-    }
 }

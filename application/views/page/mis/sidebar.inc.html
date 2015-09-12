@@ -1,3 +1,9 @@
+<?php 
+    function focus( $page = null, $match = null ) {
+        if( is_null( $page ) || is_null( $match ) ) return;
+        if( $page == $match ) echo ' focus '; 
+    }
+?>
 <div class="aside">
     <ul class="item-list">
         <li>
@@ -48,6 +54,18 @@
         </li>
         <li>
             <a href="###" class="l1">
+                <i class="fa fa-plus-square"></i> 论述管理
+            </a>
+            <ul>
+                <li>
+                    <a href="/mis/page/post" class="items">
+                        <i class="fa fa-level-up flip"></i> 论述搜索
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="###" class="l1">
                 <i class="fa fa-plus-square"></i> 审核管理
             </a>
             <ul>
@@ -69,12 +87,12 @@
             </a>
             <ul>
                 <li>
-                    <a href="###" class="items">
+                    <a href="/mis/page/user" class="items <?php focus( $nav, 'user' ); ?>">
                         <i class="fa fa-level-up flip"></i> 用户查找
                     </a>
                 </li>
                 <li>
-                    <a href="###" class="items">
+                    <a href="/mis/page/bannedusers" class="items <?php focus( $nav, 'bannedusers' ); ?>">
                         <i class="fa fa-level-up flip"></i> 用户封禁
                     </a>
                 </li>
@@ -86,14 +104,23 @@
             </a>
             <ul>
                 <li>
-                    <a href="/mis/page/reports?status=0" class="items">
+                    <a href="/mis/page/reports?status=0" class="items <?php focus( $nav, 'report-0' ); ?>">
                         <i class="fa fa-level-up flip"></i> 待处理举报
                     </a>
                 </li>
                 <li>
-                    <a href="/mis/page/reports?status=1" class="items">
-                        <i class="fa fa-level-up flip"></i>
-                        已处理举报
+                    <a href="/mis/page/reports?status=1" class="items <?php focus( $nav, 'report-1' ); ?>">
+                        <i class="fa fa-level-up flip"></i> 已处理（成功）举报
+                    </a>
+                </li>
+                <li>
+                    <a href="/mis/page/reports?status=2" class="items <?php focus( $nav, 'report-2' ); ?>">
+                        <i class="fa fa-level-up flip"></i> 已处理（失败）举报
+                    </a>
+                </li>
+                <li>
+                    <a href="/mis/page/reports?status=3" class="items <?php focus( $nav, 'report-3' ); ?>">
+                        <i class="fa fa-level-up flip"></i> 已处理（忽略）举报
                     </a>
                 </li>
             </ul>

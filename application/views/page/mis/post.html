@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'iDizcuz Management Information System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442088317853" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/post.css?_t=1442088317853" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
+            <div class="main">
+                <form class="search clearfix">
+                    <input type="submit" class="btns large aside" />
+                    <div class="main">
+                        <input type="search" class="post-id long" placeholder="您可以输入论述ID和论述URL去查找一条论述" />
+                    </div>
+                </form>
+                <?php if( !isset( $post ) ) { ?>
+                    <p class="not-exists">您未输入论述ID或您查找的论述不存在</p>
+                <?php } else { ?>
+                    <div class="post">
+                        <h2><a href="/post/<?php echo $post['id']; ?>" target="_blank"><?php echo htmlspecialchars( $post['title'] ); ?></a></h2>
+                        <div class="post-data">
+                            <p>
+                                <span>作者：<b><?php echo $post['account']['uname']; ?></b></span>
+                                <span>发表于：<b><?php echo substr( $post['ctime'], 0, -9 ); ?></b></span>
+                                <span>状态：
+                                    <?php if( $post['data']['status'] == 0 ) { ?>
+                                        <b>正常</b>
+                                    <?php } else if( $post['data']['status'] == 1 ) { ?>
+                                        <b>作者删除</b>
+                                    <?php } else { ?>
+                                        <b>管理员删除<?php echo $post['data']['status'] == 3 ? '(恶意)' : '';  ?></b>
+                                    <?php } ?>
+                                </span>
+                                <span>获得支持：<b><?php echo $post['data']['agree']; ?></b></span>
+                                <span>获得反对：<b><?php echo $post['data']['disagree']; ?></b></span>
+                                <span>评论数：<b><?php echo $post['data']['comments_cnt']; ?></b></span>
+                            </p>
+                        </div>
+                        <div class="contents rich-text">
+                            <p><?php echo $post['content']; ?></p>
+                        </div>
+                    </div>
+                    <div class="operation-part clearfix">
+                        <div class="aside">
+                            <a href="###" class="btns large delete-post" data-post-id="<?php echo $post['id']; ?>">删除此论述</a>
+                        </div>
+                        <div class="main">
+                            <label>
+                                <input type="checkbox" class="baleful" />
+                                <span>删除论述的同时设置本论述为“恶意”</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked class="deal-reports" />
+                                <span>删除论述的同时处理所有针对次论述的举报</span>
+                            </label>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+        <script>
+            ( function() {
+                $( 'form.search' ).on( 'submit', function( e ) {
+                    e.preventDefault();
+                    var id = $('input.post-id').val(),
+                        matches;
+
+                    if( !id.length ) return false;
+
+                    if( /^\d+$/.test( id ) ) {
+                        location.href = '/mis/page/post?id=' + id;
+                        return false;
+                    }
+
+                    if( matches = id.match( /\/post\/(\d+)/ ) ) {
+                        location.href = '/mis/page/post?id=' + matches[1];
+                        return false;
+                    }
+
+                    alert( '您输入的ID或URL不合法' );
+                } );
+
+                $( '.delete-post' ).on( 'click', function( e ) {
+                    e.preventDefault();
+
+                    $.ajax( {
+                        url : '/mis/interface/deletepost',
+                        method : 'POST',
+                        data : {
+                            'post_id' : $( this ).attr( 'data-post-id' ),
+                            'baleful' : +$('.baleful').get(0).checked,
+                            'deal_reports' : +$('.deal-reports').get(0).checked,
+                            'csrf-token' : $.cookie( 'CSRF-TOKEN' )
+                        }
+                    } ).done( function( response ) {
+                        var errno = +response.errno;
+
+                        if( errno ) {
+                            return false;
+                        }
+
+                        alert( '操作成功' );
+                        location.reload();
+
+                    } ).fail( function() {
+                        alert( '操作失败，请确认网络正常，或联系研发人员' );
+                    });
+                } );
+            } )();
+        </script>
+    </body>
+</html>

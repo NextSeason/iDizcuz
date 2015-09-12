@@ -26,9 +26,10 @@ Class MessagesAction extends \Local\BaseAction {
     private function clearUnread() {
         $accountDataModel = new AccountDataModel();
 
-        $accountDataModel->update( $this->account['id'], [
-            'unread_msg' => 0
-        ] );
+        $accountDataModel->update( [
+            'set' => [ 'unread_msg' => 0 ],
+            'where' => [ [ 'id', $this->account['id'] ] ]
+        ] )
 
         return $this;
     }

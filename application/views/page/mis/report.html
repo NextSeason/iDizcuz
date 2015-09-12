@@ -3,8 +3,8 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1441777373352" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/report.css?_t=1441777373352" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442088317854" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/report.css?_t=1442088317854" />
     </head>
     <body>
         <div id="idizcuz">
@@ -17,36 +17,88 @@
                         </a>
                     </p>
                     <div>
+                        <span>注册时间：<b><?php echo $report_account['ctime']; ?></b></span>
+                        <span>上次活动时间：<b><?php echo $report_account['mtime']; ?></b></span>
+                        <span>状态：<b><?php echo $report_account['status'] == 0 ? '正常' : '被封禁'; ?></b></span>
+                        <?php if( $report_account['status'] == 1 ) { ?>
+                            <span>封禁时间：<b><?php echo $report_account['ban_start']; ?></b> - <b><?php echo $report_account['ban_end']; ?></b></span>
+                        <?php } ?>
+
                     </div>
                 </div>
                 <div class="target-account-part parts">
                     <p class="topline">
-                        被举报人：
+                        被举论述作者：
                         <a href="/user/activities/<?php echo $target_account['id']; ?>">
                             <?php echo htmlspecialchars( $target_account['uname'] ); ?>
                         </a>
                     </p>
                     <div>
+                        <span>注册时间：<b><?php echo $target_account['ctime']; ?></b></span>
+                        <span>上次活动时间：<b><?php echo $target_account['mtime']; ?></b></span>
+                        <span>状态：<b><?php echo $target_account['status'] == 0 ? '正常' : '被封禁'; ?></b></span>
+                        <?php if( $target_account['status'] == 1 ) { ?>
+                            <span>封禁时间：<b><?php echo $target_account['ban_start']; ?></b> - <b><?php echo $target_account['ban_end']; ?></b></span>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="post-part parts">
                     <p class="topline">被举报论述：</p>
                     <div class="posts">
                         <h2><a href="/post/<?php echo $post['id']; ?>" target="_blank"><?php echo htmlspecialchars( $post['title'] ); ?></a></h2>
-                        <p>
-                            <span class="ctime">发表于：<?php echo substr( $post['ctime'], 0, -9 ); ?></span>
-                        </p>
-                        <?php if( isset( $post['topic'] ) ) { ?>
-                            <div class="topic-line">
-                                <a href="/topic/<%=post.topic.id %>" target="_blank">所在话题： <%-post.topic.title%></a>
-                            </div>
-                        <?php } ?>
+                        <div class="post-data">
+                            <p>
+                                <span>发表于：<b><?php echo substr( $post['ctime'], 0, -9 ); ?></b></span>
+                                <span>状态：
+                                    <?php if( $post['data']['status'] == 0 ) { ?>
+                                        <b>正常</b>
+                                    <?php } else if( $post['data']['status'] == 1 ) { ?>
+                                        <b>作者删除</b>
+                                    <?php } else { ?>
+                                        <b>管理员删除</b>
+                                    <?php } ?>
+                                </span>
+                                <span>被举报原因：<b><?php echo $report['reason']; ?></b></span>
+                                <span>举报描述：<b><?php echo htmlspecialchars( $report['desc'] ); ?></b></span>
+                            </p>
+                            <p>
+                                <span>获得支持：<b><?php echo $post['data']['agree']; ?></b></span>
+                                <span>获得反对：<b><?php echo $post['data']['disagree']; ?></b></span>
+                                <span>评论数：<b><?php echo $post['data']['comments_cnt']; ?></b></span>
+                            </p>
+                        </div>
                         <div class="contents rich-text">
                             <p><?php echo $post['content']; ?></p>
                         </div>
                     </div>
                 </div>
-                <div class="operation-part parts>
+                <div class="operation-part parts clearfix">
+                    <div class="aside btn-box">
+                        <a href="###" class="btns large pass">投诉成功</a>
+                        <a href="###" class="btns dark large failed">投诉失败</a>
+                    </div>
+                    <form class="main">
+                        <label>
+                            <input type="checkbox" checked />
+                            <span>发送消息给举报人</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" checked />
+                            <span>发送消息给被举报人</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" checked />
+                            <span>同样方式处理次论述所有相同原因的举报</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" checked />
+                            <span>当日内有5条论述被管理员删除，则直接封禁被举报用户</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" checked />
+                            <span>当日内存在10次或以上恶意投诉，则直接封禁举报用户</span>
+                        </label>
+                    </form>
                 </div>
             </div>
         </div>

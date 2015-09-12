@@ -24,14 +24,19 @@ Class UpdateInfoAction extends \Local\BaseAction {
 
         $accountModel = new AccountModel();
 
-        $res = $accountModel->update( $this->account[ 'id' ], array(
-            'sex' => $params[ 'sex' ],
-            'industry' => $params[ 'industry' ],
-            'employment' => $params[ 'employment' ],
-            'position' => $params[ 'position' ],
-            'desc' => $params[ 'desc' ],
-            'birth' => $params['birth']
-        ) );
+        $res = $accountModel->update( [
+            'set' => [
+                'sex' => $params[ 'sex' ],
+                'industry' => $params[ 'industry' ],
+                'employment' => $params[ 'employment' ],
+                'position' => $params[ 'position' ],
+                'desc' => $params[ 'desc' ],
+                'birth' => $params['birth']
+            ],
+            'where' => [
+                [ 'id', $this->account['id'] ]
+            ]
+        ] );
 
         if( !$res ) {
             $this->error( 'SYSTEM_ERR' );

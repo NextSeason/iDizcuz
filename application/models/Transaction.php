@@ -142,7 +142,14 @@ Class TransactionModel extends BaseModel {
 
             // step 5 update score in accounts_data
             // step 5 update status in posts_data
-            $this->_update( $id, [ 'status' => 1 ], 'posts_data' );
+            $this->_update( [
+                'set' => [
+                    'status' => 1
+                ],
+                'where' => [
+                    [ 'id', $id ]
+                ]
+            ], 'posts_data' );
 
             return $this->db->commit();
 
@@ -174,8 +181,15 @@ Class TransactionModel extends BaseModel {
                 throw new PDOException( 'message has already deleted by receiver' );
             }
 
-            $del = $del == 0 ? 2 : 3;
-            $this->_update( $id, [ 'del' => $del ], 'messages' );
+            $this->_update( [
+                'set' => [
+                    'del' => $del == 0 ? 2 : 3
+                ],
+                'where' => [
+                    [ 'id', $id ]
+                ]
+            ], 'messages' );
+
 
             // step 3 if message has not been read, minus value of unread_msg in table accounts_data 
             // step 4 minus value of msg_cnt in table accounts_data
@@ -228,36 +242,6 @@ Class TransactionModel extends BaseModel {
             }
 
             return $this->db->commit();
-
-        } catch( PDOException $e ) {
-            $this->db->rollback();
-            return false;
-        }
-    }
-
-
-    public function readMessage( $account, $id ) {
-        try {
-            $this->db->beginTransaction();
-
-            $query = 'UPDATE `messages` SET `read` = 1 WHERE `id` = :id AND `to` = :to';
-
-            $stmt = $this->db->prepare( $query );
-
-            $stmt->bindValue( ':id', $id );
-            $stmt->bindValue( ':to', $account );
-
-            $res = $stmt->execute();
-
-            if( !$res ) {
-                throw new PDOException( 'failed to update data in table messages' );
-            }
-
-            $this->increment( $account, [ 'unread_msg' => -1 ], 'accounts_data' );
-
-            $this->db->commit();
-
-            return $res;
 
         } catch( PDOException $e ) {
             $this->db->rollback();
@@ -436,14 +420,24 @@ Class TransactionModel extends BaseModel {
 
         try {
             $this->db->beginTransaction();
-            $res = $this->_update( $id, $data, 'topics' );
+            $res = $this->_update( [
+                'set' => $data,
+                'where' => [
+                    [ 'id', $id ]
+                ]
+            ], 'topics' );
 
             if( !$res ) {
                 throw new PDOException( 'cannot update data in table topics' );
             }
-            $res = $this->_update( $id, [
-                'type' => $type,
-                'cid' => $params['cid'],
+            $res = $this->_update( [
+                'set' => [
+                    'type' => $type,
+                    'cid' => $params['cid']
+                ],
+                'where' => [
+                    [ 'id', $id ]
+                ]
             ], 'topics_data' );
 
             if( !$res ) {

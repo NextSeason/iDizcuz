@@ -28,8 +28,11 @@ Class UploadAvatarAction extends \Local\BaseAction {
     private function update() {
         $accountModel = new AccountModel();
 
-        $res = $accountModel->update( $this->account['id'], [
-            'img' => $this->data['img']
+        $res = $accountModel->update( [
+            'set' => [ 'img' => $this->data['img'] ],
+            'where' => [
+                [ 'id', $this->account['id'] ]
+            ]
         ] );
 
         if( !$res ) {

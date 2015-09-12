@@ -1,16 +1,12 @@
 <?php
 
-Class ReportAction extends \Local\BaseAction {
+Class ReportAction extends \Local\MisAction {
     private $data = [];
 
     public function __execute() {
         $this->tpl = 'mis/report';
 
         $this->paramsProcessing()->getReport()->getPost()->getTargetAccount()->getAccount();
-
-        echo '<pre>';
-        print_r( $this->data );
-        echo '</pre>';
 
         return $this->data;
     }
@@ -32,8 +28,10 @@ Class ReportAction extends \Local\BaseAction {
     }
 
     private function getPost() {
-        $post = \Posts\Api::get( $this->data['report']['id'] );
+        $post = \Posts\Api::get( $this->data['report']['post_id'] );
+        $post['data'] = \Posts\Api::getData( $this->data['report']['post_id'] );
         $this->data['post'] = $post;
+
         return $this;
     }
 
@@ -45,6 +43,10 @@ Class ReportAction extends \Local\BaseAction {
         } else {
             $report = \Reports\Api::firstUntreatedReport();
         }
+
+        $reasons = \Local\Utils::loadConf( 'report', 'reasons' );
+
+        $report['reason'] = $reasons[ $report['reason'] ];
 
         $this->data['report'] = $report;
         return $this;

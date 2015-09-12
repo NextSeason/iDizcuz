@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'iDizcuz Management Information System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442088317858" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/user.css?_t=1442088317858" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php $nav = 'user'; ?>
+            <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
+            <div class="main">
+                 <form class="search clearfix">
+                    <input type="submit" class="btns large aside" />
+                    <div class="main">
+                        <input type="search" class="user-id long" placeholder="您可以通过用户ID查找用户" />
+                    </div>
+                </form>
+                <?php if( !isset( $user ) ) { ?>
+                    <p class="not-exists">您未输入用户ID或您查找的用户不存在</p>
+                <?php } else {  ?>
+                    <div class="user">
+
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+        <script>
+            ( function() {
+                $( 'form.search' ).on( 'submit', function( e ) {
+                    e.preventDefault();
+                    var id = $('input.user-id').val();
+
+                    if( !id.length ) return false;
+
+                    if( /^\d+$/.test( id ) ) {
+                        location.href = '/mis/page/user?id=' + id;
+                        return false;
+                    }
+
+                    alert( '您输入的ID或URL不合法' );
+                } );
+            } )();
+        </script>
+    </body>
+</html>

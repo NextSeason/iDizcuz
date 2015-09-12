@@ -20,6 +20,9 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     public $__params = [];
 
     public function execute() {
+
+        set_exception_handler( [ $this, 'exception_handler' ] );
+
         $this->session = \Yaf\Session::getInstance();
         $this->request = $this->getRequest();
         $this->controller = $this->getController();
@@ -147,7 +150,15 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
             $account['mtime'] = date( 'Y-m-d H:i:s', $_SERVER['REQUEST_TIME'] );
             $account['login_ip'] = ip2long( $_SERVER['REMOTE_ADDR'] );
 
-            $this->accountModel->update( $account['id'], $account );
+            $this->accountModel->update( [
+                'set' => [
+                    'mtime' => $account['mtime'],
+                    'login_ip' => $account['login_ip']
+                ],
+                'where' => [
+                    [ 'id', $account['id'] ]
+                ]
+            ] );
 
             $industries = \Local\Utils::loadConf( 'industries', 'list' );
 
@@ -195,6 +206,10 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         ] );
 
         return $this;
+    }
+
+    public function exception_handler( $exception ) {
+        
     }
 
     abstract protected function __execute();

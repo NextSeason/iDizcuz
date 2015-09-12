@@ -18,8 +18,11 @@ Class SaveSettingsAction extends \Local\BaseAction {
     public function save() {
         $accountSettingsModel = new AccountSettingsModel();
 
-        $accountSettingsModel->update( $this->account['id'], [
-            $this->params[ 'key' ] => $this->params[ 'value' ]
+        $accountSettingsModel->update( [
+            'set' => [ $this->params['key'] => $this->params['value'] ],
+            'where' => [
+                ['id',$this->account['id']]
+            ]
         ] );
 
         return $this;

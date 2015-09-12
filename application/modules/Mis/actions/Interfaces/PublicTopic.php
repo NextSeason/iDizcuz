@@ -14,8 +14,11 @@ Class PublicTopicAction extends \Local\MisAction {
     private function update() {
         $topicDataModel = new TopicDataModel();
 
-        $res = $topicDataModel->update( $this->params['id'], [
-            'status' => $this->params['status']
+        $res = $topicDataModel->update( [
+            'set' => [ 'status' => $this->params['status'] ],
+            'where' => [
+                [ 'id', $this->params['id'] ]
+            ]
         ] );
 
         if( !$res ) {

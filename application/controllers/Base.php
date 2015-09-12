@@ -107,5 +107,4 @@ Class BaseController extends \Yaf\Controller_Abstract {
     protected function loginStatus() {
         $session = $this->session;
     }
-
 }

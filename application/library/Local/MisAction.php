@@ -6,6 +6,9 @@ Abstract Class MisAction extends \Local\BaseAction {
     protected $adminModel;
 
     public function execute() {
+
+        set_exception_handler( [ $this, 'exception_handler' ] );
+
         $this->session = \Yaf\Session::getInstance();
         $this->request = $this->getRequest();
         $this->controller = $this->getController();

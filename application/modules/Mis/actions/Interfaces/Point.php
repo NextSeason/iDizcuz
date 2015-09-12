@@ -37,9 +37,14 @@ Class PointAction extends \Local\MisAction {
     private function updatePoint() {
         $pointModel = new PointModel();
 
-        $res = $pointModel->update( $this->params['id'], [
-            'title' => $this->params['title'],
-            'desc' => $this->params['desc']
+        $res = $pointModel->update( [
+            'set' => [
+                'title' => $this->params['title'],
+                'desc' => $this->params['desc']
+            ],
+            'where' => [
+                ['id', $this->params['id']
+            ]
         ] );
 
         if( !$res ) {

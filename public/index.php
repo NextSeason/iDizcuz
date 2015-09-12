@@ -4,4 +4,5 @@
     define( 'TPL_PATH', APP_PATH . '/application/views/page/' );
 
     $app = new \Yaf\Application( APP_PATH . '/conf/application.ini' );
+    \Yaf\Dispatcher::getInstance()->catchException( true );
     $app->bootstrap()->run();

@@ -69,7 +69,12 @@ Class SigninAction extends \Local\BaseAction {
 
         $params['remember_token'] = isset( $this->pool['remember_token'] ) ? $this->pool['remember_token'] : '';
 
-        $accountModel->update( $this->account['id'], $params );
+        $accountModel->update( [
+            'set' => $params
+            'where' => [
+                [ 'id', $this->account['id'] ]
+            ]
+        ] );
 
         return $this;
     }

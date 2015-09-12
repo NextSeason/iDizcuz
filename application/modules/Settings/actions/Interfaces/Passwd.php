@@ -19,9 +19,15 @@ Class PasswdAction extends \Local\BaseAction {
 
     private function updatePasswd() {
         $passwd = \Local\Utils::passwd( $this->params[ 'npasswd' ], $this->account[ 'salt' ] );
-        $res = $this->accountModel->update( $this->account[ 'id' ], array(
-            'passwd' => $passwd
-        ) );
+
+        $res = $this->accountModel->update( [
+            'set' => [
+                'passwd' => $passwd
+            ],
+            'where' => [
+                [ 'id', $this->account['id'] ]
+            ]
+        ] );
 
         if( !$res ) {
             $this->error( 'SYSTEM_ERR' );

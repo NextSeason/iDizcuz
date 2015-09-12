@@ -183,36 +183,126 @@ Class BaseModel {
         }
     }
 
-    public function _update( $id, $data, $table = null ) {
-        if( is_null( $table ) ) {
-            $table = $this->table;
+    public function _update( $params, $table = null ) {
+        if( is_null( $table) ) $table = $this->table;
+
+        $set = isset( $params[ 'set' ] ) ? $params['set'] : null;
+        $conditions = isset( $params['where'] ) ? $params[ 'where' ] : null;
+        $orders = isset( $params[ 'order' ] ) ? $params['order'] : null;
+        $len = isset( $params['rn'] ) ? $params[ 'rn' ] : 1;
+
+        $sets = [];
+
+        foreach ( $set as $k => $v ) {
+            $sets[] = '`' . $k . '`' . ' = :set_' . $k;
         }
 
-        $dataList = [];
+        if( is_null( $conditions ) || !count( $conditions ) ) {
+            $where = ' ';
+        } else {
+            $where = '';
 
-        foreach ( $data as $k => $v ) {
-            $dataList[] = '`' . $k . '`' . ' = :' . $k;
+            foreach( $conditions as $condition ) {
+                $key = $condition[0];
+                $bind = true;
+
+                if( strpos( $key, '-' ) === 0 ) {
+                    $bind = false;
+                }
+
+                $realkey = trim( $key, '-|' );
+
+                switch( $condition[0]{0} ) {
+                    case '|' :
+                        $connector = ' OR ';
+                        break;
+                    default : 
+                        $connector = ' AND ';
+                        break;
+                }
+
+                if( count( $condition ) == 3 ) {
+                    if( $bind ) {
+                        $where .= $connector . " `$realkey` {$condition[1]} :$realkey ";
+                        $bindList[ ':' . $realkey ] = $condition[2];
+                    } else {
+                        $where .= $connector . " `$realkey` {$condition[1]} {$condition[2]} ";
+                    }
+                } else {
+                    if( $bind ) {
+                        $where .= $connector . " `$realkey` = :$realkey ";
+                        $bindList[ ':' . $realkey ] = $condition[1];
+                    } else {
+                        $where .= $connector . " `$realkey` = {$condition[1]} ";
+                    }
+                }
+
+            }
+
+            if( strlen( trim( $where ) ) ) {
+                $where = ' WHERE ' . preg_replace( '#^\s*(AND|OR)#', '', $where );
+            }
         }
 
-        $query = sprintf( 'UPDATE `%s` SET %s WHERE `id` = :id', $table, implode( ',', $dataList ) );
+        if( is_null( $orders ) || !count( $orders ) ) {
+            $orderby = '';
+        } else {
+
+            $orderby = [];
+
+            foreach( $orders as $order ) {
+                if( is_string( $order ) ) {
+                    if( !preg_match( '#^[\w\d_-]+$#', $order ) ) {
+                        $orderby[] = $order;
+                    } else {
+                        $orderby[] = '`' . $order . '`';
+                    }
+                } else {
+                    if( !preg_match( '#^[\w\d_-]+$#', $order[0] ) ) {
+                        $o = $order[0];
+                    } else {
+                        $o = ' `' . $order[0] . '` ';
+                    }
+                    if( isset( $order[1] ) ) {
+                        $o .= $order[1] . ' ';
+                    }
+                    $orderby[] = $o;
+                }
+            }
+            $orderby = implode( ',', $orderby );
+
+            if( strlen( trim( $orderby ) ) ) {
+                $orderby = ' ORDER BY ' . $orderby;
+            }
+        }
+
+        $limit = ' LIMIT :len';
+
+
+        $query = 'UPDATE `' . $table . '` SET ' . implode( ',', $sets ) . $where . $orderby . $limit;
 
         try {
             $stmt = $this->db->prepare( $query );
-            foreach( $data as $k => $v ) {
-                $stmt->bindValue( ':' . $k, $v );
+
+            foreach( $bindList as $key => $value ) {
+                $stmt->bindValue( $key, $value );
+            }
+            foreach( $set as $k => $v ) {
+                $stmt->bindValue( ':set_' . $k, $v );
             } 
 
-            $stmt->bindValue( ':id', $id );
+            $stmt->bindValue( ':len', (int)$len, PDO::PARAM_INT );
 
             return $stmt->execute();
         } catch( PDOException $e ) {
             return false;
         }
     }
-    public function update( $id, $data ) {
+
+    public function update( $params ) {
         try {
             $this->db->beginTransaction();
-            $res = $this->_update( $id, $data );
+            $res = $this->_update( $params );
 
             if( !$res ) {
                 throw new PDOException( 'failed to update data' );
@@ -238,10 +328,7 @@ Class BaseModel {
     }
 
     public function _select( $params, $table = null ) {
-
-        if( is_null( $table ) ) {
-            $table = $this->table;
-        }
+        if( is_null( $table ) ) $table = $this->table;
 
         $columns = isset( $params[ 'columns' ] ) ? $params['columns'] : null;
         $conditions = isset( $params['where'] ) ? $params[ 'where' ] : null;
@@ -332,7 +419,6 @@ Class BaseModel {
         }
 
         $limit = ' LIMIT :start, :len';
-
 
         $query = 'SELECT ' . $this->formatColumns( $columns ) . ' FROM `' . $table . '` ' . $where . $orderby . $limit;
 
