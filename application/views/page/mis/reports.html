@@ -3,26 +3,37 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442088317854" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/reports.css?_t=1442088317854" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442437931224" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/reports.css?_t=1442437931224" />
     </head>
     <body>
-        <?php $nav = 'report-' . $status; ?>
+        <?php $nav = 'report'; ?>
         <div id="idizcuz">
             <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
             <div class="main">
+                <div class="sub-nav">
+                    <ul class="nav">
+                        <li><a href="/mis/page/reports" class="<?php if( is_null( $status ) ) echo focus; ?>">全部</a></li>
+                        <li><a href="/mis/page/reports?status=0" class="<?php if( $status == '0' ) echo focus; ?>">未处理</a></li>
+                        <li><a href="/mis/page/reports?status=1" class="<?php if( $status == '1' ) echo focus; ?>">已通过</a></li>
+                        <li><a href="/mis/page/reports?status=2" class="<?php if( $status == '2' ) echo focus; ?>">未通过</a></li>
+                        <li><a href="/mis/page/reports?status=3" class="<?php if( $status == '3' ) echo focus; ?>">被忽略</a></li>
+                    </ul>
+                </div>
                 <?php if( count( $reports ) == 0 ) { ?>
                     <p class="empty">暂时没有数据</p>
                 <?php } else { ?>
                     <ul class="report-list">
+                        <?php $arr = [ '未处理', '已通过', '未通过', '被忽略' ]; ?>
                         <?php foreach( $reports as $report ) { $post = $report['post']; ?>
                             <li class="reports" data-report-id="<?php echo $topic['id']; ?>">
                                 <div class="inner">                            
                                     <div class="topline clearfix">
-                                        <a href="/mis/page/report?id=<?php echo $report['id']; ?>" class="op detail r">详情</a>
+                                        <a href="/mis/page/report?id=<?php echo $report['id']; ?>" class="op detail r" target="_blank">详情</a>
                                         <span class="r ctime">
                                             <?php echo substr( $report['ctime'], 0, -3 ); ?>
                                         </span>
+                                        <span class="status status-<?php $report['status']; ?>"><?php echo $arr[ $report['status'] ]; ?></span>
                                         <a href="/user/activities/<?php echo $report['account']['id']; ?>" class="account">
                                             <b>举报人：</b>
                                             <?php echo htmlspecialchars( $report['account']['uname'] ); ?>

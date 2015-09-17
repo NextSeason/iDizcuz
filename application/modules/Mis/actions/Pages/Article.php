@@ -31,6 +31,10 @@ Class ArticleAction extends \Local\MisAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function getArticle() {
         $id = $this->params['id'];
 

@@ -29,7 +29,7 @@ Class MessagesAction extends \Local\BaseAction {
         $accountDataModel->update( [
             'set' => [ 'unread_msg' => 0 ],
             'where' => [ [ 'id', $this->account['id'] ] ]
-        ] )
+        ] );
 
         return $this;
     }

@@ -43,13 +43,14 @@ Class ReportsAction extends \Local\MisAction {
     private function getReports() {
         $reportModel = new ReportModel();
 
+        $where = [];
+
+        if( !is_null( $this->params['status'] ) ) {
+            $where[] = [ 'status', $this->params['status'] ];
+        }
+
         $reports = $reportModel->select( [
-            'where' => [
-                [ 'status', $this->params['status'] ]
-            ],
-            'order' => [
-                [ 'id', 'DESC' ]
-            ],
+            'where' => $where,
             'rn' => 30
         ] );
 
@@ -60,13 +61,11 @@ Class ReportsAction extends \Local\MisAction {
     private function paramsProcessing() {
         $status = $this->__getQuery( 'status' );
 
-        if( is_null( $status ) ) {
-            $status = 0;
-        }
-
         $this->params = [
             'status' => $status
         ];
+
+        $this->data['status'] = $status;
 
         return $this;
     }

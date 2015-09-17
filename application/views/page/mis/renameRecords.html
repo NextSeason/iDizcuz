@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'iDizcuz Management Information System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442437931223" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/renameRecords.css?_t=1442437931223" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php $nav = 'renamerecords'; ?>
+            <?php include TPL_PATH . '/mis/sidebar.inc.html'; ?>
+            <div class="main">
+                <div class="sub-nav">
+                    <ul class="nav">
+                        <li><a href="/mis/page/renamerecords" class="<?php if( is_null( $status ) ) echo focus; ?>">全部</a></li>
+                        <li><a href="/mis/page/renamerecords?status=0" class="<?php if( $status == '0' ) echo focus; ?>">未处理</a></li>
+                        <li><a href="/mis/page/renamerecords?status=1" class="<?php if( $status == '1' ) echo focus; ?>">已通过</a></li>
+                        <li><a href="/mis/page/renamerecords?status=2" class="<?php if( $status == '2' ) echo focus; ?>">未通过</a></li>
+                    </ul>
+                </div>
+                <?php if( count( $renameRecords ) ) { ?>
+                    <ul class="rename-record-list">
+                        <?php $arr = [ '未处理', '已通过', '未通过' ]; ?>
+                        <?php foreach( $renameRecords as $record ) { ?>
+                            <li class="rename-records clearfix">
+                                <?php if( $record['status'] == '0' ) { ?>
+                                    <a href="###" class="op" data-action="1" data-record-id="<?php echo $record['id']; ?>">通过</a>
+                                    <a href="###" class="op" data-action="0" data-record-id="<?php echo $record['id']; ?>">不通过</a>
+                                <?php } else { ?>
+                                    <span class="r"><?php echo $arr[ $record['status'] ]; ?></span>
+                                <?php } ?>
+                                <span class="ctime r"><?php echo substr( $record['ctime'], 0, -9 ); ?></span>
+                                <a href="/mis/page/user?id=<?php echo $record['account_id']; ?>" target="_blank">
+                                    <?php echo htmlspecialchars( $record['old_uname'] ); ?>
+                                </a>
+                                <span>申请姓名修改为：<?php echo htmlspecialchars( $record['new_uname'] ); ?></span>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                <?php } else { ?>
+                    <p class="empty">暂时没有数据</p>
+                <?php } ?>
+            </div>
+        </div>
+        <script>
+            ( function() {
+                $( '.op' ).on( 'click', function( e ) {
+                    var action = +$( this ).attr( 'data-action' ),
+                        el = $( this ).closest( '.rename-records' );
+
+                    e.preventDefault();
+
+                    if( !window.confirm( action ? '确定通过申请？' : '确定不通过此申请？' ) ) return false;
+
+                    $.ajax( {
+                        url : '/mis/interface/dealrename',
+                        method : 'POST',
+                        data : {
+                            record_id : $( this ).attr( 'data-record-id' ),
+                            action : action,
+                            'csrf-token' : $.cookie( 'CSRF-TOKEN' )
+                        }
+                    } ).done( function( response ) {
+                        var errno = +response.errno;
+
+                        if( errno ) {
+                            alert( '操作失败' );
+                            return false;
+                        }
+                        alert( '操作成功' );
+                        el.find( '.op' ).hide();
+                    } ).fail( function() {
+                        alert( '操作失败' );
+                    });
+                } );
+            } )();
+        </script>
+    </body>
+</html>

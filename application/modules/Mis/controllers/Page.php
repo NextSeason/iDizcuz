@@ -17,7 +17,8 @@ Class PageController extends BasePageController {
             'report' => $this->action_path . 'Report.php',
             'post' => $this->action_path . 'Post.php',
             'user' => $this->action_path . 'User.php',
-            'bannedusers' => $this->action_path . 'BannedUsers.php'
+            'bannedusers' => $this->action_path . 'BannedUsers.php',
+            'renamerecords' => $this->action_path . 'RenameRecords.php'
         );
     }
 }

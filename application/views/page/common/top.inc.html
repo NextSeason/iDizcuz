@@ -1,3 +1,13 @@
+<?php if( $account['status'] != 0 ) { ?>
+    <div class="boxes ban-tip">
+        <div class="inner">
+            <p>
+                您的帐号目前处于封禁状态，封禁时间为 <b><?php echo $account['ban_start']; ?></b> 至 <b><?php echo $account['ban_end']; ?></b> 
+                <a href="###">[ 查看封禁规则 ]</a>
+            </p>
+        </div>
+    </div>
+<?php } ?>
 <div class="boxes top">
     <div class="inner">
         <?php if( isset( $account ) && $account ) { ?>

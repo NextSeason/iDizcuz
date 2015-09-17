@@ -14,7 +14,7 @@ Class InfoAction extends \Local\BaseAction {
             exit;
         }
 
-        $this->getIndustries();
+        $this->getAccountRename()->getIndustries();
 
         return $this->data;
     }
@@ -30,6 +30,12 @@ Class InfoAction extends \Local\BaseAction {
 
         return $this->data;
 
+    }
+
+    private function getAccountRename() {
+        $renameRecord = \Accounts\RenameRecord::renameable( $this->account['id'] );
+        $this->data['renameRecord'] = $renameRecord;
+        return $this;
     }
 
     private function getIndustries() {

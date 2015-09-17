@@ -7,10 +7,6 @@ Class UserAction extends \Local\MisAction {
     public function __execute() {
         $this->paramsProcessing()->getUser();
 
-        echo '<pre>';
-        print_r( $this->data );
-        echo '</pre>';
-
         return $this->data;
     }
 

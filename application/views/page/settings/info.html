@@ -5,7 +5,7 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/settings/css/info.css?_t=1441219684273" />
+        <link rel="stylesheet" type="text/css" href="/static/settings/css/info.css?_t=1442300209677" />
     </head>
     <body>
         <div id="idizcuz">
@@ -15,6 +15,36 @@
                     <div class="aside"></div>
                     <div class="main">
                         <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
+                        <form class="info-form" id="uname-form">
+                            <div class="parts clearfix">
+                                <div class="s-title l">
+                                    <span>姓名</span>
+                                </div>
+                                <div class="s-main l clearfix">
+                                    <?php if( $renameRecord['renameable'] ) { ?>
+                                        <p class="uname-part">
+                                            <?php echo htmlspecialchars( $account['uname'] ); ?>
+                                            <a href="###" class="modify-uname"><i class="fa fa-edit"></i></a>
+                                        </p>
+                                        <div class="uname-modify-part">
+                                            <input type="hidden" class="old-uname" value="<?php echo htmlspecialchars( $account['uname'] ); ?>" />
+                                            <input type="text" class="uname" value="<?php echo htmlspecialchars( $account['uname'] ); ?>" />
+                                            <a href="###" class="btns save-uname">保存修改</a>
+                                            <p class="rename-tip">* 为保证本站秩序，每个用户每月仅可修改用户名一次</p>
+                                        </div>
+                                    <?php } else { ?>
+                                        <p class="uname"><?php echo htmlspecialchars( $account['uname'] ); ?></p>
+                                        <?php if( $renameRecord['status'] == 0 ) { ?>
+                                            <p class="rename-tip">
+                                                * 您已提交申请将姓名修改为“<?php echo htmlspecialchars( $renameRecord['new_uname'] ); ?>”，我们会尽快为您审核
+                                            </p>
+                                        <?php } else { ?>
+                                            <p class="rename-tip">* <?php echo ceil( $renameRecord['dis'] / 86400 ); ?>天之后可以修改姓名</p>
+                                        <?php } ?>
+                                    <?php }?>
+                                </div>
+                            </div>
+                        </form>
                         <form class="info-form" id="avatar-form">
                             <div class="parts clearfix">
                                 <div class="s-title l">
@@ -79,8 +109,8 @@
                                     <span>目前状况</span>
                                 </div>
                                 <div class="s-main l">
-                                    <input type="text" class="employment" value="<?php echo $account['employment']; ?>" placeholder="公司/学校/机构等" /> 
-                                    <input type="text" class="small position" value="<?php echo $account['position']; ?>" placeholder="职位" />
+                                    <input type="text" class="employment" value="<?php echo htmlspecialchars( $account['employment'] ); ?>" placeholder="公司/学校/机构等" /> 
+                                    <input type="text" class="small position" value="<?php echo htmlspecialchars( $account['position'] ); ?>" placeholder="职位" />
                                 </div>
                             </div>
                             <div class="parts clearfix">
@@ -88,7 +118,7 @@
                                     <span>个人简介</span>
                                 </div>
                                 <div class="s-main l">
-                                    <textarea class="desc"><?php echo $account['desc']; ?></textarea>
+                                    <textarea class="desc"><?php echo htmlspecialchars( $account['desc'] ); ?></textarea>
                                 </div>
                             </div>
                             <div class="parts clearfix">
@@ -127,9 +157,10 @@
         </div>
         <script>
             var idizcuz = new J(); 
-            idizcuz.mount( 'Birth', '/static/settings/packages/Birth/bootstrap.js?_t=1441219684234', {} );
-            idizcuz.mount( 'Upload', '/static/settings/packages/Upload/bootstrap.js?_t=1441219684234', {} );
-            idizcuz.mount( 'UserInfo', '/static/settings/packages/UserInfo/bootstrap.js?_t=1441219684234', {} );
+            idizcuz.mount( 'ModifyUname', '/static/settings/packages/ModifyUname/bootstrap.js?_t=1442300209616', {} );
+            idizcuz.mount( 'Birth', '/static/settings/packages/Birth/bootstrap.js?_t=1442300209616', {} );
+            idizcuz.mount( 'Upload', '/static/settings/packages/Upload/bootstrap.js?_t=1442300209616', {} );
+            idizcuz.mount( 'UserInfo', '/static/settings/packages/UserInfo/bootstrap.js?_t=1442300209616', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

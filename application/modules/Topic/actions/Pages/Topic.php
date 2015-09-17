@@ -70,22 +70,16 @@ Class TopicAction extends \Local\BaseAction {
     private function getTopic() {
         $id = $this->params[ 'id' ];
 
-        $topicModel = new TopicModel();
-
-        $topic = $topicModel->get( $id );
-
-        if( !$topic ) {
-            return false;
-        }
-
         $topicDataModel = new TopicDataModel();
+        $topic_data = $topicDataModel->get( $id );
 
-        $topic_data = $topicDataModel->get( $topic[ 'id' ] );
+        if( !$topic_data || $topic_data['status'] == 0 ) return false;
 
         $categories = \Local\Utils::loadConf( 'categories', 'list' );
-
         $topic_data['cate'] = $categories[ $topic_data['cid'] ];
 
+        $topicModel = new TopicModel();
+        $topic = $topicModel->get( $id );
         $topic['data'] = $topic_data;
 
         $this->data[ 'topic' ] = $topic;

@@ -11,7 +11,8 @@ Class InterfaceController extends BaseInterfaceController {
             'updateinfo' => $this->action_path . 'UpdateInfo.php',
             'passwd' => $this->action_path . 'Passwd.php',
             'uploadavatar' => $this->action_path . 'UploadAvatar.php',
-            'savesettings' => $this->action_path . 'SaveSettings.php'
+            'savesettings' => $this->action_path . 'SaveSettings.php',
+            'rename' => $this->action_path . 'Rename.php'
         );
     }
 }

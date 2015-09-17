@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
     `email` char(80) NOT NULL,
     `passwd` char(40) NOT NULL,
     `salt` char(32) NOT NULL,
-    `uname` char(30) NOT NULL,
+    `uname` varchar(50) NOT NULL,
     `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
     `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'account type reserved column',
     `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'status of account',
@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS `accounts` (
     `position` varchar(10) NOT NULL DEFAULT '',
     `birth` date NOT NULL DEFAULT '0000-00-00',
     `desc` varchar(255) NOT NULL DEFAULT '',
-    `ctime` timestamp NOT NULL DEFAULT NOW() COMMENT 'create time',
-    `mtime` timestamp NOT NULL DEFAULT NOW() COMMENT 'last login time',
+    `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'create time',
+    `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'last login time',
     PRIMARY KEY (`id`),
     UNIQUE KEY `account_email_unique` (`email`)
 );
@@ -283,3 +283,36 @@ CREATE TABLE `activities` (
     `ctime` timestamp NOT NULL DEFAULT NOW(),
     PRIMARY KEY( `id` )
 );
+
+DROP TABLE IF EXISTS `accounts_rename`;
+
+CREATE TABLE `accounts_rename` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `account_id` int unsigned NOT NULL DEFAULT 0,
+    `old_uname` varchar(50) NOT NULL,
+    `new_uname` varchar(50) NOT NULL,
+    `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '0 means normal, 1 means pass, 2 means failed',
+    `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY( `id`)
+);
+
+DROP TABLE IF EXISTS `page_contents`;
+
+CREATE TABLE `page_contents` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `alias` varchar( 30 ) NOT NULL DEFAULT '',
+    `contents` varchar(21500) DEFAULT '',
+    `mtime` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `page_contents_history`;
+
+CREATE TABLE `page_contents_history`(
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `page_content_id` int unsigned NOT NULL,
+    `contents` varchar(21500) DEFAULT '',
+    `ctime` timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY( `id` )
+);
+

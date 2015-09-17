@@ -25,5 +25,4 @@ Class Api {
     static public function getData( $id, $columns = null ) {
         return self::getTopicDataModel()->get( $id, $columns );
     }
-
 }

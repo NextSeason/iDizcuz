@@ -36,4 +36,40 @@ Class Api {
     static public function getSettings( $id, $columns = null ) {
         return self::getAccountSettingModel()->get( $id, $columns );
     }
+
+    static public function ban( $id, $start, $end ) {
+        return self::getAccountModel()->update( [
+            'set' => [
+                'ban_start' => $start,
+                'ban_end' => $end,
+                'status' => 1
+            ],
+            'where' => [
+                ['id', $id]
+            ]
+        ] );
+    }
+
+    static public function unban( $id ) {
+        return self::getAccountModel()->update( [
+            'set' => [
+                'status' => 0
+            ],
+            'where' => [
+                ['id', $id]
+            ]
+        ] );
+    }
+
+    static public function rename( $id, $uname ) {
+        $res = self::getAccountModel()->update( [
+            'set' => [
+                'uname' => $uname,
+            ],
+            'where' => [
+                ['id', $id]
+            ]
+        ] );
+        return $res;
+    }
 }

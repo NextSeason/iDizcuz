@@ -137,7 +137,6 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         $account = $this->accountModel->get( $this->account[ 'id' ]  );
 
         if( $account ) {
-
             $ban_start = $account['ban_start'];
             $ban_end = $account['ban_end'];
 

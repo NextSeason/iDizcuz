@@ -3,8 +3,8 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442088317857" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/topic.css?_t=1442088317857" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442437931227" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/topic.css?_t=1442437931227" />
     </head>
     <body>
         <div id="idizcuz">
@@ -27,8 +27,8 @@
                     <div class="line clearfix">
                         <label>
                             <p class="s-title">类型：</p>
-                            <div class="styled-select">
-                                <?php $type = $topic['id'] != 0 ? $topic['data']['type'] : 0; ?>
+                            <?php $type = $topic['id'] != 0 ? $topic['data']['type'] : 0; ?>
+                            <div class="select-helper">
                                 <select class="type">
                                     <option value="2" <?php echo $type == 0 ? 'selected' : '' ?>>讨论类型</option>
                                     <option value="1" <?php echo $type == 1 ? 'selected' : '' ?>>辩论类型</option>
@@ -37,7 +37,7 @@
                         </label>
                         <label>
                             <p class="s-title">领域：</p>
-                            <div class="styled-select">
+                            <div class="select-helper">
                                 <select class="cid">
                                     <?php foreach( $categories as $k => $v ) { ?>
                                         <option value="<?php echo $k; ?>" <?php if( isset( $topic['data']['cid'] ) && $k == $topic['data']['cid'] ) { echo 'selected'; } ?>><?php echo $v; ?></option>
@@ -117,7 +117,7 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'topic', '/static/mis/packages/Topic/bootstrap.js?_t=1442088317801', {} );
+            idizcuz.mount( 'topic', '/static/mis/packages/Topic/bootstrap.js?_t=1442437931172', {} );
         </script>
     </body>
 </html>

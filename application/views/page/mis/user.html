@@ -3,8 +3,8 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442088317858" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/user.css?_t=1442088317858" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442437931228" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/user.css?_t=1442437931228" />
     </head>
     <body>
         <div id="idizcuz">
@@ -21,7 +21,115 @@
                     <p class="not-exists">您未输入用户ID或您查找的用户不存在</p>
                 <?php } else {  ?>
                     <div class="user">
-
+                        <div class="aside">
+                            <?php if( $user['img'] ) { ?>
+                                <span class="avatar big" style="background-image:url( http://avatar.idizcuzz.com/<?php echo $user['img']; ?>)"></span>
+                            <?php } else { ?>
+                                <span class="avatar big"></span>
+                            <?php } ?>
+                            <a href="###" class="btns send-message">发送系统消息</a>
+                        </div>
+                        <div class="main">
+                            <div class="basic-info info-boxes">
+                                <p class="topline">用户基本信息</p>
+                                <p class="info-line">
+                                    <span>用户名：<b><?php echo htmlspecialchars( $user['uname'] ); ?></b></span>
+                                    <span>用户邮箱：<b><?php echo $user['email']; ?></b></span>
+                                    <span>用户ID（混淆后）：<b><?php echo $user['id']; ?></b></span>
+                                    <span>用户ID（真实）：<b><?php echo \Local\Utils::decodeId( $user['id'] ); ?></b></span>
+                                </p>
+                                <p class="info-line">
+                                    <span>注册时间：<b><?php echo $user['ctime']; ?></b></span>
+                                    <span>上次活动时间：<b><?php echo $user['mtime']; ?></b></span>
+                                    <span>注册IP：<b><?php echo long2ip( $user['reg_ip'] ); ?></b></span>
+                                    <span>上次活动IP：<b><?php echo long2ip( $user['login_ip'] ); ?></b></span>
+                                </p>
+                                <p class="info-line">
+                                    <span>帐号状态：<b><?php echo $user['status'] == 0 ? '正常' : '封禁'; ?></b></span>
+                                    <?php if( $user['status'] != 0 ) { ?>
+                                        <span>封禁时间：<b><?php echo $user['ban_start']; ?></b> - <b><?php echo $user['ban_end']; ?></b></span>
+                                    <?php } ?>
+                                </p>
+                            </div>
+                            <div class="extra-info info-boxes">
+                                <p class="topline">用户其他信息</p>
+                                <p class="info-line">
+                                    <?php if( $user['sex'] == 0 ) { ?>
+                                        <span>性别：未知</span>
+                                    <?php } else { ?>
+                                        <span>性别：<b><?php echo $user['sex'] == 1 ? '男' : '女'; ?></b></span>
+                                    <?php } ?>
+                                    <span>生日：<b><?php echo $user['birth']; ?></b></span>
+                                </p>
+                                <p class="info-line">
+                                    <?php if( $user['industry'] == 0 ) { ?>
+                                        <span>所在行业：未知行业</span>
+                                    <?php } else { ?>
+                                        <span>所在行业：<b><?php echo $user['industry']; ?></b></span>
+                                    <?php } ?>
+                                    <?php if( $user['employment'] ) { ?>
+                                        <span>所在组织：<b><?php echo htmlspecialchars( $user['employment'] ); ?></b></span>
+                                    <?php } else { ?>
+                                        <span>所在组织：未知组织</span>
+                                    <?php } ?>
+                                    <?php if( $user['position'] ) { ?>
+                                        <span>职位：<b><?php echo htmlspecialchars( $user['position'] ); ?></b></span>
+                                    <?php } else { ?>
+                                        <span>职位：未知职位</span>
+                                    <?php } ?>
+                                </p>
+                                <p class="info-line">
+                                    <span>用户简介：<b><?php echo htmlspecialchars( $user['desc'] ); ?></b></span>
+                                </p>
+                            </div>
+                            <div class="user-data info-boxes">
+                                <p class="topline">用户数据</p>
+                                <p class="info-line">
+                                    <span>用户积分：<b><?php echo $user['data']['score']; ?></b></span>
+                                </p>
+                                <p class="info-line">
+                                    <span>用户粉丝数量：<b><?php echo $user['data']['fans']; ?></b></span>
+                                    <span>用户关注数量：<b><?php echo $user['data']['follow']; ?></b></span>
+                                </p>
+                                <p class="info-line">
+                                    <span>用户论述数量：<b><?php echo $user['data']['post_cnt']; ?></b></span>
+                                    <span>用户获得支持：<b><?php echo $user['data']['agree']; ?></b></span>
+                                    <span>用户获得反对：<b><?php echo $user['data']['disagree']; ?></b></span>
+                                </p>
+                            </div>
+                        <div class="operation-part clearfix">
+                            <div class="aside">
+                                <?php if( $user['status'] == 0 ) { ?>
+                                    <a href="###" class="btns large ban-user" data-user-id="<?php echo $user['id']; ?>">封禁此用户</a>
+                                <?php } else { ?>
+                                    <a href="###" class="btns large unban-user" data-user-id="<?php echo $user['id']; ?>">解除用户封禁</a>
+                                <?php } ?>
+                            </div>
+                            <?php if( $user['status'] == 0 ) { ?>
+                                <div class="main clearfix">
+                                    <textarea placeholder="填写封禁原因，该原因会以系统通知的方式发送给被封禁用户" class="l message"></textarea>
+                                    <div class="ban-time-box l">
+                                        <label>
+                                            <input type="radio" checked name="ban-time" value="24" /> 1天
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="ban-time" value="72" /> 3天
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="ban-time" value="120" /> 5天
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="ban-time" value="720" /> 1个月
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="ban-time" value="0" />
+                                            <input type="text" class="small" name="custom-ban-time" placeholder="自定义" /> 小时
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        </div>
                     </div>
                 <?php } ?>
             </div>
@@ -40,6 +148,88 @@
                     }
 
                     alert( '您输入的ID或URL不合法' );
+                } );
+
+                $( '.ban-user' ).on( 'click', function( e ) {
+                    var times = $( 'input[name=ban-time]' ),
+                        i = 0,
+                        l = times.length,
+                        value,
+                        userId = $( this ).attr( 'data-user-id' ),
+                        message = $( 'textarea.message' ).val();
+
+                    for( ; i < l; i += 1 ) {
+                        if( times.get( i ).checked ) {
+                            time = +times.eq(i).val();
+                        }
+                    }
+
+                    if( !time ) {
+                        time = $( 'input[name=custom-ban-time]' ).val();
+                    }
+
+                    if( !time ) return false;
+
+                    if( !message.length ) {
+                        if( !window.confirm( '确定不给该用户发送消息吗？' ) ) {
+                            return false;
+                        }
+                    }
+
+                    if( !window.confirm( '确定要封禁该用户？' ) ) {
+                        return false;
+                    }
+
+                    $.ajax( {
+                        url : '/mis/interface/banuser',
+                        method : 'POST',
+                        data : {
+                            time : time,
+                            user_id : userId,
+                            message : $( 'textarea.message' ).val(),
+                            'csrf-token' : $.cookie( 'CSRF-TOKEN' )
+                        }
+                    } ).done( function( response ) {
+                        var errno = +response.errno;
+
+                        if( !errno ) {
+                            alert( '操作成功' );
+                            location.reload();
+                            return;
+                        }
+                    } ).fail( function() {
+                        alert( '操作失败' );
+                    } );
+
+                } );
+
+                $( '.unban-user' ).on( 'click', function( e ) {
+                    var userId = $( this ).attr( 'data-user-id' );
+
+                    if( !window.confirm( '确定要接触对该用户的封禁么？' ) ) {
+                        return false;
+                    }
+
+                    $.ajax( {
+                        url : '/mis/interface/unbanuser',
+                        method : 'POST',
+                        data : {
+                            user_id : userId,
+                            'csrf-token' : $.cookie( 'CSRF-TOKEN' )
+                        }
+                    } ).done( function( response ) {
+                        var errno = +response.errno;
+
+                        if( !errno ) {
+                            alert( '操作成功' );
+                            location.reload();
+                            return;
+                        }
+
+                        alert( '操作失败' );
+                    } ).fail( function() {
+                        alert( '操作失败' );
+                    } );
                 } );
             } )();
         </script>

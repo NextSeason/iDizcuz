@@ -43,7 +43,7 @@ Class PointAction extends \Local\MisAction {
                 'desc' => $this->params['desc']
             ],
             'where' => [
-                ['id', $this->params['id']
+                ['id', $this->params['id'] ]
             ]
         ] );
 

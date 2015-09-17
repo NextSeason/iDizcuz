@@ -142,6 +142,5 @@ Class Utils {
                 return date( 'Y-m-d', $_SERVER['REQUEST_TIME'] );
                 break;
         }
-
     }
 }
