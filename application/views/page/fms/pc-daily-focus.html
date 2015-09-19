@@ -3,18 +3,25 @@
     <head>
         <?php $title = 'Fragement Management System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442626129825" />
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442597775389" />
     </head>
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/fms/top.inc.html'; ?>
             <div class="boxes crumb">
-                <span>PC端首页</span> <span>•</span> <span>Banner轮播图</span>
+                <span>PC端首页</span>
+                <span>&gt;</span>
+                <span>Banner轮播图</span>
             </div>
             <div class="boxes form">
                 <form>
-                    <?php $alias = 'pc-home-slides'; ?>
-                    <?php include TPL_PATH . '/fms/alias.inc.html'; ?>
+                    <div class="block">
+                        <div class="line clearfix">
+                            <p>片段别名：</p>
+                            <input type="text" name="fragment-alias" value="pc-home-slides" disabled />
+                            <span>该片段别名，保存时会根据此别名作为判重标识</span>
+                        </div>
+                    </div>
                     <div class="block content">
                         <?php 
                             $slides = $fragment['content']['slides'];
@@ -44,7 +51,10 @@
                             </div>
                         <?php } ?>
                     </div>
-                    <?php include TPL_PATH . '/fms/btns.inc.html'; ?>
+                    <div class="btns-line">
+                        <input type="reset" class="btns dark large" value="重置表单" />
+                        <input type="submit" class="btns large" value="保存" />
+                    </div>
                 </form>
             </div>
             <textarea class="templates" id="slide-unit-tpl">
@@ -75,9 +85,31 @@
         <script>
             var fms = new J();
 
-            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442626129801', {
+            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442597775355', {
                 getData : function( form ) {
-                    var res = {};
+                    var lines = form.find( '.content .line' ),
+                        i = 0,
+                        l = lines.length,
+                        res = {},
+                        src, link, title,
+                        line;
+                    var trim = $.trim;
+
+                    res.slides = [];
+                    for( ; i < l; i += 1 ) {
+                        line = lines.eq( i );
+                        src = this.val( line.find( 'input.src' ), 'link' );
+                        link = this.val( line.find( 'input.link' ), 'link' );
+                        title = this.val( line.find( 'input.title' ) );
+
+                        if( !src.length || !link.length ) continue;
+
+                        res.slides.push( {
+                            src : src,
+                            link : link,
+                            title : title
+                        } );
+                    }
                     return res;
                 }
             } );

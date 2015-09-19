@@ -4,7 +4,10 @@ Class FMSAction extends \Local\MisAction {
     private $data = [];
 
     public function __execute() {
-        $this->paramsProgressing();
+        $this->paramsProgressing()->getFragment();
+
+        $this->tpl = 'fms/' . $this->params['page'];
+
         return $this->data;
     }
 
@@ -12,9 +15,21 @@ Class FMSAction extends \Local\MisAction {
         return $this->__execute();
     }
 
+    private function getFragment() {
+        $fragment = \FMS\Api::getFragmentByAlias( $this->params['page'] );
+
+        if( !$fragment ) return $this;
+        $fragment['content'] = json_decode( $fragment['content'], true );
+        $this->data['fragment'] = $fragment;
+        return $this;
+    }
+
     private function paramsProgressing() {
         $page = $this->__getParam( 'page' );
-        $this->tpl = 'fms/' . $page;
+
+        $this->params = [
+            'page' => $page
+        ];
         return $this;
     }
 }

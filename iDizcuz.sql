@@ -296,22 +296,22 @@ CREATE TABLE `accounts_rename` (
     PRIMARY KEY( `id`)
 );
 
-DROP TABLE IF EXISTS `page_contents`;
+DROP TABLE IF EXISTS `fms`;
 
-CREATE TABLE `page_contents` (
+CREATE TABLE `fms` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `alias` varchar( 30 ) NOT NULL DEFAULT '',
-    `contents` varchar(21500) DEFAULT '',
+    `content` varchar(21500) DEFAULT '',
     `mtime` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY( `id` )
 );
 
-DROP TABLE IF EXISTS `page_contents_history`;
+DROP TABLE IF EXISTS `fms_history`;
 
-CREATE TABLE `page_contents_history`(
+CREATE TABLE `fms_history`(
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `page_content_id` int unsigned NOT NULL,
-    `contents` varchar(21500) DEFAULT '',
+    `content` varchar(21500) DEFAULT '',
     `ctime` timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY( `id` )
 );

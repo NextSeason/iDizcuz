@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'Fragement Management System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442626129824" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/fms/top.inc.html'; ?>
+            <div class="boxes crumb">
+                <span>PC端首页</span> <span>•</span> <span>今日焦点</span>
+            </div>
+            <div class="boxes form">
+                <form>
+                    <?php $alias = 'pc-home-daily-focus'; ?>
+                    <?php include TPL_PATH . '/fms/alias.inc.html'; ?>
+                    <div class="block content">
+                        <fieldset>
+                            <legend> 辩论话题 </legend>
+                            <div class="clearfix line">
+                                <div class="item l">
+                                    <p>话题标题：</p>
+                                    <input type="text" class="title long" placeholder="请输入辩论话题标题" />
+                                </div>
+                                <div class="item l">
+                                    <p>话题链接：</p>
+                                    <input type="text" class="title" placeholder="eg. http://www.idizcuz.com/topic/285738248" />
+                                </div>
+                                <div class="item l">
+                                    <p>热门论述展示数：</p>
+                                    <input type="number" class="post_num small" value="4" />
+                                </div>
+                            </div>
+
+                            <div class="line unit clearfix">
+                                <div class="item l">
+                                    <p>论点：</p>
+                                    <input type="text" class="points long" placeholder="填写论点标题" />
+                                </div>
+                                <div class="unit-op l">
+                                    <a href="###" class="add-unit" data-unit-tpl="topic-point-tpl">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                    <a href="###" class="del-unit">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend> 讨论话题 </legend>
+                            <div class="clearfix line">
+                                <div class="item l">
+                                    <p>话题标题：</p>
+                                    <input type="text" class="title long" placeholder="请输入辩论话题标题" />
+                                </div>
+                                <div class="item l">
+                                    <p>话题链接：</p>
+                                    <input type="text" class="title" placeholder="eg. http://www.idizcuz.com/topic/285738248" />
+                                </div>
+                                <div class="item l">
+                                    <p>热门论述展示数：</p>
+                                    <input type="number" class="post_num small" value="3" />
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <?php include TPL_PATH . '/fms/btns.inc.html'; ?>
+                </form>
+            </div>
+            <textarea class="templates" id="topic-point-tpl">
+                <div class="line unit clearfix">
+                    <div class="item l">
+                        <p>论点：</p>
+                        <input type="text" class="points long" placeholder="填写论点标题" />
+                    </div>
+                    <div class="unit-op l">
+                        <a href="###" class="add-unit" data-unit-tpl="topic-point-tpl">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                        <a href="###" class="del-unit">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+            </textarea>
+        </div>
+        <script>
+            var fms = new J();
+
+            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442626129800', {
+                getData : function( form ) {
+                    var lines = form.find( '.content .line' ),
+                        i = 0,
+                        l = lines.length,
+                        res = {},
+                        src, link, title,
+                        line;
+                    var trim = $.trim;
+
+                    res.slides = [];
+                    for( ; i < l; i += 1 ) {
+                        line = lines.eq( i );
+                        src = this.val( line.find( 'input.src' ), 'link' );
+                        link = this.val( line.find( 'input.link' ), 'link' );
+                        title = this.val( line.find( 'input.title' ) );
+
+                        if( !src.length || !link.length ) continue;
+
+                        res.slides.push( {
+                            src : src,
+                            link : link,
+                            title : title
+                        } );
+                    }
+                    return res;
+                }
+            } );
+        </script>
+    </body>
+</html>

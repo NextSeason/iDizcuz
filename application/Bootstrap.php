@@ -18,7 +18,7 @@ Class Bootstrap extends \Yaf\Bootstrap_Abstract {
         $router = \Yaf\Dispatcher::getInstance()->getRouter();
         $router->addRoute( 'idizcuz', new \Yaf\Route\Supervar( '__r' ) );
 
-        $router->addRoute( 'fms', new \Yaf\Route\Rewrite( '/fms/:page', [
+        $router->addRoute( 'fms', new \Yaf\Route\Rewrite( '/fms/page/:page', [
             'module' => 'fms',
             'controller' => 'page',
             'action' => 'fms'
