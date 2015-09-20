@@ -3,7 +3,7 @@
     <head>
         <?php $title = 'Fragement Management System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442710724010" />
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442632689700" />
     </head>
     <body>
         <div id="idizcuz">
@@ -20,7 +20,7 @@
                             $slides = $fragment['content']['slides'];
                             foreach( $slides as $slide ) {
                         ?>
-                            <div class="line slide clearfix unit">
+                            <div class="line clearfix unit">
                                 <div class="item l">
                                     <p>图片地址：</p>
                                     <input type="text" class="src" placeholder="输入图片地址" value="<?php echo htmlspecialchars( $slide['src'] ); ?>" />
@@ -48,7 +48,7 @@
                 </form>
             </div>
             <textarea class="templates" id="slide-unit-tpl">
-                <div class="line slide clearfix unit">
+                <div class="line clearfix unit">
                     <div class="item l">
                         <p>图片地址：</p>
                         <input type="text" class="src" placeholder="输入图片地址" />
@@ -75,30 +75,9 @@
         <script>
             var fms = new J();
 
-            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442710723978', {
+            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442632689657', {
                 getData : function( form ) {
-                    var res = {},
-                        slides = form.find( '.line.slide' ),
-                        i = 0, l = slides.length,
-                        src, link, title;
-
-                    res.slides = [];
-
-                    if( !slides.length ) return res;
-
-                    for( ; i < l; i += 1 ) {
-                        src = this.val( slides.eq(i).find( 'input.src' ), 'link' );
-                        link = this.val( slides.eq(i).find( 'input.link' ), 'link' );
-                        title = this.val( slides.eq(i).find( 'input.title' ) );
-
-                        if( !src.length || !link.length ) continue;
-
-                        res.slides.push( {
-                            src : src,
-                            link : link,
-                            title : title
-                        } );
-                    }
+                    var res = {};
                     return res;
                 }
             } );

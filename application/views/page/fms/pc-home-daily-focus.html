@@ -3,7 +3,7 @@
     <head>
         <?php $title = 'Fragement Management System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442626129824" />
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442710724007" />
     </head>
     <body>
         <div id="idizcuz">
@@ -16,52 +16,64 @@
                     <?php $alias = 'pc-home-daily-focus'; ?>
                     <?php include TPL_PATH . '/fms/alias.inc.html'; ?>
                     <div class="block content">
-                        <fieldset>
+                        <?php 
+                            $content = $fragment['content'];
+                            $debate = $content['debate'];
+                            $discuss = $content['discuss'];
+                        ?>
+                        <fieldset class="debate">
                             <legend> 辩论话题 </legend>
                             <div class="clearfix line">
                                 <div class="item l">
                                     <p>话题标题：</p>
-                                    <input type="text" class="title long" placeholder="请输入辩论话题标题" />
+                                    <input type="text" class="title long" value="<?php echo htmlspecialchars( $debate['title'] ); ?>" placeholder="请输入辩论话题标题" />
                                 </div>
                                 <div class="item l">
                                     <p>话题链接：</p>
-                                    <input type="text" class="title" placeholder="eg. http://www.idizcuz.com/topic/285738248" />
+                                    <input type="text" class="url" value="<?php echo htmlspecialchars( $debate['url'] ); ?>" placeholder="eg. http://www.idizcuz.com/topic/285738248" />
                                 </div>
                                 <div class="item l">
                                     <p>热门论述展示数：</p>
-                                    <input type="number" class="post_num small" value="4" />
+                                    <input type="number" class="post_num small" value="<?php echo $debate['post_num']; ?>" />
                                 </div>
                             </div>
-
-                            <div class="line unit clearfix">
-                                <div class="item l">
-                                    <p>论点：</p>
-                                    <input type="text" class="points long" placeholder="填写论点标题" />
+                            <?php foreach( $debate['points'] as $point ) { ?>
+                                <div class="line unit clearfix">
+                                    <div class="item l">
+                                        <p>论点：</p>
+                                        <input type="text" class="points long" value="<?php echo htmlspecialchars( $point ); ?>" placeholder="填写论点标题" />
+                                    </div>
+                                    <div class="unit-op l">
+                                        <a href="###" class="add-unit" data-unit-tpl="topic-point-tpl">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a href="###" class="del-unit">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="unit-op l">
-                                    <a href="###" class="add-unit" data-unit-tpl="topic-point-tpl">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                    <a href="###" class="del-unit">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            <?php } ?>
                         </fieldset>
-                        <fieldset>
+                        <fieldset class="discuss">
                             <legend> 讨论话题 </legend>
                             <div class="clearfix line">
                                 <div class="item l">
                                     <p>话题标题：</p>
-                                    <input type="text" class="title long" placeholder="请输入辩论话题标题" />
+                                    <input type="text" class="title long" value="<?php echo htmlspecialchars( $discuss['title'] ); ?>" placeholder="请输入辩论话题标题" />
                                 </div>
                                 <div class="item l">
                                     <p>话题链接：</p>
-                                    <input type="text" class="title" placeholder="eg. http://www.idizcuz.com/topic/285738248" />
+                                    <input type="text" class="url" value="<?php echo htmlspecialchars( $discuss['title'] ); ?>" placeholder="eg. http://www.idizcuz.com/topic/285738248" />
                                 </div>
                                 <div class="item l">
                                     <p>热门论述展示数：</p>
-                                    <input type="number" class="post_num small" value="3" />
+                                    <input type="number" class="post_num small" value="<?php echo $discuss['post_num']; ?>" />
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="item">
+                                    <p>话题描述：</p>
+                                    <textarea class="desc long"><?php echo htmlspecialchars( $discuss['desc'] ); ?></textarea>
                                 </div>
                             </div>
                         </fieldset>
@@ -89,31 +101,33 @@
         <script>
             var fms = new J();
 
-            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442626129800', {
+            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442710723963', {
                 getData : function( form ) {
-                    var lines = form.find( '.content .line' ),
-                        i = 0,
-                        l = lines.length,
-                        res = {},
-                        src, link, title,
-                        line;
-                    var trim = $.trim;
+                    var res = {},
+                        debate = $( 'fieldset.debate' ),
+                        discuss = $( 'fieldset.discuss' ),
+                        points = debate.find( 'input.points' ),
+                        i, l, point;
 
-                    res.slides = [];
-                    for( ; i < l; i += 1 ) {
-                        line = lines.eq( i );
-                        src = this.val( line.find( 'input.src' ), 'link' );
-                        link = this.val( line.find( 'input.link' ), 'link' );
-                        title = this.val( line.find( 'input.title' ) );
+                    res.debate = {
+                        title : this.val( debate.find( 'input.title' ) ),
+                        url : this.val( debate.find( 'input.url' ), 'link' ),
+                        post_num : this.val( debate.find( 'input.post_num' ) ),
+                        points : []
+                    };
 
-                        if( !src.length || !link.length ) continue;
-
-                        res.slides.push( {
-                            src : src,
-                            link : link,
-                            title : title
-                        } );
+                    for( i = 0, l = points.length; i < l; i += 1 ) {
+                        point = this.val( points.eq(i) ); 
+                        point.length && res.debate.points.push( point );
                     }
+
+                    res.discuss = {
+                        title : this.val( discuss.find( 'input.title' ) ),
+                        desc : this.val( discuss.find( 'textarea.desc' ) ),
+                        url : this.val( discuss.find( 'input.url' ), 'link' ),
+                        post_num : this.val( discuss.find( 'input.post_num' ) )
+                    };
+
                     return res;
                 }
             } );

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'Fragement Management System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442710724008" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/fms/top.inc.html'; ?>
+            <div class="boxes crumb">
+                <span>PC端首页</span> <span>•</span> <span>Banner轮播图</span>
+            </div>
+            <div class="boxes form">
+                <form>
+                    <?php $alias = 'pc-home-daily-topics'; ?>
+                    <?php include TPL_PATH . '/fms/alias.inc.html'; ?>
+                    <div class="block content">
+                        <?php 
+                            $topics = $fragment['content']['topics'];
+                            foreach( $topics as $topic ) {
+                        ?>
+                        <div class="line topic unit">
+                            <div class="clearfix mb-20">
+                                <div class="item l">
+                                    <p>论述标题：</p>
+                                    <input type="text" class="title" placeholder="输入论述标题" value="<?php echo htmlspecialchars( $topic['title'] ); ?>" />
+                                </div>
+                                <div class="item l">
+                                    <p>论述链接：</p>
+                                    <input type="text" class="url" placeholder="输入论述链接" value="<?php echo $topic['url']; ?>" />
+                                </div>
+                                <div class="item l">
+                                    <p>论述类型：</p>
+                                    <div class="select-helper">
+                                        <select class="type">
+                                            <option value="0" <?php if( $topic['type'] == '0' ) echo 'selected'; ?>>选择话题</option>
+                                            <option value="1" <?php if( $topic['type'] == '1' ) echo 'selected'; ?>>辩论类型</option>
+                                            <option value="2" <?php if( $topic['type'] == '2' ) echo 'selected'; ?>>讨论类型</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <?php include TPL_PATH . '/fms/unit-op.inc.html'; ?>
+                            </div>
+                            <div class="mb-20 clearfix">
+                                <div class="item l">
+                                    <p>论述描述： </P>
+                                    <textarea class="long desc" placeholder="输入论述描述"><?php echo htmlspecialchars( $topic['desc'] ); ?></textarea>
+                                </div>
+                                <div class="item l">
+                                    <p>所在领域：</p>
+                                    <?php $categories = \Local\Utils::loadConf( 'categories', 'list' ); ?>
+                                    <div class="select-helper">
+                                        <select class="cid">
+                                            <option value="0">选择领域</option>
+                                            <?php foreach( $categories as $i => $category ) { ?>
+                                                <option value="<?php echo $i; ?>" <?php if( $topic['cid'] == $i ) echo 'selected'; ?>><?php echo $category; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                    <?php include TPL_PATH . '/fms/btns.inc.html'; ?>
+                </form>
+            </div>
+            <textarea class="templates" id="slide-unit-tpl">
+                <div class="line topic unit">
+                    <div class="clearfix mb-20">
+                        <div class="item l">
+                            <p>论述标题：</p>
+                            <input type="text" class="title" placeholder="输入论述标题" />
+                        </div>
+                        <div class="item l">
+                            <p>论述链接：</p>
+                            <input type="text" class="url" placeholder="输入论述链接" />
+                        </div>
+                        <div class="item l">
+                            <p>论述类型：</p>
+                            <div class="select-helper">
+                                <select class="type">
+                                    <option value="0">选择话题</option>
+                                    <option value="1">辩论类型</option>
+                                    <option value="2">讨论类型</option>
+                                </select>
+                            </div>
+                        </div>
+                        <?php include TPL_PATH . '/fms/unit-op.inc.html'; ?>
+                    </div>
+                    <div class="mb-20 clearfix">
+                        <div class="item l">
+                            <p>论述描述： </P>
+                            <textarea class="long desc" placeholder="输入论述描述">&lt;/textarea>
+                        </div>
+                        <div class="item l">
+                            <p>所在领域：</p>
+                            <div class="select-helper">
+                                <select class="cid">
+                                    <option value="0">选择领域</option>
+                                    <?php foreach( $categories as $i => $category ) { ?>
+                                        <option value="<?php echo $i; ?>"><?php echo $category; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </textarea>
+        </div>
+        <script>
+            var fms = new J();
+
+            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442710723965', {
+                getData : function( form ) {
+                    var res = {},
+                        topics = form.find( '.line.topic' ),
+                        i = 0, l = topics.length,
+                        title, url, type, desc, cid;
+
+                    res.topics = [];
+ 
+                    if( !topics.length ) return res;
+
+                    for( ; i < l; i += 1 ) {
+                        title = this.val( topics.eq(i).find( 'input.title' ) );
+                        url = this.val( topics.eq(i).find( 'input.url' ), 'link' );
+                        type = this.val( topics.eq(i).find( 'select.type' ) ); 
+                        desc = this.val( topics.eq(i).find( 'textarea.desc' ) );
+                        cid = this.val( topics.eq(i).find( 'select.cid' ) );                    
+
+                        res.topics.push( {
+                            title : title,
+                            url : url,
+                            type : type,
+                            desc : desc,
+                            cid : cid
+                        } );
+                    }
+
+                    return res;
+                }
+            } );
+        </script>
+    </body>
+</html>

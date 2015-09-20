@@ -8,6 +8,10 @@ Class FMSAction extends \Local\MisAction {
 
         $this->tpl = 'fms/' . $this->params['page'];
 
+        echo '<pre>';
+        print_r( $this->data );
+        echo '</pre>';
+
         return $this->data;
     }
 
