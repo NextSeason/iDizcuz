@@ -11,13 +11,20 @@ Class Api {
         return self::$FMSModel;
     }
 
-    static public function getFragmentByAlias( $alias ) {
+    static public function getFragmentByAlias( $alias, $decode = true ) {
         $fms = self::getFMSModel()->select( [
             'where' => [
                 [ 'alias', $alias ]
             ]
         ] );
-        return $fms ? $fms[0] : $fms;
+
+        if( !$fms ) return $fms;
+
+        $fms = $fms[0];
+
+        if( $decode ) $fms['content'] = json_decode( $fms['content'], true );
+
+        return $fms;
     }
 
     static public function get( $id ) {

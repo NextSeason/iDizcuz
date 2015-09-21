@@ -143,4 +143,9 @@ Class Utils {
                 break;
         }
     }
+
+    static function ntocn( $n ) {
+        $cns = [ '一', '二', '三', '四', '五', '六', '七', '八', '九', '十' ];
+        return $cns[$n-1];
+    }
 }

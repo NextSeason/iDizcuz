@@ -6,7 +6,7 @@
             $nav = 'index';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/home/css/index.css?_t=1442444748486" />
+        <link rel="stylesheet" href="/static/home/css/index.css?_t=1442824907124" />
     </head>
     <body>
         <div id="idizcuz">
@@ -82,7 +82,7 @@
                                     </div>
                                 </form>
                                 <script>
-                                    new J().mount( 'Signin', '/static/home/packages/Signin/bootstrap.js?_t=1442444748446', {} );
+                                    new J().mount( 'Signin', '/static/home/packages/Signin/bootstrap.js?_t=1442824907074', {} );
                                 </script>
                             </div>
                         <?php } ?>
@@ -158,54 +158,68 @@
                 </div>
             </div>
             <div class="boxes focus-box">
+                <?php $fragment = \FMS\Api::getFragmentByAlias( 'pc-home-daily-focus' ); ?>
                 <div class="inner clearfix">
-                    <div class="aside hot-posts">
-                        <h2 class="hd">热门论述</h2>
-                        <ul class="hot-post-list-1 post-list"></ul>
-                        <ul class="hot-post-list-2 post-list"></ul>
+                    <div class="clearfix blocks">
+                        <div class="aside">
+                            <h2 class="hd">热门论述</h2>
+                        </div>
+                        <div class="main">
+                            <h2 class="hd">今日焦点</h2>
+                        </div>
                     </div>
-                    <div class="main topic-area">
-                        <h2 class="hd">今日焦点</h2>
-                        <div class="topics debate clearfix">
+                    <div class="clearfix blocks">
+                        <?php $debate = $fragment['content']['debate']; ?>
+                        <div class="aside">
+                            <ul class="hot-post-list-<?php echo $debate['topic_id']; ?> post-list"></ul>
+                            <script>
+                                new J().mount( 'hot-post-<?php echo $debate['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1442824907074', {
+                                    topic_id : '<?php echo $debate['topic_id']; ?>',
+                                    rn : '<?php echo $debate['post_num']; ?>'
+                                } );
+                            </script>
+                        </div>
+                        <div class="main topics clearfix">
                             <div class="aside chart">
                                 <div id="focus-chart"></div>
                                 <div class="chart-legend"><b class="brand">•</b> 各观点指数对比</div>
+                                <script>
+                                    new J().mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1442824907074', { id : '<?php echo $debate['topic_id']; ?>' } );
+                                </script>
                             </div>
                             <div class="main">
-                                <h3><a href="/topic/285738250" target="_blank"><span class="seal seal-1"></span> 各地青少年犯罪频现，究竟谁该背起更多的责任</a></h3>
-                                <div class="data-line">
-                                </div>
+                                <h3><a href="<?php echo $debate['url']; ?>" target="_blank"><span class="seal seal-1"></span> <?php echo htmlspecialchars( $debate['title'] ); ?></a></h3>
                                 <ul class="point-list">
                                     <li>
-                                        <div class="points">
-                                            <i class="fa fa-flag flags flag-1"></i>
-                                            <span>观点一：加大对未成年人犯罪的处罚力度，降低限定年龄，让未成年人体会到犯罪的严重性</span>
-                                        </div>
+                                        <?php $points = $debate['points']; $i = 1; foreach( $points as $point ) { ?>
+                                            <div class="points">
+                                                <i class="fa fa-flag flags flag-<?php echo $i; ?>"></i>
+                                                <span>观点<?php echo \Local\Utils::ntocn( $i ); ?>：<?php echo htmlspecialchars( $point ); ?></span>
+                                            </div>
+                                        <?php $i++; } ?> 
                                     </li>
-                                    <li>
-                                        <div class="points">
-                                            <i class="fa fa-flag flags flag-2"></i>
-                                            <span>观点二：明确监护人责任，加强对监护人的处罚，能够更有效的减少未成年人犯罪的情况发生</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="points">
-                                            <i class="fa fa-flag flags flag-3"></i>
-                                            <span>观点三：未成年人没有错，错的是教育和环境，我们不能把教育的错让未成年的孩子承担</span>
-                                        </div>
-                                    </li>
-
                                 </ul>
-                                <a href="/topic/285738250" class="view">查看话题详情</a>
+                                <a href="<?php echo $debate['url']; ?>" target="_blank" class="view">查看话题详情</a>
                             </div>
                         </div>
-                        <div class="topics clearfix">
-                            <h3><a href="/topic/285738253"><span class="seal seal-1"></span> 我们是否对“国民素质”的问题有太少的“实质性关注”？该怎样来改善现状？</a></h3>
-                            <div class="data-line">
-                            </div>
+                    </div>
+                    <div class="clearfix blocks">
+                        <?php $discuss = $fragment['content']['discuss']; ?>
+                        <div class="aside">
+                            <ul class="hot-post-list-<?php echo $discuss['topic_id']; ?> post-list"></ul>
+                            <script>
+                                new J().mount( 'hot-post-<?php echo $discuss['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1442824907074', {
+                                    topic_id : '<?php echo $discuss['topic_id']; ?>',
+                                    rn : '<?php echo $discuss['post_num']; ?>'
+                                } );
+                            </script>
+                        </div>
+                        <div class="main topics clearfix">
+                            <h3><a href="<?php echo $discuss['url']; ?>" target="_blank"><span class="seal seal-2"></span> <?php echo htmlspecialchars( $discuss['title'] ); ?></a></h3>
                             <div class="desc">
-                                 <p>“景点挂出的供人欣赏的风铃遭游人哄抢一空”，“私人承包500亩油蛤养殖地遭群众哄抢”，我们发现不断的有类似的新闻让我们一次又一次的倍感“震惊”。但其实在震惊的同时，似乎又感觉对类似事情已经见怪不怪。谈到类似的事情，总让我们离不开一个词“国民素质”，这些让我们震惊的新闻一次又一次的让我们对中国“国民素质”的现状失去信心。</p>
+                                <p><?php echo htmlspecialchars( $discuss['desc'] ); ?></p>
                             </div>
+                            <a href="<?php echo $debate['url']; ?>" target="_blank" class="view">查看话题详情</a>
                         </div>
                     </div>
                 </div>
@@ -245,21 +259,11 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ichart.js?_t=1442444748486"></script>
+        <script src="/static/common/js/ichart.js?_t=1442824907124"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1442444748446', { id : 285738250 } );
-            idizcuz.mount( 'hotposts', '/static/home/packages/HotPosts/bootstrap.js?_t=1442444748446', { blocks : [ {
-                topic_id : 285738250,
-                rn : 4,
-                container : $( '.hot-post-list-1' )
-            }, {
-                topic_id : 285738253,
-                rn : 3,
-                container : $( '.hot-post-list-2' )
-            } ] } );
-            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1442444748446', { rn : 10 } );
-            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1442444748446' );
+            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1442824907074', { rn : 10 } );
+            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1442824907074' );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
