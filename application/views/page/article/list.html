@@ -5,14 +5,21 @@
             $title = '每日论点•iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/article/css/list.css?_t=1441405108067" />
+        <link rel="stylesheet" href="/static/article/css/list.css?_t=1443146308744" />
     </head>
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
             <div class="boxes body">
                 <div class="inner">
-                    <div class="aside"></div>
+                    <div class="aside">
+                        <?php if( $account ) { ?>
+                            <a href="/topic/<?php echo $topic['id']; ?>" class="btns large fullsize">查看所在论述</a>
+                            <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
+                        <?php } else { ?>
+                            <?php include TPL_PATH . '/common/signin.inc.html'; ?>
+                        <?php } ?>
+                    </div>
                     <div class="main">
                         <?php if( !empty( $topic ) ) { ?>
                             <div class="topic-area">

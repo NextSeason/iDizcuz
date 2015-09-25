@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/homeMobile//css/index.css?_t=1439884800023" />
+        <link rel="stylesheet" href="/static/homeMobile//css/index.css?_t=1443006820857" />
     </head>
     <body>
         <?php $nav = 'index'; ?>
@@ -14,76 +14,91 @@
             <?php } ?>
             <div class="slides boxes">
                 <ul class="slide-content">
+                    <?php 
+                        $fragment = \FMS\Api::getFragmentByAlias( 'mobile-home-slides' );
+                        $slides = $fragment['content']['slides'];
+                        foreach( $slides as $slide ) {
+                    ?>
                     <li>
-                        <a href="###" class="slide" style="background-image:url(http://img.baidu.com/img/iknow/wenku/xuanshang_704x272.jpg)"></a>
+                    <a href="<?php echo $slide['link']; ?>" class="slide" style="background-image:url(<?php echo $slide['src']; ?>)" alt="<?php echo htmlspecialchars( $slide['title'] ); ?>"></a>
                     </li>
-                    <li>
-                        <a href="###" class="slide" style="background-image:url(http://img.baidu.com/img/iknow/wenku/aaaa704x272-2.jpg)"></a>
-                    </li>
-                    <li>
-                        <a href="###" class="slide" style="background-image:url(http://img.baidu.com/img/iknow/wenku/xuanshang_704x272.jpg)"></a>
-                    </li>
+                    <?php } ?>
                 </ul>
                 <ul class="slide-nav"></ul>
             </div>
             <div class="boxes">
+                <?php $fragment = \FMS\Api::getFragmentByAlias( 'mobile-home-daily-focus' ); ?>
                 <div class="topics">
+                    <?php $debate = $fragment['content']['debate']; ?>
                     <div class="first-line">
-                        <span class="date r">1988-03-24</span>
+                        <span class="date r"><?php echo $debate['time']; ?></span>
                         <span class="brand">焦点</span>
                         <span> • </span>
                         <span class="brand">辩论</span>
                     </div>
                     <h2>
-                        <a href="###">
-                            各地青少年犯罪频现，究竟谁该背起更多的责任
+                        <a href="<?php echo $debate['url']; ?>">
+                            <?php echo htmlspecialchars( $debate['title'] ); ?>
                         </a>
                     </h2>
                     <ul class="point-list">
-                        <li>
-                            <div class="points">
-                                <i class="flags flag-1"></i>
-                                                    <span>观点一：加大对未成年人犯罪的处罚力度，降低限定年龄，让未成年人体会到犯罪的严重性</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="points">
-                                <i class="flags flag-2"></i>
-                                <span>观点二：明确监护人责任，加强对监护人的处罚，能够更有效的减少未成年人犯罪的情况发生</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="points">
-                                <i class="flags flag-3"></i>
-                                            <span>观点三：未成年人没有错，错的是教育和环境，我们不能把教育的错让未成年的孩子承担</span>
-                            </div>
-                        </li> 
+                        <?php $i = 1; foreach( $debate['points'] as $point ) { ?>
+                            <li>
+                                <div class="points">
+                                    <i class="flags flag-<?php echo $i; ?>"></i>
+                                    <span>观点<?php echo \Local\Utils::ntocn( $i ); ?>：<?php echo htmlspecialchars( $point ); ?></span>
+                                </div>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
                 <div class="topics">
+                    <?php $discuss = $fragment['content']['discuss']; ?>
                     <div class="first-line">
-                        <span class="date r">1988-03-24</span>
+                        <span class="date r"><?php echo $discuss['time']; ?></span>
                         <span class="brand">焦点</span>
                         <span> • </span>
                         <span class="brand">讨论</span>
                     </div>
                     <h2>
-                        <a href="###">
-                            各地青少年犯罪频现，究竟谁该背起更多的责任
+                        <a href="<?php echo $discuss['url']; ?>">
+                            <?php echo htmlspecialchars( $discuss['title'] ); ?>
                         </a>
                     </h2>
                     <div class="desc">
-                        <p>
-                        近期，各种青少年犯罪的新闻和视频被曝出，其中很多手段恶劣到让我们难以想象。有人认为这种现象只是随着互联网和媒体的越来越发达，更多的相关事件被暴光在众目之下。中国青少年研究中心对12个省区市的调查研究显示，2014年14周岁以下未成年人犯罪占20.11%，相比2001年上升了7.78个百分点。同时，未成年人犯罪低龄化也可能大大增加未来社会中惯犯和累犯的可能性。
-                        </p>
+                        <p><?php echo htmlspecialchars( $discuss['desc'] ); ?></p>
                     </div>
                 </div>
+            </div>
+            <div class="boxes">
+                <?php 
+                    $categories = \Local\Utils::loadConf( 'categories', 'list' );
+                    $fragment = \FMS\Api::getFragmentByAlias( 'mobile-home-daily-topics' );
+                    foreach( $fragment['content']['topics'] as $topic ) {
+                ?>
+                <div class="topics">
+                    <div class="first-line">
+                        <span class="date r"><?php echo $topic['time']; ?></span>
+                        <span class="brand"><?php echo $categories[ $topic['cid'] ]; ?></span>
+                        <span> • </span>
+                        <span class="brand"><?php echo $topic['type'] == '1' ? '辩论' : '讨论'; ?></span>
+                    </div>
+                    <h2>
+                        <a href="<?php echo $topic['url']; ?>">
+                            <?php echo htmlspecialchars( $topic['title'] ); ?>
+                        </a>
+                    </h2>
+                    <div class="desc">
+                        <p><?php echo htmlspecialchars( $topic['desc'] ); ?></p>
+                    </div>
+                </div>
+                <?php } ?>
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'slides', '/static/homeMobile/packages/Slides/bootstrap.js?_t=1439884800001' );
+            idizcuz.mount( 'slides', '/static/homeMobile/packages/Slides/bootstrap.js?_t=1443006820833' );
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>

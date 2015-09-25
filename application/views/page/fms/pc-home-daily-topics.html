@@ -3,13 +3,13 @@
     <head>
         <?php $title = 'Fragement Management System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1442825106608" />
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1443019273157" />
     </head>
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/fms/top.inc.html'; ?>
             <div class="boxes crumb">
-                <span>PC端首页</span> <span>•</span> <span>Banner轮播图</span>
+                <span>PC端首页</span> <span>•</span> <span> 今日话题 </span>
             </div>
             <div class="boxes form">
                 <form>
@@ -113,7 +113,7 @@
         <script>
             var fms = new J();
 
-            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1442825106569', {
+            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1443019273119', {
                 getData : function( form ) {
                     var res = {},
                         topics = form.find( '.line.topic' ),

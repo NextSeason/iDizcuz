@@ -5,7 +5,7 @@
             $title = '每日论点•iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/article/css/article.css?_t=1441405108065" />
+        <link rel="stylesheet" href="/static/article/css/article.css?_t=1443146308743" />
     </head>
     <body>
         <div id="idizcuz">
@@ -13,7 +13,12 @@
             <div class="boxes body">
                 <div class="inner clearfix">
                     <div class="aside">
-                        <a href="###" class="btns large show-editor">查看所在论述</a>
+                        <a href="/topic/<?php echo $topic['id']; ?>" class="btns large fullsize">查看所在论述</a>
+                        <?php if( $account ) { ?>
+                            <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
+                        <?php } else { ?>
+                            <?php include TPL_PATH . '/common/signin.inc.html'; ?>
+                        <?php } ?>
                     </div>
                     <div class="main">
                         <div class="article">
@@ -82,7 +87,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js?_t=1441405108035', {} );
+            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js?_t=1443146308715', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

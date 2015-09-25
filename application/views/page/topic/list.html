@@ -7,14 +7,20 @@
             $nav = ( $cid == 1 ? 'focus' : 'list' );
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topic/css/list.css?_t=1441416268991" />
+        <link rel="stylesheet" href="/static/topic/css/list.css?_t=1443145394633" />
     </head>
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
             <div class="boxes body">
                 <div class="inner">
-                    <div class="aside"></div>
+                    <div class="aside">
+                        <?php if( $account ) { ?>
+                            <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
+                        <?php } else { ?>
+                            <?php include TPL_PATH . '/common/signin.inc.html'; ?>
+                        <?php } ?>
+                    </div>
                     <div class="list-area main">
                         <ul class="topic-list">
                             <?php foreach( $topics as $topic ) { ?>

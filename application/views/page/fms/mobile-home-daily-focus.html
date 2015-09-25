@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'Fragement Management System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1443019273152" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/fms/top.inc.html'; ?>
+            <div class="boxes crumb">
+                <span>Mobile端首页</span> <span>•</span> <span> 今日焦点 </span>
+            </div>
+            <div class="boxes form">
+                <form>
+                    <?php $alias = 'mobile-home-daily-focus'; ?>
+                    <?php include TPL_PATH . '/fms/alias.inc.html'; ?>
+                    <div class="block content">
+                        <?php 
+                            $fragment = \FMS\Api::getFragmentByAlias( $alias );
+                            $content = $fragment['content'];
+                            $debate = $content['debate'];
+                            $discuss = $content['discuss'];
+                        ?>
+                        <fieldset class="debate">
+                            <legend> 辩论话题 </legend>
+                            <div class="clearfix line">
+                                <div class="item l">
+                                    <p>话题标题：</p>
+                                    <input type="text" class="title long" value="<?php echo htmlspecialchars( $debate['title'] ); ?>" placeholder="请输入辩论话题标题" />
+                                </div>
+                                <div class="item l">
+                                    <p>话题链接：</p>
+                                    <input type="text" class="url" value="<?php echo htmlspecialchars( $debate['url'] ); ?>" placeholder="eg. http://www.idizcuz.com/topic/285738248" />
+                                </div>
+                                <div class="item l">
+                                    <p>话题时间：</p>
+                                    <input type="text" class="time small" value="<?php echo $debate['time']; ?>" />
+                                </div>
+                            </div>
+                            <?php if( !count( $debate['points'] ) ) { ?>
+                                <div class="line unit clearfix">
+                                    <div class="item l">
+                                        <p>论点：</p>
+                                        <input type="text" class="points long" placeholder="填写论点标题" />
+                                    </div>
+                                    <div class="unit-op l">
+                                        <a href="###" class="add-unit" data-unit-tpl="topic-point-tpl">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a href="###" class="del-unit">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php } else { foreach( $debate['points'] as $point ) { ?>
+                                <div class="line unit clearfix">
+                                    <div class="item l">
+                                        <p>论点：</p>
+                                        <input type="text" class="points long" value="<?php echo htmlspecialchars( $point ); ?>" placeholder="填写论点标题" />
+                                    </div>
+                                    <div class="unit-op l">
+                                        <a href="###" class="add-unit" data-unit-tpl="topic-point-tpl">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a href="###" class="del-unit">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php } } ?>
+                        </fieldset>
+                        <fieldset class="discuss">
+                            <legend> 讨论话题 </legend>
+                            <div class="clearfix line">
+                                <div class="item l">
+                                    <p>话题标题：</p>
+                                    <input type="text" class="title long" value="<?php echo htmlspecialchars( $discuss['title'] ); ?>" placeholder="请输入辩论话题标题" />
+                                </div>
+                                <div class="item l">
+                                    <p>话题链接：</p>
+                                    <input type="text" class="url" value="<?php echo htmlspecialchars( $discuss['url'] ); ?>" placeholder="eg. http://www.idizcuz.com/topic/285738248" />
+                                </div>
+                                <div class="item l">
+                                    <p>话题时间：</p>
+                                    <input type="text" class="time small" value="<?php echo $discuss['time']; ?>" />
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="item">
+                                    <p>话题描述：</p>
+                                    <textarea class="desc long"><?php echo htmlspecialchars( $discuss['desc'] ); ?></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <?php include TPL_PATH . '/fms/btns.inc.html'; ?>
+                </form>
+            </div>
+            <textarea class="templates" id="topic-point-tpl">
+                <div class="line unit clearfix">
+                    <div class="item l">
+                        <p>论点：</p>
+                        <input type="text" class="points long" placeholder="填写论点标题" />
+                    </div>
+                    <div class="unit-op l">
+                        <a href="###" class="add-unit" data-unit-tpl="topic-point-tpl">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                        <a href="###" class="del-unit">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+            </textarea>
+        </div>
+        <script>
+            var fms = new J();
+
+            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1443019273113', {
+                getData : function( form ) {
+                    var res = {},
+                        debate = $( 'fieldset.debate' ),
+                        discuss = $( 'fieldset.discuss' ),
+                        points = debate.find( 'input.points' ),
+                        i, l, point;
+
+                    res.debate = {
+                        title : this.val( debate.find( 'input.title' ) ),
+                        url : this.val( debate.find( 'input.url' ), 'link' ),
+                        time : this.val( debate.find( 'input.time' ) ),
+                        points : []
+                    };
+
+                    for( i = 0, l = points.length; i < l; i += 1 ) {
+                        point = this.val( points.eq(i) ); 
+                        point.length && res.debate.points.push( point );
+                    }
+
+                    res.discuss = {
+                        title : this.val( discuss.find( 'input.title' ) ),
+                        desc : this.val( discuss.find( 'textarea.desc' ) ),
+                        url : this.val( discuss.find( 'input.url' ), 'link' ),
+                        time : this.val( discuss.find( 'input.time' ) )
+                    };
+
+                    return res;
+                }
+            } );
+        </script>
+    </body>
+</html>

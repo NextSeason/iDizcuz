@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topicMobile/css/post.css?_t=1440348753520" />
+        <link rel="stylesheet" href="/static/topicMobile/css/post.css?_t=1443013737508" />
     </head>
     <body>
         <div id="idizcuz">
@@ -32,14 +32,14 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'post', '/static/topicMobile/packages/Post/bootstrap.js?_t=1440348753486', {
+            idizcuz.mount( 'post', '/static/topicMobile/packages/Post/bootstrap.js?_t=1443013737478', {
                 postId : '<?php echo $post['id']; ?>'
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1440348753486', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1443013737478', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
 
-            idizcuz.mount( 'comment', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1440348753486', {
+            idizcuz.mount( 'comment', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1443013737478', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
         </script>

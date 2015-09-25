@@ -5,13 +5,14 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1441207777516" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1443175278200" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
             <div class="boxes body">
                 <div class="inner">
+                    <?php include TPL_PATH . '/user/banneduser.inc.html'; ?>
                     <div class="aside">
                         <?php include TPL_PATH . '/user/card.inc.html'; ?>
                     </div>
@@ -56,11 +57,11 @@
         <?php include TPL_PATH . '/common/pagination.inc.html'; ?>
         <script>
             var iDizcuz = new J();
-            iDizcuz.mount( 'accounts', '/static/user/packages/Accounts/bootstrap.js?_t=1441207777470', {
+            iDizcuz.mount( 'accounts', '/static/user/packages/Accounts/bootstrap.js?_t=1443175278160', {
                 page : '<?php echo $page; ?>',
                 userId : '<?php echo $user['id']; ?>'
             } );
-            iDizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1441207777470', {
+            iDizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1443175278160', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
         </script>

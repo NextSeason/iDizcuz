@@ -1,0 +1,7 @@
+<?php if( $user['status'] != 0 ) { ?>
+    <div class="boxes banned-user">
+        <p>用户 <b class="brand"><?php echo htmlspecialchars( $user['uname'] ); ?></b> 的帐号目前处于被封禁状态
+            <br />被封禁时间为 <b class="brand"><?php echo $user['ban_start']; ?></b> 至 <b class="brand"><?php echo $user['ban_end']; ?></b>
+        </p>
+    </div>
+<?php } ?>

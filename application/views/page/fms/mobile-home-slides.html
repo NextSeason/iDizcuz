@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php $title = 'Fragement Management System'; ?>
+        <?php include TPL_PATH . '/common/head.inc.html'; ?>
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1443019273154" />
+    </head>
+    <body>
+        <div id="idizcuz">
+            <?php include TPL_PATH . '/fms/top.inc.html'; ?>
+            <div class="boxes crumb">
+                <span>Mobile端首页</span> <span>•</span> <span>Banner轮播图</span>
+            </div>
+            <div class="boxes form">
+                <form>
+                    <?php $alias = 'mobile-home-slides'; ?>
+                    <?php include TPL_PATH . '/fms/alias.inc.html'; ?>
+                    <div class="block content">
+                        <?php 
+                            $fragment = \FMS\Api::getFragmentByAlias( $alias );
+                            $slides = $fragment['content']['slides'];
+                            foreach( $slides as $slide ) {
+                        ?>
+                            <div class="line slide clearfix unit">
+                                <div class="item l">
+                                    <p>图片地址：</p>
+                                    <input type="text" class="src" placeholder="输入图片地址" value="<?php echo htmlspecialchars( $slide['src'] ); ?>" />
+                                </div>
+                                <div class="item l">
+                                    <p>图片链接：</p>
+                                    <input type="text" class="link" placeholder="输入图片链接" value="<?php echo htmlspecialchars( $slide['link'] ); ?>" />
+                                </div>
+                                <div class="item l">
+                                    <p>图片title：</p>
+                                    <input type="text" class="title" placeholder="输入图片title" value="<?php echo htmlspecialchars( $slide['title'] ); ?>" />
+                                </div>
+                                <div class="unit-op l">
+                                    <a href="###" class="add-unit" data-unit-tpl="slide-unit-tpl">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                    <a href="###" class="del-unit">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <?php include TPL_PATH . '/fms/btns.inc.html'; ?>
+                </form>
+            </div>
+            <textarea class="templates" id="slide-unit-tpl">
+                <div class="line slide clearfix unit">
+                    <div class="item l">
+                        <p>图片地址：</p>
+                        <input type="text" class="src" placeholder="输入图片地址" />
+                    </div>
+                    <div class="item l">
+                        <p>图片链接：</p>
+                        <input type="text" class="link" placeholder="输入图片链接" />
+                    </div>
+                    <div class="item l">
+                        <p>图片title：</p>
+                        <input type="text" class="title" placeholder="输入图片title" />
+                    </div>
+                    <div class="unit-op l">
+                        <a href="###" class="add-unit" data-unit-tpl="slide-unit-tpl">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                        <a href="###" class="del-unit">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+            </textarea>
+        </div>
+        <script>
+            var fms = new J();
+
+            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1443019273115', {
+                getData : function( form ) {
+                    var res = {},
+                        slides = form.find( '.line.slide' ),
+                        i = 0, l = slides.length,
+                        src, link, title;
+
+                    res.slides = [];
+
+                    if( !slides.length ) return res;
+
+                    for( ; i < l; i += 1 ) {
+                        src = this.val( slides.eq(i).find( 'input.src' ), 'link' );
+                        link = this.val( slides.eq(i).find( 'input.link' ), 'link' );
+                        title = this.val( slides.eq(i).find( 'input.title' ) );
+
+                        if( !src.length || !link.length ) continue;
+
+                        res.slides.push( {
+                            src : src,
+                            link : link,
+                            title : title
+                        } );
+                    }
+                    return res;
+                }
+            } );
+        </script>
+    </body>
+</html>

@@ -6,7 +6,7 @@
             $nav = 'index';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/home/css/index.css?_t=1442824907124" />
+        <link rel="stylesheet" href="/static/home/css/index.css?_t=1443142221121" />
     </head>
     <body>
         <div id="idizcuz">
@@ -53,38 +53,7 @@
                                 </div>
                             </div>
                         <?php } else { ?>
-                            <a href="/signup" class="btns join-btn">加入每日论点 • iDizcuz</a>
-                            <div class="sign-box">
-                                <form class="signin">
-                                    <span class="signin-tip">用户名或密码错误！</span>
-                                    <p class="tt">帐号登录</p>
-                                    <div class="line">
-                                        <input type="text" class="email" placeholder="邮箱">
-                                    </div>
-                                    <div class="line">
-                                        <input type="password" class="passwd" placeholder="密码">
-                                    </div>
-                                    <div class="line">
-                                        <p class="tip"></p>
-                                    </div>
-                                    <div class="line">
-                                        <label>
-                                            <input type="checkbox" class="remember" />
-                                            <span>记住我</span>
-                                        </label> 
-                                        <span class="sp">|</span>
-                                        <a href="/forget?r=http://www.idizcuz.com" class="redirect forget">忘记密码？</a>
-                                        <span class="sp">|</span>
-                                        <a href="/signup?r=http://www.idizcuz.com" class="redirect">注册</a>
-                                    </div>
-                                    <div class="line">
-                                        <input type="submit" class="btns larger signin-btn" value="登录">
-                                    </div>
-                                </form>
-                                <script>
-                                    new J().mount( 'Signin', '/static/home/packages/Signin/bootstrap.js?_t=1442824907074', {} );
-                                </script>
-                            </div>
+                            <?php include TPL_PATH . '/common/signin.inc.html'; ?>
                         <?php } ?>
                     </div>
                     <div class="main clearfix" >
@@ -103,12 +72,15 @@
                         <div class="middle-area main">
                             <div class="slide-area">
                                 <ul class="slide-list">
+                                    <?php 
+                                        $fragment = \FMS\Api::getFragmentByAlias( 'pc-home-slides' );
+                                        $slides = $fragment['content']['slides'];
+                                        foreach( $slides as $slide ) {
+                                    ?>
                                     <li>
-                                        <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/aaaa704x272-2.jpg)"></a>
+                                        <a href="<?php echo $slide['link']; ?>" target="_blank" title="<?php echo htmlspecialchars( $slide['title'] ); ?>" style="background-image:url(<?php echo $slide['src']; ?>)"></a>
                                     </li>
-                                    <li>
-                                        <a href="###" style="background-image:url(http://img.baidu.com/img/iknow/wenku/xuanshang_704x272.jpg)"></a>
-                                    </li>
+                                    <?php } ?>
                                 </ul>
                                 <ul class="slide-nav"></ul>
                             </div>
@@ -173,7 +145,7 @@
                         <div class="aside">
                             <ul class="hot-post-list-<?php echo $debate['topic_id']; ?> post-list"></ul>
                             <script>
-                                new J().mount( 'hot-post-<?php echo $debate['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1442824907074', {
+                                new J().mount( 'hot-post-<?php echo $debate['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1443142221077', {
                                     topic_id : '<?php echo $debate['topic_id']; ?>',
                                     rn : '<?php echo $debate['post_num']; ?>'
                                 } );
@@ -184,7 +156,7 @@
                                 <div id="focus-chart"></div>
                                 <div class="chart-legend"><b class="brand">•</b> 各观点指数对比</div>
                                 <script>
-                                    new J().mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1442824907074', { id : '<?php echo $debate['topic_id']; ?>' } );
+                                    new J().mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1443142221077', { id : '<?php echo $debate['topic_id']; ?>' } );
                                 </script>
                             </div>
                             <div class="main">
@@ -208,7 +180,7 @@
                         <div class="aside">
                             <ul class="hot-post-list-<?php echo $discuss['topic_id']; ?> post-list"></ul>
                             <script>
-                                new J().mount( 'hot-post-<?php echo $discuss['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1442824907074', {
+                                new J().mount( 'hot-post-<?php echo $discuss['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1443142221077', {
                                     topic_id : '<?php echo $discuss['topic_id']; ?>',
                                     rn : '<?php echo $discuss['post_num']; ?>'
                                 } );
@@ -234,13 +206,20 @@
                     <div class="main topic-area">
                         <h2 class="hd">今日话题</h2>
                         <ul class="clearfix">
-                            <li class="topics">
-                                <a href="###" class="cate btns small dark">经济</a>
-                                <h3><span class="seal seal-2"></span> <a href="###">经济学的一个话题，我们一起来讨论</a></h3>
-                                <div class="desc">
-                                    <p>近期，各种青少年犯罪的新闻和视频被曝出，其中很多手段恶劣到让我们难以想象。有人认为这种现象只是随着互联网和媒体的越来越发达，更多的相关事件被暴光在众。</p>
-                                </div>
-                            </li>
+                            <?php 
+                                $fragment = \FMS\Api::getFragmentByAlias( 'pc-home-daily-topics' );
+                                $topics = $fragment['content']['topics'];
+                                $categories = \Local\Utils::loadConf( 'categories', 'list' );
+                                foreach( $topics as $topic ) {
+                            ?>
+                                <li class="topics">
+                                    <a href="/list/<?php echo $topic['cid']; ?>" target="_blank" class="cate btns small dark"><?php echo $categories[$topic['cid']]; ?></a>
+                                    <h3><span class="seal seal-<?php echo $topic['type']; ?>"></span> <a href="<?php echo $topic['url']; ?>" target="_blank"><?php echo htmlspecialchars( $topic['title'] ); ?></a></h3>
+                                    <div class="desc">
+                                        <p><?php echo htmlspecialchars( $topic['desc'] ); ?></p>
+                                    </div>
+                                </li>
+                            <?php } ?>
                         </ul>
 
                     </div>
@@ -259,11 +238,11 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ichart.js?_t=1442824907124"></script>
+        <script src="/static/common/js/ichart.js?_t=1443142221121"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1442824907074', { rn : 10 } );
-            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1442824907074' );
+            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1443142221077', { rn : 10 } );
+            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1443142221077' );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
