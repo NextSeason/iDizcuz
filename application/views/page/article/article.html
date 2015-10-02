@@ -5,7 +5,7 @@
             $title = '每日论点•iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/article/css/article.css?_t=1443146308743" />
+        <link rel="stylesheet" href="/static/article/css/article.css?_t=1443790362634" />
     </head>
     <body>
         <div id="idizcuz">
@@ -13,7 +13,7 @@
             <div class="boxes body">
                 <div class="inner clearfix">
                     <div class="aside">
-                        <a href="/topic/<?php echo $topic['id']; ?>" class="btns large fullsize">查看所在论述</a>
+                        <a href="/topic/<?php echo $topic['id']; ?>" target="_blank" class="btns large fullsize">查看所在话题</a>
                         <?php if( $account ) { ?>
                             <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
                         <?php } else { ?>
@@ -23,9 +23,7 @@
                     <div class="main">
                         <div class="article">
                             <div class="hd">
-                                <?php if( $article['origin_logo'] != '' ) { ?>
-                                    <a class="origin-logo" href="<?php echo $article['origin_url']; ?>" target="_blank" style="background-image:url(<?php echo $article['origin_logo']; ?>)"></a>
-                                <?php } ?>
+                                <a href="/articles/<?php echo $topic['id']; ?>" class="btns dark go r">返回列表</a>
                                 <h1><?php echo htmlspecialchars( $article['title'] ); ?></h1>
                                 <p class="info">
                                     <?php if( $article['origin'] != '' ) { ?>
@@ -70,7 +68,7 @@
                                 <h3 class="l">相关资讯</h3>
                             </div>
                             <ul>
-                                <?php foreach( $related_articles as $related_article ) { if( $related_article['id'] == $article['id'] ) {} ?>
+                                <?php foreach( $related_articles as $related_article ) { if( $related_article['id'] == $article['id'] ) continue; ?>
                                     <li>
                                         <a href="/article/<?php echo $related_article['id']; ?>">
                                             <?php echo $related_article['title']; ?>
@@ -87,7 +85,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js?_t=1443146308715', {} );
+            idizcuz.mount( 'article', '/static/article/packages/Article/bootstrap.js?_t=1443790362607', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

@@ -8,6 +8,7 @@ Class InterfaceController extends BaseInterfaceController {
         parent::init();
 
         $this->actions = [
+            'topicarticles' => $this->action_path . 'TopicArticles.php'
         ];
     }
 }

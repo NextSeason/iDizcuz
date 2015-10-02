@@ -5,7 +5,7 @@
             $title = '每日论点•iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/article/css/list.css?_t=1443146308744" />
+        <link rel="stylesheet" href="/static/article/css/list.css?_t=1443790362635" />
     </head>
     <body>
         <div id="idizcuz">
@@ -14,7 +14,7 @@
                 <div class="inner">
                     <div class="aside">
                         <?php if( $account ) { ?>
-                            <a href="/topic/<?php echo $topic['id']; ?>" class="btns large fullsize">查看所在论述</a>
+                            <a href="/topic/<?php echo $topic['id']; ?>" target="_blank" class="btns large fullsize">查看所在话题</a>
                             <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
                         <?php } else { ?>
                             <?php include TPL_PATH . '/common/signin.inc.html'; ?>
@@ -29,42 +29,45 @@
                                 </h1>
                             </div>
                         <?php } ?>
-                        <ul class="article-list">
-                            <?php foreach( $articles as $article ) { ?>
-                                <li>
-                                    <div class="articles clearfix">
-                                        <?php if( $article['img'] ) { ?>
-                                            <div class="aside">
-                                                <a href="/article/<?php echo $article['id']; ?>" class="cover" style="background-image:url(http://topicstc.idizcuzz.com/<?php echo $article['img']; ?>);"></a>
-                                            </div>
-                                        <?php } ?>
-                                        <div class="info main">
-                                            <h2><a href="/article/<?php echo $article['id']; ?>"><?php echo htmlspecialchars( $article['title'] ); ?></a></h2>
-                                            <p class="summary">
-                                                <?php echo htmlspecialchars( $article['summary'] ); ?>
-                                                <a href="/article/<?php echo $article['id']; ?>"> [详细]</a>
-                                            </p>
-                                            <p class="detail">
-                                                <span class="time r">
-                                                    <?php echo substr( $article['time'], 0, -9 ); ?>
-                                                </span>
-                                                <?php if( $article['origin'] ) { ?>
-                                                    <span class="item">来源：<a href="<?php echo $article['origin_url']; ?>" target="_blank"><?php echo $article['origin']; ?></a></span>
-                                                <?php } ?>
-                                                <?php if( $article['author'] ) { ?>
-                                                    <span class="item">作者：<?php echo $article['author']; ?></span>
-                                                <?php } ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            <?php } ?>
-                        </ul>
+                        <ul class="article-list"></ul>
+                        <a href="###" class="load-more">加载更多</a>
                     </div>
                 </div>
             </div>
             <?php include TPL_PATH . '/common/foot.inc.html'; ?>
         </div>
+        <textarea class="templates" id="article-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { var article = data[i]; %>
+                <li>
+                    <div class="articles clearfix">
+                        <% if( article['img'].length ) { %>
+                            <div class="aside">
+                                <a href="/article/<%-article.id %>" class="cover" style="background-image:url(http://topicstc.idizcuzz.com/<%-article.img %>);"></a>
+                            </div>
+                        <% } %>
+                        <div class="info main">
+                            <h2><a href="/article/<%-article.id %>"><%-article.title %></a></h2>
+                            <p class="summary">
+                                <%-article.summary %> <a href="/article/<%-article.id %>"> [详细]</a>
+                            </p>
+                            <p class="detail">
+                                <span class="time r"><%-article.time.substring( 0, 10 ) %></span>
+                                <% if( article.origin.length ) { %>
+                                    <span class="item">来源：<a href="<%-article.origin_url %>" target="_blank"><%-article.origin %></a></span>
+                                <% } if( article.author.length ) { %>
+                                    <span class="item">作者：<%-article.author %></span>
+                                <% } %>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            <% } %>
+        </textarea>
+        <script>
+            new J().mount( 'topic_articles', '/static/article/packages/TopicArticles/bootstrap.js?_t=1443790362609', {
+                topic_id : '<?php echo $topic['id']; ?>'
+            } );
+        </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
 </html>

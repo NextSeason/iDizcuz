@@ -6,36 +6,14 @@ Class ListAction extends \Local\BaseAction {
 
     public function __execute() {
         $this->tpl = 'article/list';
-        $this->paramsProcessing()->getTopic()->getArticles();
+        $this->paramsProcessing()->getTopic();
         return $this->data;
     }
 
     public function __mobile() {
         $this->tpl = 'articleMobile/list';
-        $this->paramsProcessing()->getTopic()->getArticles();
+        $this->paramsProcessing()->getTopic();
         return $this->data;
-    }
-
-    private function getArticles() {
-        $articleModel = new ArticleModel();
-
-        $articles = $articleModel->select( [
-            'columns' => [ 'id', 'img', 'title', 'summary', 'time', 'origin', 'origin_url', 'author' ],
-            'where' => [
-                [ 'topic_id', $this->params['id'] ]
-            ],
-            'order' => [ [ 'time', 'DESC' ] ],
-            'start' => $this->params['start'],
-            'rn' => $this->rn 
-        ] );
-
-        if( $articles === false ) {
-            //echo error;
-        }
-
-        $this->data['articles'] = $articles;
-
-        return $this;
     }
 
     private function getTopic() {
