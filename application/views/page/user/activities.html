@@ -5,9 +5,9 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1444126334959" />
-        <link rel="stylesheet" type="text/css" href="/static/user/css/activities.css?_t=1444126334959" />
-        <link rel="stylesheet" type="text/css" href="/static/common/css/post.css?_t=1444126334959" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1444144491604" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/activities.css?_t=1444144491604" />
+        <link rel="stylesheet" type="text/css" href="/static/common/css/post.css?_t=1444144491604" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -32,7 +32,7 @@
         </div>
         <textarea class="templates" id="activity-list-tpl">
             <% if( !data.length ) { %>
-                <li><p class="empty">暂时没有用户动态</p></li>
+                <li><p class="empty">暂时没有更多用户动态</p></li>
             <% } else { %>
                 <% var txts = { 
                     '0' : '发布了新的论述', 
@@ -97,26 +97,26 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/qrcode.js?_t=1444126334959"></script>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1444126334959"></script>
+        <script src="/static/common/js/qrcode.js?_t=1444144491604"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1444144491604"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js?_t=1444126334919', { 
+            idizcuz.mount( 'activities', '/static/user/packages/Activities/bootstrap.js?_t=1444144491566', { 
                 self : +'<?php echo $self ? 1 : 0; ?>',
                 accountId : +'<?php echo $user['id']; ?>'
             } );
-            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1444126334919', {
+            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1444144491566', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             });
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444126334919', {
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444144491566', {
                 signin : +'<?php echo $account ? 1 : 0; ?>',
                 fullFunction : false
             } );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444126334919', {
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444144491566', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444126334919', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444126334919', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444144491566', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444144491566', {} );
  
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>

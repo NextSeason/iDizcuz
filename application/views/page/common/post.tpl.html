@@ -1,4 +1,4 @@
-<div class="posts" id="post-<%=post.id %>" data-post-id="<%=post.id %>">
+<div class="posts" id="post-<%=post.id %>" data-post-id="<%=post.id %>" data-is-own="<%=post.own %>">
     <div class="data-line clearfix">
         <% if( post.point_id != 0 ) {  %>
             <span class="flags"><i class="fa fa-flag point-flag-<%-post.point_id %>"></i></span>
@@ -38,7 +38,7 @@
         <div class="triangle"><div class="triangle"></div></div>
         <div class="inner">
             <div class="mark box clearfix">
-                <p class="l">收藏成功！您可以在 <a href="/user/mark/<?php echo $account['id']; ?>">您的收藏</a> 中查看。您也可以分享这条论述，让更多人参与讨论</p>
+                <p class="l">收藏成功！您可以在 <a href="/user/mark/<?php echo $account['id']; ?>">我的收藏</a> 中查看。您也可以分享这条论述，让更多人参与讨论</p>
                 <div class="share-box l" data-share-title="[ <%-post.title %> ](分享自 每日论点 • iDizcuz)">
                     <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
                     <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>

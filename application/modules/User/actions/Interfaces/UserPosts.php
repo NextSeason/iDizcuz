@@ -156,7 +156,7 @@ Class UserPostsAction extends \Local\BaseAction {
 
         $this->params = array(
             'account_id' => $account_id,
-            'cursor' => $cursor,
+            'cursor' => $cursor == 0 ? 0 : \Local\Utils::decodeId( $cursor ),
             'rn' => $rn
         );
 

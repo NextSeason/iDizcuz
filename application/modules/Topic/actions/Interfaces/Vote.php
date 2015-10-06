@@ -80,7 +80,6 @@ Class VoteAction extends \Local\BaseAction {
         }
 
         if( $this->account['id'] == $post['account_id'] ) {
-            echo 'fdfkafsa';
             $this->error( 'PARAMS_ERR' );
         }
 
