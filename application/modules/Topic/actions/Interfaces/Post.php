@@ -146,7 +146,7 @@ Class PostAction extends \Local\BaseAction {
             $this->error( 'CONTENT_TOOLONG' );
         }
 
-        $content = \Local\EditorPurifier::purify( $content );
+        $content = \Local\EditorPurifier::purifyPost( $content );
 
         $topic_id = $this->__getPost( 'topic_id' );
 

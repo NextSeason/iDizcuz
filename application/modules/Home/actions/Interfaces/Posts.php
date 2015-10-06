@@ -86,7 +86,7 @@ Class PostsAction extends \Local\BaseAction {
         if( $rn < 1 ) $rn = 20;
 
         $this->params = [
-            'cursor' => $cursor,
+            'cursor' => $cursor == 0 ? 0 : \Local\Utils::decodeId( $cursor ),
             'rn' => $rn
         ];
 

@@ -25,6 +25,10 @@ Class UploadAvatarAction extends \Local\BaseAction {
         return $this->data;
     }
 
+    public function __mobile() {
+        return $this->__execute();
+    }
+
     private function update() {
         $accountModel = new AccountModel();
 

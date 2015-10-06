@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
     `login_ip` int NOT NULL DEFAULT 0 COMMENT 'ip address of last login client',
     `img` char(40) NOT NULL DEFAULT '',
     `sex` tinyint unsigned NOT NULL DEFAULT 0 COMMENT 'sex of user, 1 means male, 2 means female, 0 means not selected',
-    `industry` tinyint unsigned NOT NULL DEFAULT 0,
+    `industry` smallint unsigned NOT NULL DEFAULT 0,
     `employment` varchar(20) NOT NULL DEFAULT '',
     `position` varchar(10) NOT NULL DEFAULT '',
     `birth` date NOT NULL DEFAULT '0000-00-00',
@@ -245,6 +245,7 @@ DROP TABLE IF EXISTS `articles`;
 CREATE TABLE `articles` (
     `id` int unsigned NOT NULL AUTO_INCREMENT,
     `topic_id` int unsigned NOT NULL DEFAULT 0,
+    `type` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '0 = news, 1 = document, 2 = meterial',
     `title` varchar(255) NOT NULL,
     `content` text NOT NULL,
     `summary` varchar(255) NOT NULL DEFAULT '',
@@ -255,6 +256,30 @@ CREATE TABLE `articles` (
     `origin_url` varchar( 128 ) NOT NULL DEFAULT '',
     `origin_logo` varchar( 128 ) NOT NULL DEFAULT '',
     `ctime` timestamp NOT NULL DEFAULT NOW(),
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `articles_cid`;
+CREATE TABLE `articles_cid` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `article_id` int unsigned NOT NULL,
+    `cid` int unsigned NOT NULL,
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `articles_topic`;
+CREATE TABLE `articles_topic` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `article_id` int unsigned NOT NULL,
+    `topic_id` int unsigned NOT NULL,
+    PRIMARY KEY( `id` )
+);
+
+DROP TABLE IF EXISTS `articles_tag`;
+CREATE TABLE `articles_tag` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `article_id` int unsigned NOT NULL,
+    `tag_id` char(20) NOT NULL,
     PRIMARY KEY( `id` )
 );
 

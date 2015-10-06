@@ -20,10 +20,14 @@ Class ForgetResetAction extends \Local\BaseAction {
 
         $passwd = \Local\Utils::passwd( $this->params['passwd'], $salt );
 
-        $res = $accountModel->updatePasswd( [
-            'email' => $this->params['email'],
-            'passwd' => $passwd,
-            'salt' => $salt
+        $res = $accountModel->update( [
+            'set' => [
+                'passwd' => $passwd,
+                'salt' => $salt
+            ],
+            'where' => [
+                [ 'email', $this->params['email'] ]
+            ]
         ] );
 
         if( !$res ) {

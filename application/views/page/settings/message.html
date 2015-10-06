@@ -5,7 +5,7 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/settings/css/message.css?_t=1442300209679" />
+        <link rel="stylesheet" href="/static/settings/css/message.css?_t=1443946302279" />
 
     </head>
     <body>
@@ -13,7 +13,9 @@
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
             <div class="boxes body">
                 <div class="inner">
-                    <div class="aside">.</div>
+                    <div class="aside">
+                        <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
+                    </div>
                     <div class="main">
                         <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
                         <div>
@@ -148,7 +150,7 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'SaveSettings', '/static/settings/packages/SaveSettings/bootstrap.js?_t=1442300209617', {} );
+            idizcuz.mount( 'SaveSettings', '/static/settings/packages/SaveSettings/bootstrap.js?_t=1443946302226', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

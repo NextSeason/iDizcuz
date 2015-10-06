@@ -6,8 +6,8 @@
             $nav = 'activities';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/common/css/post.css?_t=1443142221120" />
-        <link rel="stylesheet" href="/static/home/css/activities.css?_t=1443142221120" />
+        <link rel="stylesheet" href="/static/common/css/post.css?_t=1443946534044" />
+        <link rel="stylesheet" href="/static/home/css/activities.css?_t=1443946534044" />
     </head>
     <body>
         <div id="idizcuz">
@@ -17,13 +17,7 @@
                 <div class="inner">
                     <div class="aside">
                         <?php if( $account ) { ?>
-                            <ul class="account-aside-nav clearfix">
-                                <li><a href=""><i class="fa fa-newspaper-o"></i> 关注动态</a></li>
-                                <li><a href=""><i class="fa fa-file-text-o"></i> 我的论述</a></li>
-                                <li><a href=""><i class="fa fa-bookmark-o"></i> 我的收藏</a></li>
-                                <li><a href=""><i class="fa fa-eye"></i> 我关注的</a></li>
-                                <li><a href=""><i class="fa fa-users"></i> 我的粉丝</a></li>
-                            </ul>
+                            <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
                         <?php } else { ?>
                             <?php include TPL_PATH . '/common/signin.inc.html'; ?>
                         <?php } ?>
@@ -81,21 +75,21 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1443142221120"></script>
-        <script src="/static/common/js/qrcode.js?_t=1443142221120"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1443946534044"></script>
+        <script src="/static/common/js/qrcode.js?_t=1443946534044"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js?_t=1443142221075' );
+            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js?_t=1443946534005' );
 
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1443142221075', {
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1443946534005', {
                 signin : +'<?php echo $account ? 1 : 0; ?>',
                 fullFunction : false
             } );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1443142221075', {
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1443946534005', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1443142221075', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1443142221075', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1443946534005', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1443946534005', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

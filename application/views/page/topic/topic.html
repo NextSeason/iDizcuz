@@ -5,9 +5,9 @@
             $title = $topic[ 'title' ] . ' - 每日论点 • iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1443780055855" />
-        <link rel="stylesheet" href="/static/common/css/post.css?_t=1443780055855" />
-        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1443780055855" />
+        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1443980797013" />
+        <link rel="stylesheet" href="/static/common/css/post.css?_t=1443980797013" />
+        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1443980797013" />
     </head>
     <body>
         <div id="idizcuz" 
@@ -357,7 +357,6 @@
                     </div>
                 </form>
             </div>
-            <a href="javascript:void(0)" id="copy-btn" class="btns">复制链接</a>
             <div id="remove-post-dialog" class="dialogs" >
                 <div class="inner">
                     <input type="hidden" class="post-id" />
@@ -470,10 +469,10 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/umeditor.config.js?_t=1443780055855"></script>
-        <script src="/static/common/js/umeditor.js?_t=1443780055855"></script>
-        <script src="/static/common/js/qrcode.js?_t=1443780055855"></script>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1443780055855"></script>
+        <script src="/static/common/js/umeditor.config.js?_t=1443980797013"></script>
+        <script src="/static/common/js/umeditor.js?_t=1443980797013"></script>
+        <script src="/static/common/js/qrcode.js?_t=1443980797013"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1443980797013"></script>
         <script>
             var idizcuz = new J();
 
@@ -487,26 +486,26 @@
                 $( '#editor-dialog' ).hide();
             };
 
-            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1443780055825', { 'topic' : {
+            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1443980796980', { 'topic' : {
                 id : "<?php echo $topic['id']; ?>",
                 type : "<?php echo $topic['data']['type']; ?>" 
             } } );
-            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1443780055825', {
+            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1443980796980', {
                 topic : {
                     id : "<?php echo $topic['id']; ?>",
                     title : "<?php echo $topic['title']; ?>"
                 }
             } );
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1443780055825', {
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1443980796980', {
                 signin : +'<?php echo $account ? 1 : 0; ?>',
                 fullFunction : true
             } );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1443780055825', {
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1443980796980', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1443780055825', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1443780055825', {} );
-            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1443780055825', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1443980796980', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1443980796980', {} );
+            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1443980796980', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

@@ -38,6 +38,7 @@ Class GetCommentsAction extends \Local\BaseAction {
         $accountModel = $this->accountModel ? $this->accountModel : new AccountModel();
 
         foreach( $this->data[ 'comments' ] as &$comment ) {
+            $comment['content'] = nl2br( $comment['content'] );
             if( $comment[ 'reply_account_id' ] == 0 ) continue;
             $comment[ 'reply_account' ] = $accountModel->get( $comment[ 'reply_account_id' ], [ 'id', 'uname' ] );
         }
@@ -104,7 +105,7 @@ Class GetCommentsAction extends \Local\BaseAction {
 
         $this->params = [
             'post_id' => $post_id,
-            'cursor' => $cursor,
+            'cursor' => $cursor == 0 ? 0 : \Local\Utils::decodeId( $cursor ),
             'rn' => $rn
         ];
 

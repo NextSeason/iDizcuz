@@ -19,6 +19,11 @@ Class CommentAction extends \Local\BaseAction {
 
         $this->addComment()->sendMessage();
 
+        $this->record( [
+            'type' => 3,
+            'relation_id' => $this->data['comment_id']
+        ] );
+
         $this->data['account'] = [
             'id' => $this->account[ 'id' ],
             'uname' => $this->account[ 'uname' ]
@@ -124,6 +129,12 @@ Class CommentAction extends \Local\BaseAction {
             $this->error( 'PARAMS_ERR' );
         }
 
+        $content = \Local\EditorPurifier::purifyComment( $content );
+
+        if( strlen( $content ) == 0 ) {
+            $this->error( 'PARAMS_ERR' );
+        }
+
         if( mb_strlen( $content ) > 400 ) {
             $this->error( 'PARAMS_ERR' );
         }
@@ -135,6 +146,8 @@ Class CommentAction extends \Local\BaseAction {
             'content' => $content,
             'reply_comment_id' => $reply_comment_id
         ];
+
+        $this->data['comment'] = nl2br( $content );
         return $this;
     }
 }

@@ -43,10 +43,10 @@ Class GetFansAction extends \Local\BaseAction {
 
         foreach( $follows as $follow ) {
             $account_id = $follow['fans_id'];
-            $account = $accountModel->get( $account_id, ['id', 'uname', 'industry', 'employment', 'position' ] );
+            $account = $accountModel->get( $account_id, ['id', 'uname', 'industry', 'employment', 'position', 'img', 'sex' ] );
 
             if( $account['industry'] != 0 ) {
-                $account['industry'] = $industries[ $account[ 'industry'] ];
+                $account['industry'] = trim( $industries[ $account[ 'industry'] ], '-' );
             }
 
             $account['data'] = $accountDataModel->get( $account_id, [

@@ -5,14 +5,16 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/settings/css/info.css?_t=1442300209677" />
+        <link rel="stylesheet" type="text/css" href="/static/settings/css/info.css?_t=1443946302278" />
     </head>
     <body>
         <div id="idizcuz">
             <?php include TPL_PATH . '/common/top.inc.html'; ?>
             <div class="boxes body">
                 <div class="inner">
-                    <div class="aside"></div>
+                    <div class="aside">
+                        <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
+                    </div>
                     <div class="main">
                         <?php include TPL_PATH . '/settings/nav.inc.html'; ?>
                         <form class="info-form" id="uname-form">
@@ -30,7 +32,14 @@
                                             <input type="hidden" class="old-uname" value="<?php echo htmlspecialchars( $account['uname'] ); ?>" />
                                             <input type="text" class="uname" value="<?php echo htmlspecialchars( $account['uname'] ); ?>" />
                                             <a href="###" class="btns save-uname">保存修改</a>
+                                            <span class="rename-submit-tip"></span>
                                             <p class="rename-tip">* 为保证本站秩序，每个用户每月仅可修改用户名一次</p>
+                                        </div>
+                                        <div class="rename-submited">
+                                            <p class="uname"><?php echo htmlspecialchars( $account['uname'] ); ?></p>
+                                             <p class="rename-tip">
+                                                * 您的改名申请已经提交，我们会尽快为您审核
+                                            </p>
                                         </div>
                                     <?php } else { ?>
                                         <p class="uname"><?php echo htmlspecialchars( $account['uname'] ); ?></p>
@@ -157,10 +166,10 @@
         </div>
         <script>
             var idizcuz = new J(); 
-            idizcuz.mount( 'ModifyUname', '/static/settings/packages/ModifyUname/bootstrap.js?_t=1442300209616', {} );
-            idizcuz.mount( 'Birth', '/static/settings/packages/Birth/bootstrap.js?_t=1442300209616', {} );
-            idizcuz.mount( 'Upload', '/static/settings/packages/Upload/bootstrap.js?_t=1442300209616', {} );
-            idizcuz.mount( 'UserInfo', '/static/settings/packages/UserInfo/bootstrap.js?_t=1442300209616', {} );
+            idizcuz.mount( 'ModifyUname', '/static/settings/packages/ModifyUname/bootstrap.js?_t=1443946302224', {} );
+            idizcuz.mount( 'Birth', '/static/settings/packages/Birth/bootstrap.js?_t=1443946302225', {} );
+            idizcuz.mount( 'Upload', '/static/settings/packages/Upload/bootstrap.js?_t=1443946302225', {} );
+            idizcuz.mount( 'UserInfo', '/static/settings/packages/UserInfo/bootstrap.js?_t=1443946302225', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

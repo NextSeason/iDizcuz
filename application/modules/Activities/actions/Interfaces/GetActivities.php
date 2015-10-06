@@ -5,7 +5,6 @@ Class GetActivitiesAction extends \Local\BaseAction {
     protected $type = 'interface';
 
     public function __execute() {
-        print_r( \Message\Send::viewTo() );
         $this->paramsProcessing()->getActivities()->getExtra();
         return $this->data;
     }
@@ -81,9 +80,7 @@ Class GetActivitiesAction extends \Local\BaseAction {
         $accountModel = new AccountModel();
         $account = $accountModel->get( $id, ['id','uname', 'desc', 'img', 'industry', 'employment', 'position' ] );
 
-        if( !$account ) {
-            return null;
-        }
+        if( !$account ) return null;
 
         $industry = $account['industry'];
 
@@ -92,13 +89,7 @@ Class GetActivitiesAction extends \Local\BaseAction {
          */
         if( $industry != 0 ) {
             $industries = \Local\Utils::loadConf( 'industries', 'list' );
-
-            if( !isset( $industries[ $industry ] ) ) {
-                // if the industry cannot be found in industry list, set the value to 0
-                $account['industry'] = 0;
-            } else {
-                $account[ 'industry' ] = $industries[ $industry ];
-            }
+            $account[ 'industry' ] = trim( $industries[ $industry ], '-' );
         }
 
         $accountDataModel = new AccountDataModel();
@@ -218,7 +209,7 @@ Class GetActivitiesAction extends \Local\BaseAction {
         if( $rn < 1 ) $rn = 20;
 
         $this->params = [
-            'cursor' => $cursor,
+            'cursor' => $cursor == 0 ? 0 : \Local\Utils::decodeId( $cursor ),
             'rn' => $rn,
             'account_id' => $account_id,
             'follower_id' => $follower_id

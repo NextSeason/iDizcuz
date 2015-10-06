@@ -5,7 +5,7 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/message/css/messages.css?_t=1441209319937" />
+        <link rel="stylesheet" type="text/css" href="/static/message/css/messages.css?_t=1443953090634" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -13,6 +13,7 @@
             <div class="boxes body">
                 <div class="inner clearfix">
                     <div class="sidebar aside">
+                        <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
                     </div>
                     <div class="content-box main">
                         <ul class="message-list"></ul>
@@ -49,8 +50,8 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js?_t=1441209319908', {} );
-            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1441209319908', {} );
+            idizcuz.mount( 'message', '/static/message/packages/Message/bootstrap.js?_t=1443953090608', {} );
+            idizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1443953090608', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

@@ -71,7 +71,7 @@ Class GetMessagesAction extends \Local\BaseAction {
         $type = intval( $this->__getQuery( 'type' ) );
 
         $this->params = [
-            'cursor' => $cursor,
+            'cursor' => $cursor == 0 ? 0 : \Local\Utils::decodeId( $cursor ),
             'rn' => $rn,
             'type' => $type,
         ];

@@ -1,11 +1,11 @@
 <div id="comment-<%=data[i].id %>" class="comment-item" data-comment-id="<%=data[i].id %>">
     <a href="/user/activities/<%=data[i].account_id %>" class="u-link" target="_blank"><i class="fa fa-user"></i> <%-data[i].account.uname %></a>
+    <% if( data[i].reply_account ) { %>
+        [ <span>回复 </span>     
+        <a href="/user/activities/<%=data[i].reply_account.id %>" target="_blank"%><%-data[i].reply_account.uname %></a> ]
+    <% } %>
     <p class="comment-text">
-        <% if( data[i].reply_account ) { %>
-            [ <span>回复 </span>     
-            <a href="/user/activities/<%=data[i].reply_account.id %>" target="_blank"%><%-data[i].reply_account.uname %></a> ]
-        <% } %>
-        <%-data[i].content %>
+        <%=data[i].content %>
     </p>
     <div class="op-line">
         <span><%=data[i].ctime %></span>
@@ -18,7 +18,7 @@
     <form class="comment-form reply-form clearfix" data-comment-id="<%=data[i].id %>" data-account-id="<%-data[i].account.id %>">
         <input type="submit" class="btns submit aside" value="发布" />
         <div class="main">
-            <input type="text" class="comment" placeholder="输入短评内容" />
+            <div contentEditable="true"type="text" class="comment" placeholder="输入短评内容"></div>
         </div>
     </form>
 </div>
