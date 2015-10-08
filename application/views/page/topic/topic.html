@@ -5,9 +5,9 @@
             $title = $topic[ 'title' ] . ' - 每日论点 • iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1444156401125" />
-        <link rel="stylesheet" href="/static/common/css/post.css?_t=1444156401125" />
-        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1444156401125" />
+        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1444294892907" />
+        <link rel="stylesheet" href="/static/common/css/post.css?_t=1444294892907" />
+        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1444294892907" />
     </head>
     <body>
         <div id="idizcuz" 
@@ -20,7 +20,7 @@
                     <div class="sidebar aside">
                         <?php if( $account ) { ?>
                             <?php if( isset( $topic ) ) { ?>
-                                <a href="###" class="btns large show-editor">发表我的论述</a>
+                                <a href="###" class="btns large fullsize show-editor need-fixed">发布我的论述</a>
                             <?php } ?>
                             <?php include TPL_PATH . '/common/userpages.inc.html'; ?>
                         <?php } else { ?>
@@ -62,7 +62,7 @@
                                                 <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><?php echo $post['data']['disagree']; ?></b>)</a>
                                             </div>
                                             <div class="title l">
-                                                <h2><?php echo htmlspecialchars( $post['title'] ); ?></h2>
+                                                <h2><a href="/post/<?php echo $post['id']; ?>"><?php echo htmlspecialchars( $post['title'] ); ?></a></h2>
                                                 <a href="/user/activities/<?php echo $post['account_id']; ?>" class="uname" target="_blank">
                                                     作者： <?php echo htmlspecialchars( $post['account']['uname'] ); ?>
                                                 </a>
@@ -142,8 +142,8 @@
                                             </div>
                                         <?php } ?>
                                         <div class="bottom-line">
-                                            <a href="#editor" class="reply-to r">针对本条论述发表观点</a>
-                                            <span class="ctime">发表于：<?php echo substr( $post['ctime'], 0, -9 ); ?></span>
+                                            <a href="#editor" class="reply-to r">针对本条论述发布观点</a>
+                                            <span class="ctime">发布于：<?php echo substr( $post['ctime'], 0, -9 ); ?></span>
                                             <?php if( $post['ctime'] != $post['mtime'] ) { ?>
                                                 <span class="mtime">最后修改于：<?php echo substr( $post['mtime'], 0, -9 ); ?></span>
                                             <?php } ?>
@@ -162,7 +162,7 @@
                                             <form class="comment-form clearfix">
                                                 <input type="submit" class="btns submit aside" value="发布" />
                                                 <div class="main">
-                                                    <input type="text" class="comment" placeholder="输入短评内容" />
+                                                    <div contentEditable="true" class="comment" placeholder="输入短评内容"></div>
                                                 </div>
                                             </form>
                                         </div>
@@ -301,7 +301,7 @@
                                     </div>
                                     <div id="textbox" class="textbox">
                                         <script type="text/plain" id="editor" class="editor">
-                                            <p>在此输入您想发表的内容</p>
+                                            <p>在此输入您想发布的内容</p>
                                         </script>
                                     </div>
                                     <div class="line tip-line clearfix">
@@ -327,7 +327,7 @@
                                 <?php } else { ?>
                                     <div id="textbox" class="textbox">
                                         <div class="not-login-editor">
-                                            <p>请登录并发表您的观点
+                                            <p>请登录并发布您的观点
                                                 <a href="/signin">登录</a>
                                                 /
                                                 <a href="/signup">注册</a>
@@ -357,24 +357,30 @@
                     </div>
                 </form>
             </div>
-            <div id="remove-post-dialog" class="dialogs" >
-                <div class="inner">
-                    <input type="hidden" class="post-id" />
-                    <div class="text">
-                        <p>您确定要删除这条论述么？</p>
-                        <p class="fail"><i class="brand fa fa-warning"></i> 操作失败，请稍候再试</p>
-                        <p class="tip"><i class="brand fa fa-lightbulb-o"></i> 删除该论述将会扣掉您 <b class="brand">100积分</b></p>
-                    </div>
-                    <div class="ft">
-                        <a href="###" class="btns confirm">确定</a>
-                        <a href="###" class="btns dark cancel">取消</a>
-                    </div>
-                </div>
-            </div>
             <div id="editor-dialog" class="dialogs">
                 <div class="inner">
                     <a href="###" class="minus"><i class="fa fa-times"></i></a>
                     <div id="editor-float-box"></div>
+                </div>
+            </div>
+            <div class="side-nav-bar">
+                <div class="write-post item">
+                    <a href="###" class="btns"><i class="fa fa-pencil-square-o"></i></a>
+                    <div class="bubbles left small">
+                        <div class="triangle"><div class="triangle"></div></div>
+                        <div class="inner">
+                            <p>发布论述</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-top item">
+                    <a href="###" class="btns"><i class="fa fa-angle-up"></i></a>
+                    <div class="bubbles left small">
+                        <div class="triangle"><div class="triangle"></div></div>
+                        <div class="inner">
+                            <p>回到顶部</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -456,8 +462,8 @@
                     </div>
                 <% } %>
                 <div class="bottom-line">
-                    <a href="###" class="reply-to r">针对本条论述发表观点</a>
-                    <span class="ctime">发表于：<%=data.ctime %></span>
+                    <a href="###" class="reply-to r">针对本条论述发布观点</a>
+                    <span class="ctime">发布于：<%=data.ctime %></span>
                     <a href="###" class="remove-post" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
                 </div>
             </li>
@@ -469,10 +475,10 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/umeditor.config.js?_t=1444156401125"></script>
-        <script src="/static/common/js/umeditor.js?_t=1444156401125"></script>
-        <script src="/static/common/js/qrcode.js?_t=1444156401125"></script>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1444156401125"></script>
+        <script src="/static/common/js/umeditor.config.js?_t=1444294892907"></script>
+        <script src="/static/common/js/umeditor.js?_t=1444294892907"></script>
+        <script src="/static/common/js/qrcode.js?_t=1444294892907"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1444294892907"></script>
         <script>
             var idizcuz = new J();
 
@@ -486,26 +492,49 @@
                 $( '#editor-dialog' ).hide();
             };
 
-            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1444156401095', { 'topic' : {
+            idizcuz.mount( 'topnavfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444294892875', {
+                el : $( '.boxes.top-nav' ),
+                onfixed : function() {
+                    this.el.css( 'width', '100%' );
+                    this.el.find( '.logo' ).show();
+                },
+                onunfixed : function() {
+                    this.el.find( '.logo' ).hide();
+                }
+            } );
+
+            idizcuz.mount( 'showeditbtnfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444294892875', {
+                el : $( '.show-editor.need-fixed' ),
+                dis : 5,
+                onfixed : function() {
+                    this.el.addClass( 'dark' );
+                },
+                onunfixed : function() {
+                    this.el.removeClass( 'dark' );
+                }
+            } );
+
+            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1444294892875', { 'topic' : {
                 id : "<?php echo $topic['id']; ?>",
                 type : "<?php echo $topic['data']['type']; ?>" 
             } } );
-            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1444156401095', {
+            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1444294892875', {
                 topic : {
                     id : "<?php echo $topic['id']; ?>",
                     title : "<?php echo $topic['title']; ?>"
                 }
             } );
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444156401095', {
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444294892875', {
                 signin : +'<?php echo $account ? 1 : 0; ?>',
                 fullFunction : true
             } );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444156401095', {
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444294892875', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444156401095', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444156401095', {} );
-            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1444156401095', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444294892875', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444294892875', {} );
+            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1444294892875', {} );
+            idizcuz.mount( 'sidenavbar', '/static/topic/packages/Sidenavbar/bootstrap.js?_t=1444294892875', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

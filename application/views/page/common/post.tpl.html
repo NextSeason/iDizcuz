@@ -108,7 +108,9 @@
         </div>
     <% } %>
     <div class="bottom-line">
-        <a href="#editor" class="reply-to r">针对本条论述发表观点</a>
+        <a href="#editor" class="reply-to r">
+            <i class="fa fa-pencil-square-o"></i> 针对本条论述发表观点
+        </a>
         <span class="ctime">发表于：<%=post.ctime %></span>
         <% if( post.mtime != post.ctime ) { %>
             <span class="mtime">修改于：<%=post.mtime %></span>
@@ -117,7 +119,27 @@
             <%=post.data.comments_cnt %>条短评
         </a>
         <% if( post.own ) { %>
-            <a href="###" class="remove-post" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
+            <div class="remove-box">
+                <a href="###" class="remove-post"><i class="fa fa-trash"></i> 删除</a>
+                <div class="bubbles right remove-tip">
+                    <div class="triangle"><div class="triangle"></div></div>
+                    <div class="inner">
+                        <p class="title">
+                            <span>确认删除次论述吗？</span>
+                            <a href="###" class="btns small confirm-remove-post">确认</a>
+                            <a href="###" class="btns dark small cancel-remove-post">取消</a>
+                        </p>
+                        <ul>
+                            <li><p>* 论述删除之后将无法找回</p></li>
+                            <li><p>* 会同时扣除您通过此论述获得的相关数据</p></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bubbles small right remove-submit-tip">
+                    <div class="triangle"><div class="triangle"></div></div>
+                    <div class="inner"><p class="text">操作成功</p></div>
+                </div>
+            </div>
         <% } %>
     </div>
     <div class="comment-box">

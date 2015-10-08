@@ -25,12 +25,12 @@ Class RemovePostAction extends \Local\BaseAction {
         if( $this->params[ 'trash' ] == 1 ) { 
             $res = $transactionModel->trashPost(
                 $this->account[ 'id' ],
-                $this->params[ 'id' ]
+                $this->params[ 'post_id' ]
             );
         } else {
             $res = $transactionModel->removePost(
                 $this->account[ 'id' ],
-                $this->params[ 'id' ]
+                $this->params[ 'post_id' ]
             );
         }
 
@@ -42,9 +42,9 @@ Class RemovePostAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $id = $this->__getPost( 'id' );
+        $post_id = $this->__getPost( 'post_id' );
 
-        if( is_null( $id ) ) {
+        if( is_null( $post_id ) ) {
             $this->error( 'PARAMS_ERR' );
         }
 
@@ -55,7 +55,7 @@ Class RemovePostAction extends \Local\BaseAction {
         }
 
         $this->params = [ 
-            'id' => $id,
+            'post_id' => $post_id,
             'trash' => $trash
         ];
 

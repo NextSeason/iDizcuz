@@ -5,7 +5,7 @@
             $title = '';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1444144491609" />
+        <link rel="stylesheet" type="text/css" href="/static/user/css/home.css?_t=1444200736256" />
     </head>
     <body>
         <div id="idizcuz" data-account-id="<?php echo $user['id']; ?>">
@@ -57,11 +57,11 @@
         <?php include TPL_PATH . '/common/pagination.inc.html'; ?>
         <script>
             var iDizcuz = new J();
-            iDizcuz.mount( 'accounts', '/static/user/packages/Accounts/bootstrap.js?_t=1444144491570', {
+            iDizcuz.mount( 'accounts', '/static/user/packages/Accounts/bootstrap.js?_t=1444200736215', {
                 page : '<?php echo $page; ?>',
                 userId : '<?php echo $user['id']; ?>'
             } );
-            iDizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1444144491570', {
+            iDizcuz.mount( 'follow', '/static/common/packages/Follow/bootstrap.js?_t=1444200736215', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
         </script>

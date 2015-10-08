@@ -1,0 +1,16 @@
+<div class="side-nav-bar">
+    <a href="###" class="btns">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+<script>
+    ( function() {
+        $( window ).on( 'scroll', function( e ) {
+            if( $( window ).scrollTop() > $( window ).height() ) {
+                $( '.side-nav-bar' ).fadeIn( 'slow' );
+            } else {
+                $( '.side-nav-bar' ).fadeOut( 'slow' );
+            }
+        } );
+    } )();
+</script>
