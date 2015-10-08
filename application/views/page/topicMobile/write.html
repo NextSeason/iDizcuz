@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topicMobile/css/write.css?_t=1443013737510" />
+        <link rel="stylesheet" href="/static/topicMobile/css/write.css?_t=1444332431973" />
     </head>
     <body>
         <div id="idizcuz">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="boxes topic">
                     <a href="/topic/<?php echo $topic['id']; ?>" class="title">
-                        题：<?php echo $topic['title']; ?>
+                        <b class="gruy-light">话题：</b><?php echo $topic['title']; ?>
                     </a>
                 </div>
                 <?php if( $topic['data']['type'] == 1 ) { ?>
@@ -45,7 +45,7 @@
                 <?php if( isset( $post ) && $post != 0 ) { ?>
                     <div class="boxes to">
                         <a href="/post/<?php $post['id']; ?>" class="title">
-                            针对论述：<?php echo htmlspecialchars( $post['title'] ); ?>
+                            <b class="gruy-light">针对论述：</b><?php echo htmlspecialchars( $post['title'] ); ?>
                         </a>
                         <a href="###" class="remove">删除</a>
                     </div>
@@ -81,7 +81,7 @@
                 <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
                 <script>
                     var idizcuz = new J();
-                    idizcuz.mount( 'write', '/static/topicMobile/packages/Write/bootstrap.js?_t=1443013737480', {
+                    idizcuz.mount( 'write', '/static/topicMobile/packages/Write/bootstrap.js?_t=1444332431941', {
                         topicId : +'<?php echo $topic['id']; ?>',
                         needPoint : +'<?php echo $topic['data']['type'] == 1 ? 1 : 0; ?>'
                     } );

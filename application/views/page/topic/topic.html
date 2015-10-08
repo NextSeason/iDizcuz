@@ -5,9 +5,9 @@
             $title = $topic[ 'title' ] . ' - 每日论点 • iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1444294892907" />
-        <link rel="stylesheet" href="/static/common/css/post.css?_t=1444294892907" />
-        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1444294892907" />
+        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1444300743489" />
+        <link rel="stylesheet" href="/static/common/css/post.css?_t=1444300743489" />
+        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1444300743489" />
     </head>
     <body>
         <div id="idizcuz" 
@@ -398,76 +398,6 @@
                 <% } %>
             <% } %>
         </textarea>
-        <textarea class="templates" id="new-post-tpl">
-            <li class="posts new-post" id="post-<%=data.id %>" data-post-id="<%=data.id %>">
-                <div class="data-line clearfix">
-                    <% if( data.point_id != 0 ) {  %>
-                        <span href="###" class="flags"><i class="fa fa-flag point-flag-<%-data.point_id %>"></i></span>
-                    <% } %>
-                    <div class="operates r">
-                        <a href="###" class="op-btn" data-action="share">分享</a>
-                    </div>
-                    <div class="vote l">
-                        <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b>0</b>)</a>
-                        <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b>0</b>)</a>
-                    </div>
-                    <div class="title l">
-                        <h2><a href="/post/<%=data.id %>" target="_blank"><%-data.title %></a></h2>
-                        <a href="/user/activities/<?php echo $account['id']; ?>" class="uname" target="_blank">作者： <?php echo $account[ 'uname' ]; ?><?php echo $account[ 'desc' ]; ?></a>
-                    </div>
-                </div>
-                <div class="bubbles op-bubbles">
-                    <a href="###" class="close"><i class="fa fa-times"></i></a>
-                    <div class="triangle"><div class="triangle"></div></div>
-                    <div class="inner">
-                        <div class="share box clearfix">
-                            <div class="qrcode l"></div>
-                            <div class="share-part l">
-                                <div class="share-btn-boxes share-box">
-                                    <span>将自己的论述分享给朋友：</span>
-                                    <a class="share-btns" data-dest="qzone"><i class="fa fa-qq"></i></a>
-                                    <a class="share-btns" data-dest="weibo"><i class="fa fa-weibo"></i></a>
-                                    <a class="share-btns" data-dest="renren"><i class="fa fa-renren"></i></a>
-                                    <a class="share-btns" data-dest="tx_weibo"><i class="fa fa-tencent-weibo"></i></a>
-                                    <a class="share-btns" data-dest="facebook"><i class="fa fa-facebook-official"></i></a>
-                                    <a class="share-btns" data-dest="twitter"><i class="fa fa-twitter"></i></a>
-                                </div> 
-                                <div class="share-link">
-                                    <div class="line clearfix">
-                                        <span class="l">分享此条论述：</span>
-                                        <a href="http://www.idizcuz.com/post/<%=data.id %>?fr=share" data-title="<%-data.title %>" target="_blank" class="share-post-link link l">
-                                            http://www.idizcuz.com/post/<%=data.id %>?fr=share
-                                        </a>
-                                        <a href="###" class="btns l copy-link">复制链接</a>
-                                    </div>
-                                    <div class="line clearfix">
-                                        <span class="l">分享当前话题：</span>
-                                        <a href="http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share" data-title="<?php echo $topic['title']; ?>" target="_blank" class="share-topic-link link l">
-                                            http://www.idizcuz.com/topic/<?php echo $topic['id']; ?>?fr=share
-                                        </a>
-                                        <a href="###" class="btns l copy-link">复制链接</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="contents rich-text">
-                    <p><%=data.content %></p>
-                </div>
-                <% if( data.to != 0 ) { %>
-                    <div class="to-area">
-                        <span><i class="fa fa-hand-o-right"></i> 所针对论述：</span>
-                        <a href="/post/<%=data.to.id %>" target="_blank"><%=data.to.title %></a>
-                    </div>
-                <% } %>
-                <div class="bottom-line">
-                    <a href="###" class="reply-to r">针对本条论述发布观点</a>
-                    <span class="ctime">发布于：<%=data.ctime %></span>
-                    <a href="###" class="remove-post" title="删除后论述可以在个人中心找到，可在个人中心恢复发布或彻底删除"><i class="fa fa-trash"></i> 删除</a>
-                </div>
-            </li>
-        </textarea>
         <textarea class="templates" id="comment-list-tpl">
             <% for( var i = 0, l = data.length; i < l; i += 1 ) { %>
                 <li>
@@ -475,10 +405,10 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/umeditor.config.js?_t=1444294892907"></script>
-        <script src="/static/common/js/umeditor.js?_t=1444294892907"></script>
-        <script src="/static/common/js/qrcode.js?_t=1444294892907"></script>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1444294892907"></script>
+        <script src="/static/common/js/umeditor.config.js?_t=1444300743489"></script>
+        <script src="/static/common/js/umeditor.js?_t=1444300743489"></script>
+        <script src="/static/common/js/qrcode.js?_t=1444300743489"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1444300743489"></script>
         <script>
             var idizcuz = new J();
 
@@ -492,7 +422,7 @@
                 $( '#editor-dialog' ).hide();
             };
 
-            idizcuz.mount( 'topnavfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444294892875', {
+            idizcuz.mount( 'topnavfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444300743449', {
                 el : $( '.boxes.top-nav' ),
                 onfixed : function() {
                     this.el.css( 'width', '100%' );
@@ -503,7 +433,7 @@
                 }
             } );
 
-            idizcuz.mount( 'showeditbtnfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444294892875', {
+            idizcuz.mount( 'showeditbtnfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444300743449', {
                 el : $( '.show-editor.need-fixed' ),
                 dis : 5,
                 onfixed : function() {
@@ -514,27 +444,34 @@
                 }
             } );
 
-            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1444294892875', { 'topic' : {
-                id : "<?php echo $topic['id']; ?>",
-                type : "<?php echo $topic['data']['type']; ?>" 
-            } } );
-            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1444294892875', {
+            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1444300743449', { 
+                'topic' : {
+                    id : "<?php echo $topic['id']; ?>",
+                    type : "<?php echo $topic['data']['type']; ?>",
+                    title : '<?php echo $topic['title']; ?>'
+                },
+                account : {
+                    id : '<?php echo $account ? $account['id'] : 0; ?>',
+                    uname : '<?php echo $account ? $account['uname'] : 0; ?>'
+                }
+            } );
+            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1444300743449', {
                 topic : {
                     id : "<?php echo $topic['id']; ?>",
                     title : "<?php echo $topic['title']; ?>"
                 }
             } );
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444294892875', {
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444300743449', {
                 signin : +'<?php echo $account ? 1 : 0; ?>',
                 fullFunction : true
             } );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444294892875', {
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444300743449', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444294892875', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444294892875', {} );
-            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1444294892875', {} );
-            idizcuz.mount( 'sidenavbar', '/static/topic/packages/Sidenavbar/bootstrap.js?_t=1444294892875', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444300743449', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444300743449', {} );
+            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1444300743449', {} );
+            idizcuz.mount( 'sidenavbar', '/static/topic/packages/Sidenavbar/bootstrap.js?_t=1444300743449', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

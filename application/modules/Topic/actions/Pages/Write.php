@@ -35,9 +35,7 @@ Class WriteAction extends \Local\BaseAction {
      * get data of post in view of
      */
     private function getPost() {
-        if( is_null( $this->params['post'] ) ) {
-            return $this;
-        }
+        if( is_null( $this->params['post'] ) ) return $this;
 
         $postModel = new PostModel();
         $post = $postModel->get( $this->params[ 'post' ], [ 'id', 'title', 'topic_id' ] );
@@ -82,13 +80,13 @@ Class WriteAction extends \Local\BaseAction {
             ]
         ] );
 
-        if( !$topic_data || !count( $topic_data ) ) return false;
+        if( !$topic_data || !count( $topic_data ) ) $this->exception( $this->data );
 
         $topicModel = new TopicModel();
 
         $topic = $topicModel->get( $id, [ 'id', 'title', 'points' ] );
 
-        if( !$topic ) return false;
+        if( !$topic ) return $this;
 
         $topic['data'] = $topic_data[0];
 
@@ -98,9 +96,9 @@ Class WriteAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $topic = $this->__getQuery( 'topic' );
+        $topic = $this->__getQuery( 'topic_id' );
 
-        $post = $this->__getQuery( 'post' );
+        $post = $this->__getQuery( 'post_id' );
 
         if( is_null( $topic ) && is_null( $post ) ) {
             $this->redirect( '/' );

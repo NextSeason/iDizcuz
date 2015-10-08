@@ -19,9 +19,11 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
     public $__queries = [];
     public $__params = [];
 
+    private $output_data = [];
+
     public function execute() {
 
-        set_exception_handler( [ $this, 'exception_handler' ] );
+        set_exception_handler( [ $this, 'exception' ] );
 
         $this->session = \Yaf\Session::getInstance();
         $this->request = $this->getRequest();
@@ -45,6 +47,10 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
             $data = $this->__execute();
         }
 
+        $this->output( $data );
+    }
+
+    private function output( $data ) {
         if( $this->type == 'interface' ) {
             $this->controller->success( Utils::traverseEncodeId( $data ) );
         } else {
@@ -207,8 +213,9 @@ Abstract Class BaseAction extends \Yaf\Action_Abstract {
         return $this;
     }
 
-    public function exception_handler( $exception ) {
-        
+    public function exception( $data ) {
+        $this->output( $data );
+        exit;
     }
 
     abstract protected function __execute();

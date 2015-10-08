@@ -1,3 +1,4 @@
+<% post.data || ( post.data = {} ) %>
 <div class="posts" id="post-<%=post.id %>" data-post-id="<%=post.id %>" data-is-own="<%=post.own %>">
     <div class="data-line clearfix">
         <% if( post.point_id != 0 ) {  %>
@@ -20,11 +21,11 @@
             <% } %>
         </div>
         <div class="vote l">
-            <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree %></b>)</a>
-            <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree %></b>)</a>
+            <a href="###" class="op-btn btns small agree" data-action="agree" data-intent="1">支持(<b><%=post.data.agree || 0 %></b>)</a>
+            <a href="###" class="op-btn btns small disagree" data-action="agree" data-intent="0">反对(<b><%=post.data.disagree || 0 %></b>)</a>
         </div>
         <div class="title l">
-            <h2><a href="/post/<%=post.id %>" target="_blank"><%-post.title %></a></h2>
+            <h2><a href="/post/<%=post.id %>" target="_blank" title="<%-post.title %>"><%-post.title %></a></h2>
             <a href="/user/activities/<%=post.account.id %>" class="uname" target="_blank">作者： <%=post.account.uname %></a>
         </div>
     </div>
@@ -112,11 +113,8 @@
             <i class="fa fa-pencil-square-o"></i> 针对本条论述发表观点
         </a>
         <span class="ctime">发表于：<%=post.ctime %></span>
-        <% if( post.mtime != post.ctime ) { %>
-            <span class="mtime">修改于：<%=post.mtime %></span>
-        <% } %>
-            <a href="###" class="comments" data-cursor="0">
-            <%=post.data.comments_cnt %>条短评
+        <a href="###" class="comments" data-cursor="0">
+            <%=post.data.comments_cnt || 0 %>条短评
         </a>
         <% if( post.own ) { %>
             <div class="remove-box">

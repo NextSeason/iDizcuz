@@ -6,9 +6,14 @@ Class ErrorController extends BaseController{
 
         $data = [];
 
-        if( $this->session['account'] ) {
-            $data['account'] = $this->session['account'];
+        $data['account'] = $this->session['account'] ? $this->session['account'] : null;
+
+        $detect = new \Local\MobileDetect();
+
+        if( $detect->isMobile() && !$detect->isTablet() ) {
+            $this->display( '../errorMobile/error', $data );
+        } else {
+            $this->display( 'error', $data );
         }
-        $this->display( 'error', $data );
     }
 }

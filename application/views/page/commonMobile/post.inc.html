@@ -13,7 +13,7 @@
         <% if( post.own != 1 ) { %>
             <span class="op-btn btns <% if( post.mark != 1 ) { %>dark<% } %>" data-marked="<%-post.mark %>" data-action="mark" data-need-signin="1">收藏</span>
         <% } %>
-        <a href="/write?post=<%=post.id %>" class="op-btn btns dark" data-action="to">针对</a>
+        <a href="/write?post_id=<%=post.id %>" class="op-btn btns dark" data-action="to">针对</a>
     </div>
     <div class="main">
         <h2><a href="/post/<%=post.id %>"><%-post.title %></a></h2>
