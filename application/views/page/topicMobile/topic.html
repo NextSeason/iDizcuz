@@ -2,6 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/topicMobile/css/topic.css?_t=1444354224648" />
     </head>
     <body>
         <div id="idizcuz">
@@ -34,6 +35,7 @@
                             <?php echo $topic['desc']; ?>
                         </div>
                         <div class="bottom-line">
+                            <a href="/articles/<?php echo $topic['id']; ?>">[查看话题相关资料]</a>
                             <a href="###" class="show-more-info">[显示更多介绍]</a>
                         </div>
                     </div>
@@ -90,7 +92,7 @@
                 </div>
             </div>
             <div class="boxes">
-                <a href="/articles/<?php echo $topic['id']; ?>" class="full-width-link">查看话题相关资料</a>
+                <a href="/write?topic_id=<?php echo $topic['id']; ?>" class="full-width-link">说说我的看法</a>
             </div>
             <div class="boxes" style="margin-top:10px;padding:0 5px">
                 本话题共 
@@ -108,6 +110,11 @@
                 <ul class="post-list"></ul>
                 <div class="loading">正在加载数据...</div>
                 <div class="pagination"></div>
+            </div>
+            <div class="boxes bottom-fixed-bar">
+                <a href="http://www.idizcuz.com" class="logo l">每日论点 • iDizcuz</a>
+                <a href="/write?topic_id=<?php echo $topic['id']; ?>" class="btns dark small">发布论述</a>
+                <a href="###" class="btns dark small scroll-top">回到顶部</a>
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
@@ -135,14 +142,16 @@
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1444332431940', {
+            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1444354224614', {
                 topic : '<?php echo $topic['id']; ?>',
                 points : <?php echo $points ? json_encode( $points ) : 'null'; ?>
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444332431940', {
+
+            idizcuz.mount( 'bottomfixedbar', '/static/topicMobile/packages/BottomFixedBar/bootstrap.js?_t=1444354224614', {} );
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444354224614', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444332431940', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444354224614', {
                 signin : +'<?php echo $signin; ?>'
             } );
             ( function() {

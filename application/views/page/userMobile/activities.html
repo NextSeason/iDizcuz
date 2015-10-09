@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1439644144810" />
+        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1444333787387" />
     </head>
     <body>
         <div id="idizcuz">
@@ -83,18 +83,18 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'activities', '/static/userMobile/packages/Activities/bootstrap.js?_t=1439644144775', {
+            idizcuz.mount( 'activities', '/static/userMobile/packages/Activities/bootstrap.js?_t=1444333787351', {
                 accountId : '<?php echo $account['id']; ?>',
                 userId : '<?php echo $user['id']; ?>',
                 self : +'<?php echo $account['id'] == $user['id'] ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'postoperate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439644144775', {
+            idizcuz.mount( 'postoperate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444333787351', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439644144775', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444333787351', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'follow', '/static/commonMobile/packages/Follow/bootstrap.js?_t=1439644144775', {
+            idizcuz.mount( 'follow', '/static/commonMobile/packages/Follow/bootstrap.js?_t=1444333787351', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
         </script>

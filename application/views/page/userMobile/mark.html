@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1439644144812" />
+        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1444333787391" />
     </head>
     <body>
         <div id="idizcuz">
@@ -47,15 +47,15 @@
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/userMobile/packages/Posts/bootstrap.js?_t=1439644144778', {
+            idizcuz.mount( 'posts', '/static/userMobile/packages/Posts/bootstrap.js?_t=1444333787355', {
                 signin : +'<?php echo $signin; ?>',
                 userId : +'<?php echo $user['id']; ?>',
                 url : '/user/interface/markedposts'
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1439644144778', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444333787355', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1439644144778', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444333787355', {
                 signin : +'<?php echo $signin ?>'
             } );
         </script>
