@@ -18,11 +18,13 @@
         <% } %>
         <a href="###" class="reply">回复</a>
     </div>
-    <form class="comment-form reply-form" data-comment-id="<%=comment.id %>" data-account-id="<%-comment.account.id %>">
-        <textarea class="content" placeholder="输入短评内容">&lt;/textarea>
-        <div class="btns-line">
-            <a href="###" class="clear">清空</a>
-            <input type="submit" class="btns submit small" value="发布" />
-        </div>
-    </form>
+    <% if( J.Data.get( 'account.signin' ) ) { %>
+        <form class="comment-form reply-form" data-comment-id="<%=comment.id %>" data-account-id="<%-comment.account.id %>">
+            <textarea class="content" placeholder="输入短评内容">&lt;/textarea>
+            <div class="btns-line">
+                <a href="###" class="clear">清空</a>
+                <input type="submit" class="btns submit small" value="发布" />
+            </div>
+        </form>
+    <% } %>
 </li>

@@ -1,19 +1,41 @@
 <% var postUrl = '/post/' + post.id; %>
-<div class="posts clearfix" data-post-id="<%=post.id %>">
+<div class="posts clearfix" data-post-id="<%=post.id %>" data-is-own="<%=post.own %>">
     <div class="aside">
-        <span class="op-btn btns agree" data-action="vote" data-intent="1" data-need-signin="1">
-            <b><%=post.data.agree %></b>
-            <span>支持</span>
-        </span>
-        <span class="op-btn btns disagree" data-action="vote" data-intent="0" data-need-signin="1">
-            <b><%=post.data.disagree %></b>
-            <span>反对</span>
-        </span>
-        <span class="op-btn btns dark" data-action="share">分享</span>
+        <div class="op-item">
+            <span class="op-btn btns agree" data-action="vote" data-intent="1" data-need-signin="1">
+                <b><%=post.data.agree %></b>
+                <span>支持</span>
+            </span>
+            <div class="bubbles small left">
+                <div class="triangle"><div class="triangle"></div></div>
+                <div class="inner"><p class="txt"></p></div>
+            </div>
+        </div>
+        <div class="op-item">
+            <span class="op-btn btns disagree" data-action="vote" data-intent="0" data-need-signin="1">
+                <b><%=post.data.disagree %></b>
+                <span>反对</span>
+            </span>
+            <div class="bubbles small left">
+                <div class="triangle"><div class="triangle"></div></div>
+                <div class="inner"><p class="txt"></p></div>
+            </div>
+        </div>
+        <div class="op-item">
+            <span class="op-btn btns dark" data-action="share">分享</span>
+        </div>
         <% if( post.own != 1 ) { %>
-            <span class="op-btn btns <% if( post.mark != 1 ) { %>dark<% } %>" data-marked="<%-post.mark %>" data-action="mark" data-need-signin="1">收藏</span>
+            <div class="op-item">
+                <span class="op-btn btns <% if( post.mark != 1 ) { %>dark<% } %>" data-marked="<%-post.mark %>" data-action="mark" data-need-signin="1">收藏</span>
+                <div class="bubbles small left mark-bubbles">
+                    <div class="triangle"><div class="triangle"></div></div>
+                    <div class="inner"><p class="txt"></p></div>
+                </div>
+            </div>
         <% } %>
-        <a href="/write?post_id=<%=post.id %>" class="op-btn btns dark" data-action="to">针对</a>
+        <div class="op-item">
+            <a href="/write?post_id=<%=post.id %>" class="op-btn btns dark" data-action="to">针对</a>
+        </div>
     </div>
     <div class="main">
         <h2><a href="/post/<%=post.id %>"><%-post.title %></a></h2>
@@ -63,13 +85,21 @@
         <ul class="comment-list"></ul>
         <div class="btns load-more">点击加载更多短评</div>
         <ul class="new-comment-list"></ul>
-        <form class="comment-form">
-            <textarea class="content" placeholder="输入短评内容">&lt;/textarea>
-            <div class="btns-line">
-                <span class="hide btns dark small l">收起短评</span>
-                <a href="###" class="clear">清空</a>
-                <input type="submit" class="btns submit small" value="发布" />
+        <% if( !J.Data.get( 'account.signin' ) ) { %>
+            <div class="not-signin">
+                <a href="#">登录后可以发布短评</a>
+                <span class="sp">|</span>
+                <a href="/signup">注册</a>
             </div>
-        </form>
+        <% } else { %>
+            <form class="comment-form">
+                <textarea class="content" placeholder="输入短评内容">&lt;/textarea>
+                <div class="btns-line">
+                    <span class="hide btns dark small l">收起短评</span>
+                    <a href="###" class="clear">清空</a>
+                    <input type="submit" class="btns submit small" value="发布" />
+                </div>
+            </form>
+        <% } %>
     </div>
 </div>

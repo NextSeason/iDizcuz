@@ -7,11 +7,19 @@
         <% } %>
         <% if( card.self != 1 ) { %>
             <div class="btns-part">
-                <% if( card.followed == 1 ) { %>
-                    <a href="###" class="btns dark unfollow" data-account-id="<%=card.id %>">取消关注</a>
-                <% } else { %>
-                    <a href="###" class="btns follow" data-account-id="<%=card.id %>">关 注</a>
-                <% } %>
+                <div class="follow-btn-box">
+                    <% if( card.followed == 1 ) { %>
+                        <a href="###" class="btns dark unfollow" data-account-id="<%=card.id %>">取消关注</a>
+                    <% } else { %>
+                        <a href="###" class="btns follow" data-account-id="<%=card.id %>">关 注</a>
+                    <% } %>
+                    <div class="bubbles right small">
+                        <div class="triangle"><div class="triangle"></div></div>
+                        <div class="inner">
+                            <p class="txt"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         <% } %>
     </div>

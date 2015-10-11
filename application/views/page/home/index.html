@@ -6,7 +6,7 @@
             $nav = 'index';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/home/css/index.css?_t=1443946534045" />
+        <link rel="stylesheet" href="/static/home/css/index.css?_t=1444541100846" />
     </head>
     <body>
         <div id="idizcuz">
@@ -145,7 +145,7 @@
                         <div class="aside">
                             <ul class="hot-post-list-<?php echo $debate['topic_id']; ?> post-list"></ul>
                             <script>
-                                new J().mount( 'hot-post-<?php echo $debate['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1443946534007', {
+                                new J().mount( 'hot-post-<?php echo $debate['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1444541100809', {
                                     topic_id : '<?php echo $debate['topic_id']; ?>',
                                     rn : '<?php echo $debate['post_num']; ?>'
                                 } );
@@ -156,7 +156,7 @@
                                 <div id="focus-chart"></div>
                                 <div class="chart-legend"><b class="brand">•</b> 各观点指数对比</div>
                                 <script>
-                                    new J().mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1443946534007', { id : '<?php echo $debate['topic_id']; ?>' } );
+                                    new J().mount( 'Chart', '/static/home/packages/Chart/bootstrap.js?_t=1444541100809', { id : '<?php echo $debate['topic_id']; ?>' } );
                                 </script>
                             </div>
                             <div class="main">
@@ -180,7 +180,7 @@
                         <div class="aside">
                             <ul class="hot-post-list-<?php echo $discuss['topic_id']; ?> post-list"></ul>
                             <script>
-                                new J().mount( 'hot-post-<?php echo $discuss['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1443946534007', {
+                                new J().mount( 'hot-post-<?php echo $discuss['topic_id']; ?>', '/static/home/packages/HotPosts/bootstrap.js?_t=1444541100809', {
                                     topic_id : '<?php echo $discuss['topic_id']; ?>',
                                     rn : '<?php echo $discuss['post_num']; ?>'
                                 } );
@@ -238,11 +238,11 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ichart.js?_t=1443946534045"></script>
+        <script src="/static/common/js/ichart.js?_t=1444541100846"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1443946534007', { rn : 10 } );
-            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1443946534007' );
+            idizcuz.mount( 'latestPosts', '/static/home/packages/LatestPosts/bootstrap.js?_t=1444541100809', { rn : 10 } );
+            idizcuz.mount( 'slides', '/static/home/packages/Slides/bootstrap.js?_t=1444541100809' );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

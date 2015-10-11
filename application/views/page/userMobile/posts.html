@@ -2,7 +2,8 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1444333787392" />
+        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1444539864695" />
+        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1444539864695" />
     </head>
     <body>
         <div id="idizcuz">
@@ -17,12 +18,9 @@
                 <ul class="post-list"></ul>
                 <div class="btns load-more">点击加载更多</div>
             </div>
-            <div class="dialog tip-dialog">
-                <div class="wrap">
-                    <div class="inner">
-                        <p class="brand tip"></p>
-                    </div>
-                </div>
+            <div class="boxes bottom-fixed-bar">
+                <a href="http://www.idizcuz.com" class="logo l">每日论点 • iDizcuz</a>
+                <a href="###" class="item scroll-top"><i class="fa fa-eject"></i></a>
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
@@ -47,16 +45,19 @@
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/userMobile/packages/Posts/bootstrap.js?_t=1444333787357', {
+            idizcuz.mount( 'posts', '/static/userMobile/packages/Posts/bootstrap.js?_t=1444539864662', {
                 signin : +'<?php echo $signin; ?>',
                 userId : +'<?php echo $user['id']; ?>',
                 url : '/user/interface/userposts'
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444333787357', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444539864662', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444333787357', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444539864662', {
                 signin : +'<?php echo $signin ?>'
+            } );
+            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1444539864662', {
+                start : 500 
             } );
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>

@@ -1,3 +1,8 @@
+<script>
+    J.Data.set( 'account', {
+        signin : !!+'<?php echo $account ? 1 : 0; ?>' 
+    } );
+</script>
 <div class="top boxes">
     <?php if( $account ) { ?>
         <div class="account">
@@ -8,7 +13,7 @@
                 <li>
                     <a href="###"> 
                         <?php
-                            $avatar = $account['img'] ? 'http://avatar.idizcuzz.com/' . $account['img'] : '/static/common/images/avatar.png?_t=1444349960375';
+                            $avatar = $account['img'] ? 'http://avatar.idizcuzz.com/' . $account['img'] : '/static/common/images/avatar.png?_t=1444539794478';
                         ?>
                         <span class="avatar smaller radius" style="background-image:url(<?php echo $avatar; ?>)"></span>
                     </a>

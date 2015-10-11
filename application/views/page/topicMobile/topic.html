@@ -2,7 +2,8 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topicMobile/css/topic.css?_t=1444354224648" />
+        <link rel="stylesheet" href="/static/topicMobile/css/topic.css?_t=1444494281943" />
+        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1444494281943" />
     </head>
     <body>
         <div id="idizcuz">
@@ -113,8 +114,8 @@
             </div>
             <div class="boxes bottom-fixed-bar">
                 <a href="http://www.idizcuz.com" class="logo l">每日论点 • iDizcuz</a>
-                <a href="/write?topic_id=<?php echo $topic['id']; ?>" class="btns dark small">发布论述</a>
-                <a href="###" class="btns dark small scroll-top">回到顶部</a>
+                <a href="/write?topic_id=<?php echo $topic['id']; ?>" class="item write"><i class="fa fa-pencil-square-o"></i></a>
+                <a href="###" class="item scroll-top"><i class="fa fa-eject"></i></a>
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
@@ -142,16 +143,18 @@
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1444354224614', {
+            idizcuz.mount( 'posts', '/static/topicMobile/packages/Posts/bootstrap.js?_t=1444494281910', {
                 topic : '<?php echo $topic['id']; ?>',
                 points : <?php echo $points ? json_encode( $points ) : 'null'; ?>
             } );
 
-            idizcuz.mount( 'bottomfixedbar', '/static/topicMobile/packages/BottomFixedBar/bootstrap.js?_t=1444354224614', {} );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444354224614', {
+            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1444494281910', {
+                start : $( '.boxes.sub-nav' ).offset().top
+            } );
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444494281910', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444354224614', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444494281910', {
                 signin : +'<?php echo $signin; ?>'
             } );
             ( function() {

@@ -5,9 +5,9 @@
             $title = $topic[ 'title' ] . ' - 每日论点 • iDizcuz';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1444357502359" />
-        <link rel="stylesheet" href="/static/common/css/post.css?_t=1444357502359" />
-        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1444357502359" />
+        <link rel="stylesheet" href="/static/common/css/umeditor/default/css/umeditor.css?_t=1444380571667" />
+        <link rel="stylesheet" href="/static/common/css/post.css?_t=1444380571667" />
+        <link rel="stylesheet" href="/static/topic/css/topic.css?_t=1444380571667" />
     </head>
     <body>
         <div id="idizcuz" 
@@ -405,10 +405,10 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/umeditor.config.js?_t=1444357502359"></script>
-        <script src="/static/common/js/umeditor.js?_t=1444357502359"></script>
-        <script src="/static/common/js/qrcode.js?_t=1444357502359"></script>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1444357502359"></script>
+        <script src="/static/common/js/umeditor.config.js?_t=1444380571667"></script>
+        <script src="/static/common/js/umeditor.js?_t=1444380571667"></script>
+        <script src="/static/common/js/qrcode.js?_t=1444380571667"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1444380571667"></script>
         <script>
             var idizcuz = new J();
 
@@ -422,7 +422,7 @@
                 $( '#editor-dialog' ).hide();
             };
 
-            idizcuz.mount( 'topnavfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444357502325', {
+            idizcuz.mount( 'topnavfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444380571633', {
                 el : $( '.boxes.top-nav' ),
                 onfixed : function() {
                     this.el.css( 'width', '100%' );
@@ -433,7 +433,7 @@
                 }
             } );
 
-            $( '.show-editor.need-fixed' ).length && idizcuz.mount( 'showeditbtnfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444357502325', {
+            $( '.show-editor.need-fixed' ).length && idizcuz.mount( 'showeditbtnfixed', '/static/common/packages/Fixed/bootstrap.js?_t=1444380571633', {
                 el : $( '.show-editor.need-fixed' ),
                 dis : 5,
                 onfixed : function() {
@@ -444,7 +444,7 @@
                 }
             } );
 
-            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1444357502325', { 
+            idizcuz.mount( 'editor', '/static/topic/packages/Editor/bootstrap.js?_t=1444380571633', { 
                 'topic' : {
                     id : "<?php echo $topic['id']; ?>",
                     type : "<?php echo $topic['data']['type']; ?>",
@@ -455,23 +455,23 @@
                     uname : '<?php echo $account ? $account['uname'] : 0; ?>'
                 }
             } );
-            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1444357502325', {
+            idizcuz.mount( 'posts', '/static/topic/packages/Posts/bootstrap.js?_t=1444380571633', {
                 topic : {
                     id : "<?php echo $topic['id']; ?>",
                     title : "<?php echo $topic['title']; ?>"
                 }
             } );
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444357502325', {
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444380571633', {
                 signin : +'<?php echo $account ? 1 : 0; ?>',
                 fullFunction : true
             } );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444357502325', {
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444380571633', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444357502325', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444357502325', {} );
-            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1444357502325', {} );
-            idizcuz.mount( 'sidenavbar', '/static/topic/packages/Sidenavbar/bootstrap.js?_t=1444357502325', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444380571633', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444380571633', {} );
+            idizcuz.mount( 'sidebar', '/static/topic/packages/Sidebar/bootstrap.js?_t=1444380571633', {} );
+            idizcuz.mount( 'sidenavbar', '/static/topic/packages/Sidenavbar/bootstrap.js?_t=1444380571633', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

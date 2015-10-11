@@ -2,6 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
+        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1444479036623" />
     </head>
     <body>
         <?php $nav = 'activities'; ?>
@@ -22,6 +23,10 @@
                         <p class="brand tip"></p>
                     </div>
                 </div>
+            </div>
+            <div class="boxes bottom-fixed-bar">
+                <a href="http://www.idizcuz.com" class="logo l">每日论点 • iDizcuz</a>
+                <a href="###" class="item scroll-top"><i class="fa fa-eject"></i></a>
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
@@ -45,13 +50,18 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/homeMobile/packages/Posts/bootstrap.js?_t=1443006820830' );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1443006820830', {
+            idizcuz.mount( 'posts', '/static/homeMobile/packages/Posts/bootstrap.js?_t=1444479036594' );
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444479036594', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1443006820830', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444479036594', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
+
+            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1444479036594', {
+                start : 500
+            } );
+
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>

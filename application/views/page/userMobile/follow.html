@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1444333787390" />
+        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1444539864693" />
     </head>
     <body>
         <div id="idizcuz">
@@ -16,13 +16,6 @@
             <div class="boxes">
                 <ul class="account-list"></ul>
                 <div class="btns load-more">点击加载更多</div>
-            </div>
-            <div class="dialog tip-dialog">
-                <div class="wrap">
-                    <div class="inner">
-                        <p class="brand tip"></p>
-                    </div>
-                </div>
             </div>
             <textarea class="templates" id="account-list-tpl">
                 <% if( !data.length ) { %>
@@ -52,11 +45,11 @@
             </textarea>
             <script>
                 var idizcuz = new J();
-                idizcuz.mount( 'follow', '/static/commonMobile/packages/Follow/bootstrap.js?_t=1444333787354', {
+                idizcuz.mount( 'follow', '/static/commonMobile/packages/Follow/bootstrap.js?_t=1444539864661', {
                     signin : +'<?php echo $account ? 1 : 0; ?>'
                 } );
 
-                idizcuz.mount( 'followandfans', '/static/userMobile/packages/FollowAndFans/bootstrap.js?_t=1444333787354', {
+                idizcuz.mount( 'followandfans', '/static/userMobile/packages/FollowAndFans/bootstrap.js?_t=1444539864661', {
                     userId : +'<?php echo $user['id']; ?>',
                     page : '<?php echo $page; ?>'
                 } );
