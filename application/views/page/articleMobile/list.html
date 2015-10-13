@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/articleMobile/css/list.css?_t=1443780920073" />
+        <link rel="stylesheet" href="/static/articleMobile/css/list.css?_t=1444595695079" />
     </head>
     <body>
         <div id="idizcuz">
@@ -21,39 +21,47 @@
             <?php } ?>
             <div class="boxes article">
                 <ul class="article-list">
-                    <?php foreach( $articles as $article ) { ?>
-                        <li>
-                            <div class="articles clearfix">
-                                <?php if( $article['img'] ) { ?>
-                                    <div class="aside">
-                                        <a href="/article/<?php echo $article['id']; ?>" class="cover" style="background-image:url(http://topicstc.idizcuzz.com/<?php echo $article['img']; ?>);"></a>
-                                    </div>
-                                <?php } ?>
-                                <div class="info main">
-                                    <h2><a href="/article/<?php echo $article['id']; ?>"><?php echo htmlspecialchars( $article['title'] ); ?></a></h2>
-                                    <div class="detail">
-                                        <span class="time r">
-                                            <?php echo substr( $article['time'], 0, -9 ); ?>
-                                        </span>
-                                        <?php if( $article['origin'] ) { ?>
-                                            <span class="item">来源：<a href="<?php echo $article['origin_url']; ?>" target="_blank"><?php echo $article['origin']; ?></a></span>
-                                        <?php } ?>
-                                        <?php if( $article['author'] ) { ?>
-                                            <span class="item">作者：<?php echo $article['author']; ?></span>
-                                        <?php } ?>
-                                    </div>
-                                    <a href="/article/<?php echo $article['id']; ?>" class="summary">
-                                        <?php echo htmlspecialchars( $article['summary'] ); ?>
-                                        <span class="view">[详细]</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    <?php } ?>
                 </ul>
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
+        <textarea class="templates" id="article-list-tpl">
+            <% for( var i = 0, l = data.length; i < l; i += 1 ) { var article = data[i]; %>
+                <li>
+                    <div class="articles">
+                        <div class="top-line clearfix">
+                            <% if( article.img.length ) { %>
+                                <div class="aside">
+                                    <a href="/article/<%-article.id %>" class="cover" style="background-image:url(http://topicstc.idizcuzz.com/<%-article.img %>);"></a>
+                                </div>
+                            <% } %>
+                            <div class="info main">
+                                <h2><a href="/article/<%-article.id %>"><%-article.title %></a></h2>
+                                <div class="detail">
+                                    <span class="time r">
+                                        <%-article.time.substr( 0, -9 ) %>
+                                    </span>
+                                    <% if( article.origin.length ) { %>
+                                        <span class="item">来源：<a href="<%-article.origin_url %>" target="_blank"><%-article.origin %></a></span>
+                                    <% } %>
+                                    <% if( article.author.length ) { %>
+                                        <span class="item">作者：<%-article.author %></span>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/article/<%-article.id %>" class="summary">
+                            <%-article.summary %> <span class="view">[详细]</span>
+                        </a>
+                    </div>
+                </li>
+            <% } %>
+        </textarea>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
+        <script>
+            new J().mount( 'topics_articles', '/static/articleMobile/packages/TopicArticles/bootstrap.js?_t=1444595695052', {
+                topic_id : '<?php echo $topic['id']; ?>'
+            } );
+        </script>
     </body>
 </html>

@@ -19,7 +19,8 @@ Class InterfaceController extends BaseInterfaceController {
             'uploadimages' => $this->action_path . 'UploadImages.php',
             'comment' => $this->action_path . 'Comment.php',
             'getcomments' => $this->action_path . 'GetComments.php',
-            'removecomment' => $this->action_path . 'RemoveComment.php'
+            'removecomment' => $this->action_path . 'RemoveComment.php',
+            'list' => $this->action_path . 'List.php'
         );
     }
 }

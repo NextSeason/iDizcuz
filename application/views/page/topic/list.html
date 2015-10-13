@@ -7,7 +7,7 @@
             $nav = 'list';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topic/css/list.css?_t=1444380571664" />
+        <link rel="stylesheet" href="/static/topic/css/list.css?_t=1444671976825" />
     </head>
     <body>
         <div id="idizcuz">
@@ -22,76 +22,76 @@
                         <?php } ?>
                     </div>
                     <div class="list-area main">
-                        <ul class="topic-list">
-                            <?php foreach( $topics as $topic ) { ?>
-                                <li class="topics">
-                                    <h3>
-                                        <span class="seal seal-<?php echo $topic['data']['type']; ?>"></span>
-                                        <a href="/topic/<?php echo $topic['id']; ?>" target="_blank"><?php echo $topic['title']; ?></a>
-                                    </h3>
-                                    <p class="data">
-                                        <span class="r">话题日期：<?php echo substr( $topic['ctime'], 0, -9 ); ?></span>
-                                        <span class="">共有 <b class="brand"><?php echo $topic['data']['post_cnt']; ?></b> 条论述</span>
-                                        <span class="cate">分类：<a href="/list/<?php echo $topic['data']['cid']; ?>"><?php echo $topic['data']['cate']; ?></a></span>
-                                    </p>
-                                    <div class="desc">
-                                        <?php echo $topic['desc']; ?>
-                                        <div class="bottom-line">
-                                            <a href="###" class="show-more-info">[显示更多介绍]</a>
-                                        </div>
-                                    </div>
-                                    <?php if( $topic['points'] ) { $points = $topic['points'];  ?>
-                                        <div class="point-area">
-                                            <ul class="clearfix">
-                                                <?php $arr = ['一','二','三','四','五']; ?>
-                                                <?php $i = 0; foreach( $points as $point ) { ?>
-                                                    <li>
-                                                        <div class="points">
-                                                            <div class="point-data r">
-                                                                <div class="base-data">
-                                                                    <b class="triangle"><b class="triangle"></b></b>
-                                                                    <span>论述 <b class="brand"><?php echo $point['data']['post_cnt']; ?></b></span>
-                                                                    <span>支持 <b class="brand"><?php echo $point['data']['agree']; ?></b></span>
-                                                                    <span>反对 <b class="brand"><?php echo $point['data']['disagree']; ?></b></span>
-                                                                </div>
-                                                                <span href="###" class="index">指数 <b class="brand"><?php echo $point['data']['index']; ?></b></span>
-                                                            </div>
-                                                            <div class="title">
-                                                                <i class="fa fa-flag flag-<?php echo $i + 1; ?>"></i>
-                                                                <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                <?php $i++; } ?>
-                                            </ul>
-                                            <ul class="clearfix split-point-list">
-                                                <?php $i = 0; foreach( $points as $point ) { ?>
-                                                    <li>
-                                                        <div class="points ">
-                                                            <div class="title">
-                                                                <i class="fa fa-flag flag-<?php echo $i + 1; ?>"></i>
-                                                                <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
-                                                            </div>
-                                                            <div class="point-data">
-                                                                <span>论述 <b class="brand"><?php echo $point['data']['post_cnt']; ?></b></span>
-                                                                <span>支持 <b class="brand"><?php echo $point['data']['agree']; ?></b></span>
-                                                                <span>反对 <b class="brand"><?php echo $point['data']['disagree']; ?></b></span>
-                                                                <span href="###" class="index">指数 <b class="brand"><?php echo $point['data']['index']; ?></b></span>
-                                                            </div>
-
-                                                        </div>
-                                                    </li>
-                                                <?php $i++; } ?>
-                                            </ul>
-                                        </div>
-                                    <?php } ?>
-                                    <div class="bottom">
-                                        <a href="/topic/<?php echo $topic['id']; ?>" target="_blank">[ 点击打开话题页面 ]</a>
-                                    </div>
-                                </li>
-                            <?php } ?>
-                        </ul>
+                        <ul class="topic-list"></ul>
+                        <a href="###" class="load-more">加载更多</a>
                     </div>
+                    <textarea class="templates" id="topic-list-tpl">
+                        <% for( var i = 0, l = data.length; i < l; i += 1 ) { var topic = data[i]; %>
+                            <li class="topics">
+                                <h3>
+                                    <span class="seal seal-<%-topic.data.type %>"></span>
+                                    <a href="/topic/<%-topic.id %>" target="_blank"><%-topic.title %></a>
+                                </h3>
+                                <p class="data">
+                                    <span class="r">话题日期：<%-topic.ctime.substr( 0, 10 ) %></span>
+                                    <span class="">共有 <b class="brand"><%-topic.data.post_cnt %></b> 条论述</span>
+                                    <span class="cate">分类：<a href="/list/<%-topic.data.cid %>"><%-topic.data.cate %></a></span>
+                                </p>
+                                <div class="desc">
+                                    <%=topic.desc %>
+                                    <div class="bottom-line">
+                                        <a href="###" class="show-more-info">[显示更多介绍]</a>
+                                    </div>
+                                </div>
+                                <% if( topic.points ) { var points = topic.points, arr = [ '一', '二', '三', '四', '五' ]; %>
+                                    <div class="point-area">
+                                        <ul class="clearfix">
+                                            <% for( var j = 0, len = points.length; j < len; j += 1 ) { var point = points[j]; %>
+                                                <li>
+                                                    <div class="points">
+                                                        <div class="point-data r">
+                                                            <div class="base-data">
+                                                                <b class="triangle"><b class="triangle"></b></b>
+                                                                <span>论述 <b class="brand"><%-point.data.post_cnt %></b></span>
+                                                                <span>支持 <b class="brand"><%-point.data.agree %></b></span>
+                                                                <span>反对 <b class="brand"><%-point.data.disagree %></b></span>
+                                                            </div>
+                                                            <span href="###" class="index">指数 <b class="brand"><%-point.data.index %></b></span>
+                                                        </div>
+                                                        <div class="title">
+                                                            <i class="fa fa-flag flag-<% j + 1 %>"></i>
+                                                            <span>观点<%-arr[ j ] %>：<%-point.title %></span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                        <ul class="clearfix split-point-list">
+                                            <% for( var j = 0, len = points.length; j < len; j += 1 ) { var point = points[j]; %>
+                                                <li>
+                                                    <div class="points">
+                                                        <div class="title">
+                                                            <i class="fa fa-flag flag-<% j + 1 %>"></i>
+                                                            <span>观点<%-arr[ j ] %>：<%-point.title %></span>
+                                                        </div>
+                                                        <div class="point-data">
+                                                            <span>论述 <b class="brand"><%-point.data.post_cnt %></b></span>
+                                                            <span>支持 <b class="brand"><%-point.data.agree %></b></span>
+                                                            <span>反对 <b class="brand"><%-point.data.disagree %></b></span>
+                                                            <span href="###" class="index">指数 <b class="brand"><%-point.data.index %></b></span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                    </div>
+                                <% } %>
+                                <div class="bottom">
+                                    <a href="/topic/<%-topic.id %>" target="_blank">[ 点击打开话题页面 ]</a>
+                                </div>
+                            </li>
+                        <% } %>
+                    </textarea>
                 </div>
             </div>
             <?php include TPL_PATH . '/common/foot.inc.html'; ?>
@@ -105,6 +105,9 @@
                     el.find( '.bottom-line' ).hide();
                 } );
             } )();
+            new J().mount( 'topiclist', '/static/topic/packages/TopicList/bootstrap.js?_t=1444671976784', {
+
+            } );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>

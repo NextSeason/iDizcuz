@@ -1,30 +1,21 @@
 <?php
 
 Class ListAction extends \Local\BaseAction {
-    private $data = array();
-    private $rn = 20;
+    private $data = [];
+    protected $type = 'interface';
 
     public function __execute() {
-        $this->tpl = 'topic/list';
-
-        $this->paramsProcessing();
-
-        $this->data['cid'] = $this->params['cid'];
-
+        $this->paramsProcessing()->getTopicsData()->getTopics()->getPoints();
         return $this->data;
     }
 
     public function __mobile() {
-        $data = $this->__execute();
-        $this->tpl = 'topicMobile/list';
-        return $data;
+        return $this->__execute();
     }
 
     private function getPoints() {
-
         $pointModel = new PointModel();
         $pointDataModel = new PointDataModel();
-
         foreach( $this->data['topics'] as &$topic ) {
             if( $topic['data']['type'] == 1 ) {
                 $points = explode( ',', $topic['points'] );
@@ -37,7 +28,6 @@ Class ListAction extends \Local\BaseAction {
                 }
             }
         }
-
         return $this;
     }
 
@@ -77,38 +67,40 @@ Class ListAction extends \Local\BaseAction {
             $where[] = [ 'cid', $params['cid'] ];
         }
 
+        if( $params['cursor'] != 0 ) {
+            $where[] = [ 'id', '<', $params[ 'cid' ] ];
+        }
+
         $topics_data = $topicDataModel->select( [
             'where' => $where,
             'order' => [ [ 'id', 'DESC' ] ],
-            'start' => $params['start'],
-            'rn' => $params['rn']
+            'rn' => $params[ 'rn' ]
         ] );
 
         if( $topics_data === false ) {
-            // err
+            $this->error( 'SYSTEM_ERR' );
         }
 
-        $this->pool['topics_data'] = $topics_data;
+        $this->pool[ 'topics_data' ] = $topics_data;
 
         return $this;
     }
 
     private function paramsProcessing() {
-        $cid = intval( $this->__getParam('cid') );
+        $cid = intval( $this->__getParam( 'cid' ) );
 
-        $pn = intval( $this->__getParam( 'pn' ) );
+        $rn = intval( $this->__getParam( 'rn' ) );
 
-        if( $pn < 1 ) $pn = 1;
+        if( $rn <= 0 || $rn > 100 ) $rn = 20;
 
-        $start = ( $pn - 1 ) * $this->rn;
+        $cursor = intval( $this->__getParam( 'cursor' ) );
+        if( $cursor < 0 ) $cursor = 0;
 
-        $this->params = array(
+        $this->params = [
             'cid' => $cid,
-            'pn' => $pn,
-            'start' => $start,
-            'rn' => 20
-        );
-
+            'cursor' => $cursor == 0 ? 0 : \Local\Utils::decodeId( $cursor ),
+            'rn' => $rn
+        ];
         return $this;
     }
 }

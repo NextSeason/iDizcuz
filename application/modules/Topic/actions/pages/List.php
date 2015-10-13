@@ -7,7 +7,7 @@ Class ListAction extends \Local\BaseAction {
     public function __execute() {
         $this->tpl = 'topic/list';
 
-        $this->paramsProcessing()->getTopicsData()->getTopics()->getPoints();
+        $this->paramsProcessing();
 
         $this->data['cid'] = $this->params['cid'];
 

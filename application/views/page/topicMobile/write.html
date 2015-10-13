@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topicMobile/css/write.css?_t=1444494281944" />
+        <link rel="stylesheet" href="/static/topicMobile/css/write.css?_t=1444602091346" />
     </head>
     <body>
         <div id="idizcuz">
@@ -98,7 +98,7 @@
                     <?php } ?>
                     <script>
                         var idizcuz = new J();
-                        idizcuz.mount( 'write', '/static/topicMobile/packages/Write/bootstrap.js?_t=1444494281911', {
+                        idizcuz.mount( 'write', '/static/topicMobile/packages/Write/bootstrap.js?_t=1444602091312', {
                             topicId : +'<?php echo $topic['id']; ?>',
                             needPoint : +'<?php echo $topic['data']['type'] == 1 ? 1 : 0; ?>'
                         } );
