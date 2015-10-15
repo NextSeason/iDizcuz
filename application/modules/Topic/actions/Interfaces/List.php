@@ -68,7 +68,7 @@ Class ListAction extends \Local\BaseAction {
         }
 
         if( $params['cursor'] != 0 ) {
-            $where[] = [ 'id', '<', $params[ 'cid' ] ];
+            $where[] = [ 'id', '<', $params[ 'cursor' ] ];
         }
 
         $topics_data = $topicDataModel->select( [
@@ -87,13 +87,13 @@ Class ListAction extends \Local\BaseAction {
     }
 
     private function paramsProcessing() {
-        $cid = intval( $this->__getParam( 'cid' ) );
+        $cid = intval( $this->__getQuery( 'cid' ) );
 
-        $rn = intval( $this->__getParam( 'rn' ) );
+        $rn = intval( $this->__getQuery( 'rn' ) );
 
         if( $rn <= 0 || $rn > 100 ) $rn = 20;
 
-        $cursor = intval( $this->__getParam( 'cursor' ) );
+        $cursor = intval( $this->__getQuery( 'cursor' ) );
         if( $cursor < 0 ) $cursor = 0;
 
         $this->params = [

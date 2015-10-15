@@ -7,7 +7,7 @@
             $nav = 'list';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topic/css/list.css?_t=1444671976825" />
+        <link rel="stylesheet" href="/static/topic/css/list.css?_t=1444761534185" />
     </head>
     <body>
         <div id="idizcuz">
@@ -105,8 +105,8 @@
                     el.find( '.bottom-line' ).hide();
                 } );
             } )();
-            new J().mount( 'topiclist', '/static/topic/packages/TopicList/bootstrap.js?_t=1444671976784', {
-
+            new J().mount( 'topiclist', '/static/topic/packages/TopicList/bootstrap.js?_t=1444761534149', {
+                'cid' : +'<?php echo $cid; ?>'
             } );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>

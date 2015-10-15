@@ -2,8 +2,8 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topicMobile/css/post.css?_t=1444602091344" />
-        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1444602091344" />
+        <link rel="stylesheet" href="/static/topicMobile/css/post.css?_t=1444845301936" />
+        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1444845301936" />
     </head>
     <body>
         <div id="idizcuz">
@@ -33,14 +33,14 @@
         </div>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'post', '/static/topicMobile/packages/Post/bootstrap.js?_t=1444602091310', {
+            idizcuz.mount( 'post', '/static/topicMobile/packages/Post/bootstrap.js?_t=1444845301902', {
                 postId : '<?php echo $post['id']; ?>'
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444602091310', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444845301902', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
 
-            idizcuz.mount( 'comment', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444602091310', {
+            idizcuz.mount( 'comment', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444845301902', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
         </script>

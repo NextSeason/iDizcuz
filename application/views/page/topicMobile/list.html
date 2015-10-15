@@ -12,53 +12,45 @@
                 <?php include TPL_PATH . '/accountMobile/signin.inc.html'; ?>
             <?php } ?>
             <div class="boxes">
-                <ul class="topic-list">
-                    <?php foreach( $topics as $topic ) { ?>
+                <ul class="topic-list"></ul>
+                <div class="btns load-more">点击加载更多</div>
+            </div>
+            <textarea class="templates" id="topic-list-tpl">
+                <% if( !data.length ) { %>
+                    <li class="empty">没有更多数据</li>
+                <% } else { %>
+                    <% for( var i = 0, l = data.length; i < l; i += 1 ) { var topic = data[i]; %>
                         <li class="topics">
                             <div class="first-line">
-                                <span class="date r">
-                                    <?php echo substr( $topic['ctime'], 0, -9 ); ?>
-                                </span>
-                                <span class="brand">
-                                    <?php echo $topic['data']['cate']; ?>
-                                </span>
+                                <span class="date r"><%=topic.ctime.substr( 0, 10 ) %></span>
+                                <span class="brand"><%-topic.data.cate %></span>
                                 <span> • </span>
-                                <span class="brand">
-                                    <?php echo $topic['data']['type'] == 1 ? '辩论' : '讨论'; ?>
-                                </span>
+                                <span class="brand"><% +topic.data.type == 1 ? '辩论' : '讨论' %></span>
                             </div>
-                            <h2>
-                                <a href="/topic/<?php echo $topic['id']; ?>">
-                                    <?php echo $topic['title']; ?>
-                                </a>
-                            </h2>
-
+                            <h2><a href="/topic/<%-topic.id %>"><%-topic.title %></a></h2>
                             <div class="desc">
-                                <div class="rich-text">
-                                    <?php echo $topic['desc']; ?>
-                                </div>
+                                <div class="rich-text"><%=topic.desc %></div>
                                 <div class="bottom-line">
                                     <a href="###" class="show-more-info">[显示更多介绍]</a>
                                 </div>
                             </div>
-                            <?php if( $topic['points'] ) { $points = $topic['points'];  ?>
-                                <?php $arr = ['一','二','三','四','五']; ?>
+                            <% if( topic.points.length ) { var points = topic.points, arr = ['一','二','三','四','五']; %>
                                 <ul class="point-list">
-                                    <?php $i = 0; foreach( $points as $point ) { ?>
+                                    <% for( var j = 0, len = points.length; j < len; j += 1 ) { var point = points[j]; %>
                                         <li>
                                             <div class="points">
-                                                <i class="flags flag-<?php echo $i + 1; ?>"></i>
-                                                <span>观点<?php echo $arr[$i]; ?>：<?php echo $point['title']; ?></span>
+                                                <i class="flags flag-<% j + 1 %>"></i>
+                                                <span>观点<%-arr[j] %>：<%-point.title %></span>
                                             </div>
                                         </li>
-                                    <?php $i++; } ?>
+                                    <% } %>
                                 </ul>
-                            <?php } ?>
-                            <a href="/topic/<?php echo $topic['id']; ?>" class="open-topic btns dark">点击查看话题</a>
+                            <% } %>
+                            <a href="/topic/<%-topic.id %>" class="open-topic btns dark">点击查看话题</a>
                         </li>
-                    <?php } ?>
-                </ul>
-            </div>
+                    <% } %>
+                <% } %>
+            </textarea>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
         <script>
@@ -70,6 +62,9 @@
                     el.find( '.bottom-line' ).hide();
                 } );
             } )();
+            new J().mount( 'topiclist', '/static/topicMobile/packages/TopicList/bootstrap.js?_t=1444845301900', {
+                cid : '<?php echo $cid; ?>'
+            } );
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>
