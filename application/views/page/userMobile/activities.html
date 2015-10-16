@@ -2,8 +2,8 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1444539864691" />
-        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1444539864691" />
+        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1445018193793" />
+        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1445018193793" />
     </head>
     <body>
         <div id="idizcuz">
@@ -26,7 +26,7 @@
         </div>
         <textarea class="templates" id="activity-list-tpl">
             <% if( !data.length ) { %>
-                <li class="empty">暂时没有用户动态</li>
+                <li class="empty">没有更多用户动态</li>
             <% } else { %>
                 <% var txts = { 
                     '0' : '发布了新的论述', 
@@ -92,23 +92,24 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'activities', '/static/userMobile/packages/Activities/bootstrap.js?_t=1444539864658', {
+            idizcuz.mount( 'activities', '/static/userMobile/packages/Activities/bootstrap.js?_t=1445018193755', {
                 accountId : '<?php echo $account['id']; ?>',
                 userId : '<?php echo $user['id']; ?>',
                 self : +'<?php echo $account['id'] == $user['id'] ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'postoperate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444539864658', {
+            idizcuz.mount( 'postoperate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1445018193755', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444539864658', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1445018193755', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'follow', '/static/commonMobile/packages/Follow/bootstrap.js?_t=1444539864658', {
+            idizcuz.mount( 'follow', '/static/commonMobile/packages/Follow/bootstrap.js?_t=1445018193755', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1444539864658', {
+            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1445018193755', {
                 start : 500 
             } );
+            idizcuz.mount( 'share', '/static/commonMobile/packages/Share/bootstrap.js?_t=1445018193755' );
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>

@@ -11,7 +11,7 @@ Class ArticleAction extends \Local\BaseAction {
 
     public function __mobile() {
         $this->tpl = 'articleMobile/article';
-        $this->paramsProcessing()->getArticle()->getTopic();
+        $this->paramsProcessing()->getArticle()->getTopic()->getRelated();
         return $this->data;
     }
 
@@ -19,7 +19,7 @@ Class ArticleAction extends \Local\BaseAction {
         $articleModel = new ArticleModel();
 
         $related_articles = $articleModel->select( [
-            'columns' => [ 'id', 'title', 'time' ],
+            'columns' => [ 'id', 'title', 'time', 'img', 'origin', 'origin_url', 'author' ],
             'where' => [
                 [ 'topic_id', $this->data['topic']['id'] ]
             ],

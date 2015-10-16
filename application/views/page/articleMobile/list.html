@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/articleMobile/css/list.css?_t=1444595695079" />
+        <link rel="stylesheet" href="/static/articleMobile/css/list.css?_t=1445022411369" />
     </head>
     <body>
         <div id="idizcuz">
@@ -20,8 +20,8 @@
                 </div>
             <?php } ?>
             <div class="boxes article">
-                <ul class="article-list">
-                </ul>
+                <ul class="article-list"></ul>
+                <div class="btns load-more">点击加载更多</div>
             </div>
             <?php include TPL_PATH . '/commonMobile/foot.inc.html'; ?>
         </div>
@@ -59,7 +59,7 @@
         </textarea>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
         <script>
-            new J().mount( 'topics_articles', '/static/articleMobile/packages/TopicArticles/bootstrap.js?_t=1444595695052', {
+            new J().mount( 'topics_articles', '/static/articleMobile/packages/TopicArticles/bootstrap.js?_t=1445022411347', {
                 topic_id : '<?php echo $topic['id']; ?>'
             } );
         </script>

@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1441212846325" />
+        <link rel="stylesheet" href="/static/messageMobile/css/message.css?_t=1445024888283" />
     </head>
     <body>
         <div id="idizcuz">
@@ -13,20 +13,24 @@
             <?php } else { ?>
                 <div class="boxes">
                     <ul class="message-list"></ul>
+                    <div class="btns load-more">加载更多</div>
                 </div>
                 <textarea class="templates" id="message-list-tpl">
                     <% if( !data.length ) { %>
-                        <li class="empty">没有消息</li>
+                        <li class="empty">没有更多消息</li>
                     <% } else { %>
                         <% for( var i = 0, l = data.length; i < l; i += 1 ) { var msg = data[i]; %>
-                            <li id="message-<%=msg.id %>" class="messages" data-read="<%=msg.read %>" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
+                            <li id="message-<%=msg.id %>" class="messages" data-msg-type="<%=msg.type %>" data-msg-id="<%=msg.id %>">
                             <p><%=msg.ctime.substr( 0, 10 ) %></p>
                                 <div class="title-line">
-                                    <a href="/user/activities/<%=msg.from.id %>"><%-msg.from.uname %></a>
-                                    <%=msg.title %>
+                                    <a href="/user/activities/<%=msg.from.id %>"><%-msg.from.uname %></a> <%=msg.title %>
                                 </div>
                                 <% if( msg.content.length ) { %>
-                                    <div class="content"><%-msg.content %></div>
+                                    <div class="content">
+                                        <i class="fa fa-quote fa-quote-left"></i>
+                                        <%-msg.content %>
+                                        <i class="fa fa-quote fa-quote-right"></i>
+                                    </div>
                                 <% } %>
                             </li>
                         <% } %>
@@ -37,7 +41,7 @@
                 </textarea>
                 <script>
                     var idizcuz = new J();
-                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1441212846303', {
+                    idizcuz.mount( 'messages', '/static/messageMobile/packages/Messages/bootstrap.js?_t=1445024888266', {
                         accountId : '<?php echo $account['id']; ?>'
                     } );
                 </script>

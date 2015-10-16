@@ -2,8 +2,8 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1444539864695" />
-        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1444539864695" />
+        <link rel="stylesheet" href="/static/userMobile/css/user.css?_t=1445018193797" />
+        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1445018193797" />
     </head>
     <body>
         <div id="idizcuz">
@@ -45,20 +45,21 @@
         <?php $signin = $account ? 1 : 0; ?>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/userMobile/packages/Posts/bootstrap.js?_t=1444539864662', {
+            idizcuz.mount( 'posts', '/static/userMobile/packages/Posts/bootstrap.js?_t=1445018193760', {
                 signin : +'<?php echo $signin; ?>',
                 userId : +'<?php echo $user['id']; ?>',
                 url : '/user/interface/userposts'
             } );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1444539864662', {
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1445018193760', {
                 signin : +'<?php echo $signin; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1444539864662', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1445018193760', {
                 signin : +'<?php echo $signin ?>'
             } );
-            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1444539864662', {
+            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1445018193760', {
                 start : 500 
             } );
+            idizcuz.mount( 'share', '/static/commonMobile/packages/Share/bootstrap.js?_t=1445018193760' );
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>
     </body>
