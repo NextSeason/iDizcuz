@@ -63,7 +63,31 @@ Class Utils {
     }
 
     static public function passwd( $passwd, $salt ) {
-        return sha1( $passwd . $salt );
+        $passwdlen = strlen( $passwd );
+        $saltlen = strlen( $salt );
+
+        if( ord( $salt{ $saltlen - 1 } ) % 2 ) $passwd = strrev( $passwd );
+        if( $passwd{5} % 2 ) $salt = strrev( $salt );
+
+        $res = [];
+        if( ( ord( $salt{2} ) + ord ( $passwd{3} ) ) % 2 ) {
+            for( $i = 0; $i < $passwdlen && $i < $saltlen; ++$i ) {
+                if( $passwdlen > $i ) $res[] = $passwd{$i};
+                if( $saltlen > $i ) $res[] = $saltlen{$i};
+            }
+        } else {
+            $passwd = strrev( $passwd );
+            $salt = strrev( $salt );
+
+            for( $i = 0; $i < $passwdlen && $i < $saltlen; ++$i ) {
+                if( $passwdlen > $i ) $res[] = $passwd{$i};
+                if( $saltlen > $i ) $res[] = $saltlen{$i};
+            }
+
+            $res = array_reverse( $res );
+        }
+
+        return sha1( implode( '', $res ) );
     }
 
     static public function redirect( $path ) {

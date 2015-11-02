@@ -2,12 +2,12 @@
 
 use Yaf\Registry;
 
-Class PageController extends BasePageController {
+Class InterfaceController extends BaseInterfaceController {
     public function init() {
         parent::init();
 
         $this->actions = array(
-            'fms' => $this->action_path . 'Fms.php',
+            'save' => $this->action_path . 'Save.php'
         );
     }
 }

@@ -3,8 +3,8 @@
     <head>
         <?php $title = 'iDizcuz Management Information System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1442437931227" />
-        <link rel="stylesheet" type="text/css" href="/static/mis/css/topics.css?_t=1442437931227" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/mis.css?_t=1445154952067" />
+        <link rel="stylesheet" type="text/css" href="/static/mis/css/topics.css?_t=1445154952067" />
     </head>
     <body>
         <div id="idizcuz">
@@ -25,6 +25,7 @@
                                     </span>
                                     <h3>
                                         <span class="seal seal-<?php echo $topic['data']['type']; ?>"></span>
+                                        <span class="gruy-light">ID:<?php echo $topic['id']; ?></span>&nbsp;
                                         <?php echo $topic['title']; ?>
                                         <?php if( $topic['data']['status'] == 1 ) { ?>
                                             <a href="/topic/<?php echo $topic['id']; ?>" target="_blank">[查看]</a>

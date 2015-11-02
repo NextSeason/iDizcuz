@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include TPL_PATH . '/commonMobile/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1445016823186" />
+        <link rel="stylesheet" href="/static/commonMobile/css/post.css?_t=1445195617401" />
     </head>
     <body>
         <?php $nav = 'activities'; ?>
@@ -50,19 +50,19 @@
         </textarea>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/homeMobile/packages/Posts/bootstrap.js?_t=1445016823163' );
-            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1445016823163', {
+            idizcuz.mount( 'posts', '/static/homeMobile/packages/Posts/bootstrap.js?_t=1445195617374' );
+            idizcuz.mount( 'operate', '/static/commonMobile/packages/PostOperate/bootstrap.js?_t=1445195617374', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1445016823163', {
+            idizcuz.mount( 'comments', '/static/commonMobile/packages/Comments/bootstrap.js?_t=1445195617374', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
 
-            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1445016823163', {
+            idizcuz.mount( 'bottomfixedbar', '/static/commonMobile/packages/BottomFixedBar/bootstrap.js?_t=1445195617374', {
                 start : 500
             } );
 
-            idizcuz.mount( 'share', '/static/commonMobile/packages/Share/bootstrap.js?_t=1445016823163' );
+            idizcuz.mount( 'share', '/static/commonMobile/packages/Share/bootstrap.js?_t=1445195617374' );
 
         </script>
         <?php include TPL_PATH . '/commonMobile/end.inc.html'; ?>

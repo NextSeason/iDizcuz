@@ -3,7 +3,7 @@
     <head>
         <?php $title = 'Fragement Management System'; ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1443019273157" />
+        <link rel="stylesheet" type="text/css" href="/static/fms/css/fms.css?_t=1445196044548" />
     </head>
     <body>
         <div id="idizcuz">
@@ -17,7 +17,7 @@
                     <?php include TPL_PATH . '/fms/alias.inc.html'; ?>
                     <div class="block content">
                         <?php 
-                            $fragment = \FMS\Api::getFragmentByAlias( $alias );
+                            $fragment = \Fms\Api::getFragmentByAlias( $alias );
                             $topics = $fragment['content']['topics'];
                             foreach( $topics as $topic ) {
                         ?>
@@ -113,7 +113,7 @@
         <script>
             var fms = new J();
 
-            fms.mount( 'fms', '/static/fms/packages/FMS/bootstrap.js?_t=1443019273119', {
+            fms.mount( 'fms', '/static/fms/packages/Fms/bootstrap.js?_t=1445196044513', {
                 getData : function( form ) {
                     var res = {},
                         topics = form.find( '.line.topic' ),

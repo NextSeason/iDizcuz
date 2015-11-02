@@ -7,7 +7,7 @@
             $nav = 'list';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/topic/css/list.css?_t=1444761534185" />
+        <link rel="stylesheet" href="/static/topic/css/list.css?_t=1445713486984" />
     </head>
     <body>
         <div id="idizcuz">
@@ -59,7 +59,7 @@
                                                             <span href="###" class="index">指数 <b class="brand"><%-point.data.index %></b></span>
                                                         </div>
                                                         <div class="title">
-                                                            <i class="fa fa-flag flag-<% j + 1 %>"></i>
+                                                            <i class="fa fa-flag flag-<%-(j + 1) %>"></i>
                                                             <span>观点<%-arr[ j ] %>：<%-point.title %></span>
                                                         </div>
                                                     </div>
@@ -105,7 +105,7 @@
                     el.find( '.bottom-line' ).hide();
                 } );
             } )();
-            new J().mount( 'topiclist', '/static/topic/packages/TopicList/bootstrap.js?_t=1444761534149', {
+            new J().mount( 'topiclist', '/static/topic/packages/TopicList/bootstrap.js?_t=1445713486945', {
                 'cid' : +'<?php echo $cid; ?>'
             } );
         </script>

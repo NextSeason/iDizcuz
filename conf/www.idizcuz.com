@@ -9,7 +9,7 @@
 
         location / {
             autoindex   on;
-            root   /home/iDizcuz/www/public;
+            root   /home/idizcuz/www/public;
             index  index.php index.html index.htm;
 
             rewrite ^/(\?.*)?$ /index.php?__r=home/page/index$1 last;
@@ -46,16 +46,16 @@
         #}
 
         location ~* ^/static {
-            root /home/iDizcuz/www;
+            root /home/idizcuz/www;
             expires 10d;
         }
 
         location ~* ^/bdunion.txt {
-            root /home/iDizcuz/www;
+            root /home/idizcuz/www;
         }
 
 	    location ~ \.html {
-	        root /home/iDizcuz/www;
+	        root /home/idizcuz/www;
 	    }
 
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
@@ -64,7 +64,7 @@
 		include /etc/nginx/fastcgi_params;
             fastcgi_pass   unix:/var/run/php5-fpm.sock;
             fastcgi_index  index.php;
-            fastcgi_param  SCRIPT_FILENAME  /home/iDizcuz/www/public$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  /home/idizcuz/www/public$fastcgi_script_name;
         }
 
         # deny access to .htaccess files, if Apache's document root

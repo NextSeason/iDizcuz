@@ -6,8 +6,8 @@
             $nav = 'activities';
         ?>
         <?php include TPL_PATH . '/common/head.inc.html'; ?>
-        <link rel="stylesheet" href="/static/common/css/post.css?_t=1444541100844" />
-        <link rel="stylesheet" href="/static/home/css/activities.css?_t=1444541100844" />
+        <link rel="stylesheet" href="/static/common/css/post.css?_t=1445196241263" />
+        <link rel="stylesheet" href="/static/home/css/activities.css?_t=1445196241263" />
     </head>
     <body>
         <div id="idizcuz">
@@ -75,21 +75,21 @@
                 </li>
             <% } %>
         </textarea>
-        <script src="/static/common/js/ZeroClipboard.js?_t=1444541100845"></script>
-        <script src="/static/common/js/qrcode.js?_t=1444541100845"></script>
+        <script src="/static/common/js/ZeroClipboard.js?_t=1445196241263"></script>
+        <script src="/static/common/js/qrcode.js?_t=1445196241263"></script>
         <script>
             var idizcuz = new J();
-            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js?_t=1444541100807' );
+            idizcuz.mount( 'posts', '/static/home/packages/Posts/bootstrap.js?_t=1445196241224' );
 
-            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1444541100808', {
+            idizcuz.mount( 'operate', '/static/common/packages/PostOperate/bootstrap.js?_t=1445196241224', {
                 signin : +'<?php echo $account ? 1 : 0; ?>',
                 fullFunction : false
             } );
-            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1444541100808', {
+            idizcuz.mount( 'comments', '/static/common/packages/Comments/bootstrap.js?_t=1445196241224', {
                 signin : +'<?php echo $account ? 1 : 0; ?>'
             } );
-            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1444541100808', {} );
-            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1444541100808', {} );
+            idizcuz.mount( 'share', '/static/common/packages/Share/bootstrap.js?_t=1445196241224', {} );
+            idizcuz.mount( 'copy', '/static/common/packages/Copy/bootstrap.js?_t=1445196241224', {} );
         </script>
         <?php include TPL_PATH . '/common/end.inc.html'; ?>
     </body>
